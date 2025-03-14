@@ -1,0 +1,163 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { Container } from "@/components/forms/container";
+import { Heading } from "@/components/elements/heading";
+import { Subheading } from "@/components/elements/subheading";
+import * as LucideIcons from "lucide-react";
+import { FC } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
+import { motion, useAnimation, useInView } from "framer-motion";
+import type { ServiceBlockProps } from "@/types";
+
+// Helper function to convert kebab-case to PascalCase// ✅ Convert kebab-case to PascalCase for Lucide icons
+const toPascalCase = (str: string): string =>
+  str
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join("");
+
+// ✅ Get the correct Lucide icon
+const getLucideIcon = (iconName: string): FC<any> => {
+  const pascalCaseName = toPascalCase(iconName);
+
+  // Check if the icon exists in the imported LucideIcons and return it
+  const Icon = (LucideIcons as any)[pascalCaseName];
+
+  // Fallback to a default icon if the requested icon does not exist
+  if (!Icon) {
+    return LucideIcons.AlertCircle; // Replace this with a valid fallback icon if needed
+  }
+
+  return Icon;
+};
+
+export function ServiceBlock(data: Readonly<ServiceBlockProps>) {
+  if (!data) return null;
+  const { heading, sub_heading, services } = data;
+
+  // State to track scroll position for fade-in/out effects
+  const controls = useAnimation();
+  const [scrollY, setScrollY] = useState(0);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    controls.start({
+      opacity: scrollY > 100 ? 1 : 0.2,
+      scale: scrollY > 200 ? 1 : 0.95,
+      transition: { duration: 0.5, ease: "easeOut" },
+    });
+  }, [scrollY, controls]);
+
+  return (
+    <Container className="flex flex-col items-center justify-between pb-20 mt-4 mb-4">
+      {/* Header Section */}
+      <motion.div
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="relative z-20 py-10 md:pt-40 text-center mb-10"
+      >
+        <Heading as="h1" className="mt-4 text-primary dark:text-white text-4xl font-bold">
+          {heading}
+        </Heading>
+        <Subheading as="h2" className="mt-2 text-muted-foreground text-lg">
+          {sub_heading}
+        </Subheading>
+      </motion.div>
+
+      {/* Services Grid with Scroll-based Fade & Scale Effects */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={controls}
+        transition={{ duration: 1, ease: "easeOut" }}
+        className="w-full max-w-7xl mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+      >
+        {services && services.length > 0 ? (
+          services.map((service, index) => {
+            const ServiceIcon = getLucideIcon(service.icon);
+
+            // Dynamic card styling for Bento layout
+            const isLarge = index % 5 === 0; // Makes some cards bigger
+            const gridSpan = isLarge ? "lg:col-span-2 lg:row-span-2" : "lg:col-span-1";
+            const bgGradient =
+              index % 2 === 0
+                ? "bg-gradient-to-br from-indigo-500 via-blue-600 to-purple-700"
+                : "bg-gradient-to-br from-green-500 via-teal-600 to-blue-700";
+
+            return (
+              <motion.div
+                key={service.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.5 }}
+                className={`relative flex flex-col ${gridSpan} cursor-pointer transform transition-all duration-300`}
+              >
+                <Card className="h-full flex flex-col shadow-xl hover:shadow-2xl backdrop-blur-xl bg-opacity-90 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
+                  {/* Icon and Title */}
+                  <CardHeader className="relative flex items-center justify-center py-6">
+                    <div className={`${bgGradient} p-4 rounded-xl`}>
+                      {ServiceIcon && <ServiceIcon className="h-12 w-12 text-white" />}
+                    </div>
+                  </CardHeader>
+
+                  <Separator className="opacity-30" />
+
+                  {/* Content */}
+                  <CardContent className="p-6 flex flex-col flex-grow justify-between">
+                    <motion.h3
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.2, duration: 0.5 }}
+                      className="text-xl font-semibold text-gray-900 dark:text-white"
+                    >
+                      {service.name}
+                    </motion.h3>
+                    <motion.p
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.4, duration: 0.5 }}
+                      className="text-gray-600 dark:text-gray-400 mt-2 flex-grow text-sm md:text-base"
+                    >
+                      {service.description}
+                    </motion.p>
+
+                    {/* Learn More Button */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.6, duration: 0.5 }}
+                      className="mt-auto"
+                    >
+                      <Button variant="outline" className="w-full border border-primary text-primary dark:text-white">
+                        <Link href={`/services/${service.slug}`}>Learn More →</Link>
+                      </Button>
+                    </motion.div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })
+        ) : (
+          <p className="text-gray-600 dark:text-gray-400 text-center col-span-full">
+            No services available.
+          </p>
+        )}
+      </motion.div>
+    </Container>
+  );
+}

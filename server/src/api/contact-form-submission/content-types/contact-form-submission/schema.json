@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contact_form_submissions",
+  "info": {
+    "singularName": "contact-form-submission",
+    "pluralName": "contact-form-submissions",
+    "displayName": "ContactFormSubmissions"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "message": {
+      "type": "text"
+    },
+    "referralSource": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "biginteger"
+    }
+  }
+}

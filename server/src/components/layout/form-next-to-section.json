@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_layout_form_next_to_sections",
+  "info": {
+    "displayName": "Form_Next_To_Section",
+    "icon": "brush",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "sub_heading": {
+      "type": "text"
+    },
+    "section": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.section"
+    }
+  }
+}

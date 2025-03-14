@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_shared_challenges",
+  "info": {
+    "displayName": "Challenges",
+    "icon": "check",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

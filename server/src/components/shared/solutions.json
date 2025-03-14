@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_shared_solutions",
+  "info": {
+    "displayName": "Solutions",
+    "icon": "check"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}
