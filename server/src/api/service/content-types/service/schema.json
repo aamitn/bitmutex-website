@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "services",
+  "info": {
+    "singularName": "service",
+    "pluralName": "services",
+    "displayName": "Service",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "techstacklogos": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "service_items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.service-items"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "icon": {
+      "type": "string"
+    }
+  }
+}

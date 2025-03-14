@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "messages",
+  "info": {
+    "singularName": "message",
+    "pluralName": "messages",
+    "displayName": "Message"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "text": {
+      "type": "string"
+    },
+    "sender": {
+      "type": "enumeration",
+      "enum": [
+        "visitor",
+        "admin"
+      ]
+    }
+  }
+}
