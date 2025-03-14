@@ -1,0 +1,30 @@
+{
+  "name": "strapi-next-starter",
+  "version": "1.0.0",
+  "description": "Strapi starter project with Next.js",
+  "type": "module",
+  "scripts": {
+    "client": "yarn dev --prefix ../client/",
+    "server": "yarn dev --prefix ../server/",
+    "setup:client": "cd client && yarn && node --loader ts-node/esm ../copy-env.mts ./",
+    "setup:server": "cd server && yarn && node --loader ts-node/esm ../copy-env.mts ./",
+    "setup": "yarn install && yarn setup:client && yarn setup:server",
+    "dev": "yarn concurrently \"cd server && yarn develop\" \"npx wait-on http://localhost:1337 && cd client && yarn dev\"",
+    "build": "yarn concurrently \"cd server && yarn build\" \"npx wait-on http://localhost:1337 && cd client && yarn build\"",
+    "start": "yarn concurrently \"cd server && yarn start\" \"npx wait-on http://localhost:1337 && cd client && yarn start\"",
+    "seed": "cd server && yarn strapi import -f ../seed-data.tar.gz --force",
+    "export": "cd server && yarn strapi export --no-encrypt -f ../seed-data",
+    "repo:upstream": "git fetch upstream && git merge upstream/main"
+  },
+  "dependencies": {
+    "@types/node": "^22.5.2",
+    "concurrently": "^8.2.2",
+    "strapi-next-starter": "file:",
+    "typescript": "^5.0.0",
+    "wait-on": "^8.0.1"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2"
+  },
+  "license": "Apache-2.0"
+}

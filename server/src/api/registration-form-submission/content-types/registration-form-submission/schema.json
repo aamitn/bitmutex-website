@@ -1,0 +1,62 @@
+{
+  "kind": "collectionType",
+  "collectionName": "registration_form_submissions",
+  "info": {
+    "singularName": "registration-form-submission",
+    "pluralName": "registration-form-submissions",
+    "displayName": "RegistrationFormSubmissions",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "firstname": {
+      "type": "string"
+    },
+    "lastname": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "phone": {
+      "type": "biginteger"
+    },
+    "company": {
+      "type": "string"
+    },
+    "service": {
+      "type": "enumeration",
+      "enum": [
+        "Web",
+        "Mobile",
+        "Cross Platform",
+        "Full Stack",
+        "Backend",
+        "Data Driven"
+      ]
+    },
+    "enquirytype": {
+      "type": "enumeration",
+      "enum": [
+        "New Proposal",
+        "Existing Project",
+        "Support",
+        "Billing",
+        "Operations"
+      ]
+    },
+    "vcfile": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_layout_post_blocks",
+  "info": {
+    "displayName": "PostBlock",
+    "icon": "crop"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "text"
+    },
+    "sub_heading": {
+      "type": "text"
+    },
+    "posts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::post.post"
+    }
+  }
+}

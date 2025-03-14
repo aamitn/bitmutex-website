@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_service_items",
+  "info": {
+    "displayName": "Service_Items",
+    "icon": "chartCircle"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "icon": {
+      "type": "string"
+    }
+  }
+}
