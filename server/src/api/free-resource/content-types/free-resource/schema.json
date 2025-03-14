@@ -1,0 +1,17 @@
+{
+  "kind": "collectionType",
+  "collectionName": "free_resources",
+  "info": {
+    "singularName": "free-resource",
+    "pluralName": "free-resources",
+    "displayName": "Free Resource"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "url": {
+      "type": "string"
+    }
+  }
+}

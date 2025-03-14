@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "jobs",
+  "info": {
+    "singularName": "job",
+    "pluralName": "jobs",
+    "displayName": "Job",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "location": {
+      "type": "string"
+    },
+    "salary": {
+      "type": "biginteger"
+    },
+    "categories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::category.category",
+      "mappedBy": "job"
+    },
+    "jobtype": {
+      "type": "enumeration",
+      "enum": [
+        "Part-Time Remote",
+        "Part-Time WFO",
+        "Part-Time Hybrid",
+        "Full-Time Remote",
+        "Full-Time WFO",
+        "Full-Time Hybrid"
+      ]
+    },
+    "deadline": {
+      "type": "date"
+    },
+    "statu": {
+      "type": "enumeration",
+      "enum": [
+        "Open ",
+        "Closed"
+      ]
+    },
+    "details": {
+      "type": "richtext"
+    },
+    "experience": {
+      "type": "string"
+    }
+  }
+}

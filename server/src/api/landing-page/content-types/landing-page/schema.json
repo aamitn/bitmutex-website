@@ -1,0 +1,42 @@
+{
+  "kind": "singleType",
+  "collectionName": "landing_pages",
+  "info": {
+    "singularName": "landing-page",
+    "pluralName": "landing-pages",
+    "displayName": "Landing Page",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "layout.hero",
+        "layout.card-grid",
+        "layout.section-heading",
+        "layout.content-with-image",
+        "layout.price-grid",
+        "blocks.text",
+        "blocks.video",
+        "layout.ckeditor-block",
+        "layout.regform-next-to-section",
+        "layout.form-next-to-section",
+        "layout.brands",
+        "layout.faq",
+        "layout.post-block",
+        "layout.service-block",
+        "layout.testimonials"
+      ]
+    }
+  }
+}

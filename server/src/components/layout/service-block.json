@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_layout_service_blocks",
+  "info": {
+    "displayName": "ServiceBlock",
+    "icon": "cup"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "sub_heading": {
+      "type": "text"
+    },
+    "services": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service.service"
+    }
+  }
+}

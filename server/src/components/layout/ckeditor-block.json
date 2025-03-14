@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_layout_ckeditor_blocks",
+  "info": {
+    "displayName": "CkeditorBlock",
+    "icon": "alien"
+  },
+  "options": {},
+  "attributes": {
+    "content": {
+      "type": "customField",
+      "options": {
+        "preset": "defaultHtml"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    }
+  }
+}

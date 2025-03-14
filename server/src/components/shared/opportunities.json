@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_shared_opportunities",
+  "info": {
+    "displayName": "Opportunities",
+    "icon": "check"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_layout_price_grids",
+  "info": {
+    "displayName": "Price Grid",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "priceCard": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.price-card"
+    },
+    "content": {
+      "type": "customField",
+      "options": {
+        "preset": "defaultHtml"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    }
+  }
+}
