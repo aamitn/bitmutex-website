@@ -1,7 +1,6 @@
 import { fetchIndustryBySlug } from "@/data/loaders";
 import { notFound } from "next/navigation";
 import * as LucideIcons from "lucide-react";
-import { ElementType } from "react";
 import { FC } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";

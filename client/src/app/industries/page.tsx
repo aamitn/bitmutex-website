@@ -1,6 +1,5 @@
 import { fetchIndustries } from "@/data/loaders";
 import * as LucideIcons from "lucide-react";
-import { ElementType } from "react";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { FC } from "react";

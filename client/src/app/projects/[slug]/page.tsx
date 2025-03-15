@@ -1,16 +1,61 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import { fetchProjectBySlug } from "@/data/loaders";
+import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { Github, ArrowLeft, ExternalLink } from "lucide-react"; // Import Lucide Icons
+import { Badge } from "@/components/ui/badge"; // Use a badge component for category styling
+import Link from "next/link";
+import { Metadata } from "next";
 
-// API Base URL (update as needed)
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
 
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const resolveParams = await params;
+  const slug = resolveParams?.slug;
+  const project = await fetchProjectBySlug(slug);
+
+  if (!project) {
+    return {
+      title: "Project Not Found | Bitmutex Technologies",
+      description: "The requested project does not exist. Browse more projects by Bitmutex Technologies.",
+      robots: "noindex, nofollow", // Avoid indexing non-existent pages
+    };
+  }
+
+  // Extract first 150 chars from `details` or use `description`
+  const shortDescription = project.details
+    ? project.details.substring(0, 150) + "..."
+    : project.description;
+
+  // Construct SEO title
+  const seoTitle = `${project.name} - ${project.category} | Bitmutex Technologies`;
+
+  return {
+    title: seoTitle,
+    description: shortDescription,
+    robots: "index, follow", // Ensure it's indexed properly
+    openGraph: {
+      title: seoTitle,
+      description: shortDescription,
+      url: `https://bitmutex.com/projects/${project.slug}`,
+      type: "article",
+      images: project.imageUrl ? [{ url: project.imageUrl, width: 1200, height: 630 }] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seoTitle,
+      description: shortDescription,
+      images: project.imageUrl ? [project.imageUrl] : [],
+    },
+    alternates: {
+      canonical: `https://bitmutex.com/projects/${project.slug}`, // Ensure correct indexing
+    },
+  };
+}
 
 const renderMarkdown = (content: string) => {
   if (!content) return null;
@@ -47,61 +92,13 @@ const renderRichText = (content: any) => {
   return <p>{content}</p>;
 };
 
-const ProjectPage = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const [project, setProject] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const router = useRouter();
 
-  useEffect(() => {
-    const fetchProject = async () => {
-      if (!slug) return;
-
-      try {
-        const response = await fetch(`${API_URL}/api/projects?filters[slug]=${slug}&populate=*`);
-        const result = await response.json();
-
-        if (!result.data || result.data.length === 0) {
-          throw new Error("Project not found");
-        }
-
-        const projectData = result.data[0];
-
-        setProject({
-          id: projectData.id,
-          name: projectData.name || "Untitled Project",
-          description: projectData.description || [],
-          imageUrl: projectData.image?.url ? `${API_URL}${projectData.image.url}` : null,
-          category: projectData.category?.name || "Uncategorized",
-          repourl: projectData.repourl || null,
-          hostedurl: projectData.hostedurl || null,
-          details: projectData.details || [],
-        });
-      } catch (error) {
-        console.error("Error fetching project:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProject();
-  }, [slug]);
-
-  if (loading) {
-    return (
-      <div className="container mx-auto p-6">
-        <Skeleton className="h-64 w-full rounded-lg" />
-      </div>
-    );
-  }
+export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const project = await fetchProjectBySlug(slug);
 
   if (!project) {
-    return (
-      <div className="container mx-auto p-6 text-center">
-        <p className="text-gray-500">Project not found.</p>
-        <Button onClick={() => router.push("/projects")}>Back to Projects</Button>
-      </div>
-    );
+    return notFound();
   }
 
   return (
@@ -117,31 +114,52 @@ const ProjectPage = () => {
         )}
 
         <div className="flex-1">
-          <CardHeader className="p-0">
-            <CardTitle className="text-2xl font-bold">{project.name}</CardTitle>
+        <CardHeader className="p-0">
+            {/* Keep Title & Button in One Row */}
+            <div className="flex flex-row items-center justify-between gap-x-4 flex-wrap">
+              <CardTitle className="text-xl sm:text-2xl font-bold">{project.name}</CardTitle>
+
+              {/* Back to Industries Button with Lucide Icon */}
+              <Link href="/projects">
+                <Button variant="outline" className="flex items-center gap-2 whitespace-nowrap">
+                  <ArrowLeft size={18} /> Go Back
+                </Button>
+              </Link>
+            </div>
           </CardHeader>
+
           <CardContent className="p-0 mt-4">
             <div className="text-gray-600 dark:text-gray-300 text-lg">
               {renderRichText(project.description)}
             </div>
 
-            {/* Buttons for Repo and Hosted URL */}
+            {/* Buttons for Repo and Hosted URL with Icons */}
             <div className="mt-6 flex gap-4">
               {project.repourl && (
                 <Button asChild variant="outline">
-                  <a href={project.repourl} target="_blank" rel="noopener noreferrer">
-                    View Repository
+                  <a href={project.repourl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                    <Github size={18} /> View Repository
                   </a>
                 </Button>
               )}
               {project.hostedurl && (
                 <Button asChild>
-                  <a href={project.hostedurl} target="_blank" rel="noopener noreferrer">
-                    Visit Project
+                  <a href={project.hostedurl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                    <ExternalLink size={18} /> Visit Project
                   </a>
                 </Button>
               )}
             </div>
+
+            {/* Category Pill */}
+            {project.category && (
+              <div className="mt-4">
+                <Badge variant="secondary" className="px-3 py-1 rounded-full bg-blue-500 text-white">
+                  {project.category}
+                </Badge>
+              </div>
+            )}
+
           </CardContent>
         </div>
       </div>
@@ -160,12 +178,8 @@ const ProjectPage = () => {
         </Accordion>
       </div>
 
-      {/* Back Button */}
-      <div className="mt-6">
-        <Button onClick={() => router.push("/projects")}>Back to Projects</Button>
-      </div>
+
     </div>
   );
 };
 
-export default ProjectPage;
