@@ -308,6 +308,71 @@ export async function getBlogPosts(
 }
 
 
+
+// Fetch projects on the server
+export async function fetchProjects() {
+  const API_URL = process.env.NEXT_PUBLIC_STRAPI_BASE_URL || "http://localhost:1337";
+  try {
+    const response = await fetch(`${API_URL}/api/projects?populate=*`, { cache: "no-store" });
+    const result = await response.json();
+
+    if (!result.data || !Array.isArray(result.data)) {
+      throw new Error("Invalid response format");
+    }
+
+    return result.data.map((project: any) => ({
+      id: project.id,
+      name: project.name || "Untitled Project",
+      description: project.description?.[0]?.children?.[0]?.text || "No description available.",
+      slug: project.slug || "",
+      imageUrl: project.image?.formats?.medium?.url
+        ? `${API_URL}${project.image.formats.medium.url}`
+        : `${API_URL}${project.image?.url || ""}`,
+      category: project.category?.text || "Uncategorized",
+    }));
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+    return [];
+  }
+}
+
+export async function fetchProjectBySlug(slug: string) {
+  const STRAPI_BASE_URL = process.env.NEXT_PUBLIC_STRAPI_BASE_URL || "http://localhost:1337";
+
+  try {
+    const response = await fetch(`${STRAPI_BASE_URL}/api/projects?filters[slug][$eq]=${slug}&populate=*`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch project by slug");
+    }
+
+    const data = await response.json();
+    console.log("Fetched Project By Slug:", JSON.stringify(data, null, 2));
+    console.log("Image is :", JSON.stringify(data.data[0].image.url));
+
+    if (!data.data.length) return null;
+
+    const project = data.data[0];
+
+    return {
+      id: project.id,
+      name: project.name || "Untitled Project",
+      description: project.description || "",
+      details: project.details || "",
+      imageUrl: project.image?.url
+        ? `${STRAPI_BASE_URL}${project.image.url}`
+        : null,
+      category: project.category?.text || "Uncategorized",
+      repourl: project.repourl || null,
+      hostedurl: project.hostedurl || null,
+      slug: project.slug || "",
+    };
+  } catch (error) {
+    console.error("Error fetching project by slug:", error);
+    return null;
+  }
+}
+
+
 export async function fetchServices() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/api/services?populate=*`);
   const data = await res.json();
@@ -327,6 +392,7 @@ export async function fetchServices() {
     })) || [],
   }));
 }
+
 
 
 export async function fetchIndustries() {
@@ -387,4 +453,38 @@ export async function fetchIndustryBySlug(slug: string) {
     console.error("Error fetching industry by slug:", error);
     return null;
   }
+}
+
+
+
+export async function getProjectBySlug(slug: string, status: string) {
+  const project = await sdk.collection("projects").find({
+    populate: {
+      image: {
+        fields: ["url", "alternativeText", "name"],
+      },
+      category: {
+        fields: ["text"],
+      },
+      blocks: {
+        on: {
+          "blocks.video": {
+            populate: {
+              image: {
+                fields: ["url", "alternativeText", "name"],
+              },
+            },
+          },
+          "blocks.text": {
+            populate: "*",
+          },
+        },
+      },
+    },
+    filters: {
+      slug: { $eq: slug },
+    },
+    status: status as "draft" | "published" | undefined,
+  });
+  return project;
 }
