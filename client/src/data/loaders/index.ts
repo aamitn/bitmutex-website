@@ -224,36 +224,48 @@ export async function getCategories() {
 }
 
 export async function getBlogPostBySlug(slug: string, status: string) {
+  const postDataResponse = await sdk.collection("posts").find({
+    fields: ["id"],
+    filters: { slug: { $eq: slug } },
+  });
+
+  const postData = postDataResponse.data;
+  if (!postData || postData.length === 0) return null;
+
+  const postId = postData[0].id;
+
+  // 🔥 Step 1: Increment views using Next.js API route
+  try {
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/increment-views`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ postId }),
+    });
+  } catch (error) {
+    console.error("Error incrementing views:", error);
+  }
+
+  // 🔥 Step 2: Fetch full post data
   const post = await sdk.collection("posts").find({
     populate: {
-      image: {
-        fields: ["url", "alternativeText", "name"],
-      },
-      category: {
-        fields: ["text"],
-      },
+      image: { fields: ["url", "alternativeText", "name"] },
+      category: { fields: ["text"] },
       blocks: {
         on: {
           "blocks.video": {
-            populate: {
-              image: {
-                fields: ["url", "alternativeText", "name"],
-              },
-            },
+            populate: { image: { fields: ["url", "alternativeText", "name"] } },
           },
-          "blocks.text": {
-            populate: "*",
-          },
+          "blocks.text": { populate: "*" },
         },
       },
     },
-    filters: {
-      slug: { $eq: slug },
-    },
+    filters: { slug: { $eq: slug } },
     status: status as "draft" | "published" | undefined,
   });
+
   return post;
 }
+
 
 // TODO: FIX THE SEARCH QUERY
 export async function getBlogPosts(

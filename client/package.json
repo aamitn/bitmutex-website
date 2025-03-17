@@ -35,6 +35,8 @@
     "embla-carousel-react": "^8.5.2",
     "framer-motion": "^12.4.10",
     "gsap": "^3.12.7",
+    "iron-session": "^8.0.4",
+    "js-cookie": "^3.0.5",
     "leaflet": "^1.9.4",
     "leaflet.markercluster": "^1.5.3",
     "lucide-react": "^0.479.0",
@@ -69,6 +71,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/leaflet": "^1.9.16",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.17",

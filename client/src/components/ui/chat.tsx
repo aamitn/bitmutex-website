@@ -57,7 +57,7 @@ export default function Chat() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-20 left-3 z-50">
       {/* Floating Chat Button */}
       <AnimatePresence>
         {!isOpen && (

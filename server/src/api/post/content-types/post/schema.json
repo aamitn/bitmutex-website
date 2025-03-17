@@ -57,6 +57,12 @@
         "preset": "defaultHtml"
       },
       "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "views": {
+      "type": "integer",
+      "default": 0,
+      "private": false,  
+      "configurable": true
     }
   }
 }
