@@ -1,0 +1,87 @@
+{
+  "kind": "collectionType",
+  "collectionName": "success_stories",
+  "info": {
+    "singularName": "success-story",
+    "pluralName": "success-stories",
+    "displayName": "Success Stories",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "content": {
+      "type": "text"
+    },
+    "services": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::service.service",
+      "mappedBy": "success_stories"
+    },
+    "industry": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::industry.industry"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "glimpses": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "casestudy": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "impacts": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.service-items"
+    },
+    "stack": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.solutions"
+    },
+    "location": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.location"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "websiteurl": {
+      "type": "string"
+    }
+  }
+}

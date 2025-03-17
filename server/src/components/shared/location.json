@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_locations",
+  "info": {
+    "displayName": "Location",
+    "icon": "alien"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "lat": {
+      "type": "decimal"
+    },
+    "lon": {
+      "type": "decimal"
+    }
+  }
+}
