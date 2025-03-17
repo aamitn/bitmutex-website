@@ -214,3 +214,62 @@ body {
   color: #1fae5f; /* Slightly darker color on hover */
 }
 
+
+
+/* //Hero 3rd word style */
+
+:root {
+  /* Light mode colors */
+  --text-gradient-light-1: #007aff;
+  --text-gradient-light-2: #5856d6;
+  --text-gradient-light-3: #ff9500;
+  --shadow-light: rgba(0, 0, 0, 0.2);
+}
+
+.dark {
+  /* Dark mode colors */
+  --text-gradient-light-1: #0a84ff;
+  --text-gradient-light-2: #5e5ce6;
+  --text-gradient-light-3: #ff9f0a;
+  --shadow-light: rgba(255, 255, 255, 0.2);
+}
+
+@keyframes pulseGradient {
+  0% {
+    background-position: 0% 50%;
+    text-shadow: 0px 2px 4px var(--shadow-light);
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  50% {
+    background-position: 100% 50%;
+    text-shadow: 0px 4px 10px var(--shadow-light);
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  100% {
+    background-position: 0% 50%;
+    text-shadow: 0px 2px 4px var(--shadow-light);
+    opacity: 0.9;
+    transform: scale(1);
+  }
+}
+
+.animate-pulse-gradient {
+  background-image: linear-gradient(
+    45deg,
+    var(--text-gradient-light-1),
+    var(--text-gradient-light-2),
+    var(--text-gradient-light-3)
+  );
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-shadow: 0px 3px 6px var(--shadow-light);
+  animation: pulseGradient 4s infinite ease-in-out;
+  display: inline-block;
+  transition: all 0.3s ease-out;
+}

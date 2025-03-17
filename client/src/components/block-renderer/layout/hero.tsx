@@ -34,14 +34,20 @@ export function Hero(data: Readonly<HeroProps>) {
   }, [mousePos, mouseX, mouseY]);
 
   // Function to split the heading and highlight the third word with Tailwind classes
-  const splitHeading = (headingText: string) => {
+  const splitHeading = (headingText: string, startIndex: number, wordCount: number) => {
     const words = headingText.split(" ");
-    if (words.length >= 3) {
-      // Wrap the third word in a span with Tailwind classes for highlight
-      words[2] = `<span class="bg-gradient-to-br from-blue-500 via-indigo-500 to-amber-600 text-transparent bg-clip-text animate-glow-highlight">${words[2]}</span>`;
+    
+    if (startIndex < 0 || startIndex >= words.length) return headingText; // Edge case handling
+  
+    for (let i = startIndex; i < Math.min(startIndex + wordCount, words.length); i++) {
+      words[i] = `<span class="bg-gradient-to-br from-blue-500 via-indigo-500 to-orange-600 text-transparent bg-clip-text animate-pulse-gradient">${words[i]}</span>`;
     }
+  
     return words.join(" ");
   };
+  
+  
+  
 
   // 3D Parallax Effect calculation
   const parallaxX = useTransform(mouseX, [-0.5, 0.5], ["-10px", "10px"]);
@@ -82,7 +88,7 @@ export function Hero(data: Readonly<HeroProps>) {
         <h1
           className="max-w-2xl text-4xl font-semibold sm:text-5xl"
           dangerouslySetInnerHTML={{
-            __html: splitHeading(heading),
+            __html: splitHeading(heading,2,2),
           }}
         />
         <p className="max-w-md text-lg text-muted-foreground">{text}</p>
