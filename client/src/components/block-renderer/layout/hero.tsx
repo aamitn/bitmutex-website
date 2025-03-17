@@ -130,7 +130,7 @@ export function Hero(data: Readonly<HeroProps>) {
           <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-40" />
           <StrapiImage
             src={image.url}
-            alt="SaaS Dashboard"
+            alt="Bitmutex Dashboard"
             width={1000}
             height={698}
             priority
