@@ -12,11 +12,18 @@ export default {
     strapi.io = io;
     const connectedClients = new Map();
 
+    let liveUserCount = 0; // 🔥 Track the number of live users
+
     eventEmitter.emit("ioReady", io);
 
     io.on("connection", (socket) => {
-      console.log("✅ Visitor connected:", socket.id);
       connectedClients.set(socket.id, socket);
+      liveUserCount++; // Increase count
+
+      // 🔥 Broadcast updated count to all clients
+      io.emit("liveUserCount", { count: liveUserCount });
+
+      console.log(`✅ Visitor connected: ${socket.id} | Live Users: ${liveUserCount}`);
 
       socket.on("chatMessage", async (msg) => {
         console.log(`📨 Visitor Message [${socket.id}]:`, msg);
@@ -53,8 +60,13 @@ export default {
       });
 
       socket.on("disconnect", () => {
-        console.log("❌ Visitor disconnected:", socket.id);
         connectedClients.delete(socket.id);
+        liveUserCount = Math.max(0, liveUserCount - 1); // Prevent negative counts
+
+        // 🔥 Broadcast updated count to all clients
+        io.emit("liveUserCount", { count: liveUserCount });
+
+        console.log(`❌ Visitor disconnected: ${socket.id} | Live Users: ${liveUserCount}`);
       });
     });
   },

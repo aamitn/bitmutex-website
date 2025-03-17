@@ -7,7 +7,8 @@ import { notFound } from "next/navigation";
 import { Header, Footer } from "@/components/layout";
 import { getGlobalPageData } from "@/data/loaders";
 import Chat from "@/components/ui/chat";
-import { metadata } from "@/app/metadata"; // Import metadata
+import { metadata } from "@/app/metadata"; 
+import LiveUserCount from "@/components/custom/LiveUserCount";
 
 const fontSans = Inter({
   variable: "--font-sans",
@@ -63,6 +64,7 @@ export default async function RootLayout({
           {children}
           <Footer data={{ ...footer, logoWideSrc }} />
           <Chat />
+          <LiveUserCount />
         </ThemeProvider>
       </body>
     </html>

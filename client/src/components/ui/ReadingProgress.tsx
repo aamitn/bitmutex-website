@@ -6,9 +6,12 @@ import { useTheme } from "next-themes";
 
 export default function ReadingProgress() {
   const [scrollProgress, setScrollProgress] = useState<number>(0);
-  const { theme } = useTheme();
+  const { theme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+
     const updateScrollProgress = () => {
       const scrollTop = window.scrollY;
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -20,31 +23,32 @@ export default function ReadingProgress() {
     return () => window.removeEventListener("scroll", updateScrollProgress);
   }, []);
 
-  // 🎨 Dark & Light Mode Colors with Opacity
-  const strokeColor = theme === "dark" ? "#FACC15" : "#FF9900"; // Yellow for dark, orange for light
-  const bgStrokeColor = theme === "dark" ? "#4B5563" : "#E5E7EB"; // Dark gray for dark, light gray for light
-  const bgOpacity = theme === "dark" ? "bg-white/30" : "bg-black/40"; // Adjusted for readability
+  // Prevent hydration mismatch by ensuring the component only renders after mounting
+  if (!mounted) return null;
+
+  const currentTheme = theme || resolvedTheme;
+  const strokeColor = currentTheme === "dark" ? "#FACC15" : "#FF9900"; // Yellow for dark mode, orange for light mode
+  const bgStrokeColor = currentTheme === "dark" ? "#4B5563" : "#E5E7EB"; // Dark gray for dark mode, light gray for light mode
+  const bgOpacity = currentTheme === "dark" ? "bg-white/30" : "bg-black/40"; // Adjusted opacity for better readability
 
   return (
     <>
-      {/* ✅ Mobile View (Bottom-Left) - Smaller Size */}
+      {/* ✅ Mobile View (Bottom-Left) */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
-        className={`fixed bottom-5 left-5 z-50 flex sm:hidden 
-                   ${bgOpacity} rounded-full p-1 backdrop-blur-md`}
+        className={`fixed bottom-5 left-5 z-50 flex sm:hidden ${bgOpacity} rounded-full p-1 backdrop-blur-md`}
       >
         <ProgressCircle scrollProgress={scrollProgress} strokeColor={strokeColor} bgStrokeColor={bgStrokeColor} mobile />
       </motion.div>
 
-      {/* ✅ Desktop View (Top-Right) - Normal Size */}
+      {/* ✅ Desktop View (Top-Right) */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
-        className={`fixed top-16 right-5 sm:right-10 z-50 hidden sm:flex 
-                   ${bgOpacity} rounded-full p-2 backdrop-blur-md`}
+        className={`fixed top-16 right-5 sm:right-10 z-50 hidden sm:flex ${bgOpacity} rounded-full p-2 backdrop-blur-md`}
       >
         <ProgressCircle scrollProgress={scrollProgress} strokeColor={strokeColor} bgStrokeColor={bgStrokeColor} />
       </motion.div>
