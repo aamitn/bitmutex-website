@@ -309,6 +309,85 @@ export async function getBlogPosts(
 
 
 
+// Fetch success-stories on the server
+export async function fetchSuccessStories() {
+  const API_URL = process.env.NEXT_PUBLIC_STRAPI_BASE_URL || "http://localhost:1337";
+  const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/api/success-stories?populate=*`);
+  const data = await res.json();
+
+  return data.data.map((story: any) => ({
+    uuid: story.id,
+    name: story.name,
+    content: story.content,
+    slug: story.slug,
+    industry: story.industry?.name || "Unknown",
+    logo: `${API_URL}${story.logo?.url || ""}`,
+    glimpses: story.glimpses?.map((glimpse: any) => ({
+      url: glimpse.url,
+    })) || [],
+    casestudy: story.casestudy?.url || null,
+    impacts: story.impacts?.map((impact: any) => ({
+      name: impact.name,
+      description: impact.description,
+      icon: impact.icon,
+    })) || [],
+    stack: story.stack?.map((solution: any) => ({
+      name: solution.name,
+    })) || [],
+    location: story.location?.map((loc: any) => ({
+      name: loc.name,
+      lat: loc.lat,
+      lon: loc.lon,
+    })) || [],
+    services: story.services?.map((service: any) => ({
+      name: service.name,
+      icon: service.icon,
+    })) || [],
+    websiteurl: story.websiteurl,
+  }));
+}
+
+export async function fetchSuccessStoryBySlug(slug: string) {
+  const API_URL = process.env.NEXT_PUBLIC_STRAPI_BASE_URL || "http://localhost:1337";
+  const res = await fetch(`${API_URL}/api/success-stories?filters[slug][$eq]=${slug}&populate=*`);
+  const data = await res.json();
+
+  if (!data.data.length) return null;
+
+  const story = data.data[0];
+
+  return {
+    uuid: story.id,
+    name: story.name,
+    content: story.content,
+    slug: story.slug,
+    industry: story.industry?.name || "Unknown",
+    logo: story.logo?.url ? `${API_URL}${story.logo.url}` : null,
+    glimpses: story.glimpses?.map((glimpse: any) => ({
+      url: `${API_URL}${glimpse.url}`,
+    })) || [],
+    casestudy: `${API_URL}${story.casestudy?.url}`  || null,
+    impacts: story.impacts?.map((impact: any) => ({
+      name: impact.name,
+      description: impact.description,
+      icon: impact.icon,
+    })) || [],
+    stack: story.stack?.map((solution: any) => ({
+      name: solution.name,
+    })) || [],
+    location: story.location?.map((loc: any) => ({
+      name: loc.name,
+      lat: loc.lat,
+      lon: loc.lon,
+    })) || [],
+    services: story.services?.map((service: any) => ({
+      name: service.name,
+    })) || [],
+    websiteurl: story.websiteurl,
+  };
+}
+
+
 // Fetch projects on the server
 export async function fetchProjects() {
   const API_URL = process.env.NEXT_PUBLIC_STRAPI_BASE_URL || "http://localhost:1337";
