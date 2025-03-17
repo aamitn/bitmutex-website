@@ -9,6 +9,8 @@ import { getGlobalPageData } from "@/data/loaders";
 import Chat from "@/components/ui/chat";
 import { metadata } from "@/app/metadata"; 
 import LiveUserCount from "@/components/custom/LiveUserCount";
+import 'vanilla-cookieconsent/dist/cookieconsent.css';
+import CookieConsentComponent from '@/components/cookie/CookieConsent';
 
 const fontSans = Inter({
   variable: "--font-sans",
@@ -63,6 +65,7 @@ export default async function RootLayout({
           <Header data={{ ...topNav, logoSrc }} /> {/* Pass logoSrc */}
           {children}
           <Footer data={{ ...footer, logoWideSrc }} />
+          <CookieConsentComponent />
           <Chat />
           <LiveUserCount />
         </ThemeProvider>
