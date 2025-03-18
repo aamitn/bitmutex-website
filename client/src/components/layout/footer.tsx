@@ -2,13 +2,15 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Twitter, Github, Youtube } from "lucide-react";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import StatusBadge from "@/components/custom/status-badge";
 import * as CookieConsent from "vanilla-cookieconsent";
+import * as LucideIcons from "lucide-react";
+import { ElementType } from "react";
+import React from "react";
 
 interface SocialLink {
   href: string;
@@ -31,18 +33,18 @@ interface FooterProps {
   };
 }
 
-function renderIcon(text: string) {
-  switch (text.toLowerCase()) {
-    case "twitter":
-      return <Twitter className="size-5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition" />;
-    case "github":
-      return <Github className="size-5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition" />;
-    case "youtube":
-      return <Youtube className="size-5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition" />;
-    default:
-      return null;
-  }
-}
+
+
+
+// ✅ Get the correct Lucide icon
+const getLucideIcon = (iconName: string): ElementType => {
+  const pascalCaseName = iconName.split("-")
+                                  .map((word) => word
+                                  .charAt(0).toUpperCase() + word
+                                  .slice(1)).join("");;
+  return (LucideIcons as Record<string, unknown>)[pascalCaseName] as ElementType || LucideIcons.AlertCircle;
+};
+
 
 export function Footer({ data }: Readonly<FooterProps>) {
   if (!data) return null;
@@ -188,13 +190,42 @@ export function Footer({ data }: Readonly<FooterProps>) {
             </div>
             <h4 className="text-lg font-semibold">Follow Us</h4>
             <Separator className="w-12 bg-gray-500 dark:bg-gray-600" />
-            <div className="flex gap-4">
-              {socialLinks?.map((link) => (
-                <Link key={link.text} href={link.href} target="_blank" className="p-2 rounded-full bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 transition">
-                  {renderIcon(link.text)}
-                </Link>
-              ))}
+
+            <div className="flex gap-3">
+              {socialLinks?.map((link: SocialLink) => {
+                const Icon = getLucideIcon(link.text); // Get the correct icon dynamically
+                return (
+                  <Link
+                    key={link.text}
+                    href={link.href}
+                    target="_blank"
+                    className="group relative p-2 rounded-full bg-slate-300 dark:bg-orange-600 
+                              hover:bg-indigo-200 dark:hover:bg-amber-500 
+                              transition-all duration-300 shadow-md hover:shadow-lg dark:shadow-gray-700"
+                  >
+                  <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br 
+                                from-white to-gray-100 dark:from-gray-800 dark:to-gray-900 
+                                shadow-sm group-hover:shadow-md transition-all duration-300 
+                                group-hover:scale-105 group-hover:bg-opacity-90">
+
+                      {Icon
+                        ? React.createElement(Icon, {
+                            className:
+                              "w-5 h-5 text-orange-600 dark:text-amber-200\
+                              group-hover:text-orange-400 dark:group-hover:text-blue-800 transition-all duration-300",
+                          })
+                        : React.createElement(LucideIcons.AlertCircle, {
+                            className:
+                              "w-5 h-5 text-blue-600 dark:text-orange-400\
+                              group-hover:text-blue-700 dark:group-hover:text-orange-300 transition-all duration-300",
+                          })}
+                    </div>
+
+                  </Link>
+                );
+              })}
             </div>
+
           </div>
         </motion.div>
       </motion.div>
