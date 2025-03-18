@@ -40,7 +40,7 @@ const CookieConsentComponent = () => {
       }}
       className="text-sm text-blue-500 underline cursor-pointer"
     >
-      Show Cookie Preferences
+     {/* Show Cookie Preferences  Remove comments to show text */} 
     </a>
   );
 };
