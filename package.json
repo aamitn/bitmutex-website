@@ -1,7 +1,7 @@
 {
-  "name": "strapi-next-starter",
+  "name": "bitmutex-strapi-next-app",
   "version": "1.0.0",
-  "description": "Strapi starter project with Next.js",
+  "description": "Strapi5 NextJs15 App built to use as website for Bitmutex Technologies",
   "type": "module",
   "scripts": {
     "client": "yarn dev --prefix ../client/",
@@ -18,8 +18,8 @@
   },
   "dependencies": {
     "@types/node": "^22.5.2",
+    "bitmutex-strapi-next-app": "file:",
     "concurrently": "^8.2.2",
-    "strapi-next-starter": "file:",
     "typescript": "^5.0.0",
     "wait-on": "^8.0.1"
   },

@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import StatusBadge from "@/components/custom/status-badge";
+import * as CookieConsent from "vanilla-cookieconsent";
 
 interface SocialLink {
   href: string;
@@ -86,18 +88,55 @@ export function Footer({ data }: Readonly<FooterProps>) {
       >
         {/* Left Section: Logo & Text */}
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
-          <div className="flex flex-col items-center sm:items-start space-y-4">
+        <div className="flex flex-col items-center sm:items-start space-y-4">
+  
+          {/* ✅ Company Logo (or Placeholder) */}
+          <div className="w-[180px] h-[60px] flex items-center justify-center">
             {logoWideSrc ? (
-              <Image src={logoWideSrc} alt="Company Logo" width={180} height={60} className="h-auto" />
+              <Image 
+                src={logoWideSrc} 
+                alt="Company Logo" 
+                width={180} 
+                height={60} 
+                className="h-auto" 
+              />
             ) : (
-              <div className="w-[180px] h-[60px] bg-gray-300 dark:bg-gray-700 rounded-lg flex items-center justify-center text-gray-500 dark:text-gray-400">
+              <div className="w-full h-full bg-gray-300 dark:bg-gray-700 rounded-lg flex items-center justify-center text-gray-500 dark:text-gray-400">
                 No Logo
               </div>
             )}
-            <p className="text-sm text-gray-600 dark:text-gray-400 text-center sm:text-left">{text}</p>
           </div>
+
+          {/* ✅ Company Description */}
+          <p className="text-sm text-gray-600 dark:text-gray-400 text-center sm:text-left">
+            {text}
+          </p>
+
+          {/* ✅ Status Badge */}
+          <div className="flex justify-center sm:justify-start w-full">
+            <StatusBadge />
+          </div>
+
+          {/* ✅ Cookie Preferences Link */}
+          <div className="flex justify-center sm:justify-start w-full">
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                CookieConsent.showPreferences();
+              }}
+              className="text-sm font-semibold text-blue-600 dark:text-orange-400 transition-all duration-300 ease-in-out 
+              hover:text-blue-700 dark:hover:text-blue-300 hover:scale-105 focus:outline-none focus:ring-2 
+              focus:ring-blue-400 dark:focus:ring-blue-500 rounded-md px-2 py-1"
+ >
+              ⚙️ Cookie Preferences
+            </a>
+          </div>
+
+        </div>
         </motion.div>
 
+        
         {/* Center Section: Navigation */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
