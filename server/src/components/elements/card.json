@@ -1,26 +1,25 @@
 {
   "collectionName": "components_elements_cards",
   "info": {
-    "displayName": "Card"
+    "displayName": "Card",
+    "description": ""
   },
   "options": {},
   "attributes": {
-    "icon": {
-      "type": "enumeration",
-      "enum": [
-        "Frame",
-        "Download",
-        "Globe",
-        "Sparkles",
-        "LayoutPanelLeft",
-        "Palette"
-      ]
-    },
     "heading": {
       "type": "string"
     },
     "text": {
       "type": "text"
+    },
+    "link": {
+      "type": "string"
+    },
+    "isExternal": {
+      "type": "boolean"
+    },
+    "icon": {
+      "type": "string"
     }
   }
 }

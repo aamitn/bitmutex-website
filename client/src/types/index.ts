@@ -62,6 +62,8 @@ export interface CardGridProps extends Base<"layout.card-grid"> {
     heading: string;
     text: string;
     icon: string;
+    link: string;
+    isExternal: boolean;
   }[];
 }
 
