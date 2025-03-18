@@ -11,6 +11,7 @@ import { metadata } from "@/app/metadata";
 import LiveUserCount from "@/components/custom/LiveUserCount";
 import 'vanilla-cookieconsent/dist/cookieconsent.css';
 import CookieConsentComponent from '@/components/cookie/CookieConsent';
+// import CalBookingModal from "@/components/custom/appointment";
 
 const fontSans = Inter({
   variable: "--font-sans",
@@ -45,7 +46,7 @@ export default async function RootLayout({
   ? `${process.env.STRAPI_BASE_URL || "http://localhost:1337"}${logowide.url}`
   : "";
 
-  
+
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -62,12 +63,31 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+
+     {/*   <div className="flex justify-center items-center h-screen">
+            <CalBookingModal
+              url="https://cal.com/bitmutex"
+              trigger={
+                <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                  📅 Open Booking
+                </button>
+              }
+            />
+        </div> */}
+
+
           <Header data={{ ...topNav, logoSrc }} /> {/* Pass logoSrc */}
+          
           {children}
+          
           <Footer data={{ ...footer, logoWideSrc }} />
+          
           <CookieConsentComponent />
+          
           <Chat />
+          
           <LiveUserCount />
+
         </ThemeProvider>
       </body>
     </html>

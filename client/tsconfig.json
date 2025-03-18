@@ -23,6 +23,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/preview/route.ts", "src/components/three"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/preview/route.ts", "src/components/three", "src/components/custom/calcom-appointments", "src/components/custom/calcom-appointments.ts"],
   "exclude": ["node_modules"]
 }
