@@ -24,6 +24,7 @@ interface NavItem {
 interface FooterProps {
   data: {
     text: string;
+    ins: string;
     socialLinks: SocialLink[];
     navItems: NavItem[];
     logoWideSrc?: string;
@@ -45,7 +46,7 @@ function renderIcon(text: string) {
 
 export function Footer({ data }: Readonly<FooterProps>) {
   if (!data) return null;
-  const { text, socialLinks, navItems, logoWideSrc } = data;
+  const { text, ins, socialLinks, navItems, logoWideSrc } = data;
 
   // Group navItems by parentName
   const groupedNavItems = navItems.reduce<Record<string, NavItem[]>>((acc, item) => {
@@ -88,55 +89,67 @@ export function Footer({ data }: Readonly<FooterProps>) {
       >
         {/* Left Section: Logo & Text */}
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
-        <div className="flex flex-col items-center sm:items-start space-y-4">
-  
-          {/* ✅ Company Logo (or Placeholder) */}
-          <div className="w-[180px] h-[60px] flex items-center justify-center">
-            {logoWideSrc ? (
-              <Image 
-                src={logoWideSrc} 
-                alt="Company Logo" 
-                width={180} 
-                height={60} 
-                className="h-auto" 
-              />
-            ) : (
-              <div className="w-full h-full bg-gray-300 dark:bg-gray-700 rounded-lg flex items-center justify-center text-gray-500 dark:text-gray-400">
-                No Logo
-              </div>
+          <div className="flex flex-col items-center sm:items-start space-y-4">
+
+            {/* ✅ Company Logo (or Placeholder) */}
+            <div className="w-[180px] h-[60px] flex items-center justify-center">
+              {logoWideSrc ? (
+                <Image
+                  src={logoWideSrc}
+                  alt="Company Logo"
+                  width={180}
+                  height={60}
+                  className="h-auto"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-300 dark:bg-gray-700 rounded-lg flex items-center justify-center text-gray-500 dark:text-gray-400">
+                  No Logo
+                </div>
+              )}
+            </div>
+
+            {/* ✅ Company Description */}
+            <p className="text-sm text-gray-600 dark:text-gray-400 text-center sm:text-left">
+              {text}
+            </p>
+
+          {/* ✅ CIN / GSTIN */}
+          <div className="flex justify-center sm:justify-start w-full text-xs text-gray-500 dark:text-gray-400 tracking-wide">
+            {ins.split(" ").map((part, index) =>
+              index === 0 ? (
+                <span key={index} className="mr-1">{part}</span> // Normal text for the word
+              ) : (
+                <span key={index} className="font-semibold text-gray-600 dark:text-gray-300">{part}</span> // Bold for the number
+              )
             )}
           </div>
 
-          {/* ✅ Company Description */}
-          <p className="text-sm text-gray-600 dark:text-gray-400 text-center sm:text-left">
-            {text}
-          </p>
+            {/* ✅ Status Badge */}
+            <div className="flex justify-center sm:justify-start w-full">
+              <StatusBadge />
+            </div>
 
-          {/* ✅ Status Badge */}
-          <div className="flex justify-center sm:justify-start w-full">
-            <StatusBadge />
+
+            {/* ✅ Cookie Preferences Link */}
+            <div className="flex justify-center sm:justify-start w-full">
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  CookieConsent.showPreferences();
+                }}
+                className="text-sm font-normal text-slate-800 dark:text-orange-400 transition-all duration-300 ease-in-out 
+              hover:text-orange-500 dark:hover:text-blue-300 hover:font-bold focus:outline-none focus:ring-2 
+              focus:ring-orange-400 dark:focus:ring-orange-500 rounded-md px-2 py-1"
+              >
+                ⚙️ Cookie Preferences
+              </a>
+            </div>
+
           </div>
-
-          {/* ✅ Cookie Preferences Link */}
-          <div className="flex justify-center sm:justify-start w-full">
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                CookieConsent.showPreferences();
-              }}
-              className="text-sm font-semibold text-blue-600 dark:text-orange-400 transition-all duration-300 ease-in-out 
-              hover:text-blue-700 dark:hover:text-blue-300 hover:scale-105 focus:outline-none focus:ring-2 
-              focus:ring-blue-400 dark:focus:ring-blue-500 rounded-md px-2 py-1"
- >
-              ⚙️ Cookie Preferences
-            </a>
-          </div>
-
-        </div>
         </motion.div>
 
-        
+
         {/* Center Section: Navigation */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
@@ -167,9 +180,9 @@ export function Footer({ data }: Readonly<FooterProps>) {
               <Input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 rounded-l-md bg-gray-300 text-gray-900 dark:bg-gray-700 dark:text-white border-none placeholder-gray-600 dark:placeholder-gray-400 focus:ring-2 focus:ring-gray-500"
+                className="flex-1 rounded-l-md bg-gray-300 text-gray-900 dark:bg-gray-700 dark:text-white border-none placeholder-gray-600 dark:placeholder-slate-300 focus:ring-2 focus:ring-orange-500"
               />
-              <Button className="rounded-r-md bg-gray-700 hover:bg-gray-600 text-white dark:bg-gray-400 dark:hover:bg-gray-500">
+              <Button className="rounded-r-md bg-gray-700 hover:bg-gray-500 text-white dark:bg-orange-500 dark:hover:bg-amber-500">
                 Subscribe
               </Button>
             </div>
@@ -186,10 +199,10 @@ export function Footer({ data }: Readonly<FooterProps>) {
         </motion.div>
       </motion.div>
 
-      {/* Copyright Section */}
-      <div className="border-t border-gray-500 dark:border-gray-700 mt-10 pt-6 text-center text-sm text-gray-600 dark:text-gray-400">
-        &copy; {new Date().getFullYear()} {text}. All rights reserved.
-      </div>
+    {/* Copyright Section */}
+    <div className="border-t border-gray-500 dark:border-gray-700 mt-10 pt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+     &copy; 2018 - {new Date().getFullYear()} {text}. All rights reserved.
+    </div>
     </footer>
   );
 }

@@ -18,6 +18,9 @@
       "type": "component",
       "repeatable": true,
       "component": "elements.link"
+    },
+    "ins": {
+      "type": "string"
     }
   }
 }
