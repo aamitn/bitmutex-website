@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "appointments",
+  "info": {
+    "singularName": "appointment",
+    "pluralName": "appointments",
+    "displayName": "Appointment",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "appointments"
+    },
+    "guest_name": {
+      "type": "string"
+    },
+    "guest_email": {
+      "type": "string"
+    },
+    "date_time": {
+      "type": "datetime",
+      "required": true
+    },
+    "meeting_link": {
+      "type": "string"
+    },
+    "appointment_status": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "confirmed",
+        "canceled"
+      ]
+    }
+  }
+}

@@ -15,7 +15,7 @@
     "topLink": {
       "displayName": "Link",
       "type": "component",
-      "repeatable": false,
+      "repeatable": true,
       "component": "elements.link"
     },
     "buttonLink": {
@@ -24,11 +24,12 @@
       "component": "elements.link"
     },
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     }
   }
 }
