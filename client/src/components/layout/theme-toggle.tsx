@@ -27,6 +27,9 @@ export function ThemeToggle() {
   const currentTheme = theme === "system" ? systemTheme : theme;
   const isDark = currentTheme === "dark";
 
+  // Wrap DropdownMenuContent with motion()
+  const MotionDropdownMenuContent = motion(DropdownMenuContent);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -52,8 +55,7 @@ export function ThemeToggle() {
       </DropdownMenuTrigger>
       
       <AnimatePresence>
-        <DropdownMenuContent
-          as={motion.div}
+        <MotionDropdownMenuContent
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
@@ -68,7 +70,7 @@ export function ThemeToggle() {
           </DropdownMenuItem>
           <DropdownMenuItem 
             onClick={() => setTheme("dark")}
-            className={theme === "dark" ? "bg-accent" : ""}
+            className={theme === "dark" ? "bg-orange-500" : ""}
           >
             <Moon className="mr-2 h-4 w-4" />
             Dark
@@ -80,7 +82,7 @@ export function ThemeToggle() {
             <Laptop className="mr-2 h-4 w-4" />
             System
           </DropdownMenuItem>
-        </DropdownMenuContent>
+        </MotionDropdownMenuContent>
       </AnimatePresence>
     </DropdownMenu>
   );

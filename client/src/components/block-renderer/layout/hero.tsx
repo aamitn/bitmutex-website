@@ -174,14 +174,14 @@ export function Hero(data: Readonly<HeroProps>) {
       </motion.div>
 
       <motion.div
-        style={{
-          transform: `translate3d(${parallaxX.get()}, ${parallaxY.get()}, ${parallaxZ.get()})`,
-        }}
-        className="relative flex-1 flex flex-col gap-6 items-center justify-center md:justify-start"
+        className="mb-4 relative flex-1 flex flex-col gap-6 items-center justify-center md:justify-start w-full max-w-screen-xl"
       >
         {/* ParticleShape */}
         <Canvas
-          className="absolute inset-0 w-full h-full"
+          style={{
+            transform: `translate3d(${parallaxX.get()}, ${parallaxY.get()}, ${parallaxZ.get()})`,
+          }}
+          className="mb-4 absolute inset-0 w-full h-full"
           camera={{ position: [0, 8, 20], fov: 25 }}
         >
           <ambientLight intensity={0.5} />
@@ -191,22 +191,23 @@ export function Hero(data: Readonly<HeroProps>) {
 
         {/* Image */}
         <div
-          className="relative w-full md:w-3/4 lg:w-1/2 xl:w-2/3 rounded-xl shadow-lg border mt-2 border-gray-300 overflow-hidden"
+          className="relative w-full md:w-4/5 lg:w-3/4 xl:w-4/5 2xl:w-4/5 rounded-xl  overflow-hidden"
           style={{
-            transform: `translate3d(${parallaxX.get()}, ${parallaxY.get()}, ${parallaxZ.get()})`,
+            transform: `scale(1.1)`,
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-40" />
+          <div className="absolute inset-0" />
           <StrapiImage
             src={image.url}
             alt="Bitmutex Dashboard"
-            width={1000}
-            height={698}
+            width={1200}
+            height={850}
             priority
-            className="rounded-xl shadow-lg border border-gray-300 object-cover"
+            className="rounded-xl  object-cover"
           />
         </div>
-      </motion.div>
+    </motion.div>
+
     </section>
   );
 }
