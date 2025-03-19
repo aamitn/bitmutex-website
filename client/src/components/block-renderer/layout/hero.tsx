@@ -77,50 +77,50 @@ export function Hero(data: Readonly<HeroProps>) {
           transform: `translate3d(${parallaxX.get()}, ${parallaxY.get()}, ${parallaxZ.get()})`,
         }}
       >
-<div className="flex flex-wrap gap-3">
-  {Array.isArray(topLink) &&
-  topLink.map((link: NavLink) => {
-    // Get the booking URL from environment variable
-    const appointmentUrl = process.env.NEXT_PUBLIC_CAL_BOOKING_URL || "https://cal.com/bitmutex";
+      <div className="flex flex-wrap gap-3">
+        {Array.isArray(topLink) &&
+        topLink.map((link: NavLink) => {
+          // Get the booking URL from environment variable
+          const appointmentUrl = process.env.NEXT_PUBLIC_APPOINTMENT_URL || "https://cal.com/bitmutex";
 
-    // Check if the href contains "appointment" after a space
-    const parts = link.href.split(" ");
-    const isAppointment = parts.length > 1 && parts[1].toLowerCase() === "appointment";
-    const baseHref = parts[0]; // Extract the actual URL
+          // Check if the href contains "appointment" after a space
+          const parts = link.href.split(" ");
+          const isAppointment = parts.length > 1 && parts[1].toLowerCase() === "appointment";
+          const baseHref = parts[0]; // Extract the actual URL
 
-    return (
-      <div key={link.text} className="flex flex-col sm:flex-row gap-3">
-        {isAppointment ? (
-          // Wrap inside CalBookingModal if it's an appointment link
-          <CalBookingModal
-            url={appointmentUrl}
-            trigger={
-              <div className="flex w-full sm:w-auto cursor-pointer items-center gap-1 rounded-full border bg-secondary px-3 py-0.5 hover:bg-secondary/60">
-                <span className="flex items-center justify-center gap-1 text-sm text-secondary-foreground">
-                  {link.text}
-                  <ArrowRight size={16} />
-                </span>
-              </div>
-            }
-          />
-        ) : (
-          // Render normal link if not an appointment
-          <div className="flex w-full sm:w-auto cursor-pointer items-center gap-1 rounded-full border bg-secondary px-3 py-0.5 hover:bg-secondary/60">
-            <Link
-              href={baseHref}
-              target={link.isExternal ? "_blank" : "_self"}
-              className="flex items-center justify-center gap-1 text-sm text-secondary-foreground"
-            >
-              {link.text}
-              <ArrowRight size={16} />
-            </Link>
-          </div>
-        )}
+          return (
+            <div key={link.text} className="flex flex-col sm:flex-row gap-3">
+              {isAppointment ? (
+                // Wrap inside CalBookingModal if it's an appointment link
+                <CalBookingModal
+                  url={appointmentUrl}
+                  trigger={
+                    <div className="flex w-full sm:w-auto cursor-pointer items-center gap-1 rounded-full border bg-secondary px-3 py-0.5 hover:bg-secondary/60">
+                      <span className="flex items-center justify-center gap-1 text-sm text-secondary-foreground">
+                        {link.text}
+                        <ArrowRight size={16} />
+                      </span>
+                    </div>
+                  }
+                />
+              ) : (
+                // Render normal link if not an appointment
+                <div className="flex w-full sm:w-auto cursor-pointer items-center gap-1 rounded-full border bg-secondary px-3 py-0.5 hover:bg-secondary/60">
+                  <Link
+                    href={baseHref}
+                    target={link.isExternal ? "_blank" : "_self"}
+                    className="flex items-center justify-center gap-1 text-sm text-secondary-foreground"
+                  >
+                    {link.text}
+                    <ArrowRight size={16} />
+                  </Link>
+                </div>
+              )}
+            </div>
+          );
+        })}
+
       </div>
-    );
-  })}
-
-</div>
 
 
         <h1
@@ -151,7 +151,7 @@ export function Hero(data: Readonly<HeroProps>) {
                       variant={link.isPrimary ? "default" : "outline"}
                       className="h-12 cursor-pointer border-border text-base sm:h-14 sm:px-10"
                     >
-                      {link.text} {link.parentName}
+                      {link.text}
                     </Button>
                   }
                 />

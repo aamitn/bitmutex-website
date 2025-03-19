@@ -16,7 +16,7 @@
     },
     "cta": {
       "type": "component",
-      "repeatable": false,
+      "repeatable": true,
       "component": "elements.link"
     },
     "navItems1": {

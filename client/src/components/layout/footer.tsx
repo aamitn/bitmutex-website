@@ -11,7 +11,7 @@ import * as CookieConsent from "vanilla-cookieconsent";
 import * as LucideIcons from "lucide-react";
 import { ElementType } from "react";
 import React from "react";
-
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 interface SocialLink {
   href: string;
   text: string;
@@ -132,21 +132,22 @@ export function Footer({ data }: Readonly<FooterProps>) {
             </div>
 
 
-            {/* ✅ Cookie Preferences Link */}
-            <div className="flex justify-center sm:justify-start w-full">
-              <a
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  CookieConsent.showPreferences();
-                }}
-                className="text-sm font-normal text-slate-800 dark:text-orange-400 transition-all duration-300 ease-in-out 
-              hover:text-orange-500 dark:hover:text-blue-300 hover:font-bold focus:outline-none focus:ring-2 
-              focus:ring-orange-400 dark:focus:ring-orange-500 rounded-md px-2 py-1"
-              >
-                ⚙️ Cookie Preferences
-              </a>
-            </div>
+{/* ✅ Cookie Preferences Link and theme toggle*/}
+<div className="flex items-center justify-center sm:justify-start w-full gap-3">
+  <a
+    href="#"
+    onClick={(e) => {
+      e.preventDefault();
+      CookieConsent.showPreferences();
+    }}
+    className="text-sm font-normal text-slate-800 dark:text-orange-400 transition-all duration-300 ease-in-out 
+    hover:text-orange-500 dark:hover:text-blue-300 hover:font-bold focus:outline-none focus:ring-2 
+    focus:ring-orange-400 dark:focus:ring-orange-500 rounded-md px-2 py-1 flex items-center"
+  >
+    ⚙️ Cookie Preferences
+  </a>
+  <ThemeToggle />
+</div>
 
           </div>
         </motion.div>
