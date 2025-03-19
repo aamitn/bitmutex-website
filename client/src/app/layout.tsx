@@ -11,6 +11,7 @@ import { metadata } from "@/app/metadata";
 import LiveUserCount from "@/components/custom/LiveUserCount";
 import 'vanilla-cookieconsent/dist/cookieconsent.css';
 import CookieConsentComponent from '@/components/cookie/CookieConsent';
+import ErrorPage from '@/components/custom/strapi-down-error-page';
 // import CalBookingModal from "@/components/custom/appointment";
 
 const fontSans = Inter({
@@ -30,7 +31,21 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const data = await getGlobalPageData();
+  let data;
+  
+  try {
+    data = await getGlobalPageData();
+  } catch (error) {
+    console.error("Error fetching global page data:", error);
+    return (
+      <html lang="en">
+      <body className={cn("min-h-screen font-sans antialiased", fontSans.variable, fontHeading.variable)}>
+        <ErrorPage /> 
+      </body>
+    </html>
+    );
+  }
+  
   if (!data) notFound();
 
   const { topNav, footer, logo, logowide } = data.data;
