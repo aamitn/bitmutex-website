@@ -11,24 +11,15 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "user": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "appointments"
-    },
-    "guest_name": {
+    "email": {
       "type": "string"
     },
-    "guest_email": {
+    "calId": {
       "type": "string"
     },
     "date_time": {
       "type": "datetime",
       "required": true
-    },
-    "meeting_link": {
-      "type": "string"
     },
     "appointment_status": {
       "type": "enumeration",
@@ -37,6 +28,9 @@
         "confirmed",
         "canceled"
       ]
+    },
+    "userName": {
+      "type": "string"
     }
   }
 }

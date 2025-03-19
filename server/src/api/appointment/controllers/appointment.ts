@@ -1,46 +1,43 @@
-/**
- * appointment controller
- */
-
 import { factories } from "@strapi/strapi";
 
-// Jitsi Meet base URL
-const JITSI_MEET_URL = "https://meet.jit.si/";
+export default factories.createCoreController(
+  "api::appointment.appointment",
+  ({ strapi }) => ({
+    async createFromWebhook(ctx) {
+      try {
+        const { triggerEvent, payload } = ctx.request.body;
 
-export default factories.createCoreController("api::appointment.appointment", ({ strapi }) => ({
-  async create(ctx) {
-    const { guest_name, guest_email, date_time } = ctx.request.body;
+        if (triggerEvent === "BOOKING_CREATED") {
+          const existingAppointment = await strapi.entityService.findMany(
+            "api::appointment.appointment",
+            { filters: { calId: payload.uid } }
+          );
 
-    // Get authenticated user if available
-    const user = ctx.state.user;
+          if (existingAppointment.length === 0) {
+            const newAppointment = await strapi.entityService.create(
+              "api::appointment.appointment",
+              {
+                data: {
+                  calId: payload.uid,
+                  userName: payload.responses.name.value,
+                  email: payload.responses.email.value,
+                  date_time: payload.startTime,
+                  appointment_status: "confirmed", // Ensure this exists in Strapi Enumeration
+                },
+              }
+            );
 
-    if (!guest_name && !user) {
-      return ctx.badRequest("Guest name is required if not logged in.");
-    }
-
-    if (!guest_email && !user) {
-      return ctx.badRequest("Guest email is required if not logged in.");
-    }
-
-    // Generate a Jitsi meeting link
-    const meetingId = `appointment-${Date.now()}`;
-    const meeting_link = `${JITSI_MEET_URL}${meetingId}`;
-
-    // Construct data for saving
-    const appointmentData = {
-      user: user ? user.id : null,
-      guest_name: guest_name || null,
-      guest_email: guest_email || null,
-      date_time,
-      meeting_link,
-      appointment_status: "pending",
-    };
-
-    // Save to Strapi database
-    const appointment = await strapi.entityService.create("api::appointment.appointment", {
-      data: appointmentData,
-    });
-
-    return appointment;
-  },
-}));
+            return ctx.send({ message: "Appointment Created", data: newAppointment });
+          } else {
+            return ctx.send({ message: "Appointment already exists" });
+          }
+        } else {
+          return ctx.badRequest("Invalid webhook event.");
+        }
+      } catch (error) {
+        strapi.log.error("Webhook Error:", error);
+        return ctx.internalServerError("Webhook processing failed.");
+      }
+    },
+  })
+);
