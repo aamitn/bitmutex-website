@@ -116,7 +116,7 @@ export function Header({ data }: Readonly<HeaderProps>) {
       }}
       className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-between 
       backdrop-blur-lg bg-white/80 dark:bg-gray-900/80 
-      shadow-md dark:shadow-white/90 dark:text-orange-500 text-slate-800"
+      shadow-md dark:shadow-white/90 dark:text-orange-600 text-slate-800"
     >
 
       {/* Logo */}

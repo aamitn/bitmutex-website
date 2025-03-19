@@ -11,69 +11,77 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Moon, Sun, Laptop } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Handle initial hydration issue
+  if (!mounted) return null;
+
+  const currentTheme = theme === "system" ? systemTheme : theme;
+  const isDark = currentTheme === "dark";
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          size="icon"
-          className="relative overflow-hidden border border-border/50 backdrop-blur-lg shadow-md transition hover:shadow-lg"
+        <motion.div
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9, rotate: 15 }}
         >
-          <AnimatePresence mode="wait">
-            {theme === "dark" ? (
-              <motion.div
-                key="moon"
-                initial={{ opacity: 0, rotate: 90, scale: 0.8 }}
-                animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                exit={{ opacity: 0, rotate: -90, scale: 0.8 }}
-                transition={{ duration: 0.2 }}
-                className="absolute inset-0 flex items-center justify-center"
-              >
-                <Moon className="h-[1.2rem] w-[1.2rem] text-yellow-500" />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="sun"
-                initial={{ opacity: 0, rotate: -90, scale: 0.8 }}
-                animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                exit={{ opacity: 0, rotate: 90, scale: 0.8 }}
-                transition={{ duration: 0.2 }}
-                className="absolute inset-0 flex items-center justify-center"
-              >
+          <Button variant="outline" size="icon">
+            <motion.div
+              key={currentTheme}
+              initial={{ rotate: isDark ? -180 : 180, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+            >
+              {isDark ? (
+                <Moon className="h-[1.2rem] w-[1.2rem] text-slate-300" />
+              ) : (
                 <Sun className="h-[1.2rem] w-[1.2rem] text-orange-500" />
-              </motion.div>
-            )}
-          </AnimatePresence>
-          <span className="sr-only">Toggle theme</span>
-        </Button>
+              )}
+            </motion.div>
+          </Button>
+        </motion.div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="end"
-        className="mt-2 w-36 rounded-xl border border-border/50 bg-background/80 backdrop-blur-lg shadow-lg"
-      >
-        {[
-          { label: "Light", icon: Sun, value: "light" },
-          { label: "Dark", icon: Moon, value: "dark" },
-          { label: "System", icon: Laptop, value: "system" },
-        ].map(({ label, icon: Icon, value }) => (
-          <DropdownMenuItem
-            key={value}
-            onClick={() => setTheme(value)}
-            className={`flex items-center gap-2 px-4 py-2 transition ${
-              theme === value
-                ? "bg-accent text-foreground font-medium"
-                : "hover:bg-muted hover:text-foreground"
-            }`}
+      
+      <AnimatePresence>
+        <DropdownMenuContent
+          as={motion.div}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ type: "spring", stiffness: 150, damping: 12 }}
+        >
+          <DropdownMenuItem 
+            onClick={() => setTheme("light")}
+            className={theme === "light" ? "bg-accent" : ""}
           >
-            <Icon className="w-4 h-4" />
-            {label}
+            <Sun className="mr-2 h-4 w-4" />
+            Light
           </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
+          <DropdownMenuItem 
+            onClick={() => setTheme("dark")}
+            className={theme === "dark" ? "bg-accent" : ""}
+          >
+            <Moon className="mr-2 h-4 w-4" />
+            Dark
+          </DropdownMenuItem>
+          <DropdownMenuItem 
+            onClick={() => setTheme("system")}
+            className={theme === "system" ? "bg-accent" : ""}
+          >
+            <Laptop className="mr-2 h-4 w-4" />
+            System
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </AnimatePresence>
     </DropdownMenu>
   );
 }

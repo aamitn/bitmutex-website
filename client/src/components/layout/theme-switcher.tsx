@@ -3,13 +3,25 @@
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export function ThemeSwitcher() {
-  const { theme, setTheme } = useTheme();
-  const isDark = theme === "dark";
+  const { theme, setTheme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Determine the current theme after mount
+  const currentTheme = theme === "system" ? systemTheme : theme;
+  const isDark = currentTheme === "dark";
+
+  // Prevent hydration mismatch
+  if (!mounted) return <div className="w-16 h-8 bg-gray-300 dark:bg-gray-800 rounded-full" />;
 
   return (
-    <div className="flex items-center gap-3">
+    <div  className="flex items-center gap-3">
       {/* Toggle Button */}
       <motion.button
         onClick={() => setTheme(isDark ? "light" : "dark")}
@@ -34,7 +46,7 @@ export function ThemeSwitcher() {
         >
           {/* Rotating Icon */}
           <motion.div
-            key={theme}
+            key={currentTheme}
             initial={{ rotate: isDark ? -180 : 180, opacity: 0 }}
             animate={{ rotate: 0, opacity: 1 }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
