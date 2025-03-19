@@ -42,12 +42,12 @@ export function CardCarousel({ cardItems }: Readonly<CardGridProps>) {
 
             const CardContentWrapper = (
               <div className="h-full p-1 relative group">
-                <Card className="glassmorphic-card transition-transform duration-300 hover:scale-[1.02]">
-                  <CardContent className="flex flex-col items-start gap-5 p-7">
+                <Card className="glassmorphic-card h-full transition-transform duration-300 hover:scale-[1.02]">
+                  <CardContent className="flex flex-col items-start gap-5 p-7 h-full">
                     <div className="inline-flex items-center justify-center rounded-xl bg-gradient-to-br from-indigo-600 to-orange-500 p-3 shadow-md">
                       <IconComponent size={32} className="text-white" />
                     </div>
-                    <div>
+                    <div className="flex-1">
                       <h4 className="mb-2 text-lg font-bold text-foreground">{heading}</h4>
                       <p className="text-muted-foreground text-sm">{text}</p>
                     </div>

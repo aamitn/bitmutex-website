@@ -68,12 +68,15 @@ export function ServiceBlock(data: Readonly<ServiceBlockProps>) {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="relative z-20 py-10 md:pt-40 text-center mb-10"
       >
-        <Heading as="h1" className="mt-4 text-primary dark:text-white text-4xl font-bold">
+        <Heading as="h1" className="font-heading text-3xl font-semibold sm:text-4xl mb-2 text-slate-800 dark:text-slate-200">
           {heading}
         </Heading>
-        <Subheading as="h2" className="mt-2 text-muted-foreground text-lg">
+        <Subheading as="h2" className="text-lg text-muted-foreground max-w-2xl">
           {sub_heading}
         </Subheading>
+
+
+
       </motion.div>
 
       {/* Services Grid with Scroll-based Fade & Scale Effects */}
