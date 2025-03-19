@@ -16,15 +16,15 @@ export function Pricing(data: Readonly<PriceGridProps>) {
         {priceItems.map(({ id, heading, description, price, selected, feature, link }) => {
           const selectedStyle = selected ? "border-2 border-primary" : "";
           return (
-            <Card className={cn("relative shadow-lg", selectedStyle)} key={id}>
-              <CardContent className="flex flex-col items-start p-7">
+            <Card className={cn("relative shadow-lg h-full", selectedStyle)} key={id}>
+              <CardContent className="flex flex-col h-full p-7 pb-16 relative">
                 <h4 className="font-heading text-2xl font-semibold text-foreground">{heading}</h4>
                 <p className="mt-2 text-muted-foreground">{description}</p>
                 <div className="mt-5">
                   <span className="font-heading text-5xl font-semibold">${price}</span>
                   <span className="text-sm"> /month</span>
                 </div>
-                <ul className="space-y-2 mt-9">
+                <ul className="space-y-2 mt-9  mb-9 ">
                   {feature?.map((item) => (
                     <li className="flex items-center gap-2" key={item.id}>
                       <Check size={20} className="text-primary" />
@@ -32,17 +32,23 @@ export function Pricing(data: Readonly<PriceGridProps>) {
                     </li>
                   ))}
                 </ul>
-                <Button size="lg" asChild className="mt-10 w-full">
-                  <Link href={link.href}>{link.text}</Link>
-                </Button>
 
+                {/* Button Wrapper - Fixed at Bottom */}
+                <div className="absolute bottom-7 left-0 right-0 px-7">
+                  <Button size="lg" asChild className="w-full">
+                    <Link href={link.href}>{link.text}</Link>
+                  </Button>
+                </div>
               </CardContent>
+
+              {/* "Most Popular" Badge */}
               {selected ? (
                 <span className="absolute inset-x-0 -top-5 mx-auto w-32 rounded-full bg-primary px-3 py-2 text-center text-sm font-semibold text-primary-foreground shadow-md">
                   Most popular
                 </span>
               ) : null}
             </Card>
+
           );
         })}
       </div>
