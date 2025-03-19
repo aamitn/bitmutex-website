@@ -3,40 +3,56 @@ import { factories } from "@strapi/strapi";
 export default factories.createCoreController(
   "api::appointment.appointment",
   ({ strapi }) => ({
-    async createFromWebhook(ctx) {
+    async handleWebhook(ctx) {
       try {
-        const { triggerEvent, payload } = ctx.request.body;
+        const { event, payload } = ctx.request.body;
 
-        if (triggerEvent === "BOOKING_CREATED") {
-          const existingAppointment = await strapi.entityService.findMany(
-            "api::appointment.appointment",
-            { filters: { calId: payload.uid } }
-          );
-
-          if (existingAppointment.length === 0) {
-            const newAppointment = await strapi.entityService.create(
-              "api::appointment.appointment",
-              {
-                data: {
-                  calId: payload.uid,
-                  userName: payload.responses.name.value,
-                  email: payload.responses.email.value,
-                  date_time: payload.startTime,
-                  appointment_status: "confirmed", // Ensure this exists in Strapi Enumeration
-                },
-              }
-            );
-
-            return ctx.send({ message: "Appointment Created", data: newAppointment });
-          } else {
-            return ctx.send({ message: "Appointment already exists" });
-          }
-        } else {
-          return ctx.badRequest("Invalid webhook event.");
+        if (!payload || !payload.id) {
+          return ctx.badRequest("Invalid webhook payload");
         }
+
+        // Check if the appointment already exists
+        const existingAppointments = await strapi.entityService.findMany(
+          "api::appointment.appointment",
+          { filters: { calId: payload.id } }
+        );
+
+        const updateData: Partial<Record<string, any>> = {}; // Ensure TypeScript allows the status field
+
+        if (event === "booking.created") {
+          if (existingAppointments.length === 0) {
+            await strapi.entityService.create("api::appointment.appointment", {
+              data: {
+                calId: payload.id,
+                userName: payload.name,
+                email: payload.email,
+                date_time: payload.startTime,
+                appointment_status: "confirmed", // Ensure this exists in the content-type
+              } as any, // Explicit cast if TypeScript still complains
+            });
+          }
+        } else if (event === "booking.updated") {
+          if (existingAppointments.length > 0) {
+            updateData.status = "updated";
+          }
+        } else if (event === "booking.canceled") {
+          if (existingAppointments.length > 0) {
+            updateData.status = "canceled";
+          }
+        }
+
+        if (existingAppointments.length > 0) {
+          await strapi.entityService.update(
+            "api::appointment.appointment",
+            existingAppointments[0].id,
+            { data: updateData as any } // Explicitly cast to `any`
+          );
+        }
+
+        ctx.send({ message: "Webhook processed successfully" });
       } catch (error) {
-        strapi.log.error("Webhook Error:", error);
-        return ctx.internalServerError("Webhook processing failed.");
+        strapi.log.error("Webhook processing failed:", error);
+        ctx.internalServerError("Webhook processing failed");
       }
     },
   })
