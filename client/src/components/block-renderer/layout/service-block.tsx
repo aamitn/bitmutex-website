@@ -128,12 +128,13 @@ export function ServiceBlock(data: Readonly<ServiceBlockProps>) {
                     >
                       {service.name}
                     </motion.h3>
+
                     <motion.p
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.4, duration: 0.5 }}
-                      className="text-gray-600 dark:text-gray-400 mt-2 flex-grow text-sm md:text-base"
+                      className="text-gray-600 dark:text-gray-400 mt-2 flex-grow text-sm md:text-base line-clamp-3"
                     >
                       {service.description}
                     </motion.p>
