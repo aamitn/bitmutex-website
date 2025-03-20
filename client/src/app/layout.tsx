@@ -14,6 +14,8 @@ import CookieConsentComponent from '@/components/cookie/CookieConsent';
 import ErrorPage from '@/components/custom/strapi-down-error-page';
 // import CalBookingModal from "@/components/custom/appointment";
 
+import LoginButtonServer from "@/components/custom/LoginButtonServer";
+
 const fontSans = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
@@ -90,9 +92,9 @@ export default async function RootLayout({
             />
         </div> */}
 
-
+         
           <Header data={{ ...topNav, logoSrc }} /> {/* Pass logoSrc */}
-          
+          <LoginButtonServer />
           {children}
           
           <Footer data={{ ...footer, logoWideSrc }} />
