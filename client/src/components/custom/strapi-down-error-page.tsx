@@ -1,6 +1,32 @@
+"use client"; // ✅ Make it a client component
+
+import { useEffect, useState } from "react";
 import { AlertCircle } from "lucide-react";
 
 export default function ErrorPage() {
+  const [isChecking, setIsChecking] = useState(false);
+
+  useEffect(() => {
+    const checkStrapiStatus = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL || "http://localhost:1337"}/_health`, {
+          method: "GET",
+          cache: "no-store",
+        });
+
+        if (response.ok) {
+          window.location.reload(); // ✅ Reload when Strapi is back online
+        }
+      } catch (error) {
+        console.error("Strapi is still down:", error);
+      }
+    };
+
+    const interval = setInterval(checkStrapiStatus, 2000); // ✅ Poll every 5 seconds
+
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, []);
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 px-6">
       <div className="bg-white dark:bg-gray-800 shadow-xl rounded-lg p-8 max-w-md text-center border border-red-300 dark:border-red-700">
@@ -26,7 +52,7 @@ export default function ErrorPage() {
         </div>
 
         <p className="text-gray-500 text-sm mt-2">
-          Please check back soon.
+          Checking server status...
         </p>
       </div>
     </div>
