@@ -1,6 +1,5 @@
 import { fetchProjectBySlug } from "@/data/loaders";
 import { notFound } from "next/navigation";
-import ReactMarkdown from "react-markdown";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
@@ -8,7 +7,7 @@ import { Github, ArrowLeft, ExternalLink } from "lucide-react"; // Import Lucide
 import { Badge } from "@/components/ui/badge"; // Use a badge component for category styling
 import Link from "next/link";
 import { Metadata } from "next";
-
+import RenderMarkdown from "@/components/custom/RenderMarkdown";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -56,25 +55,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     },
   };
 }
-
-const renderMarkdown = (content: string) => {
-  if (!content) return null;
-  return (
-    <ReactMarkdown
-      components={{
-        p: ({ node, ...props }) => <p className="mb-2 text-gray-600 dark:text-gray-300" {...props} />,
-        h1: ({ node, ...props }) => <h1 className="text-2xl font-bold mt-4" {...props} />,
-        h2: ({ node, ...props }) => <h2 className="text-xl font-semibold mt-3" {...props} />,
-        ul: ({ node, ...props }) => <ul className="list-disc pl-5" {...props} />,
-        ol: ({ node, ...props }) => <ol className="list-decimal pl-5" {...props} />,
-        blockquote: ({ node, ...props }) => <blockquote className="border-l-4 pl-4 italic text-gray-500" {...props} />,
-        code: ({ node, ...props }) => <code className="bg-gray-100 dark:bg-gray-800 p-1 rounded" {...props} />,
-      }}
-    >
-      {content}
-    </ReactMarkdown>
-  );
-};
 
 // Helper function to render Strapi "blocks" or "richtext"
 const renderRichText = (content: any) => {
@@ -171,7 +151,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             <AccordionTrigger>Project Details</AccordionTrigger>
             <AccordionContent>
               <div className="text-gray-600 dark:text-gray-300 text-lg">
-              {renderMarkdown(project.details)}
+              <RenderMarkdown content={project.details} />
               </div>
             </AccordionContent>
           </AccordionItem>

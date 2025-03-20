@@ -39,7 +39,8 @@
         "layout.faq",
         "layout.service-block",
         "layout.post-block",
-        "layout.testimonials"
+        "layout.testimonials",
+        "layout.ckeditor-block-markdown"
       ]
     },
     "seo": {

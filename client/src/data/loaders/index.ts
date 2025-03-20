@@ -60,7 +60,12 @@ export async function getLandingPage() {
               },
             },
           },
+
           "layout.ckeditor-block": {
+            populate: "*",
+          },
+
+          "layout.ckeditor-block-markdown": {
             populate: "*",
           },
 

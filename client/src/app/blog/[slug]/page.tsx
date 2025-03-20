@@ -2,13 +2,14 @@ import { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 import { formatDate } from "@/lib/utils";
-import { MarkdownText } from "@/components/custom/markdown-text";
+import  RenderMarkdown  from "@/components/custom/RenderMarkdown";
 import { StrapiImage } from "@/components/custom/strapi-image";
 import { getBlogPostBySlug } from "@/data/loaders";
 import { BlockRenderer } from "@/components/block-renderer";
 import sanitizeHtml from "sanitize-html";
 import ReadingProgress from "@/components/ui/ReadingProgress";
 import { Facebook, Twitter, Linkedin, Eye } from "lucide-react"; // Importing Lucide icons
+import { CkeditorBlock } from "@/components/block-renderer/layout/ckeditor-block";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -79,7 +80,7 @@ export default async function SinglePost({ params }: PageProps) {
   return (
     <article className="pt-10 pb-16">
       <ReadingProgress />
-      <div className="container mx-auto max-w-3xl px-4">
+      <div className="container  max-w-6xl px-4">
         <header className="my-10 text-center">
           <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl mb-4">
             {post.title}
@@ -136,7 +137,7 @@ export default async function SinglePost({ params }: PageProps) {
         {/* Main Blog Content */}
         {post.content && (
           <div className="text-lg leading-relaxed text-gray-800">
-            <MarkdownText content={post.content} />
+            <RenderMarkdown content={post.content} />
           </div>
         )}
 
@@ -144,8 +145,18 @@ export default async function SinglePost({ params }: PageProps) {
         {post.content1 && (
           <div
             className="mt-6 text-lg leading-relaxed text-gray-800"
-            dangerouslySetInnerHTML={{ __html: sanitizedContent }}
-          />
+          >
+             <RenderMarkdown content={post.content1} />
+          </div>
+        )}
+
+          {/* Render sanitized HTML safely */}
+          {post.content2 && (
+          <div
+            className="mt-6 text-lg leading-relaxed text-gray-800"
+          >
+             <CkeditorBlock content={post.content2} />
+          </div>
         )}
 
         {/* Dynamic Content Blocks */}

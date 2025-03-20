@@ -193,31 +193,6 @@ body {
 
 
 
-.ckeditor-content h1,
-.ckeditor-content h2,
-.ckeditor-content h3,
-.ckeditor-content h4,
-.ckeditor-content h5,
-.ckeditor-content h6 {
-  color: hwb(259 1% 64%); /* Highlighted heading color */
-  font-weight: bold;
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-.ckeditor-content a {
-  color: #00aaff; /* Highlighted link color */
-  font-weight: bold;
-  text-decoration: underline;
-  transition: color 0.3s ease-in-out;
-}
-
-.ckeditor-content a:hover {
-  color: #1fae5f; /* Slightly darker color on hover */
-}
-
-
-
 /* //Hero 3rd word style */
 
 :root {

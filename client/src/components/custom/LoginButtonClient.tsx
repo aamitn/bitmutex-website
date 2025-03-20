@@ -20,7 +20,7 @@ const LoginButtonClient = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
 
   return (
         <div 
-        className="fixed right-2 z-50 
+        className="fixed z-50 
 
             /* Mobile Position */
             bottom-30 top-7 left-23 right-[40%]  

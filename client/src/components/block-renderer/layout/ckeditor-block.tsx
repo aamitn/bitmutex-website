@@ -6,18 +6,23 @@
   4. src->data->loaders->index.ts (inside getLandingPage())
 */
 
-import type { CkeditorBlockProps } from "@/types";
 import React, { useMemo } from "react";
 import sanitizeHtml from "sanitize-html";
+import parse from "html-react-parser";
+
+interface CkeditorBlockProps {
+  content: string;
+}
 
 export function CkeditorBlock({ content }: Readonly<CkeditorBlockProps>) {
   if (!content) return null;
 
+  // Sanitize HTML
   const sanitizedContent = useMemo(
     () =>
       sanitizeHtml(content, {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat([
-          "img", "iframe", "h1", "h2", "h3", "h4", "h5", "h6", "a"
+          "img", "iframe", "h1", "h2", "h3", "h4", "h5", "h6", "a", "ul", "ol", "li"
         ]),
         allowedAttributes: {
           ...sanitizeHtml.defaults.allowedAttributes,
@@ -33,10 +38,9 @@ export function CkeditorBlock({ content }: Readonly<CkeditorBlockProps>) {
   return (
     <section className="flex items-center justify-center px-6 py-16">
       <div className="w-full max-w-6xl bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 md:p-10 transition-all border dark:border-gray-700">
-        <div
-          className="ckeditor-content text-gray-800 dark:text-gray-200 leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: sanitizedContent }}
-        />
+        <div className="rich-text text-gray-800 dark:text-gray-200 leading-relaxed">
+          {parse(content)}
+        </div>
       </div>
     </section>
   );

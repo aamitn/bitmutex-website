@@ -1,8 +1,8 @@
 import { type TextProps } from "@/types";
-import { MarkdownText } from "../../custom/markdown-text";
+import  RenderMarkdown  from "@/components/custom/RenderMarkdown";
 
 export function Text(data: Readonly<TextProps>) {
   if (!data) return null;
   console.log(data, "data");
-  return <MarkdownText content={data.content} />;
+  return <RenderMarkdown content={data.content} />;
 }

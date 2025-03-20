@@ -49,12 +49,13 @@ export default async function IndustryPage() {
         Industries We Serve
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-4">
         {industries.map((industry) => {
           const IconComponent = getLucideIcon(industry.icon);
           return (
             <Link key={industry.uuid} href={`/industries/${industry.slug}`} passHref>
-              <Card className="h-full flex flex-col p-6 bg-slate-50 dark:bg-slate-800 shadow-lg rounded-xl border border-gray-200 dark:border-slate-700 hover:shadow-xl transition-all hover:cursor-pointer">
+              <Card className="group h-full flex flex-col p-6 bg-slate-50 dark:bg-slate-800 shadow-lg rounded-xl border border-gray-200 dark:border-slate-700 hover:shadow-2xl hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer relative overflow-hidden">
+                {/* Card Header */}
                 <CardHeader className="flex items-center space-x-4">
                   <div className="p-3 bg-gray-100 dark:bg-gray-700 rounded-full">
                     <IconComponent className="w-8 h-8 text-gray-700 dark:text-gray-300" />
@@ -64,32 +65,23 @@ export default async function IndustryPage() {
                   </h2>
                 </CardHeader>
 
-                <CardContent className="flex-grow">
-                  <p className="text-gray-600 dark:text-gray-400">{industry.description}</p>
-                  
-                  <h3 className="text-lg font-medium mt-4">Challenges</h3>
-                  <ul className="list-disc list-inside text-gray-600 dark:text-gray-400">
-                    {industry.challenges.map((challenge, index) => (
-                      <li key={index}>{challenge}</li>
-                    ))}
-                  </ul>
+              {/* Card Content */}
+              <CardContent className="flex-grow overflow-hidden">
+                <p className="mb-4 text-gray-600 dark:text-gray-400 line-clamp-3">
+                  {industry.description}
+                </p>
+              </CardContent>
 
-                  <h3 className="text-lg font-medium mt-4">Opportunities</h3>
-                  <ul className="list-disc list-inside text-gray-600 dark:text-gray-400">
-                    {industry.opportunities.map((opportunity, index) => (
-                      <li key={index}>{opportunity}</li>
-                    ))}
-                  </ul>
 
-                  <h3 className="text-lg font-medium mt-4">Solutions</h3>
-                  <ul className="list-disc list-inside text-gray-600 dark:text-gray-400">
-                    {industry.solutions.map((solution, index) => (
-                      <li key={index}>{solution}</li>
-                    ))}
-                  </ul>
-                </CardContent>
+                {/* Learn More Button - Initially Hidden, Shows on Hover */}
+                <div className="absolute inset-x-0 bottom-4 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <button className="bg-slate-800 dark:bg-orange-500 text-white px-4 py-2 rounded-3xl text-center">
+                    Learn More →
+                  </button>
+                </div>
               </Card>
             </Link>
+
           );
         })}
       </div>

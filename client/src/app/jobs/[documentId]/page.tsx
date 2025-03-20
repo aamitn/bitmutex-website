@@ -8,11 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { MapPin, DollarSign, Calendar, Clipboard, Briefcase } from 'lucide-react'; // Importing Lucide icons
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';  // For GitHub-flavored markdown (tables, strikethroughs, etc.)
-import rehypeRaw from 'rehype-raw';  // For rendering HTML tags if needed
-
-
+import RenderMarkdown from "@/components/custom/RenderMarkdown";
 
 // Form submission API URL
 const API_URL = process.env.STRAPI_BASE_URL || "http://localhost:1337";
@@ -329,20 +325,7 @@ const JobDetailPage = ({ params }: { params: Promise<{ documentId: string }> }) 
           </AccordionTrigger>
           <AccordionContent className="text-gray-500 text-sm mt-2">
             <div className="markdown-content">  
-            <ReactMarkdown
-              components={{
-                p: ({ node, ...props }) => <p className="mb-2 text-gray-600 dark:text-gray-300" {...props} />,
-                h1: ({ node, ...props }) => <h1 className="text-2xl font-bold mt-4" {...props} />,
-                h2: ({ node, ...props }) => <h2 className="text-xl font-semibold mt-3" {...props} />,
-                ul: ({ node, ...props }) => <ul className="list-disc pl-5" {...props} />,
-                ol: ({ node, ...props }) => <ol className="list-decimal pl-5" {...props} />,
-                blockquote: ({ node, ...props }) => <blockquote className="border-l-4 pl-4 italic text-gray-500" {...props} />,
-                code: ({ node, ...props }) => <code className="bg-gray-100 dark:bg-gray-800 p-1 rounded" {...props} />,
-              }}
-              remarkPlugins={[remarkGfm]} // Enables GitHub-flavored markdown
-              rehypePlugins={[rehypeRaw]} // Allow HTML content if included in markdown
-              children={job.details} // Markdown content
-            />
+              <RenderMarkdown content={job.details} />
             </div>            
           </AccordionContent>
         </AccordionItem>
