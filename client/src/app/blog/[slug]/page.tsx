@@ -10,6 +10,7 @@ import sanitizeHtml from "sanitize-html";
 import ReadingProgress from "@/components/ui/ReadingProgress";
 import { Facebook, Twitter, Linkedin, Eye } from "lucide-react"; // Importing Lucide icons
 import { CkeditorBlock } from "@/components/block-renderer/layout/ckeditor-block";
+import TableOfContents from "@/components/custom/TableOfContents";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -59,18 +60,6 @@ export default async function SinglePost({ params }: PageProps) {
   const readingTime = post.content ? calculateReadingTime(post.content) : 1;
   const viewCount = post.views || 0; // Assuming views are coming from API
 
-  // Sanitize content to prevent XSS attacks
-  const sanitizedContent = post.content1
-    ? sanitizeHtml(post.content1, {
-        allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img", "iframe"]),
-        allowedAttributes: {
-          a: ["href", "target"],
-          img: ["src", "alt", "width", "height"],
-          iframe: ["src", "width", "height", "allowfullscreen", "frameborder"],
-        },
-      })
-    : "";
-
   // Social share URLs
   const shareUrl = encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`);
   const twitterShare = `https://twitter.com/intent/tweet?url=${shareUrl}&text=${encodeURIComponent(post.title)}`;
@@ -80,6 +69,7 @@ export default async function SinglePost({ params }: PageProps) {
   return (
     <article className="pt-10 pb-16">
       <ReadingProgress />
+      <TableOfContents containerClass="post-content" />
       <div className="container  max-w-6xl px-4">
         <header className="my-10 text-center">
           <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl mb-4">
@@ -134,6 +124,8 @@ export default async function SinglePost({ params }: PageProps) {
           />
         </header>
 
+        <div className="post-content">
+
         {/* Main Blog Content */}
         {post.content && (
           <div className="text-lg leading-relaxed text-gray-800">
@@ -141,7 +133,7 @@ export default async function SinglePost({ params }: PageProps) {
           </div>
         )}
 
-        {/* Render sanitized HTML safely */}
+        {/* Render ckeditor content1 markdown  */}
         {post.content1 && (
           <div
             className="mt-6 text-lg leading-relaxed text-gray-800"
@@ -150,7 +142,7 @@ export default async function SinglePost({ params }: PageProps) {
           </div>
         )}
 
-          {/* Render sanitized HTML safely */}
+        {/* Render ckeditor content2 markdown  */}
           {post.content2 && (
           <div
             className="mt-6 text-lg leading-relaxed text-gray-800"
@@ -158,6 +150,8 @@ export default async function SinglePost({ params }: PageProps) {
              <CkeditorBlock content={post.content2} />
           </div>
         )}
+
+        </div>
 
         {/* Dynamic Content Blocks */}
         {blocks && (

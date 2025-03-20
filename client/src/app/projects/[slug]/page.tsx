@@ -134,7 +134,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             {/* Category Pill */}
             {project.category && (
               <div className="mt-4">
-                <Badge variant="secondary" className="px-3 py-1 rounded-full bg-blue-500 text-white">
+                <Badge variant="secondary" className="px-3 py-1 rounded-full bg-blue-500 text-white hover:text-slate-800 dark:hover:text-slate-300">
                   {project.category}
                 </Badge>
               </div>
