@@ -38,7 +38,7 @@ export default async function RootLayout({
   try {
     data = await getGlobalPageData();
   } catch (error) {
-    console.error("Error fetching global page data:", error);
+    console.error("Error fetching global data, strapi is down", error);
     return (
       <html lang="en">
       <body className={cn("min-h-screen font-sans antialiased", fontSans.variable, fontHeading.variable)}>
