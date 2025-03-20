@@ -5,6 +5,7 @@ import { SectionHeading } from "@/components/block-renderer/layout/section-headi
 import { ContentWithImage } from "@/components/block-renderer/layout/content-with-image";
 import { Pricing } from "@/components/block-renderer/layout/pricing";
 import { CkeditorBlock } from "@/components/block-renderer/layout/ckeditor-block";
+import { CkeditorBlockMarkdown } from "@/components/block-renderer/layout/ckeditor-block-markdown";
 import { FormNextToSection } from "@/components/block-renderer/layout/form-next-to-section";
 import { RegformNextToSection } from "@/components/block-renderer/layout/regform-next-to-section";
 import { Brands } from "@/components/block-renderer/layout/brands";
@@ -33,6 +34,8 @@ function blockRenderer(block: Block, index: number) {
       return <Pricing key={index} {...block} />;
     case "layout.ckeditor-block":
       return <CkeditorBlock key={index} {...block} />;
+    case "layout.ckeditor-block-markdown":
+      return <CkeditorBlockMarkdown key={index} {...block} />;
     case "layout.form-next-to-section":
       return <FormNextToSection key={index} {...block} />;
     case "layout.regform-next-to-section":

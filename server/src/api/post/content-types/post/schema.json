@@ -51,18 +51,23 @@
         "layout.regform-next-to-section"
       ]
     },
+    "views": {
+      "type": "integer",
+      "default": 0
+    },
     "content1": {
+      "type": "customField",
+      "options": {
+        "preset": "defaultMarkdown"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "content2": {
       "type": "customField",
       "options": {
         "preset": "defaultHtml"
       },
       "customField": "plugin::ckeditor5.CKEditor"
-    },
-    "views": {
-      "type": "integer",
-      "default": 0,
-      "private": false,  
-      "configurable": true
     }
   }
 }

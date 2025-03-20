@@ -35,7 +35,8 @@
         "layout.faq",
         "layout.post-block",
         "layout.service-block",
-        "layout.testimonials"
+        "layout.testimonials",
+        "layout.ckeditor-block-markdown"
       ]
     }
   }

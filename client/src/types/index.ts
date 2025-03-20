@@ -15,6 +15,7 @@ type ComponentType =
   | "layout.content-with-image"   
   | "layout.price-grid"
   | "layout.ckeditor-block"
+  | "layout.ckeditor-block-markdown"
   | "layout.form-next-to-section"
   | "layout.regform-next-to-section"
   | "layout.brands"
@@ -42,7 +43,7 @@ export interface NavLink {
   icon?: LucideIcon; 
 }
  
-export type Block = HeroProps | CardGridProps | SectionHeadingProps | ContentWithImageProps | PriceGridProps | CkeditorBlockProps | FormNextToSectionProps | RegformNextToSectionProps| BrandsProps | FAQProps | PostBlockProps | ServiceBlockProps | TestimonialsProps | VideoProps | TextProps;
+export type Block = HeroProps | CardGridProps | SectionHeadingProps | ContentWithImageProps | PriceGridProps | CkeditorBlockProps| CkeditorBlockMarkdownProps | FormNextToSectionProps | RegformNextToSectionProps| BrandsProps | FAQProps | PostBlockProps | ServiceBlockProps | TestimonialsProps | VideoProps | TextProps;
 
 export interface HeroProps extends Base<"layout.hero"> {
   heading: string;
@@ -121,6 +122,11 @@ export interface TextProps extends Base<"blocks.text"> {
 export interface CkeditorBlockProps extends Base<"layout.ckeditor-block"> {
   content:string
 }
+
+export interface CkeditorBlockMarkdownProps extends Base<"layout.ckeditor-block-markdown"> {
+  content:string
+}
+
 
 export interface FormNextToSectionProps extends Base<"layout.form-next-to-section"> {
   heading:string
