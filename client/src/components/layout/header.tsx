@@ -215,7 +215,6 @@ export function Header({ data }: Readonly<HeaderProps>) {
             })}
         </div>
         <ThemeSwitcher />
-
       </div>
 
     {/* Mobile Navbar */}
