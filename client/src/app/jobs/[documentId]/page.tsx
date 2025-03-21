@@ -277,43 +277,43 @@ const JobDetailPage = ({ params }: { params: Promise<{ documentId: string }> }) 
 
   return (
     <div className="container mx-auto p-6 mt-20 mb-20">
-<Card className="p-4 flex flex-col sm:flex-row gap-6 bg-white shadow-lg rounded-lg">
+<Card className="p-4 flex flex-col sm:flex-row gap-6 bg-white dark:bg-slate-900  shadow-lg rounded-lg">
   <div className="flex-1">
     <CardHeader className="p-0">
-      <CardTitle className="text-2xl font-semibold text-gray-800">{job.title}</CardTitle>
+      <CardTitle className="text-2xl font-semibold text-gray-800 dark:text-slate-200">{job.title}</CardTitle>
     </CardHeader>
     <CardContent className="p-0 mt-2 space-y-4">
       
       {/* Job Description */}
-      <p className="text-gray-600 text-sm">{job.description}</p>
+      <p className="text-gray-600 text-sm dark:text-slate-300">{job.description}</p>
 
       {/* Location */}
-      <div className="flex items-center text-gray-500 text-sm">
-        <MapPin className="mr-2 text-gray-600" />
+      <div className="flex items-center text-gray-500 text-sm dark:text-orange-500">
+        <MapPin className="mr-2 text-gray-600 dark:text-orange-500" />
         {job.location}
       </div>
 
       {/* Salary */}
       <div className="flex items-center text-gray-500 text-sm">
-        <DollarSign className="mr-2 text-gray-600" />
-        {job.salary}
+        <DollarSign className="mr-2 text-gray-600 dark:text-orange-500" />
+        {job.salary} (in INR LPA)
       </div>
 
       {/* Experience */}
-      <div className="flex items-center text-gray-500 text-sm">
-        <Briefcase className="mr-2 text-gray-600" />
+      <div className="flex items-center text-gray-500 text-sm dark:text-slate-300">
+        <Briefcase className="mr-2 text-gray-600 dark:text-orange-500" />
         {job.experience ? job.experience : "Not Specified"}
       </div>
 
       {/* Posted On */}
-      <div className="flex items-center text-gray-500 text-xs">
-        <Calendar className="mr-2 text-gray-600" />
+      <div className="flex items-center text-gray-500 text-xs dark:text-slate-300">
+        <Calendar className="mr-2 text-gray-600 dark:text-orange-500" />
         Posted on: {job.createdAt}
       </div>
 
       {/* Deadline */}
-      <div className="flex items-center text-gray-500 text-xs">
-        <Clipboard className="mr-2 text-gray-600" />
+      <div className="flex items-center text-gray-500 text-xs dark:text-slate-300">
+        <Clipboard className="mr-2 text-gray-600 dark:text-orange-500" />
         Deadline: {job.deadline}
       </div>
      
