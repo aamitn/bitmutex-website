@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect } from "react";
 import { useActionState } from "react";
 import { registerUserAction } from "@/data/actions";
 
@@ -23,13 +24,21 @@ import { ProviderAuthLink } from "@/components/custom/provider-auth-button";
 const INITIAL_STATE = {
   data: null,
   zodErrors: null,
+  strapiErrors: null,
   message: null,
+  success: false, // Add success flag
 };
 
 export function SignupForm() {
   const [formState, formAction] = useActionState(registerUserAction, INITIAL_STATE);
 
-  console.log(formState, "client");
+  useEffect(() => {
+    if (formState?.success) {
+      setTimeout(() => {
+        window.location.href = "/signin"; // Redirect to login after 5 seconds
+      }, 5000);
+    }
+  }, [formState]);
 
   return (
     <div className="w-full max-w-md">
@@ -56,6 +65,13 @@ export function SignupForm() {
               <Input id="password" name="password" type="password" placeholder="password" />
               <ZodErrors error={formState?.zodErrors?.password} />
             </div>
+
+            {/* Show success message */}
+            {formState.success && (
+              <p className="text-green-600 text-sm font-medium">
+                {formState.message} Redirecting to login in 5 seconds...
+              </p>
+            )}
           </CardContent>
           <CardFooter className="flex flex-col">
             <SubmitButton className="w-full" text="Sign Up" loadingText="Loading" />
@@ -75,7 +91,7 @@ export function SignupForm() {
         <div className="mt-4 text-center text-sm">
           Have an account?
           <Link className="underline ml-2" href="signin">
-            Sing In
+            Sign In
           </Link>
         </div>
       </form>

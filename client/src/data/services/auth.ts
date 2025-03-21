@@ -11,6 +11,12 @@ interface LoginUserProps {
   password: string;
 }
 
+interface UpdateUserProps {
+  username?: string;
+  email?: string;
+  password?: string;
+}
+
 const baseUrl = getStrapiURL();
 
 export async function registerUserService(userData: RegisterUserProps) {
@@ -47,5 +53,31 @@ export async function loginUserService(userData: LoginUserProps) {
   } catch (error) {
     console.error("Login Service Error:", error);
     throw error;
+  }
+}
+
+
+export async function updateUserService(userId: string, userData: UpdateUserProps, jwt: string) {
+  const url = new URL(`/api/users/${userId}`, baseUrl);
+
+  try {
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData?.message || "Failed to update user.");
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("Update Service Error:", error);
+    return null;
   }
 }

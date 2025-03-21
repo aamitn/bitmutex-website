@@ -3,7 +3,7 @@ import { z } from "zod";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { registerUserService, loginUserService } from "@/data/services";
+import { registerUserService, loginUserService, updateUserService } from "@/data/services";
 
 const config = {
   maxAge: 60 * 60 * 24 * 7, // 1 week
@@ -38,6 +38,7 @@ export async function registerUserAction(prevState: any, formData: FormData) {
       zodErrors: validatedFields.error.flatten().fieldErrors,
       strapiErrors: null,
       message: "Missing Fields. Failed to Register.",
+      success: false,
     };
   }
 
@@ -48,7 +49,8 @@ export async function registerUserAction(prevState: any, formData: FormData) {
       ...prevState,
       strapiErrors: null,
       zodErrors: null,
-      message: "Ops! Something went wrong. Please try again.",
+      message: "Oops! Something went wrong. Please try again.",
+      success: false,
     };
   }
 
@@ -58,12 +60,15 @@ export async function registerUserAction(prevState: any, formData: FormData) {
       strapiErrors: responseData.error,
       zodErrors: null,
       message: "Failed to Register.",
+      success: false,
     };
   }
 
-  const cookieStore = await cookies();
-  cookieStore.set("jwt", responseData.jwt, config);
-  redirect("/dashboard");
+  return {
+    ...prevState,
+    success: true,
+    message: "A confirmation email has been sent to your email. Please check your inbox.",
+  };
 }
 
 const schemaLogin = z.object({
@@ -127,4 +132,57 @@ export async function logoutAction() {
   const cookieStore = await cookies();
   cookieStore.set("jwt", "", { ...config, maxAge: 0 });
   redirect("/");
+}
+
+
+
+
+const schemaUpdateUser = z.object({
+  username: z.string().min(3).max(20).optional(),
+  email: z.string().email().optional(),
+  password: z.string().min(6).max(100).optional(),
+});
+
+export async function updateUserAction(prevState: any, formData: FormData) {
+  const cookieStore = await cookies();
+  const jwt = cookieStore.get("jwt")?.value;
+
+  if (!jwt) {
+    return {
+      ...prevState,
+      message: "User not authenticated.",
+    };
+  }
+
+  const validatedFields = schemaUpdateUser.safeParse({
+    username: formData.get("username") || undefined,
+    email: formData.get("email") || undefined,
+    password: formData.get("password") || undefined,
+  });
+
+  if (!validatedFields.success) {
+    return {
+      ...prevState,
+      zodErrors: validatedFields.error.flatten().fieldErrors,
+      message: "Invalid input. Please check your details.",
+    };
+  }
+
+  const responseData = await updateUserService(
+    formData.get("userId") as string, // Assuming you have a hidden field with userId
+    validatedFields.data,
+    jwt
+  );
+
+  if (!responseData) {
+    return {
+      ...prevState,
+      message: "Oops! Something went wrong. Please try again.",
+    };
+  }
+
+  return {
+    ...prevState,
+    message: "Profile updated successfully!",
+  };
 }
