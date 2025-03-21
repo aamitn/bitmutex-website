@@ -16,7 +16,7 @@ export function CkeditorBlockMarkdown({ content }: Readonly<CkeditorBlockMarkdow
 
   return (
     <section className="mb-4 flex items-center justify-center px-6 py-16">
-      <div className="w-full max-w-6xl bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 md:p-10 transition-all border dark:border-gray-700">
+      <div className="w-full max-w-6xl bg-white dark:bg-neutral-950 rounded-2xl shadow-lg p-6 md:p-10 transition-all border dark:border-gray-700">
         <div
           className="rich-text  text-gray-800 dark:text-gray-200 leading-relaxed"
         />
