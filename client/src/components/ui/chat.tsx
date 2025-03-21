@@ -83,7 +83,7 @@ export default function Chat() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-20 right-6 w-80 z-50"
+            className="fixed bottom-20 left-12 w-90 z-50"
           >
             <Card className="shadow-2xl border border-gray-200 bg-white/90 backdrop-blur-md rounded-xl">
               <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-t-xl">
