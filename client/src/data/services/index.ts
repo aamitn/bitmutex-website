@@ -1,3 +1,3 @@
-import { registerUserService, loginUserService } from "@/data/services/auth";
+import { registerUserService, loginUserService, updateUserService } from "@/data/services/auth";
 
-export { registerUserService, loginUserService };
+export { registerUserService, loginUserService, updateUserService };
