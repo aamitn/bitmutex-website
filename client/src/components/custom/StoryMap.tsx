@@ -2,7 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 
 interface StoryMapProps {
-  location: { lat: number; lon: number; name: string };
+  location: { lat: string; lon: string; name: string };
 }
 
 const StoryMap = ({ location }: StoryMapProps) => {
@@ -18,7 +18,7 @@ const StoryMap = ({ location }: StoryMapProps) => {
 
   return (
     <MapContainer
-      center={[location.lat, location.lon]}
+      center={[parseFloat(location.lat), parseFloat(location.lon)]} 
       zoom={10}
       className="w-full h-full"
     >
@@ -26,11 +26,14 @@ const StoryMap = ({ location }: StoryMapProps) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://www.bitmutex.com">Bitmutex</a>'
       />
-      <Marker position={[location.lat, location.lon]} icon={customIcon}>
+      <Marker 
+      position={[parseFloat(location.lat), parseFloat(location.lon)]} 
+      icon={customIcon}
+      >
         <Popup>
           <strong>{location.name}</strong>
           <br />
-          Lat: {location.lat.toFixed(6)}, Lon: {location.lon.toFixed(6)}
+          Lat: {parseFloat(location.lat).toFixed(6)}, Lon: {parseFloat(location.lon).toFixed(6)}
         </Popup>
       </Marker>
     </MapContainer>

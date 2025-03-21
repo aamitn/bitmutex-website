@@ -60,7 +60,8 @@ const createClusterCustomIcon = (cluster: any) => {
 
 const defaultPosition: [number, number] = [20, 77]; // India-centered
 
-export default function SuccessStoryMap({ markers }: { markers: { lat: number; lon: number; name: string }[] }) {
+export default function SuccessStoryMap({ markers }: { markers: { lat: string; lon: string; name: string }[] }) {
+
   return (
     <div className="w-full h-96 mb-8">
       <MapContainer center={defaultPosition} zoom={4} className="w-full h-full rounded-md shadow-lg" scrollWheelZoom={true} zoomControl={false}>
@@ -78,9 +79,10 @@ export default function SuccessStoryMap({ markers }: { markers: { lat: number; l
           animate={true} // Enabling animation on declusterization
         >
           {markers.map((marker, index) => (
+
             <Marker
               key={index}
-              position={[marker.lat, marker.lon]}
+              position={[parseFloat(marker.lat), parseFloat(marker.lon)]} // Convert to number
               icon={customIcon}
               eventHandlers={{
                 click: (e) => {
@@ -101,9 +103,10 @@ export default function SuccessStoryMap({ markers }: { markers: { lat: number; l
               </Tooltip>
               <Popup>
                 <strong>{marker.name}</strong> <br />
-                Lat: {marker.lat}, Lon: {marker.lon}
+                Lat: {parseFloat(marker.lat).toFixed(6)}, Lon: {parseFloat(marker.lon).toFixed(6)}
               </Popup>
             </Marker>
+
           ))}
         </MarkerClusterGroup>
         <ZoomControl position="bottomleft" />
