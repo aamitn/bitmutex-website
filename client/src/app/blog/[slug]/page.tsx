@@ -53,7 +53,7 @@ export default async function SinglePost({ params }: PageProps) {
   const status = isDraftMode ? "draft" : "published";
   const data = await getBlogPostBySlug(slug, status);
   const post = data?.data[0];
-
+  console.log('post data is ', post);
   if (!post) notFound();
 
   const blocks = post?.blocks || [];
@@ -65,6 +65,7 @@ export default async function SinglePost({ params }: PageProps) {
   const twitterShare = `https://twitter.com/intent/tweet?url=${shareUrl}&text=${encodeURIComponent(post.title)}`;
   const facebookShare = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
   const linkedinShare = `https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}`;
+  
 
   return (
     <article className="pt-10 pb-16">
@@ -73,15 +74,52 @@ export default async function SinglePost({ params }: PageProps) {
       <div className="container  max-w-6xl px-4">
         <header className="my-10 text-center">
           <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl mb-4">
-            {post.title}
+            {post.title} 
           </h1>
-          <p className="text-gray-500 text-sm">
+
+
+        {/* Author Info Section */}
+        {post.author && (
+          <div className="mt-6 mb-4 flex items-center justify-center space-x-4 border-t pt-4">
+            {/* Author Image (if available) */}
+            {post.author.image?.url ? (
+              <img
+              src={post.author.image.url}
+              alt={post.author.image.alternativeText || post.author.firstname}
+              className="w-14 h-14 rounded-full object-cover border border-gray-300 dark:border-gray-700 shadow-sm"
+            />
+            ) : (
+              <div className="w-14 h-14 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 text-lg font-semibold">
+                {post.author.firstname.charAt(0)}
+                {post.author.lastname.charAt(0)}
+              </div>
+            )}
+
+            {/* Author Details */}
+            <div>
+            <p className="text-gray-900 dark:text-gray-100 font-semibold text-lg">
+              {post.author.firstname} {post.author.lastname}
+            </p>
+              {post.author.email && (
+                  <a
+                  href={`mailto:${post.author.email}`}
+                  className="text-blue-600 dark:text-orange-400 text-sm hover:underline transition duration-200"
+                >
+                  {post.author.email}
+                  
+                </a>
+              )}
+            </div>
+          </div>
+        )}
+
+          <p className="text-gray-500 dark:text-gray-400 text-sm">
             Posted on {formatDate(post.publishedAt)} - {post.category.text} •{" "}
             <span className="font-semibold">{readingTime} min read</span>
           </p>
 
           {/* View Count */}
-          <div className="flex items-center justify-center gap-2 mt-3 text-gray-600">
+          <div className="flex items-center justify-center gap-2 mt-3 text-gray-600 dark:text-gray-400">
             <Eye size={18} />
             <span>{viewCount} views</span>
           </div>
@@ -116,7 +154,7 @@ export default async function SinglePost({ params }: PageProps) {
 
           <StrapiImage
             src={post.image.url}
-            alt={post.image.alternativeText}
+            alt={post.image?.alternativeText || "Bitmutex Blog Post Image"}
             width={800}
             height={600}
             priority
@@ -135,12 +173,17 @@ export default async function SinglePost({ params }: PageProps) {
 
         {/* Render ckeditor content1 markdown  */}
         {post.content1 && (
-          <div
-            className="mt-6 text-lg leading-relaxed text-gray-800"
-          >
-             <RenderMarkdown content={post.content1} />
-          </div>
+
+              <section className="flex items-center justify-center px-1 py-1">
+                <div className="w-full max-w-7xl bg-white dark:bg-neutral-950 rounded-2xl shadow-lg p-6 md:p-10 transition-all border dark:border-gray-700">
+                  <div className="rich-text text-gray-800 dark:text-gray-200 leading-relaxed">
+                  <RenderMarkdown content={post.content1} />
+                  </div>
+                </div>
+              </section>
         )}
+
+        
 
         {/* Render ckeditor content2 markdown  */}
           {post.content2 && (

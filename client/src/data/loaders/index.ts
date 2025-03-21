@@ -1,6 +1,6 @@
 import sdk from "@/lib/sdk";
 import test from "node:test";
-const PAGE_SIZE = 3;
+const PAGE_SIZE = 9;
 
 export async function getGlobalPageData() {
   const landingPage = await sdk.single("global").find({
@@ -263,6 +263,7 @@ export async function getBlogPostBySlug(slug: string, status: string) {
           "blocks.text": { populate: "*" },
         },
       },
+    author: {  fields: ["firstname", "lastname", "email", "username"],  },
     },
     filters: { slug: { $eq: slug } },
     status: status as "draft" | "published" | undefined,
@@ -286,6 +287,7 @@ export async function getBlogPosts(
       category: {
         fields: ["text"],
       },
+      author: {  fields: ["firstname", "lastname", "email", "username"],  },
     },
 
     // _q: queryString,

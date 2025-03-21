@@ -43,8 +43,11 @@ export default async function BlogRoute({ searchParams }: PageProps) {
 
   const { data, meta } = await getBlogPosts(currentPage, query, category);
 
+
   const total = Number(meta?.pagination?.pageCount);
   const posts = data as PostProps[];
+
+
 
   return (
     <section className="container flex flex-col items-center gap-8 py-24">
