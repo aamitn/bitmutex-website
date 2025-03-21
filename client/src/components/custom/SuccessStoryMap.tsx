@@ -97,8 +97,8 @@ export default function SuccessStoryMap({ markers }: { markers: { lat: string; l
                   e.target.setIcon(customIcon); // Revert to original icon on mouseout
                 }
               }}
-            >
-                <Tooltip direction="top" offset={[0, -20]} opacity={1}>
+             >
+              <Tooltip direction="top" offset={[0, -20]} opacity={1}>
                 <span>{marker.name}</span>
               </Tooltip>
               <Popup>

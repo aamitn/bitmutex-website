@@ -160,11 +160,11 @@ body {
 
 /* Code blocks */
 .rich-text pre {
-  @apply font-mono bg-gray-900 text-gray-200 rounded p-4  my-6;
+  @apply font-mono bg-gray-300 dark:bg-gray-800 text-zinc-800  dark:text-gray-200 rounded p-4  my-6;
 }
 
 .rich-text code {
-  @apply font-mono bg-gray-900 text-gray-200 rounded px-2 py-1;
+  @apply font-mono dark:bg-slate-800 bg-gray-300 text-zinc-800 dark:text-zinc-300 rounded px-2 py-1;
 }
 
 /* Tables */
