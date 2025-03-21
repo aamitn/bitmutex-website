@@ -123,12 +123,16 @@ export function Hero(data: Readonly<HeroProps>) {
       </div>
 
 
-        <h1
-          className="max-w-2xl text-4xl font-semibold sm:text-5xl"
-          dangerouslySetInnerHTML={{
-            __html: splitHeading(heading,2,2),
-          }}
-        />
+      <h1
+  className="max-w-2xl text-5xl sm:text-6xl lg:text-7xl font-light tracking-tight 
+             leading-[1.15] sm:leading-[1.2] lg:leading-[1.15] 
+             text-gray-900 dark:text-gray-100 
+             md:max-w-3xl"
+  dangerouslySetInnerHTML={{
+    __html: splitHeading(heading, 2, 2),
+  }}
+/>
+
 
         <p className="max-w-md text-lg text-muted-foreground">{text}</p>
 

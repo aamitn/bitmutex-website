@@ -19,8 +19,8 @@ const SuccessStoryMap = dynamic(() => import("@/components/custom/SuccessStoryMa
 
 interface Location {
   name: string;
-  lat: number;
-  lon: number;
+  lat: string;
+  lon: string;
 }
 
 interface Impact {
@@ -52,7 +52,7 @@ interface SuccessStory {
   websiteurl: string;
 }
 
-const ITEMS_PER_PAGE = 10; // Change this as needed
+const ITEMS_PER_PAGE = 9; // Change this as needed
 
 const SuccessStoryPage = () => {
   const [successStories, setSuccessStories] = useState<SuccessStory[]>([]);

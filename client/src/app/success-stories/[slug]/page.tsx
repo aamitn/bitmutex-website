@@ -24,8 +24,8 @@ const StoryMap = dynamic(() => import("@/components/custom/StoryMap"), { ssr: fa
 
 interface Location {
   name: string;
-  lat: number;
-  lon: number;
+  lat: string;
+  lon: string;
 }
 
 interface Impact {
@@ -166,7 +166,7 @@ const SuccessStoryDetails = () => {
                       {loc.name}
                     </p>
                     <p className="text-gray-600 dark:text-gray-400 text-sm">
-                      Lat: {loc.lat.toFixed(6)}, Lon: {loc.lon.toFixed(6)}
+                    Lat: {parseFloat(loc.lat).toFixed(6)}, Lon: {parseFloat(loc.lon).toFixed(6)}
                     </p>
                   </div>
                 ))}
