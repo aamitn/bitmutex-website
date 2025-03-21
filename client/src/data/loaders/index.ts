@@ -165,6 +165,10 @@ export async function getPageBySlug(slug: string, status: string) {
             populate: "*",
           },
 
+          "layout.ckeditor-block-markdown": {
+            populate: "*",
+          },
+
           "layout.form-next-to-section": {
             populate: "*",
           },
