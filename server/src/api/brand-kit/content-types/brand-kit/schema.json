@@ -1,0 +1,25 @@
+{
+  "kind": "singleType",
+  "collectionName": "brand_kits",
+  "info": {
+    "singularName": "brand-kit",
+    "pluralName": "brand-kits",
+    "displayName": "Brand Kit",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "colors": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.color"
+    },
+    "brandlogo": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::logo.logo"
+    }
+  }
+}

@@ -47,11 +47,10 @@ export function RegformNextToSection(data: Readonly<RegformNextToSectionProps>) 
   const { heading, sub_heading } = data;
 
   const words = heading.split(" ")
-  const highlightIndex = Math.max(0, words.length - 3)
+  const highlightIndex = Math.max(0, words.length - 2)
   const highlightedText = words[highlightIndex]
 
-  const typewriterWords = useMemo(() => [highlightedText, "Innovation", "Excellence", "Futuristic", "Beyond Limits"], [highlightedText])
-  const longestWord = useMemo(() => typewriterWords.reduce((a, b) => (a.length > b.length ? a : b), ""), [typewriterWords])
+  const typewriterWords = useMemo(() => [highlightedText, "Operations", "Marketing", "Growth", "IT Infra"], [highlightedText])
   const typewriterText = useTypewriter(typewriterWords)
 
   return (
@@ -75,14 +74,14 @@ export function RegformNextToSection(data: Readonly<RegformNextToSectionProps>) 
           >
           <Heading 
             as="h1" 
-            className="text-4xl md:text-5xl lg:text-7xl font-extrabold max-w-2xl leading-tight 
-                      bg-gradient-to-r from-blue-600 via-amber-500 to-blue-600 
-                      dark:from-blue-600 dark:via-amber-500 dark:to-blue-400 
+            className="text-4xl md:text-5xl lg:text-7xl font-semibold max-w-2xl leading-relaxed 
+                      bg-gradient-to-r from-blue-600 via-orange-500 to-blue-600 
+                      dark:from-blue-600 dark:via-orange-500 dark:to-blue-400 
                       bg-clip-text text-transparent 
-                      tracking-tight drop-shadow-lg"
+                      tracking-tight drop-shadow-lg pb-2"
           >   
-         {words.slice(0, highlightIndex).join(" ")}{" "}
-              <span className="relative inline-block min-w-[10ch] text-blue-600 dark:text-blue-300">
+             {words.slice(0, highlightIndex).join(" ")}{" "}
+              <span className="relative inline-block min-w-[7ch] text-blue-600 dark:text-blue-300">
                 <motion.span 
                   initial={{ opacity: 0 }} 
                   animate={{ opacity: 1 }} 
@@ -92,9 +91,9 @@ export function RegformNextToSection(data: Readonly<RegformNextToSectionProps>) 
                   {typewriterText}
                 </motion.span>
               </span>{" "}
-              {words.slice(highlightIndex + 1).join(" ")}
-            </Heading>
-            <Subheading className="text-lg md:text-xl text-amber-500 dark:text-amber-500 max-w-lg">{sub_heading}</Subheading>
+            {words.slice(highlightIndex + 1).join(" ")}
+          </Heading>
+        <Subheading className="text-lg md:text-xl text-slate-700 dark:text-slate-300 max-w-lg">{sub_heading}</Subheading>
 
             
           </motion.div>

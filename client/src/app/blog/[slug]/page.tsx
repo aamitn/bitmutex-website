@@ -57,7 +57,8 @@ export default async function SinglePost({ params }: PageProps) {
   if (!post) notFound();
 
   const blocks = post?.blocks || [];
-  const readingTime = post.content ? calculateReadingTime(post.content) : 1;
+  const fullContent = `${post.content || ""} ${post.content1 || ""} ${post.content2 || ""}`;
+  const readingTime = fullContent.trim() ? calculateReadingTime(fullContent) : 1;
   const viewCount = post.views || 0; // Assuming views are coming from API
 
   // Social share URLs

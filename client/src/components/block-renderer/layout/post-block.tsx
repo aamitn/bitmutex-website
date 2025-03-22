@@ -5,12 +5,10 @@ import { Heading } from "@/components/elements/heading";
 import { Subheading } from "@/components/elements/subheading";
 import { FeatureIconContainer } from "@/components/block-renderer/layout/features/feature-icon-container";
 import { IconArticle } from "@tabler/icons-react";
-
 import type { PostBlockProps } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-
-// Import Swiper.js
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -21,19 +19,22 @@ import "swiper/css/pagination";
 import { motion } from "framer-motion";
 
 // Custom navigation buttons
+
 const CustomPrevButton = () => (
   <button
-    className="swiper-button-prev-custom absolute left-[-25px] top-1/2 transform -translate-y-1/2 bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:bg-opacity-90 transition"
+    aria-label="Previous Slide"
+    className="swiper-button-prev-custom absolute left-[-35px] top-1/2 transform -translate-y-1/2 bg-primary text-white dark:text-gray-900 rounded-full w-12 h-12 flex items-center justify-center shadow-xl transition-all duration-300 ease-in-out hover:scale-105 hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-primary"
   >
-    ❮
+    <ChevronLeft size={24} strokeWidth={2} />
   </button>
 );
 
 const CustomNextButton = () => (
   <button
-    className="swiper-button-next-custom absolute right-[-25px] top-1/2 transform -translate-y-1/2 bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:bg-opacity-90 transition"
+    aria-label="Next Slide"
+    className="swiper-button-next-custom absolute right-[-35px] top-1/2 transform -translate-y-1/2 bg-primary text-white dark:text-gray-900 rounded-full w-12 h-12 flex items-center justify-center shadow-xl transition-all duration-300 ease-in-out hover:scale-105 hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-primary"
   >
-    ❯
+    <ChevronRight size={24} strokeWidth={2} />
   </button>
 );
 
@@ -74,86 +75,87 @@ export function PostBlock(data: Readonly<PostBlockProps>) {
         transition={{ duration: 1, ease: "easeOut" }}
         className="w-full max-w-6xl mt-10 relative"
       >
-        <Swiper
-          modules={[Navigation, Pagination, Autoplay]}
-          spaceBetween={20}
-          slidesPerView={1}
-          breakpoints={{
-            640: { slidesPerView: 1 },
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-          }}
-          navigation={{
-            prevEl: ".swiper-button-prev-custom",
-            nextEl: ".swiper-button-next-custom",
-          }}
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 3000 }}
-          loop
-          className="w-full"
-        >
-          {posts && posts.length > 0 ? (
-            posts.map((post) => (
-              <SwiperSlide key={post.id} className="h-full flex">
-                {/* Clickable Card */}
-                <Link href={`/blog/${post.slug}`} passHref>
-                  <motion.div
-                    whileHover={{ scale: 1.03 }}
-                    transition={{ duration: 0.3 }}
-                    className="h-full flex flex-col bg-white dark:bg-gray-900 bg-opacity-90 dark:bg-opacity-90 backdrop-blur-lg border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 min-h-[250px] md:min-h-[250px] lg:min-h-[250px] cursor-pointer"
-                  >
-                    {/* Post Image */}
-                    {post.image && (
-                      <div className="w-full h-48 relative">
-                        <Image
-                          src={`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}${post.image.url}`}
-                          alt={post.title}
-                          layout="fill"
-                          objectFit="cover"
-                          className="rounded-t-lg"
-                        />
-                      </div>
-                    )}
-
-                    {/* Post Content - Flex column for equal height */}
-                    <div className="p-6 flex flex-col flex-grow justify-between">
-                      <motion.h3
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2, duration: 0.5 }}
-                        className="text-xl font-semibold text-gray-900 dark:text-white"
-                      >
-                        {post.title}
-                      </motion.h3>
-                      <motion.p
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4, duration: 0.5 }}
-                        className="text-gray-600 dark:text-gray-400 mt-2 flex-grow"
-                      >
-                        {truncateText(post.description, 120)}
-                      </motion.p>
-
-                      {/* Read More Button - Stays at Bottom */}
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.6, duration: 0.5 }}
-                        className="mt-auto text-primary dark:text-primary-light font-semibold hover:underline"
-                      >
-                        Read More →
-                      </motion.div>
+      <Swiper
+        modules={[Navigation, Pagination, Autoplay]}
+        spaceBetween={20}
+        slidesPerView={1}
+        breakpoints={{
+          640: { slidesPerView: 1 },
+          768: { slidesPerView: 2 },
+          1024: { slidesPerView: 3 },
+        }}
+        navigation={{
+          prevEl: ".swiper-button-prev-custom",
+          nextEl: ".swiper-button-next-custom",
+        }}
+        pagination={{ clickable: true }}
+        autoplay={{ delay: 3000 }}
+        loop
+        className="w-full"
+      >
+        {posts && posts.length > 0 ? (
+          posts.map((post) => (
+          <SwiperSlide key={post.id} className="h-full flex flex-col">
+              {/* Clickable Card */}
+              <Link href={`/blog/${post.slug}`} passHref>
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ duration: 0.3 }}
+                  className="h-full flex flex-col bg-white dark:bg-gray-900 bg-opacity-90 dark:bg-opacity-90 backdrop-blur-lg border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 min-h-[450px]] md:min-h-[450px]] lg:min-h-[450px]"
+                >
+                  {/* Post Image */}
+                  {post.image && (
+                    <div className="w-full h-48 relative">
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}${post.image.url}`}
+                        alt={post.title}
+                        layout="fill"
+                        objectFit="cover"
+                        className="rounded-t-lg"
+                      />
                     </div>
-                  </motion.div>
-                </Link>
-              </SwiperSlide>
-            ))
-          ) : (
-            <p className="text-gray-600 dark:text-gray-400 text-center">
-              No posts available.
-            </p>
-          )}
-        </Swiper>
+                  )}
+
+                  {/* Post Content - Flex column for equal height */}
+                  <div className="p-6 flex flex-col flex-grow">
+                  <motion.h3
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.5 }}
+                    className="text-xl font-semibold text-gray-900 dark:text-white line-clamp-2"
+                  >
+                    {post.title}
+                  </motion.h3>
+                    <motion.p
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4, duration: 0.5 }}
+                      className="text-gray-600 dark:text-gray-400 mt-2 flex-grow"
+                    >
+                      {truncateText(post.description, 120)}
+                    </motion.p>
+
+                    {/* Read More Button - Stays at Bottom */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6, duration: 0.5 }}
+                      className="mt-auto text-primary dark:text-primary-light font-semibold hover:underline"
+                    >
+                      Read More →
+                    </motion.div>
+                  </div>
+                </motion.div>
+              </Link>
+            </SwiperSlide>
+          ))
+        ) : (
+          <p className="text-gray-600 dark:text-gray-400 text-center">
+            No posts available.
+          </p>
+        )}
+      </Swiper>
+
 
         {/* Custom Navigation Buttons */}
         <CustomPrevButton />

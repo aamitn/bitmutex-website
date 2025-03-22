@@ -113,8 +113,8 @@ export const ContactForm = () => {
   };
 
   return (
-    <Container className="h-screen max-w-lg mx-auto flex flex-col ">
-      <h1 className="text-lg md:text-xl my-4 text-gray-600">We won’t spam you.</h1>
+    <Container className="h-full max-w-lg mx-auto flex flex-col ">
+      <h1 className="text-lg md:text-xl my-4 text-slate-800 dark:text-slate-400">We won’t spam you.</h1>
       <form className="w-full my-4" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -123,7 +123,7 @@ export const ContactForm = () => {
           value={formData.name}
           onChange={handleChange}
           required
-          className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:ring-2 focus:ring-neutral-800"
+          className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-charcoal border border-neutral-400 text-slate-600 dark:text-slate-200 placeholder-neutral-500 outline-none focus:ring-2 focus:ring-neutral-800 dark:focus:ring-neutral-300"
         />
         <input
           type="email"
@@ -132,7 +132,7 @@ export const ContactForm = () => {
           value={formData.email}
           onChange={handleChange}
           required
-          className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:ring-2 focus:ring-neutral-800"
+          className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-charcoal border border-neutral-400 text-slate-600 dark:text-slate-200 placeholder-neutral-500 outline-none focus:ring-2 focus:ring-neutral-800 dark:focus:ring-neutral-300"
         />
         <input
           type="tel"
@@ -147,21 +147,19 @@ export const ContactForm = () => {
           inputMode="numeric"
           pattern="[0-9]*"
           maxLength={10}
-          className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:ring-2 focus:ring-neutral-800"
+          className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-charcoal border border-neutral-400  text-slate-600 dark:text-slate-200 placeholder-neutral-500 outline-none focus:ring-2 focus:ring-neutral-800 dark:focus:ring-neutral-300"
         />
 
-        <label htmlFor="referralSource" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Where did you hear about us?</label>
+        <label htmlFor="referralSource" className="block mb-2 text-sm font-medium text-slate-600 dark:text-slate-400">Where did you hear about us?</label>
         <select
           id="referralSource"
           name="referralSource"
           value={formData.referralSource}
           onChange={handleChange}
           required
-          className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:ring-2 focus:ring-neutral-800"
+          className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-charcoal border border-neutral-400 text-slate-600 dark:text-slate-200 placeholder-neutral-500 outline-none focus:ring-2 focus:ring-neutral-800 dark:focus:ring-neutral-300"
         >
-          <option value="" disabled>
-            Where did you hear about us?
-          </option>
+
           <option value="google">Google</option>
           <option value="social_media">Social Media</option>
           <option value="friend">Friend</option>
@@ -174,7 +172,7 @@ export const ContactForm = () => {
           value={formData.message}
           onChange={handleChange}
           required
-          className="h-28 pl-4 pt-2 w-full mb-4 rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:ring-2 focus:ring-neutral-800"
+          className="h-28 pl-4 pt-2 w-full mb-4 rounded-md text-sm bg-charcoal border border-neutral-400 text-slate-600 dark:text-slate-200  placeholder-neutral-500 outline-none focus:ring-2 focus:ring-neutral-800 dark:focus:ring-neutral-300"
         />
         
         {/* Honeypot Field */}

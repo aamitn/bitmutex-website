@@ -17,45 +17,60 @@ export function FormNextToSection(data: Readonly<FormNextToSectionProps>) {
     {
       title: "twitter",
       href: "https://twitter.com/strapijs",
-      icon: <IconBrandX className="h-5 w-5 text-muted hover:text-neutral-100" />, 
+      icon: (
+        <IconBrandX className="h-5 w-5 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white" />
+      ),
     },
     {
       title: "github",
       href: "https://github.com/strapi",
-      icon: <IconBrandGithub className="h-5 w-5 text-muted hover:text-neutral-100" />, 
+      icon: (
+        <IconBrandGithub className="h-5 w-5 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white" />
+      ),
     },
     {
       title: "linkedin",
       href: "https://linkedin.com/strapi",
-      icon: <IconBrandLinkedin className="h-5 w-5 text-muted hover:text-neutral-100" />, 
+      icon: (
+        <IconBrandLinkedin className="h-5 w-5 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white" />
+      ),
     },
   ];
+  
 
   return (
     <div className="w-full min-h-screen grid grid-cols-1 md:grid-cols-2 relative overflow-hidden">
       {/* Left Section: Contact Form */}
-      <div className="flex relative z-20 items-center w-full justify-center px-4 py-4 lg:py-40 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+      <div className="flex relative z-20 items-center w-full justify-center px-4 py-4 lg:py-40 sm:px-6 lg:flex-none lg:px-20 xl:px-24 mt-10 sm:mt-0">
         <div className="mx-auto w-full max-w-md">
           <div>
-            <h1 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-white">
+            <h1 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-slate-800 dark:text-slate-200">
               {heading}
             </h1>
-            <p className="mt-4 text-muted text-sm max-w-sm">{sub_heading}</p>
+            <p className="mt-4 text-muted text-sm max-w-sm text-slate-600 dark:text-slate-400">{sub_heading}</p>
           </div>
 
-          <div className="relative overflow-hidden">
+
+        {/* Wrapper for full-width layout */}
+        <div className="w-full flex flex-col items-center justify-center">
+          
+          {/* Full-width Contact Form */}
+          <div className="w-full max-w-3xl">
             <ContactForm />
           </div>
 
-          {/* Social Icons */}
-          <div className="flex items-center justify-center space-x-4 py-4">
+          {/* Social Icons below the form with reduced vertical gap */}
+          <div className="flex items-center justify-center space-x-6 mt-2">
             {socials.map((social) => (
-              <Link href={social.href} target="_blank" key={social.title}>
+              <Link href={social.href} target="_blank" key={social.title} className="hover:scale-110 transition-transform">
                 {social.icon}
               </Link>
             ))}
           </div>
         </div>
+
+        </div>
+        
       </div>
 
       {/* Right Section: Contact Info + Decorative Panel */}
