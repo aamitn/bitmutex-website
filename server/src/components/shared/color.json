@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_shared_colors",
+  "info": {
+    "displayName": "color",
+    "icon": "gate"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "hexcode": {
+      "type": "string"
+    }
+  }
+}

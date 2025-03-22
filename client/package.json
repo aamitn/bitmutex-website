@@ -33,12 +33,15 @@
     "class-variance-authority": "^0.7.1",
     "client": "file:",
     "clsx": "^2.1.1",
+    "color-convert": "^3.0.1",
     "embla-carousel-react": "^8.5.2",
+    "file-saver": "^2.0.5",
     "framer-motion": "^12.4.10",
     "gsap": "^3.12.7",
     "html-react-parser": "^5.2.2",
     "iron-session": "^8.0.4",
     "js-cookie": "^3.0.5",
+    "jszip": "^3.10.1",
     "leaflet": "^1.9.4",
     "leaflet.markercluster": "^1.5.3",
     "lucide-react": "^0.479.0",
@@ -75,6 +78,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.7",
     "@types/js-cookie": "^3.0.6",
     "@types/leaflet": "^1.9.16",
     "@types/node": "^20",

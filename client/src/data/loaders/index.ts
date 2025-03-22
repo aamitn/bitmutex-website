@@ -94,7 +94,15 @@ export async function getLandingPage() {
           },
 
           "layout.post-block": {
-            populate: "*",
+            populate: {
+              posts: {
+                populate: {
+                  image: {
+                    fields: ["url", "alternativeText", "name"],
+                  }
+                },
+              },
+            },
           },
           
           "layout.service-block": {

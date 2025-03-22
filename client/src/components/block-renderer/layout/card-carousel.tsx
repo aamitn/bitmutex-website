@@ -58,7 +58,7 @@ export function CardCarousel({ cardItems }: Readonly<CardGridProps>) {
                         onClick={() => window.open(href, isExternal ? "_blank" : "_self")}
                         className="absolute bottom-4 right-4 bg-indigo-600 text-white px-3 py-1 text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                       >
-                        Learn More →
+                        Go →
                       </button>
                     )}
                   </CardContent>

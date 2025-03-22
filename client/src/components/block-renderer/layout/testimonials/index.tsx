@@ -38,7 +38,7 @@ export function Testimonials(data: Readonly<TestimonialsProps>) {
             </div>
 
             {testimonials && Array.isArray(testimonials) ? (
-                <Marquee gradient={false} speed={50}>
+                <Marquee gradient={false} speed={150}>
                     {testimonials.map((testimonial) => (
                         <motion.div
                             key={testimonial.id}
@@ -51,7 +51,7 @@ export function Testimonials(data: Readonly<TestimonialsProps>) {
                         >
                             <Card
                                 className={cn(
-                                    "relative p-6 w-96 rounded-2xl shadow-xl transition-all border backdrop-blur-lg overflow-hidden mb-2",
+                                    "relative w-96 p-6 rounded-2xl shadow-xl transition-all border backdrop-blur-lg overflow-hidden mb-2",
                                     theme === "dark"
                                         ? "bg-white/10 border-gray-800 text-white"
                                         : "bg-gray-50 border-gray-200 text-black"
@@ -60,9 +60,9 @@ export function Testimonials(data: Readonly<TestimonialsProps>) {
                                 {/* Inner Glow Animation */}
                                 <div className="absolute inset-0 opacity-20 pointer-events-none animate-pulse bg-gradient-to-br from-transparent via-primary/10 to-transparent"></div>
 
-                                <CardContent className="flex flex-col gap-6 relative z-10">
+                                <CardContent className="flex flex-col gap-6 relative z-10 w-3xl">
                                     {/* Testimonial Text with Animated Quotes */}
-                                    <p className="relative text-center text-lg font-medium leading-relaxed">
+                                    <p className="relative text-center  [text-wrap:pretty] text-lg font-medium leading-relaxed">
                                         <FaQuoteLeft className="absolute -left-4 top-0 text-muted-foreground text-xl opacity-50" />
                                         <span className="px-6">{testimonial.text}</span>
                                         <FaQuoteRight className="absolute -right-4 bottom-0 text-muted-foreground text-xl opacity-50" />

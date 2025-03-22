@@ -205,8 +205,8 @@ export const RegisterForm = () => {
   };
   
   return (
-    <Container className="h-screen max-w-lg mx-auto flex flex-col items-center justify-center">
-      <h1 className="text-xl md:text-4xl font-bold my-4 text-slate-800 dark:text-slate-300">Request a Quote</h1>
+    <Container className="h-full max-w-lg mx-auto flex flex-col items-center justify-center">
+      <h1 className="text-xl md:text-4xl font-bold my-4 text-slate-800 dark:text-orange-400">Request a Quote</h1>
       <form className="w-full my-4" onSubmit={handleSubmit}>
         <div className="flex gap-4 mb-4">
           <input
@@ -216,7 +216,7 @@ export const RegisterForm = () => {
             value={formData.firstname}
             onChange={handleChange}
             required
-            className="h-10 pl-4 w-1/2 rounded-md text-sm bg-white border border-neutral-800 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-neutral-800"
+            className="h-10 pl-4 w-1/2 rounded-md text-sm bg-white border border-neutral-800 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-neutral-800 dark:focus:ring-orange-300"
           />
           <input
             type="text"
@@ -225,7 +225,7 @@ export const RegisterForm = () => {
             value={formData.lastname}
             onChange={handleChange}
             required
-            className="h-10 pl-4 w-1/2 rounded-md text-sm bg-white border border-neutral-800 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-neutral-800"
+            className="h-10 pl-4 w-1/2 rounded-md text-sm bg-white border border-neutral-800 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-neutral-800 dark:focus:ring-orange-300"
           />
         </div>
         <input
@@ -235,7 +235,7 @@ export const RegisterForm = () => {
           value={formData.email}
           onChange={handleChange}
           required
-          className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-white border border-neutral-800 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-neutral-800"
+          className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-white border border-neutral-800 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-neutral-800 dark:focus:ring-orange-300"
         />
         
         <div className="mb-4">
@@ -266,9 +266,9 @@ export const RegisterForm = () => {
           value={formData.company}
           onChange={handleChange}
           required
-          className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-white border border-neutral-800 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-neutral-800"
+          className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-white border border-neutral-800 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-neutral-800 dark:focus:ring-orange-300"
         />
-        <label htmlFor="service" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="service" className="block text-sm font-medium text-gray-700 dark:text-slate-300">
           Service Opted
         </label>
         <select
@@ -277,7 +277,7 @@ export const RegisterForm = () => {
           value={formData.service}
           onChange={handleChange}
           required
-          className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-white border border-neutral-800 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-neutral-800"
+          className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-white border border-neutral-800 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-neutral-800 dark:focus:ring-orange-300"
         >
           <option value="" disabled>
             Select Service
@@ -291,7 +291,7 @@ export const RegisterForm = () => {
 
         </select>
 
-        <label htmlFor="enquirytype" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="enquirytype" className="block text-sm font-medium text-gray-700 dark:text-slate-300">
           Enquiry Type
         </label>
         <select
@@ -300,7 +300,7 @@ export const RegisterForm = () => {
           value={formData.enquirytype}
           onChange={handleChange}
           required
-          className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-white border border-neutral-800 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-neutral-800"
+          className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-white border border-neutral-800 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-neutral-800 dark:focus:ring-orange-300"
         >
           <option value="" disabled>
             Select Enquiry Type
@@ -314,7 +314,7 @@ export const RegisterForm = () => {
         </select>
 
         <div className="mb-4">
-          <label htmlFor="file-upload" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="file-upload" className="block text-sm font-medium text-gray-700 dark:text-slate-300 ">
             Upload Proposal/ Relevant Files(PDF/IMG)
           </label>
           <span className="sr-only">Upload a CV file</span> {/* Screen reader-friendly label */}
