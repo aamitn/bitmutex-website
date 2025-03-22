@@ -87,7 +87,7 @@ export function Footer({ data }: Readonly<FooterProps>) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="container mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8 px-6 py-16 relative z-10"
+        className="container mx-auto grid grid-cols-1 sm:grid-cols-[1fr_2.5fr_1fr] gap-8 px-6 py-16 relative z-10"
       >
         {/* Left Section: Logo & Text */}
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
@@ -131,23 +131,22 @@ export function Footer({ data }: Readonly<FooterProps>) {
               <StatusBadge />
             </div>
 
-
-{/* ✅ Cookie Preferences Link and theme toggle*/}
-<div className="flex items-center justify-center sm:justify-start w-full gap-3">
-  <a
-    href="#"
-    onClick={(e) => {
-      e.preventDefault();
-      CookieConsent.showPreferences();
-    }}
-    className="text-sm font-normal text-slate-800 dark:text-orange-400 transition-all duration-300 ease-in-out 
-    hover:text-orange-500 dark:hover:text-blue-300 hover:font-bold focus:outline-none focus:ring-2 
-    focus:ring-orange-400 dark:focus:ring-orange-500 rounded-md px-2 py-1 flex items-center"
-  >
-    ⚙️ Cookie Preferences
-  </a>
-  <ThemeToggle />
-</div>
+            {/* ✅ Cookie Preferences Link and theme toggle*/}
+            <div className="flex items-center justify-center sm:justify-start w-full gap-3">
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  CookieConsent.showPreferences();
+                }}
+                className="text-sm font-normal text-slate-800 dark:text-orange-400 transition-all duration-300 ease-in-out 
+                hover:text-orange-500 dark:hover:text-blue-300 hover:font-bold focus:outline-none focus:ring-2 
+                focus:ring-orange-400 dark:focus:ring-orange-500 rounded-md px-2 py-1 flex items-center"
+              >
+                ⚙️ Cookie Preferences
+              </a>
+              <ThemeToggle />
+            </div>
 
           </div>
         </motion.div>
@@ -155,7 +154,7 @@ export function Footer({ data }: Readonly<FooterProps>) {
 
         {/* Center Section: Navigation */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
             {Object.entries(groupedNavItems).map(([parent, items]) => (
               <div key={parent} className="space-y-2">
                 <h4 className="text-lg font-semibold">{parent}</h4>
@@ -233,7 +232,7 @@ export function Footer({ data }: Readonly<FooterProps>) {
 
     {/* Copyright Section */}
     <div className="border-t border-gray-500 dark:border-gray-700 mt-10 pt-6 text-center text-sm text-gray-600 dark:text-gray-400">
-     &copy; 2018 - {new Date().getFullYear()} {text}. All rights reserved.
+     &copy; 2018 - {new Date().getFullYear()} 💠 {text} 💠 All rights reserved.
     </div>
     </footer>
   );
