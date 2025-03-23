@@ -12,10 +12,75 @@ import TableOfContents from "@/components/custom/TableOfContents";
 import { FaSquareXTwitter,FaSquareFacebook, FaLinkedin } from "react-icons/fa6";
 import {FiEye } from "react-icons/fi";
 import { FaRedditSquare } from "react-icons/fa";
+import { generateMetadataObject } from '@/lib/metadata';
+import  fetchContentType  from '@/lib/strapi/fetchContentType';
+import { strapiImage } from '@/lib/strapi/strapiImage';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const BASE_URL_NEXT = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const pageData = await fetchContentType('posts', {
+    filters: { slug: params.slug }, // Filter by slug
+    populate: ["category","seo.metaImage","image"],
+  }, true)
+  //console.log("Page Data:", pageData); // Debugging output
+
+  if (!pageData) {
+    return {
+      title: "Blog Not Found | Bitmutex Technologies",
+      description: "The requested blog/article does not exist. Browse more blogs by Bitmutex Technologies.",
+      robots: "noindex, nofollow", // Avoid indexing non-existent pages
+    };
+  }
+
+  const seo = pageData?.seo;
+  const metadata = generateMetadataObject(seo);
+
+  // ✅ Ensure title fallback to `pageData.title` if `seo.metaTitle` is missing
+  const seotitle = seo?.metaTitle 
+  ? `${seo.metaTitle} | ${pageData.category?.text || "Uncategorized"} | Bitmutex Blogs`
+  : `${pageData.title || "Untitled"} |  ${pageData.category?.text || "Uncategorized"}  |Bitmutex Blogs`;
+
+  // ✅ use pageData description as fallback if metaDescription is not available
+  let seodescription = seo?.metaDescription || pageData.description || "";
+  if (seodescription.length > 150) {
+    seodescription = seodescription.substring(0, seodescription.lastIndexOf(" ", 150)) + "...";
+  }
+
+  // ✅ Override normal title field
+  metadata.title = seotitle;
+  metadata.description = seodescription;
+
+  // ✅ Override OG fields
+  metadata.openGraph = {
+    ...(metadata.openGraph as any), // Cast to 'any' to allow unknown properties
+    title: seotitle, 
+    description: seodescription,
+    images: seo?.metaImage 
+    ? [{ url: strapiImage(seo?.metaImage.url) }] 
+    : pageData?.image 
+      ? [{ url: strapiImage(pageData.image.url) }] 
+      : [],
+    url: `${BASE_URL_NEXT}/blog/${params.slug}`, // Add custom URL field
+    site_name: "Bitmutex",
+    locale: "en_US",
+    type: "article",
+  };
+  // ✅ Assign canonical URL to `alternates`
+  metadata.alternates = {
+    canonical: `${BASE_URL_NEXT}/blog/${params.slug}`,
+  };
+  
+  return metadata;
+}
+
 
 // Function to calculate estimated reading time
 const calculateReadingTime = (text: string): number => {
@@ -24,29 +89,6 @@ const calculateReadingTime = (text: string): number => {
   return Math.ceil(wordCount / wordsPerMinute);
 };
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const resolveParams = await params;
-  const slug = resolveParams?.slug;
-  const { isEnabled: isDraftMode } = await draftMode();
-  const status = isDraftMode ? "draft" : "published";
-
-  const data = await getBlogPostBySlug(slug, status);
-
-  if (!data?.data?.[0]) {
-    return {
-      title: "Blog Post - Not Found",
-      description: "This blog post does not exist.",
-    };
-  }
-
-  const post = data.data[0];
-
-  return {
-    title: post.title,
-    description: post.description,
-    robots: "index, follow", // Ensure it's indexed properly
-  };
-}
 
 export default async function SinglePost({ params }: PageProps) {
   const resolveParams = await params;

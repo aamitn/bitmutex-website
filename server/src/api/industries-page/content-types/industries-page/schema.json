@@ -1,0 +1,28 @@
+{
+  "kind": "singleType",
+  "collectionName": "industries_pages",
+  "info": {
+    "singularName": "industries-page",
+    "pluralName": "industries-pages",
+    "displayName": "Industries Page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "sub_heading": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

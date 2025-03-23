@@ -7,6 +7,15 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { FC } from "react";
+import { Metadata } from "next";
+import { generateMetadataObject } from '@/lib/metadata';
+import  fetchContentType  from '@/lib/strapi/fetchContentType';
+import { strapiImage } from '@/lib/strapi/strapiImage';
+
+
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
 
 type ServiceItem = {
   name: string;
@@ -24,16 +33,76 @@ type Service = {
   service_items: ServiceItem[];
 };
 
-// ✅ Convert kebab-case to PascalCase for Lucide icons
-const toPascalCase = (str: string): string =>
-  str
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join("");
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const BASE_URL_NEXT = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const pageData = await fetchContentType('services', {
+    filters: { slug: params.slug }, // Filter by slug
+    populate: ["seo.metaImage"],
+  }, true)
+  //console.log("Page Data:", pageData); // Debugging output
+
+  if (!pageData) {
+    return {
+      title: "Service Not Found | Bitmutex Technologies",
+      description: "The requested service page does not exist. Browse more service pages by Bitmutex Technologies.",
+      robots: "noindex, nofollow", // Avoid indexing non-existent pages
+    };
+  }
+
+  const seo = pageData?.seo;
+  const metadata = generateMetadataObject(seo);
+
+  // ✅ Ensure title fallback to `pageData.title` if `seo.metaTitle` is missing
+  const seotitle = seo?.metaTitle 
+  ? `${seo.metaTitle} | Bitmutex`
+  : `${pageData.name   || "Untitled"} Services | Bitmutex`;
+
+  // ✅ use pageData description as fallback if metaDescription is not available
+  let seodescription = seo?.metaDescription || pageData.description || "";
+  if (seodescription.length > 150) {
+    seodescription = seodescription.substring(0, seodescription.lastIndexOf(" ", 150)) + "...";
+  }
+
+  // ✅ Override normal title field
+  metadata.title = seotitle;
+  metadata.description = seodescription;
+
+  // ✅ Override OG fields
+  metadata.openGraph = {
+    ...(metadata.openGraph as any), // Cast to 'any' to allow unknown properties
+    title: seotitle, 
+    description: seodescription,
+
+    images: seo?.metaImage
+    ? [{ url: strapiImage(seo.metaImage.url) }]
+    : pageData?.image
+      ? [{ url: strapiImage(pageData.image.url) }]
+      : [{ url: `${BASE_URL_NEXT}/bmserv.png`}], // Fallback to predefined placeholder
+
+    url: `${BASE_URL_NEXT}/services/${params.slug}`, // Add custom URL field
+    site_name: "Bitmutex",
+    locale: "en_US",
+    type: "website",
+  };
+  // ✅ Assign canonical URL to `alternates`
+  metadata.alternates = {
+    canonical: `${BASE_URL_NEXT}/services/${params.slug}`,
+  };
+  
+  return metadata;
+}
+
+
 
 // ✅ Get the correct Lucide icon
 const getLucideIcon = (iconName: string): FC<any> => {
-  const pascalCaseName = toPascalCase(iconName);
+// ✅ Convert kebab-case to PascalCase for Lucide icons
+  const pascalCaseName = iconName.split("-").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join("");;
 
   // Check if the icon exists in the imported LucideIcons and return it
   const Icon = (LucideIcons as any)[pascalCaseName];
@@ -42,12 +111,11 @@ const getLucideIcon = (iconName: string): FC<any> => {
   if (!Icon) {
     return LucideIcons.AlertCircle; // Replace this with a valid fallback icon if needed
   }
-
   return Icon;
 };
 
 // Update to async function and properly handle Promise
-export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ServicePage({ params }: PageProps) {
   // Await the promise resolution to get the slug
   const { slug } = await params;
 

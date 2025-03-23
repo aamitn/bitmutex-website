@@ -8,60 +8,75 @@ import { Button } from "@/components/ui/button";
 import sanitizeHtml from "sanitize-html";
 import Link from "next/link";
 import { Metadata } from "next";
+import { generateMetadataObject } from '@/lib/metadata';
+import  fetchContentType  from '@/lib/strapi/fetchContentType';
+import { strapiImage } from '@/lib/strapi/strapiImage';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const resolveParams = await params;
-  const slug = resolveParams?.slug;
-  const industry = await fetchIndustryBySlug(slug);
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const BASE_URL_NEXT = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const pageData = await fetchContentType('industries', {
+    filters: { slug: params.slug }, // Filter by slug
+    populate: ["seo.metaImage"],
+  }, true)
+  //console.log("Page Data:", pageData); // Debugging output
 
-  if (!industry) {
+  if (!pageData) {
     return {
-      title: "Industry Not Found | Bitmutex Technologies",
-      description: "The requested project does not exist. Browse more projects by Bitmutex Technologies.",
+      title: "Page Not Found | Bitmutex Technologies",
+      description: "The requested page does not exist. Browse more industry pages by Bitmutex Technologies.",
       robots: "noindex, nofollow", // Avoid indexing non-existent pages
     };
   }
 
-  // Extract first 150 chars from `details` or use `description`
-  const shortDescription = industry.details
-    ? industry.details.substring(0, 150) + "..."
-    : industry.description;
+  const seo = pageData?.seo;
+  const metadata = generateMetadataObject(seo);
 
-  // Construct SEO title
-  const seoTitle = `${industry.name}  Industry | Bitmutex Technologies`;
-  const placeholderImage = "https://images.unsplash.com/photo-1606337321936-02d1b1a4d5ef";
+  // ✅ Ensure title fallback to `pageData.title` if `seo.metaTitle` is missing
+  const seotitle = seo?.metaTitle 
+  ? `${seo.metaTitle} | Bitmutex`
+  : `${pageData.name   || "Untitled"} Industry | Bitmutex`;
 
-  return {
-    title: seoTitle,
-    description: shortDescription,
-    robots: "index, follow", // Ensure it's indexed properly
-    openGraph: {
-      title: seoTitle,
-      description: shortDescription,
-      url: `https://bitmutex.com/projects/${industry.slug}`,
-      type: "article",
-      images: [
-        { 
-          url: placeholderImage, 
-          width: 1200, 
-          height: 630 
-        }
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: seoTitle,
-      description: shortDescription,
-      images: [placeholderImage],
-    },
-    alternates: {
-      canonical: `https://bitmutex.com/industries/${industry.slug}`, // Ensure correct indexing
-    },
+  // ✅ use pageData description as fallback if metaDescription is not available
+  let seodescription = seo?.metaDescription || pageData.description || "";
+  if (seodescription.length > 150) {
+    seodescription = seodescription.substring(0, seodescription.lastIndexOf(" ", 150)) + "...";
+  }
+
+  // ✅ Override normal title field
+  metadata.title = seotitle;
+  metadata.description = seodescription;
+
+  // ✅ Override OG fields
+  metadata.openGraph = {
+    ...(metadata.openGraph as any), // Cast to 'any' to allow unknown properties
+    title: seotitle, 
+    description: seodescription,
+
+    images: seo?.metaImage
+    ? [{ url: strapiImage(seo.metaImage.url) }]
+    : pageData?.image
+      ? [{ url: strapiImage(pageData.image.url) }]
+      : [{ url: `${BASE_URL_NEXT}/bmind.png`}], // Fallback to predefined placeholder
+
+    url: `${BASE_URL_NEXT}/industries/${params.slug}`, // Add custom URL field
+    site_name: "Bitmutex",
+    locale: "en_US",
+    type: "website",
   };
+  // ✅ Assign canonical URL to `alternates`
+  metadata.alternates = {
+    canonical: `${BASE_URL_NEXT}/industries/${params.slug}`,
+  };
+  
+  return metadata;
 }
 
 
@@ -83,7 +98,7 @@ const getLucideIcon = (iconName: string): FC<any> => {
   return Icon;
 };
 
-export default async function IndustryDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function IndustryDetailPage({ params }: PageProps) {
   // Resolve the params to get the slug
   const { slug } = await params;
 

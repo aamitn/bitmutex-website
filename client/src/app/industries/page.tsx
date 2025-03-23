@@ -3,6 +3,9 @@ import * as LucideIcons from "lucide-react";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { FC } from "react";
+import { generateMetadataObject } from '@/lib/metadata';
+import  fetchContentType  from '@/lib/strapi/fetchContentType';
+import { Metadata } from "next";
 
 type Industry = {
   uuid: string;
@@ -16,7 +19,68 @@ type Industry = {
   solutions: string[];
 };
 
+let heading: string = '', sub_heading: string = '', description: string = '';
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const BASE_URL_NEXT = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const pageData = await fetchContentType('industries-page', {
+    populate: ["seo","seo.metaImage"],
+  }, true)
+  console.log("industry Page Data:", pageData); // Debugging output
+
+  
+  if (!pageData) {
+    return {
+      title: "Page Not Found | Bitmutex Technologies",
+      description: "The requested page does not exist.",
+      robots: "noindex, nofollow", // Avoid indexing non-existent pages
+    };
+  }
+
+  
+  const seo = pageData?.seo;
+  const metadata = generateMetadataObject(seo);
+
+  heading = pageData.heading;
+  sub_heading = pageData.sub_heading;
+  description = pageData.description;
+
+  // ✅ Ensure title fallback to `pageData.title` if `seo.metaTitle` is missing
+  const seotitle = seo?.metaTitle 
+  ? `${seo.metaTitle}  | Bitmutex`
+  : `${pageData.heading || "Untitled"} | Bitmutex`;
+
+  // ✅ use pageData description as fallback if metaDescription is not available
+  let seodescription = seo?.metaDescription || pageData.description || "";
+  if (seodescription.length > 150) {
+    seodescription = seodescription.substring(0, seodescription.lastIndexOf(" ", 150)) + "...";
+  }
+
+  // ✅ Override normal title field
+  metadata.title = seotitle;
+  metadata.description = seodescription;
+
+  // ✅ Override OG fields
+  metadata.openGraph = {
+    ...(metadata.openGraph as any), // Cast to 'any' to allow unknown properties
+    title: seotitle, 
+    description: seodescription,
+    url: `${BASE_URL_NEXT}/industries`, // Add custom URL field
+    site_name: "Bitmutex",
+    locale: "en_US",
+    type: "website",
+  };
+    // ✅ Assign canonical URL to `alternates`
+    metadata.alternates = {
+      canonical: `${BASE_URL_NEXT}/industries`,
+    };
+  
+  return metadata;
+}
 
 // ✅ Get the correct Lucide icon
 const getLucideIcon = (iconName: string): FC<any> => {
@@ -36,15 +100,21 @@ const getLucideIcon = (iconName: string): FC<any> => {
 };
 
 
-
 export default async function IndustryPage() {
   const industries: Industry[] = await fetchIndustries();
 
   return (
     <div className="container mx-auto py-12 mt-8 mb-8">
-      <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-300 text-center mb-10">
-        Industries We Serve
-      </h1>
+
+        {/* Header */}
+        <div className="text-center">
+          <span className="font-bold uppercase text-primary tracking-wide">{heading}</span>
+          <h2 className="font-heading text-4xl font-bold text-gray-900 dark:text-white mt-2">{sub_heading}</h2>
+          <p className="text-lg text-muted-foreground mt-3 max-w-xl mx-auto pb-4">
+          {description}
+          </p>
+       </div>
+
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-4">
         {industries.map((industry) => {
