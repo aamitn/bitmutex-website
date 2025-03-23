@@ -7,17 +7,70 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/
 import { Button } from "@/components/ui/button";
 import sanitizeHtml from "sanitize-html";
 import Link from "next/link";
+import { Metadata } from "next";
 
-// ✅ Convert kebab-case to PascalCase for Lucide icons
-const toPascalCase = (str: string): string =>
-  str
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join("");
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const resolveParams = await params;
+  const slug = resolveParams?.slug;
+  const industry = await fetchIndustryBySlug(slug);
+
+  if (!industry) {
+    return {
+      title: "Industry Not Found | Bitmutex Technologies",
+      description: "The requested project does not exist. Browse more projects by Bitmutex Technologies.",
+      robots: "noindex, nofollow", // Avoid indexing non-existent pages
+    };
+  }
+
+  // Extract first 150 chars from `details` or use `description`
+  const shortDescription = industry.details
+    ? industry.details.substring(0, 150) + "..."
+    : industry.description;
+
+  // Construct SEO title
+  const seoTitle = `${industry.name}  Industry | Bitmutex Technologies`;
+  const placeholderImage = "https://images.unsplash.com/photo-1606337321936-02d1b1a4d5ef";
+
+  return {
+    title: seoTitle,
+    description: shortDescription,
+    robots: "index, follow", // Ensure it's indexed properly
+    openGraph: {
+      title: seoTitle,
+      description: shortDescription,
+      url: `https://bitmutex.com/projects/${industry.slug}`,
+      type: "article",
+      images: [
+        { 
+          url: placeholderImage, 
+          width: 1200, 
+          height: 630 
+        }
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seoTitle,
+      description: shortDescription,
+      images: [placeholderImage],
+    },
+    alternates: {
+      canonical: `https://bitmutex.com/industries/${industry.slug}`, // Ensure correct indexing
+    },
+  };
+}
+
+
 
 // ✅ Get the correct Lucide icon
 const getLucideIcon = (iconName: string): FC<any> => {
-  const pascalCaseName = toPascalCase(iconName);
+  // ✅ Convert kebab-case to PascalCase for Lucide icons
+  const pascalCaseName = iconName.split("-").map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+  .join("");;
 
   // Check if the icon exists in the imported LucideIcons and return it
   const Icon = (LucideIcons as any)[pascalCaseName];

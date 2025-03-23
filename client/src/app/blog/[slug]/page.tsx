@@ -44,6 +44,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: post.title,
     description: post.description,
+    robots: "index, follow", // Ensure it's indexed properly
   };
 }
 

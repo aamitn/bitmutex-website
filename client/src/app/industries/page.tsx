@@ -17,15 +17,12 @@ type Industry = {
 };
 
 
-const toPascalCase = (str: string): string =>
-  str
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join("");
 
 // ✅ Get the correct Lucide icon
 const getLucideIcon = (iconName: string): FC<any> => {
-  const pascalCaseName = toPascalCase(iconName);
+  //Convert incon descriptor name to pascal case
+  const pascalCaseName = iconName.split("-").map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+  .join("");;
 
   // Check if the icon exists in the imported LucideIcons and return it
   const Icon = (LucideIcons as any)[pascalCaseName];
