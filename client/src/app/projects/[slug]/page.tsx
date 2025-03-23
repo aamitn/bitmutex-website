@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Github, ArrowLeft, ExternalLink } from "lucide-react"; // Import Lucide Icons
+import { FaGitAlt,FaExternalLinkAlt} from "react-icons/fa";
+import { FaArrowLeftLong } from "react-icons/fa6";
 import { Badge } from "@/components/ui/badge"; // Use a badge component for category styling
 import Link from "next/link";
 import { Metadata } from "next";
@@ -102,7 +103,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               {/* Back to Industries Button with Lucide Icon */}
               <Link href="/projects">
                 <Button variant="outline" className="flex items-center gap-2 whitespace-nowrap">
-                  <ArrowLeft size={18} /> Go Back
+                  <FaArrowLeftLong  size={18} /> Go Back
                 </Button>
               </Link>
             </div>
@@ -118,14 +119,14 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               {project.repourl && (
                 <Button asChild variant="outline">
                   <a href={project.repourl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                    <Github size={18} /> View Repository
+                    <FaGitAlt /> View Repository
                   </a>
                 </Button>
               )}
               {project.hostedurl && (
                 <Button asChild>
                   <a href={project.hostedurl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                    <ExternalLink size={18} /> Visit Project
+                    <FaExternalLinkAlt/> Visit Project
                   </a>
                 </Button>
               )}
@@ -146,7 +147,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
       {/* Full-width Details Accordion */}
       <div className="mt-8 w-full">
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion type="single" defaultValue="details" collapsible className="w-full">
           <AccordionItem value="details">
             <AccordionTrigger>Project Details</AccordionTrigger>
             <AccordionContent>
