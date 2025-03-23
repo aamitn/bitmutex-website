@@ -260,3 +260,21 @@ body {
   box-shadow: 0px 8px 10px rgba(31, 38, 135, 0.2);
   transition: transform 0.3s ease-in-out;
 }
+
+
+
+/* Leaflet OpenStreetMaps Styles */
+
+.leaflet-container {
+  position: relative !important; /* Ensure it's positioned properly */
+  z-index: 0 !important; /* Push it below other elements */
+}
+
+.custom-cluster-icon {
+  z-index: 1000 !important; /* Ensure clusters remain clickable */
+}
+
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 1000 !important; /* Keep controls above the map */
+}

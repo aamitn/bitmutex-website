@@ -6,11 +6,12 @@ import  RenderMarkdown  from "@/components/custom/RenderMarkdown";
 import { StrapiImage } from "@/components/custom/strapi-image";
 import { getBlogPostBySlug } from "@/data/loaders";
 import { BlockRenderer } from "@/components/block-renderer";
-import sanitizeHtml from "sanitize-html";
 import ReadingProgress from "@/components/ui/ReadingProgress";
-import { Facebook, Twitter, Linkedin, Eye } from "lucide-react"; // Importing Lucide icons
 import { CkeditorBlock } from "@/components/block-renderer/layout/ckeditor-block";
 import TableOfContents from "@/components/custom/TableOfContents";
+import { FaSquareXTwitter,FaSquareFacebook, FaLinkedin } from "react-icons/fa6";
+import {FiEye } from "react-icons/fi";
+import { FaRedditSquare } from "react-icons/fa";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -62,10 +63,13 @@ export default async function SinglePost({ params }: PageProps) {
   const viewCount = post.views || 0; // Assuming views are coming from API
 
   // Social share URLs
-  const shareUrl = encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`);
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:1337"; // Fallback URL
+  const shareUrl = encodeURIComponent(`${baseUrl}/blog/${slug}`);
   const twitterShare = `https://twitter.com/intent/tweet?url=${shareUrl}&text=${encodeURIComponent(post.title)}`;
   const facebookShare = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
   const linkedinShare = `https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}`;
+  const redditShare = `https://www.reddit.com/submit?url=${shareUrl}&title=${encodeURIComponent(post.title)}`;
+  
   
 
   return (
@@ -121,7 +125,7 @@ export default async function SinglePost({ params }: PageProps) {
 
           {/* View Count */}
           <div className="flex items-center justify-center gap-2 mt-3 text-gray-600 dark:text-gray-400">
-            <Eye size={18} />
+            <FiEye  size={18} />
             <span>{viewCount} views</span>
           </div>
 
@@ -133,7 +137,7 @@ export default async function SinglePost({ params }: PageProps) {
               rel="noopener noreferrer"
               className="p-2 rounded-full hover:bg-blue-100 transition"
             >
-              <Twitter className="w-5 h-5 text-blue-500" />
+            <FaSquareXTwitter className="w-5 h-5 text-orange-500"/>
             </a>
             <a
               href={facebookShare}
@@ -141,7 +145,7 @@ export default async function SinglePost({ params }: PageProps) {
               rel="noopener noreferrer"
               className="p-2 rounded-full hover:bg-blue-100 transition"
             >
-              <Facebook className="w-5 h-5 text-blue-600" />
+              <FaSquareFacebook className="w-5 h-5 text-orange-500" />
             </a>
             <a
               href={linkedinShare}
@@ -149,7 +153,16 @@ export default async function SinglePost({ params }: PageProps) {
               rel="noopener noreferrer"
               className="p-2 rounded-full hover:bg-blue-100 transition"
             >
-              <Linkedin className="w-5 h-5 text-blue-700" />
+              <FaLinkedin className="w-5 h-5 text-orange-500" />
+            </a>
+
+            <a
+              href={redditShare}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-full hover:bg-blue-100 transition"
+            >
+              <FaRedditSquare  className="w-5 h-5 text-orange-500" />
             </a>
           </div>
 
