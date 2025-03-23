@@ -37,3 +37,16 @@ export const formatNumber = (
     maximumFractionDigits: 2,
   }).format(number);
 };
+
+export const extractTextFromRichText = (content: any): string => {
+  if (!content) return "";
+
+  if (Array.isArray(content)) {
+    return content
+      .map((block) => (block.type === "paragraph" ? block.children.map((child: any) => child.text).join(" ") : ""))
+      .join("\n"); // Join paragraphs with newlines
+  }
+
+  return String(content);
+};
+

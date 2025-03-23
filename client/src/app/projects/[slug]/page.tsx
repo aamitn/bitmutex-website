@@ -9,16 +9,29 @@ import { Badge } from "@/components/ui/badge"; // Use a badge component for cate
 import Link from "next/link";
 import { Metadata } from "next";
 import RenderMarkdown from "@/components/custom/RenderMarkdown";
+import { generateMetadataObject } from '@/lib/metadata';
+import  fetchContentType  from '@/lib/strapi/fetchContentType';
+import { strapiImage } from '@/lib/strapi/strapiImage';
+import {extractTextFromRichText} from "@/lib/utils";
+
+
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const resolveParams = await params;
-  const slug = resolveParams?.slug;
-  const project = await fetchProjectBySlug(slug);
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const BASE_URL_NEXT = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const pageData = await fetchContentType('projects', {
+    filters: { slug: params.slug }, // Filter by slug
+    populate: ["category","seo.metaImage","image"],
+  }, true)
+  //console.log("Project Data:", pageData); // Debugging output
 
-  if (!project) {
+  if (!pageData) {
     return {
       title: "Project Not Found | Bitmutex Technologies",
       description: "The requested project does not exist. Browse more projects by Bitmutex Technologies.",
@@ -26,36 +39,51 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  // Extract first 150 chars from `details` or use `description`
-  const shortDescription = project.details
-    ? project.details.substring(0, 150) + "..."
-    : project.description;
+  const seo = pageData?.seo;
+  const metadata = generateMetadataObject(seo);
 
-  // Construct SEO title
-  const seoTitle = `${project.name} - ${project.category} | Bitmutex Technologies`;
+// Usage example
+const richTextString = extractTextFromRichText(pageData.description);
 
-  return {
-    title: seoTitle,
-    description: shortDescription,
-    robots: "index, follow", // Ensure it's indexed properly
-    openGraph: {
-      title: seoTitle,
-      description: shortDescription,
-      url: `https://bitmutex.com/projects/${project.slug}`,
-      type: "article",
-      images: project.imageUrl ? [{ url: project.imageUrl, width: 1200, height: 630 }] : [],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: seoTitle,
-      description: shortDescription,
-      images: project.imageUrl ? [project.imageUrl] : [],
-    },
-    alternates: {
-      canonical: `https://bitmutex.com/projects/${project.slug}`, // Ensure correct indexing
-    },
+
+  // ✅ Ensure title fallback to `pageData.title` if `seo.metaTitle` is missing
+  const seotitle = seo?.metaTitle 
+  ? `${seo.metaTitle} | ${pageData.category?.text || "Uncategorized"} | Bitmutex Projects`
+  : `${pageData.name || "Untitled"} |  ${pageData.category?.text || "Uncategorized"}  |Bitmutex Projects`;
+
+  // ✅ use pageData description as fallback if metaDescription is not available
+  let seodescription = seo?.metaDescription || richTextString || "";
+  if (seodescription.length > 150) {
+    seodescription = seodescription.substring(0, seodescription.lastIndexOf(" ", 150)) + "...";
+  }
+
+  // ✅ Override normal title field
+  metadata.title = seotitle;
+  metadata.description = seodescription;
+
+  // ✅ Override OG fields
+  metadata.openGraph = {
+    ...(metadata.openGraph as any), // Cast to 'any' to allow unknown properties
+    title: seotitle, 
+    description: seodescription,
+    images: seo?.metaImage 
+    ? [{ url: strapiImage(seo?.metaImage.url) }] 
+    : pageData?.image 
+      ? [{ url: strapiImage(pageData.image.url) }] 
+      : [],
+    url: `${BASE_URL_NEXT}/projects/${params.slug}`, // Add custom URL field
+    site_name: "Bitmutex",
+    locale: "en_US",
+    type: "article",
   };
+  // ✅ Assign canonical URL to `alternates`
+  metadata.alternates = {
+    canonical: `${BASE_URL_NEXT}/projects/${params.slug}`,
+  };
+  
+  return metadata;
 }
+
 
 // Helper function to render Strapi "blocks" or "richtext"
 const renderRichText = (content: any) => {
@@ -74,7 +102,7 @@ const renderRichText = (content: any) => {
 };
 
 
-export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ProjectDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const project = await fetchProjectBySlug(slug);
 

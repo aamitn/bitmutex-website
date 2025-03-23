@@ -7,7 +7,6 @@ import { notFound } from "next/navigation";
 import { Header, Footer } from "@/components/layout";
 import { getGlobalPageData } from "@/data/loaders";
 import Chat from "@/components/ui/chat";
-import { metadata } from "@/app/metadata"; 
 import LiveUserCount from "@/components/custom/LiveUserCount";
 import 'vanilla-cookieconsent/dist/cookieconsent.css';
 import CookieConsentComponent from '@/components/cookie/CookieConsent';
@@ -26,7 +25,6 @@ const fontHeading = Nunito({
   subsets: ["latin"],
 });
 
-export { metadata }; // Export metadata for Next.js to use
 
 export default async function RootLayout({
   children,

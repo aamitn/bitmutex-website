@@ -25,6 +25,15 @@ export async function getGlobalPageData() {
 export async function getLandingPage() {
   const landingPage = await sdk.single("landing-page").find({
     populate: {
+      
+      seo: {
+        populate: {
+          metaImage: {
+            fields: ["url"],
+          },
+        },
+      },
+
       blocks: {
         on: {
           "layout.hero": {
@@ -140,6 +149,13 @@ export async function getAllPagesSlugs() {
 export async function getPageBySlug(slug: string, status: string) {
   const page = await sdk.collection("pages").find({
     populate: {
+      seo: {
+        populate: {
+          metaImage: {
+            fields: ["url", "alternativeText", "name"],
+          },
+        },
+      },
       blocks: {
         on: {
           "layout.hero": {
@@ -229,6 +245,7 @@ export async function getPageBySlug(slug: string, status: string) {
       slug: slug,
     },
     status: status as "draft" | "published" | undefined,
+
   });
   return page;
 }
@@ -276,6 +293,7 @@ export async function getBlogPostBySlug(slug: string, status: string) {
         },
       },
     author: {  fields: ["firstname", "lastname", "email", "username"],  },
+    seo: {  populate: "*"  },
     },
     filters: { slug: { $eq: slug } },
     status: status as "draft" | "published" | undefined,
