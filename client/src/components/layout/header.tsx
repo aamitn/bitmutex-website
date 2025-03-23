@@ -148,7 +148,7 @@ export function Header({ data }: Readonly<HeaderProps>) {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
-                  className="absolute left-0 mt-2 w-56 bg-white dark:bg-gray-800 shadow-lg rounded-md border z-50"
+                  className="absolute left-0 mt-2 w-56 bg-white dark:bg-gray-800 shadow-lg rounded-md border z-[99999]"
                   onMouseEnter={() => handleMouseEnter(parentName)}
                   onMouseLeave={handleMouseLeave}
                 >

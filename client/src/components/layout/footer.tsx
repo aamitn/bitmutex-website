@@ -12,6 +12,7 @@ import * as LucideIcons from "lucide-react";
 import { ElementType } from "react";
 import React from "react";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+
 interface SocialLink {
   href: string;
   text: string;
@@ -34,7 +35,7 @@ interface FooterProps {
 }
 
 
-
+const unicode_diamond = "\ud83d\udca0";
 
 // ✅ Get the correct Lucide icon
 const getLucideIcon = (iconName: string): ElementType => {
@@ -60,7 +61,7 @@ export function Footer({ data }: Readonly<FooterProps>) {
   }, {});
 
   return (
-    <footer className="relative bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-white">
+    <footer className="relative bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-white mt-14">
       {/* ✅ Shape Divider (Wavy Effect) placed inside footer at the correct level */}
       <div className="absolute top-[-80px] left-0 w-full overflow-hidden leading-none backdrop-blur-md opacity-90 drop-shadow-lg">
         <svg
@@ -74,8 +75,8 @@ export function Footer({ data }: Readonly<FooterProps>) {
           ></path>
           <defs>
             <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style={{ stopColor: "#007bff", stopOpacity: 0.9 }} />
-              <stop offset="100%" style={{ stopColor: "#ff8d00", stopOpacity: 0.9 }} />
+              <stop offset="0%" style={{ stopColor: "#0858F6", stopOpacity: 0.9 }} />
+              <stop offset="100%" style={{ stopColor: "#FF914D", stopOpacity: 0.9 }} />
             </linearGradient>
           </defs>
         </svg>
@@ -232,7 +233,7 @@ export function Footer({ data }: Readonly<FooterProps>) {
 
     {/* Copyright Section */}
     <div className="border-t border-gray-500 dark:border-gray-700 mt-10 pt-6 text-center text-sm text-gray-600 dark:text-gray-400">
-     &copy; 2018 - {new Date().getFullYear()} 💠 {text} 💠 All rights reserved.
+      &copy; 2018 - {new Date().getFullYear()} {unicode_diamond} {text} {unicode_diamond} All rights reserved.
     </div>
     </footer>
   );
