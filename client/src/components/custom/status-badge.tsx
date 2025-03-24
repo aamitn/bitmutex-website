@@ -41,8 +41,6 @@ export default function StatusBadge() {
                         src={iframeSrc}
                         width="250"
                         height="30"
-                        frameBorder="0"
-                        scrolling="no"
                         style={{ colorScheme: "normal" }}
                     ></iframe>
                 )}

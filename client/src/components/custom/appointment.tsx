@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, ReactNode } from "react";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils"; // Utility for merging Tailwind classes
 
@@ -46,7 +45,7 @@ const CalBookingModal: React.FC<CalBookingModalProps> = ({ url, trigger }) => {
       >
         {/* Hidden Title for Accessibility */}
         <DialogTitle>
-          <VisuallyHidden>Schedule an Appointment</VisuallyHidden>
+          Schedule an Appointment
         </DialogTitle>
 
         {/* Framer Motion Animated Iframe Container */}
