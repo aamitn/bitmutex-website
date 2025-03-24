@@ -6,8 +6,8 @@ import { Container } from "./container";
 import { Button } from "@/components/ui/button";
 
 
+const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "amitnandileo@gmail.com";
 
-const adminEmail = "amitnandileo@gmail.com"; //TODO get from env
 export const RegisterForm = () => {
   const [formData, setFormData] = useState({
     firstname: "",
@@ -38,38 +38,38 @@ export const RegisterForm = () => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       const allowedTypes = ["application/pdf", "image/jpeg", "image/png"];
-      
+
       if (!allowedTypes.includes(file.type)) {
         alert("Invalid file type. Please upload a PDF or image.");
         return;
       }
-  
+
       if (file.size > 2 * 1024 * 1024) { // 2MB limit
         alert("File size exceeds 2MB. Please upload a smaller file.");
         return;
       }
-  
+
       setVcFile(file);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
+
     if (formData.honeysecretpot) {
       console.warn("Spam detected! Submission blocked.");
       return;
     }
-  
+
     setLoading(true);
     let uploadedFileId = null;
-  
+
     try {
       // **Step 1: Upload File First (If Exists)**
       if (vcFile) {
         const fileFormData = new FormData();
         fileFormData.append("files", vcFile);
-  
+
         const fileResponse = await fetch(
           `${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/api/upload`,
           {
@@ -77,16 +77,16 @@ export const RegisterForm = () => {
             body: fileFormData,
           }
         );
-  
+
         if (!fileResponse.ok) {
           throw new Error("File upload failed.");
         }
-  
+
         const fileData = await fileResponse.json();
         uploadedFileId = fileData[0].id; // Get uploaded file ID
         console.log("File uploaded successfully. Media ID:", uploadedFileId);
       }
-  
+
       // **Step 2: Submit Form Data (with File ID)**
       const submissionData = {
         data: {
@@ -100,7 +100,7 @@ export const RegisterForm = () => {
           vcfile: uploadedFileId ? uploadedFileId : null, // Attach uploaded file ID if exists
         },
       };
-  
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/api/registration-form-submissions`,
         {
@@ -109,15 +109,15 @@ export const RegisterForm = () => {
           body: JSON.stringify(submissionData),
         }
       );
-  
+
       if (!response.ok) {
         throw new Error("Form submission failed.");
       }
-  
+
       const responseData = await response.json();
       const submissionId = responseData.data.id;
       console.log("Form submission successful. ID:", submissionId);
-  
+
       // **Step 3: Send Confirmation Email to User**
       const emailResponse = await fetch(`/api/email`, {
         method: "POST",
@@ -132,14 +132,14 @@ export const RegisterForm = () => {
             Team Bitmutex`,
         }),
       });
-  
+
       if (!emailResponse.ok) {
         throw new Error("Failed to send email to user.");
       }
-  
+
       // **Step 4: Wait Before Sending Admin Email**
       await new Promise((resolve) => setTimeout(resolve, 2000));
-  
+
       // **Step 5: Send Email Notification to Admin**
       let attachmentData = null;
       if (vcFile) {
@@ -149,7 +149,7 @@ export const RegisterForm = () => {
           reader.onload = () => resolve(reader.result);
         });
       }
-  
+
       const emailResponseAdmin = await fetch(`/api/email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -168,22 +168,22 @@ export const RegisterForm = () => {
                     Best Regards,<br> Bitmutex Bot 🤖`,
           attachments: vcFile
             ? [
-                {
-                  filename: vcFile.name,
-                  content: attachmentData,
-                  encoding: "base64",
-                },
-              ]
+              {
+                filename: vcFile.name,
+                content: attachmentData,
+                encoding: "base64",
+              },
+            ]
             : [],
         }),
       });
-  
+
       if (!emailResponseAdmin.ok) {
         throw new Error("Failed to send admin email with attachment.");
       }
-  
+
       setSuccess("Registration Successful!");
-  
+
       // **Step 6: Reset Form**
       setFormData({
         firstname: "",
@@ -200,10 +200,10 @@ export const RegisterForm = () => {
       console.error(error);
       setSuccess("Error submitting form.");
     }
-  
+
     setLoading(false);
   };
-  
+
   return (
     <Container className="h-full max-w-lg mx-auto flex flex-col items-center justify-center">
       <h1 className="text-xl font-heading font-bold md:text-4xl font-bold my-4 text-slate-800 dark:text-orange-400">Request a Quote</h1>
@@ -237,7 +237,7 @@ export const RegisterForm = () => {
           required
           className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-white border border-neutral-800 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-neutral-800 dark:focus:ring-orange-300"
         />
-        
+
         <div className="mb-4">
           <PhoneInput
             country={"in"}
@@ -337,7 +337,7 @@ export const RegisterForm = () => {
           </div>
         </div>
 
-      {/* Honeypot Field */}
+        {/* Honeypot Field */}
         <input
           type="text"
           name="honeysecretpot"

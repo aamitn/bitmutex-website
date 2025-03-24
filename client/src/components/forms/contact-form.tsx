@@ -4,7 +4,7 @@ import { Container } from "./container";
 
 import { Button } from "@/components/ui/button";
 
-const adminEmail = "amitnandileo@gmail.com";
+const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "amitnandileo@gmail.com";
 
 export const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -35,23 +35,23 @@ export const ContactForm = () => {
     setLoading(true);
 
     try {
-        console.log(process.env.NEXT_PUBLIC_STRAPI_BASE_URL);
+      console.log(process.env.NEXT_PUBLIC_STRAPI_BASE_URL);
       // Save form data to backend
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/api/contact-form-submissions`, 
+        `${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/api/contact-form-submissions`,
         {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          data: {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            referralSource: formData.referralSource,
-            message: formData.message,
-          },
-        }),
-      });
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            data: {
+              name: formData.name,
+              email: formData.email,
+              phone: formData.phone,
+              referralSource: formData.referralSource,
+              message: formData.message,
+            },
+          }),
+        });
 
       if (!response.ok) {
         throw new Error("Failed to save message");
@@ -174,7 +174,7 @@ export const ContactForm = () => {
           required
           className="h-28 pl-4 pt-2 w-full mb-4 rounded-md text-sm bg-charcoal border border-neutral-400 text-slate-600 dark:text-slate-200  placeholder-neutral-500 outline-none focus:ring-2 focus:ring-neutral-800 dark:focus:ring-neutral-300"
         />
-        
+
         {/* Honeypot Field */}
         <input
           type="text"
