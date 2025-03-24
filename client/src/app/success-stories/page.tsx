@@ -7,11 +7,7 @@ import { generateMetadataObject } from '@/lib/metadata';
 
 let heading: string = '', sub_heading: string = '', description: string = '';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const BASE_URL_NEXT = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const pageData = await fetchContentType('stories-page', {
     populate: ["seo","seo.metaImage"],
@@ -69,7 +65,10 @@ export async function generateMetadata({
   return metadata;
 }
 
-export default async function SuccessStoryPage({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
+export default async function SuccessStoryPage({ 
+  searchParams 
+}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+  const resolvedSearchParams = await searchParams; // Await the Promise
   const successStories = await fetchSuccessStories();
 
   return (

@@ -21,11 +21,7 @@ type Industry = {
 
 let heading: string = '', sub_heading: string = '', description: string = '';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const BASE_URL_NEXT = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const pageData = await fetchContentType('industries-page', {
     populate: ["seo","seo.metaImage"],

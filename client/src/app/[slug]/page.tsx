@@ -1,3 +1,4 @@
+
 import { draftMode } from "next/headers";
 import { getAllPagesSlugs, getPageBySlug } from "@/data/loaders";
 import { BlockRenderer } from "@/components/block-renderer";
@@ -12,11 +13,13 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
 
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-  const { slug } = params;
+  const resolveParams = await params;
+  const slug = await resolveParams?.slug;
 
   // ✅ Fetch page data for the given slug
   const { isEnabled: isDraftMode } = await draftMode();
@@ -70,12 +73,15 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return metadata;
 }
 
+
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>
 }
 
+
 export default async function PageBySlugRoute({ params }: PageProps) {
-  const { slug } = params;
+  const resolveParams = await params;
+  const slug = await resolveParams?.slug;
   const { isEnabled: isDraftMode } = await draftMode();
   const status = isDraftMode ? "draft" : "published";
 

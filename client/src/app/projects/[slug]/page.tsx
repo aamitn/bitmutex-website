@@ -19,14 +19,14 @@ import {extractTextFromRichText} from "@/lib/utils";
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const BASE_URL_NEXT = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+
+  const resolveParams = await params;
+  const slug = await resolveParams?.slug;
+
   const pageData = await fetchContentType('projects', {
-    filters: { slug: params.slug }, // Filter by slug
+    filters: { slug: slug }, // Filter by slug
     populate: ["category","seo.metaImage","image"],
   }, true)
   //console.log("Project Data:", pageData); // Debugging output
@@ -71,14 +71,14 @@ const richTextString = extractTextFromRichText(pageData.description);
     : pageData?.image 
       ? [{ url: strapiImage(pageData.image.url) }] 
       : [],
-    url: `${BASE_URL_NEXT}/projects/${params.slug}`, // Add custom URL field
+    url: `${BASE_URL_NEXT}/projects/${slug}`, // Add custom URL field
     site_name: "Bitmutex",
     locale: "en_US",
     type: "article",
   };
   // ✅ Assign canonical URL to `alternates`
   metadata.alternates = {
-    canonical: `${BASE_URL_NEXT}/projects/${params.slug}`,
+    canonical: `${BASE_URL_NEXT}/projects/${slug}`,
   };
   
   return metadata;

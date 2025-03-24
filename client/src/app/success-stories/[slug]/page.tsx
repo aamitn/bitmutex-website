@@ -5,19 +5,17 @@ import  fetchContentType  from '@/lib/strapi/fetchContentType';
 import { strapiImage } from '@/lib/strapi/strapiImage';
 import { Metadata } from "next";
 
-interface Props {
-  params: { slug: string };
+interface PageProps {
+  params: Promise<{ slug: string }>;
 }
 
-
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const BASE_URL_NEXT = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const resolveParams = await params;
+  const slug = await resolveParams?.slug;
+
   const pageData = await fetchContentType('success-stories', {
-    filters: { slug: params.slug }, // Filter by slug
+    filters: { slug: slug }, // Filter by slug
     populate: ["seo.metaImage","logo"],
   }, true)
   //console.log("Page Data:", pageData); // Debugging output
@@ -58,14 +56,14 @@ export async function generateMetadata({
     : pageData?.logo 
       ? [{ url: strapiImage(pageData.logo.url) }] 
       : [],
-    url: `${BASE_URL_NEXT}/success-stories/${params.slug}`, // Add custom URL field
+    url: `${BASE_URL_NEXT}/success-stories/${slug}`, // Add custom URL field
     site_name: "Bitmutex",
     locale: "en_US",
     type: "article",
   };
   // ✅ Assign canonical URL to `alternates`
   metadata.alternates = {
-    canonical: `${BASE_URL_NEXT}/success-stories/${params.slug}`,
+    canonical: `${BASE_URL_NEXT}/success-stories/${slug}`,
   };
   
   return metadata;
@@ -77,8 +75,11 @@ const fetchData = async (slug: string) => {
   return await fetchSuccessStoryBySlug(slug);
 };
 
-export default async function SuccessStoryDetails({ params }: Props) {
-  const story = await fetchData(params.slug);
+export default async function SuccessStoryDetails({ params }: PageProps) {
+  const resolveParams = await params;
+  const slug = resolveParams?.slug;
+
+  const story = await fetchData(slug);
 
   if (!story) {
     return <p className="text-center text-gray-500 mt-10">Success story not found.</p>;

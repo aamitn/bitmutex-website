@@ -34,14 +34,13 @@ type Service = {
 };
 
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const BASE_URL_NEXT = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const resolveParams = await params;
+  const slug = await resolveParams?.slug;
+
   const pageData = await fetchContentType('services', {
-    filters: { slug: params.slug }, // Filter by slug
+    filters: { slug }, // Filter by slug
     populate: ["seo.metaImage"],
   }, true)
   //console.log("Page Data:", pageData); // Debugging output
@@ -84,14 +83,14 @@ export async function generateMetadata({
       ? [{ url: strapiImage(pageData.image.url) }]
       : [{ url: `${BASE_URL_NEXT}/bmserv.png`}], // Fallback to predefined placeholder
 
-    url: `${BASE_URL_NEXT}/services/${params.slug}`, // Add custom URL field
+    url: `${BASE_URL_NEXT}/services/${slug}`, // Add custom URL field
     site_name: "Bitmutex",
     locale: "en_US",
     type: "website",
   };
   // ✅ Assign canonical URL to `alternates`
   metadata.alternates = {
-    canonical: `${BASE_URL_NEXT}/services/${params.slug}`,
+    canonical: `${BASE_URL_NEXT}/services/${slug}`,
   };
   
   return metadata;

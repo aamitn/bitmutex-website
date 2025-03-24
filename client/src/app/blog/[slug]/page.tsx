@@ -15,19 +15,19 @@ import { FaRedditSquare } from "react-icons/fa";
 import { generateMetadataObject } from '@/lib/metadata';
 import  fetchContentType  from '@/lib/strapi/fetchContentType';
 import { strapiImage } from '@/lib/strapi/strapiImage';
+import { calculateReadingTime } from "@/lib/utils";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const BASE_URL_NEXT = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const resolveParams = await params;
+  const slug = await resolveParams?.slug;
+
   const pageData = await fetchContentType('posts', {
-    filters: { slug: params.slug }, // Filter by slug
+    filters: { slug: slug }, // Filter by slug
     populate: ["category","seo.metaImage","image"],
   }, true)
   //console.log("Page Data:", pageData); // Debugging output
@@ -68,26 +68,20 @@ export async function generateMetadata({
     : pageData?.image 
       ? [{ url: strapiImage(pageData.image.url) }] 
       : [],
-    url: `${BASE_URL_NEXT}/blog/${params.slug}`, // Add custom URL field
+    url: `${BASE_URL_NEXT}/blog/${slug}`, // Add custom URL field
     site_name: "Bitmutex",
     locale: "en_US",
     type: "article",
   };
   // ✅ Assign canonical URL to `alternates`
   metadata.alternates = {
-    canonical: `${BASE_URL_NEXT}/blog/${params.slug}`,
+    canonical: `${BASE_URL_NEXT}/blog/${slug}`,
   };
   
   return metadata;
 }
 
 
-// Function to calculate estimated reading time
-const calculateReadingTime = (text: string): number => {
-  const wordsPerMinute = 225; 
-  const wordCount = text.split(/\s+/).length;
-  return Math.ceil(wordCount / wordsPerMinute);
-};
 
 
 export default async function SinglePost({ params }: PageProps) {
@@ -100,6 +94,9 @@ export default async function SinglePost({ params }: PageProps) {
   console.log('post data is ', post);
   if (!post) notFound();
 
+    
+ 
+  
   const blocks = post?.blocks || [];
   const fullContent = `${post.content || ""} ${post.content1 || ""} ${post.content2 || ""}`;
   const readingTime = fullContent.trim() ? calculateReadingTime(fullContent) : 1;
@@ -112,7 +109,6 @@ export default async function SinglePost({ params }: PageProps) {
   const facebookShare = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
   const linkedinShare = `https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}`;
   const redditShare = `https://www.reddit.com/submit?url=${shareUrl}&title=${encodeURIComponent(post.title)}`;
-  
   
 
   return (
