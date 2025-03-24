@@ -3,7 +3,6 @@
 import type { CardGridProps } from "@/types";
 import * as LucideIcons from "lucide-react";
 import Link from "next/link";
-
 import {
   Carousel,
   CarouselPrevious,
@@ -48,7 +47,7 @@ export function CardCarousel({ cardItems }: Readonly<CardGridProps>) {
                       <IconComponent size={32} className="text-white" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="mb-2 text-lg font-bold text-foreground">{heading}</h4>
+                      <h4 className="mb-2 text-lg font-bold font-heading  hover:drop-shadow-md text-foreground">{heading}</h4>
                       <p className="text-muted-foreground text-sm">{text}</p>
                     </div>
             

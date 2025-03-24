@@ -60,10 +60,10 @@ export function PostBlock(data: Readonly<PostBlockProps>) {
         <FeatureIconContainer className="flex justify-center items-center overflow-hidden">
           <IconArticle className="h-12 w-12 text-primary text-slate-200 dark:text-white" />
         </FeatureIconContainer>
-        <Heading as="h1" className="mt-4 text-primary dark:text-white">
+        <Heading as="h1" className="mt-4 font-heading text-primary dark:text-white">
           {heading}
         </Heading>
-        <Subheading as="h2" className="mt-2 text-muted-foreground">
+        <Subheading as="h2" className="mt-2 font-sans text-muted-foreground">
           {sub_heading}
         </Subheading>
       </motion.div>
@@ -109,8 +109,8 @@ export function PostBlock(data: Readonly<PostBlockProps>) {
                       <Image
                         src={`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}${post.image.url}`}
                         alt={post.title}
-                        layout="fill"
-                        objectFit="cover"
+                        fill
+                        style={{ objectFit: "cover" }}
                         className="rounded-t-lg"
                       />
                     </div>
@@ -122,7 +122,7 @@ export function PostBlock(data: Readonly<PostBlockProps>) {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.5 }}
-                    className="text-xl font-semibold text-gray-900 dark:text-white line-clamp-2"
+                    className="text-xl font-heading font-bold text-gray-900 dark:text-white line-clamp-2"
                   >
                     {post.title}
                   </motion.h3>
@@ -130,7 +130,7 @@ export function PostBlock(data: Readonly<PostBlockProps>) {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4, duration: 0.5 }}
-                      className="text-gray-600 dark:text-gray-400 mt-2 flex-grow"
+                      className="text-gray-600 font-sans dark:text-gray-400 mt-2 flex-grow"
                     >
                       {truncateText(post.description, 120)}
                     </motion.p>
@@ -170,7 +170,7 @@ export function PostBlock(data: Readonly<PostBlockProps>) {
         className="mt-10"
       >
         <Link href="/blogs">
-          <button className="px-6 py-3 text-white bg-gradient-to-r from-blue-600 to-indigo-500 dark:from-blue-400 dark:to-indigo-400 rounded-lg shadow-md hover:bg-opacity-90 transition transform hover:scale-105">
+          <button className="font-heading font-bold px-6 py-3 text-white dark:text-slate-800 bg-gradient-to-r from-blue-600 to-indigo-500 dark:from-blue-400 dark:to-indigo-400 rounded-lg shadow-md hover:bg-opacity-90 transition transform hover:scale-105">
             View All Blogs
           </button>
         </Link>

@@ -206,7 +206,7 @@ export const RegisterForm = () => {
   
   return (
     <Container className="h-full max-w-lg mx-auto flex flex-col items-center justify-center">
-      <h1 className="text-xl md:text-4xl font-bold my-4 text-slate-800 dark:text-orange-400">Request a Quote</h1>
+      <h1 className="text-xl font-heading font-bold md:text-4xl font-bold my-4 text-slate-800 dark:text-orange-400">Request a Quote</h1>
       <form className="w-full my-4" onSubmit={handleSubmit}>
         <div className="flex gap-4 mb-4">
           <input

@@ -74,14 +74,14 @@ export function RegformNextToSection(data: Readonly<RegformNextToSectionProps>) 
           >
           <Heading 
             as="h1" 
-            className="text-4xl md:text-5xl lg:text-7xl font-semibold max-w-2xl leading-relaxed 
+            className="text-7xl md:text-5xl lg:text-7xl font-heading font-semibold max-w-2xl leading-relaxed 
                       bg-gradient-to-r from-blue-600 via-orange-500 to-blue-600 
                       dark:from-blue-600 dark:via-orange-500 dark:to-blue-400 
                       bg-clip-text text-transparent 
                       tracking-tight drop-shadow-lg pb-2"
           >   
              {words.slice(0, highlightIndex).join(" ")}{" "}
-              <span className="relative inline-block min-w-[7ch] text-blue-600 dark:text-blue-300">
+              <span className="relative inline-block min-w-[7.5ch] text-blue-600 dark:text-blue-300">
                 <motion.span 
                   initial={{ opacity: 0 }} 
                   animate={{ opacity: 1 }} 

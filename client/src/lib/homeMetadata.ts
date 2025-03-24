@@ -1,6 +1,19 @@
 import { getLandingPage } from "@/data/loaders";
 import { generateMetadataObject } from "@/lib/metadata";
 import { strapiImage } from "@/lib/strapi/strapiImage";
+import type { Viewport } from 'next'
+
+
+export const viewport: Viewport = {
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+//interactiveWidget: 'resizes-visual',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '0A192F' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
+  ],
+}   
 
 export async function generateHomeMetadata() {
   const data = await getLandingPage();
@@ -45,7 +58,6 @@ export async function generateHomeMetadata() {
     alternates: {
       canonical: seo?.canonicalURL || `${BASE_URL}/`,
     },
-    viewport: seo?.metaViewport || "width=device-width, initial-scale=1",
     keywords: seo?.keywords
       ? seo.keywords.split(",").map((kw: string) => kw.trim())
       : ["software consultancy", "enterprise solutions", "cloud computing", "custom software development", "Bitmutex Technologies"], // ✅ Improved fallback keywords
@@ -80,7 +92,6 @@ export async function generateHomeMetadata() {
       ],
       manifest: `${BASE_URL}/site.webmanifest`,
     },
-    themeColor: "#0A192F", // ✅ Custom branding color (update to match your branding)
     author: "Bitmutex Technologies",
     publisher: "Bitmutex Technologies",
     other: {

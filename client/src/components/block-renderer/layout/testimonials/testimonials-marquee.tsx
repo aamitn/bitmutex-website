@@ -17,9 +17,9 @@ export const TestimonialsMarquee = ({ testimonials }: { testimonials: any }) => 
           {levelOne.map((testimonial: any, index: any) => (
             <Card
               key={`testimonial-${testimonial.id}-${index}`}
-              className="max-w-xl h-60 mx-4"
+              className="max-w-xl h-60 mx-4 "
             >
-              <Quote>{testimonial?.text}</Quote>
+              <Quote className="font-heading">{testimonial?.text}</Quote>
               <div className="flex gap-2 items-center mt-8">
                 <Image
                   src={`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}${testimonial.image.url}`}

@@ -16,10 +16,10 @@ export function FAQ(data: Readonly<FAQProps>) {
         <FeatureIconContainer className="flex justify-center items-center overflow-hidden">
           <IconHelpHexagonFilled className="h-10 w-10 text-primary text-slate-200 dark:text-white" />
         </FeatureIconContainer>
-        <Heading as="h1" className="mt-4 text-primary dark:text-white">
+        <Heading as="h1" className="font-heading mt-4 text-primary dark:text-white">
           {heading}
         </Heading>
-        <Subheading as="h2" className="mt-2 text-muted-foreground">
+        <Subheading as="h2" className="font-sans mt-2 text-muted-foreground">
           {sub_heading}
         </Subheading>
       </div>
@@ -30,7 +30,7 @@ export function FAQ(data: Readonly<FAQProps>) {
           <Accordion key={index} type="single" collapsible className="w-full">
             <AccordionItem value={`item-${index}`} className="border border-border rounded-lg">
            
-              <AccordionTrigger className="p-4 text-lg font-semibold transition-all duration-300 
+              <AccordionTrigger className="p-4 text-lg font-bold font-heading transition-all duration-300 
                 bg-gradient-to-r from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900 
                 hover:bg-gradient-to-r hover:from-primary/80 hover:to-primary/60 
                 dark:hover:from-primary/90 dark:hover:to-primary/70 
@@ -41,7 +41,7 @@ export function FAQ(data: Readonly<FAQProps>) {
                 {faq.question}
               </AccordionTrigger>
 
-              <AccordionContent className="p-4 text-muted-foreground">
+              <AccordionContent className="p-4 font-sans text-muted-foreground">
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>

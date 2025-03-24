@@ -129,7 +129,7 @@ export function ServiceBlock(data: Readonly<ServiceBlockProps>) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2, duration: 0.5 }}
-                className="text-2xl font-semibold text-gray-900 dark:text-white tracking-tight"
+                className="text-2xl font-semibold font-heading text-gray-900 dark:text-white tracking-tight"
               >
                 {service.name}
               </motion.h3>
@@ -139,7 +139,8 @@ export function ServiceBlock(data: Readonly<ServiceBlockProps>) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.4, duration: 0.5 }}
-                className="text-gray-600 dark:text-gray-400 mt-3 flex-grow text-sm md:text-base leading-relaxed line-clamp-3"
+                className="text-gray-600 font-sans dark:text-gray-400 mt-3 flex-grow text-sm md:text-base leading-relaxed line-clamp-3
+                 flex-grow mt-3 transition-all duration-300 ease-in-out  hover:drop-shadow-md"
               >
                 {service.description}
               </motion.p>
