@@ -50,3 +50,8 @@ export const extractTextFromRichText = (content: any): string => {
   return String(content);
 };
 
+export function calculateReadingTime(text: string): number {
+  const wordsPerMinute = 225;
+  const wordCount = text.split(/\s+/).length;
+  return Math.ceil(wordCount / wordsPerMinute);
+}

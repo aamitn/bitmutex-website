@@ -11,12 +11,7 @@ import { List, Grid } from "lucide-react"; // Icons for toggle button
 import { generateMetadataObject } from '@/lib/metadata';
 import  fetchContentType  from '@/lib/strapi/fetchContentType';
 import { Metadata } from "next";
-
-export function calculateReadingTime(text: string): number {
-  const wordsPerMinute = 200;
-  const wordCount = text.trim().split(/\s+/).length;
-  return Math.max(1, Math.ceil(wordCount / wordsPerMinute));
-}
+import { calculateReadingTime } from "@/lib/utils";
 
 interface PageProps {
   searchParams: Promise<{ page?: string; query?: string; category?: string; view?: string }>;
@@ -50,11 +45,8 @@ interface PostProps {
 
 let heading: string = '', sub_heading: string = '', description: string = '';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const BASE_URL_NEXT = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const pageData = await fetchContentType('blog-page', {
     populate: ["seo","seo.metaImage"],
