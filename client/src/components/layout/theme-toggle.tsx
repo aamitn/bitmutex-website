@@ -1,12 +1,12 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   DropdownMenu,
+  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
+  DropdownMenuPortal,
 } from "@/components/ui/dropdown-menu";
 
 import { Button } from "@/components/ui/button";
@@ -21,69 +21,54 @@ export function ThemeToggle() {
     setMounted(true);
   }, []);
 
-  // Handle initial hydration issue
   if (!mounted) return null;
 
   const currentTheme = theme === "system" ? systemTheme : theme;
   const isDark = currentTheme === "dark";
 
-  // Wrap DropdownMenuContent with motion()
-  const MotionDropdownMenuContent = motion(DropdownMenuContent);
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <motion.div
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9, rotate: 15 }}
-        >
-          <Button variant="outline" size="icon">
-            <motion.div
-              key={currentTheme}
-              initial={{ rotate: isDark ? -180 : 180, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              transition={{ type: "spring", stiffness: 200, damping: 20 }}
-            >
-              {isDark ? (
-                <Moon className="h-[1.2rem] w-[1.2rem] text-slate-300" />
-              ) : (
-                <Sun className="h-[1.2rem] w-[1.2rem] text-orange-500" />
-              )}
-            </motion.div>
-          </Button>
-        </motion.div>
+        <Button variant="outline" size="icon">
+          {isDark ? (
+            <Moon className="h-[1.2rem] w-[1.2rem] text-slate-300" />
+          ) : (
+            <Sun className="h-[1.2rem] w-[1.2rem] text-orange-500" />
+          )}
+        </Button>
       </DropdownMenuTrigger>
-      
-      <AnimatePresence>
-        <MotionDropdownMenuContent
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ type: "spring", stiffness: 150, damping: 12 }}
-        >
-          <DropdownMenuItem 
+
+      <DropdownMenuPortal>
+        <DropdownMenuContent className="z-50 border border-gray-200 dark:border-gray-700 bg-white dark:bg-neutral-900">
+          <DropdownMenuItem
             onClick={() => setTheme("light")}
-            className={theme === "light" ? "bg-accent" : ""}
+            className={`hover:bg-orange-200 dark:hover:bg-gray-600 ${
+              isDark ? "text-orange-400" : "text-slate-700"
+            }`}
           >
             <Sun className="mr-2 h-4 w-4" />
             Light
           </DropdownMenuItem>
-          <DropdownMenuItem 
+          <DropdownMenuItem
             onClick={() => setTheme("dark")}
-            className={theme === "dark" ? "bg-orange-500" : ""}
+            className={`hover:bg-orange-200 dark:hover:bg-gray-600 ${
+              isDark ? "text-orange-400" : "text-slate-700"
+            }`}
           >
             <Moon className="mr-2 h-4 w-4" />
             Dark
           </DropdownMenuItem>
-          <DropdownMenuItem 
+          <DropdownMenuItem
             onClick={() => setTheme("system")}
-            className={theme === "system" ? "bg-accent" : ""}
+            className={`hover:bg-orange-200 dark:hover:bg-gray-600 ${
+              isDark ? "text-orange-400" : "text-slate-700"
+            }`}
           >
             <Laptop className="mr-2 h-4 w-4" />
             System
           </DropdownMenuItem>
-        </MotionDropdownMenuContent>
-      </AnimatePresence>
+        </DropdownMenuContent>
+      </DropdownMenuPortal>
     </DropdownMenu>
   );
 }
