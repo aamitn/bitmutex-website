@@ -3,13 +3,14 @@ import { motion, useTransform, useMotionValue } from "framer-motion";
 import { Canvas } from "@react-three/fiber";
 import type { HeroProps } from "@/types";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight,PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StrapiImage } from "@/components/custom/strapi-image";
 import ParticleShape from "@/components/three/ParticleShape";
 import { useEffect, useState } from "react";
 import CalBookingModal from "@/components/custom/appointment";
 import { NavLink } from "@/types";
+
 
 const appointmentUrl = process.env.NEXT_PUBLIC_APPOINTMENT_URL || "https://cal.com/bitmutexs";
 
@@ -40,18 +41,18 @@ export function Hero(data: Readonly<HeroProps>) {
   // Function to split the heading and highlight the third word with Tailwind classes
   const splitHeading = (headingText: string, startIndex: number, wordCount: number) => {
     const words = headingText.split(" ");
-    
+
     if (startIndex < 0 || startIndex >= words.length) return headingText; // Edge case handling
-  
+
     for (let i = startIndex; i < Math.min(startIndex + wordCount, words.length); i++) {
       words[i] = `<span class="bg-gradient-to-br from-blue-500 via-indigo-500 to-orange-600 text-transparent bg-clip-text animate-pulse-gradient">${words[i]}</span>`;
     }
-  
+
     return words.join(" ");
   };
-  
-  
-  
+
+
+
 
   // 3D Parallax Effect calculation
   const parallaxX = useTransform(mouseX, [-0.5, 0.5], ["-10px", "10px"]);
@@ -77,62 +78,68 @@ export function Hero(data: Readonly<HeroProps>) {
           transform: `translate3d(${parallaxX.get()}, ${parallaxY.get()}, ${parallaxZ.get()})`,
         }}
       >
-      <div className="flex flex-wrap gap-3">
-        {Array.isArray(topLink) &&
-        topLink.map((link: NavLink) => {
-          // Get the booking URL from environment variable
-          const appointmentUrl = process.env.NEXT_PUBLIC_APPOINTMENT_URL || "https://cal.com/bitmutex";
+        <div className="flex flex-wrap gap-3">
+          {Array.isArray(topLink) &&
+            topLink.map((link: NavLink) => {
+              // Get the booking URL from environment variable
+              const appointmentUrl = process.env.NEXT_PUBLIC_APPOINTMENT_URL || "https://cal.com/bitmutex";
 
-          // Check if the href contains "appointment" after a space
-          const parts = link.href.split(" ");
-          const isAppointment = parts.length > 1 && parts[1].toLowerCase() === "appointment";
-          const baseHref = parts[0]; // Extract the actual URL
+              // Check if the href contains "appointment" after a space
+              const parts = link.href.split(" ");
+              const isAppointment = parts.length > 1 && parts[1].toLowerCase() === "appointment";
+              const baseHref = parts[0]; // Extract the actual URL
 
-          return (
-            <div key={link.text} className="flex flex-col sm:flex-row gap-3">
-              {isAppointment ? (
-                // Wrap inside CalBookingModal if it's an appointment link
-                <CalBookingModal
-                  url={appointmentUrl}
-                  trigger={
+              return (
+                <div key={link.text} className="flex flex-col sm:flex-row gap-3">
+                  {isAppointment ? (
+                    // Wrap inside CalBookingModal if it's an appointment link
+                    <CalBookingModal
+                      url={appointmentUrl}
+                      trigger={
+                        <div className="flex w-full sm:w-auto cursor-pointer items-center gap-1 rounded-full border bg-secondary px-3 py-0.5 hover:bg-secondary/60">
+                          <span className="flex items-center justify-center gap-1 text-sm text-secondary-foreground">
+                            {link.text}
+                            <ArrowRight size={16} />
+                          </span>
+                        </div>
+                      }
+                    />
+                  ) : (
+                    // Render normal link if not an appointment
                     <div className="flex w-full sm:w-auto cursor-pointer items-center gap-1 rounded-full border bg-secondary px-3 py-0.5 hover:bg-secondary/60">
-                      <span className="flex items-center justify-center gap-1 text-sm text-secondary-foreground">
+                      <Link
+                        href={baseHref}
+                        target={link.isExternal ? "_blank" : "_self"}
+                        className="flex items-center justify-center gap-1 text-sm text-secondary-foreground"
+                      >
                         {link.text}
                         <ArrowRight size={16} />
-                      </span>
+                      </Link>
                     </div>
-                  }
-                />
-              ) : (
-                // Render normal link if not an appointment
-                <div className="flex w-full sm:w-auto cursor-pointer items-center gap-1 rounded-full border bg-secondary px-3 py-0.5 hover:bg-secondary/60">
-                  <Link
-                    href={baseHref}
-                    target={link.isExternal ? "_blank" : "_self"}
-                    className="flex items-center justify-center gap-1 text-sm text-secondary-foreground"
-                  >
-                    {link.text}
-                    <ArrowRight size={16} />
-                  </Link>
+                  )}
                 </div>
-              )}
-            </div>
-          );
-        })}
+              );
+            })}
 
-      </div>
+        </div>
 
 
-      <h1
-        className="max-w-2xl text-5xl sm:text-6xl lg:text-6xl font-light tracking-tight 
+        <h1
+          className="max-w-2xl text-5xl sm:text-6xl lg:text-6xl font-light backdrop:font-heading tracking-tight 
                   leading-[1.15] sm:leading-[1.2] lg:leading-[1.15] 
                   text-gray-900 dark:text-gray-100 
-                  md:max-w-3xl"
-        dangerouslySetInnerHTML={{  __html: splitHeading(heading, 2, 2), }}
-      />
+                  md:max-w-3xl md:text-left text-center"
+          dangerouslySetInnerHTML={{ __html: splitHeading(heading, 2, 2), }}
+        />
 
 
-        <p className="max-w-md text-lg text-muted-foreground">{text}</p>
+        <p className="pt-4 max-w-lg text-lg md:text-2xl font-light text-gray-800 dark:text-zinc-300 
+          font-sans tracking-tight leading-relaxed md:text-justify text-justify  text-muted-foreground 
+          transition-all duration-300 ease-in-out 
+        hover:text-gray-900 dark:hover:text-gray-100">
+          {text}
+        </p>
+
 
         <div className="grid grid-cols-2 gap-3">
           {buttonLink &&
@@ -148,13 +155,27 @@ export function Hero(data: Readonly<HeroProps>) {
                   key={link.text}
                   url={appointmentUrl}
                   trigger={
-                    <Button
-                      size="lg"
-                      variant={link.isPrimary ? "default" : "outline"}
-                      className="h-12 cursor-pointer border-border text-base sm:h-14 sm:px-10"
-                    >
-                      {link.text}
-                    </Button>
+                  <Button
+                    size="lg"
+                    variant={link.isPrimary ? "default" : "outline"}
+                    className={`relative h-12 sm:h-14 sm:px-10 cursor-pointer text-base font-semibold flex items-center gap-3 
+                      transition-all duration-300 ease-out transform rounded-xl overflow-hidden
+                      ${link.isPrimary 
+                        ? "border-orange-500 dark:border-orange-400 bg-gradient-to-r from-blue-500 to-indigo-500 dark:from-blue-600 dark:to-indigo-600 text-white shadow-[0px_4px_20px_rgba(59,130,246,0.4)] hover:shadow-[0px_6px_30px_rgba(59,130,246,0.6)] hover:scale-[1.05] active:scale-95" 
+                        : "border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-300 hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 bg-white/10 dark:bg-gray-900/10 backdrop-blur-lg"}`}
+                  >
+                    {/* Lucide Icon */}
+                    <PhoneCall className="w-5 h-5 text-white dark:text-gray-300 transition-all duration-300" />
+
+                    <span className="relative z-10">{link.text}</span>
+
+                    {/* Soft Glow Pulse Effect */}
+                    {link.isPrimary && (
+                      <span className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-all duration-500 
+                        bg-blue-500/30 blur-xl rounded-xl" 
+                      />
+                    )}
+                  </Button>
                   }
                 />
               ) : (
@@ -164,15 +185,29 @@ export function Hero(data: Readonly<HeroProps>) {
                   size="lg"
                   variant={link.isPrimary ? "default" : "outline"}
                   asChild
-                  className="h-12 cursor-pointer border-border text-base sm:h-14 sm:px-10"
-                >
+                  className={`relative h-12 sm:h-14 sm:px-10 cursor-pointer text-base font-medium overflow-hidden 
+                    transition-all duration-300 ease-out transform rounded-xl group
+                    ${link.isPrimary 
+                    ? "bg-blue-600 hover:bg-blue-700 text-white shadow-[0px_4px_20px_rgba(59,130,246,0.4)] hover:shadow-[0px_6px_30px_rgba(59,130,246,0.6)]" 
+                    : "border border-orange-500 dark:border-orange-400 text-gray-800 dark:text-gray-300 hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400   bg-orange-300/10 dark:bg-orange-900/20 backdrop-blur-lg"
+                    }`}
+                   >
                   <Link href={baseHref} target={link.isExternal ? "_blank" : "_self"}>
-                    {link.text} {link.parentName}
+                    <span className="relative z-10">{link.text} {link.parentName}</span>
+                    
+                    {/* Subtle Background Animation (Glassmorphism Effect) */}
+                    {!link.isPrimary && (
+                      <span className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-all duration-300 
+                        bg-gradient-to-r from-blue-500/10 to-blue-500/20 dark:from-blue-500/20 dark:to-blue-500/30 
+                        rounded-xl blur-md" 
+                      />
+                    )}
                   </Link>
                 </Button>
               );
             })}
         </div>
+        
       </motion.div>
 
       <motion.div
@@ -208,7 +243,7 @@ export function Hero(data: Readonly<HeroProps>) {
             className="rounded-xl  object-cover"
           />
         </div>
-    </motion.div>
+      </motion.div>
 
     </section>
   );

@@ -155,7 +155,7 @@ export function Footer({ data }: Readonly<FooterProps>) {
 
         {/* Center Section: Navigation */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 dark:text-orange-500 text-slate-800">
             {Object.entries(groupedNavItems).map(([parent, items]) => (
               <div key={parent} className="space-y-2">
                 <h4 className="text-lg font-semibold">{parent}</h4>
@@ -163,7 +163,7 @@ export function Footer({ data }: Readonly<FooterProps>) {
                 <ul className="space-y-1">
                   {items.map((item) => (
                     <li key={item.text}>
-                      <Link href={item.href} className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white transition">
+                      <Link href={item.href} className="font-heading text-gray-600 hover:text-orange-500 dark:text-gray-400 dark:hover:text-orange-400 transition">
                         {item.text}
                       </Link>
                     </li>
@@ -232,7 +232,7 @@ export function Footer({ data }: Readonly<FooterProps>) {
       </motion.div>
 
     {/* Copyright Section */}
-    <div className="border-t border-gray-500 dark:border-gray-700 mt-10 pt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+    <div className="font-heading border-t-2 border-gray-500 dark:border-gray-700 mt-10 pt-1 pb-1 text-center text-sm text-gray-600 dark:text-gray-400">
       &copy; 2018 - {new Date().getFullYear()} {unicode_diamond} {text} {unicode_diamond} All rights reserved.
     </div>
     </footer>

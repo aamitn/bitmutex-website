@@ -33,7 +33,7 @@ export function Testimonials(data: Readonly<TestimonialsProps>) {
 
             {/* Header Section */}
             <div className="text-center mb-10 relative z-10">
-                <Heading className="text-4xl font-bold text-primary">{heading}</Heading>
+                <Heading className="font-heading text-4xl font-bold text-primary">{heading}</Heading>
                 <Subheading className="text-muted-foreground">{sub_heading}</Subheading>
             </div>
 
@@ -62,9 +62,9 @@ export function Testimonials(data: Readonly<TestimonialsProps>) {
 
                                 <CardContent className="flex flex-col gap-6 relative z-10 w-3xl">
                                     {/* Testimonial Text with Animated Quotes */}
-                                    <p className="relative text-center  [text-wrap:pretty] text-lg font-medium leading-relaxed">
+                                    <p className="relative text-center font-heading [text-wrap:pretty] text-lg font-medium leading-relaxed">
                                         <FaQuoteLeft className="absolute -left-4 top-0 text-muted-foreground text-xl opacity-50" />
-                                        <span className="px-6">{testimonial.text}</span>
+                                        <span className="px-6 ">{testimonial.text}</span>
                                         <FaQuoteRight className="absolute -right-4 bottom-0 text-muted-foreground text-xl opacity-50" />
                                     </p>
 

@@ -116,6 +116,7 @@ export default async function BlogRoute({ searchParams }: PageProps) {
 
   return (
     <section className="container flex flex-col items-center gap-8 py-24">
+      
       {/* Header */}
       <div className="text-center">
         <span className="font-bold uppercase text-primary tracking-wide">{heading}</span>
