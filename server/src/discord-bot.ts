@@ -67,6 +67,28 @@ const bot = new Client({
     }
   });
   
-  bot.login(process.env.DISCORD_BOT_TOKEN);
+ // bot.login(process.env.DISCORD_BOT_TOKEN);
 
-  export { bot };
+  // ✅ Handle Invalid Token Gracefully
+  const colors = {
+    reset: "\x1b[0m",
+    yellow: "\x1b[33m",
+    red: "\x1b[31m",
+    green: "\x1b[32m",
+  };
+
+  (async () => {
+    try {
+      if (!process.env.DISCORD_BOT_TOKEN) {
+        console.warn(`\n${colors.yellow}⚠️ Warning: DISCORD_BOT_TOKEN is missing! Discord bot will not start.${colors.reset}\n`);
+      } else {
+        await bot.login(process.env.DISCORD_BOT_TOKEN);
+        console.log(`\n${colors.green}✅ Discord bot logged in successfully.${colors.reset}\n`);
+      }
+    } catch (error) {
+      console.warn(`\n${colors.red}⚠️ Warning: Failed to log in Discord bot. Might be an invalid token.\n Please check the .env file and ensure DISCORD_BOT_TOKEN is set correctly.${colors.reset}\n`);
+      console.warn(`\n${colors.red} DISCORD BOT ERROR MESSAGE: ${error.message}${colors.reset}\n`); // Print the error message in red
+    }
+  })();
+
+export { bot };
