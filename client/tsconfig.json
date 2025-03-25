@@ -12,7 +12,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "types": ["react"],
     "incremental": true,
     "plugins": [
       {
@@ -24,5 +23,6 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/preview/route.ts", "src/components/three", "src/components/custom/calcom-appointments", "src/components/custom/calcom-appointments.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "types": ["react"]
 }
