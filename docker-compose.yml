@@ -65,6 +65,7 @@ services:
       SMTP_DEFAULT_REPLY_TO: support@bitmutex.com
     volumes:
     - strapi-uploads:/app/public/uploads
+    - ./server/public/uploads:/app/public/uploads 
     - ./seed-data.tar.gz:/seed-data.tar.gz  # ✅ Mount seed file into Strapi container
     ports:
       - "1337:1337"
@@ -73,19 +74,21 @@ services:
       if [ -f /seed-data.tar.gz ] && [ ! -f /app/.imported ]; then
         echo "✅ Seed data found, importing for the first time..."
         cp /seed-data.tar.gz /app/seed-data.tar.gz
-        yarn install
+
         yarn strapi import -f /app/seed-data.tar.gz --force
         touch /app/.imported
       else
+        yarn strapi import -f /app/seed-data.tar.gz --force
         echo "⚠️ No seed data found or data already imported, skipping import..."
       fi
       echo "🚀 Starting Strapi..."
-      yarn develop'
+      yarn develop
+      '
     healthcheck:  # ✅ Added healthcheck
       test: ["CMD-SHELL", "curl -fs http://localhost:1337/_health || exit 1"]
       interval: 10s
-      timeout: 5s
-      retries: 5
+      timeout: 2s
+      retries: 2
 
   nextjs:
     build: ./client
@@ -124,9 +127,8 @@ services:
       - "3000:3000"
     entrypoint: ["/bin/sh", "-c", "
       echo 'Waiting for Strapi to be ready...' && \
-      while ! curl -s http://strapi:1337; do sleep 2; done && \
       echo 'Strapi is ready, building Next.js...' && \
-      yarn install && yarn build && yarn start "]
+      yarn build && yarn start "]
 
 volumes:
   postgres-data:

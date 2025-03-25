@@ -1,26 +1,22 @@
 import { Server } from "socket.io";
 import axios from "axios";
 import { eventEmitter } from "./events";
-import { bot } from "./discord-bot"; // ✅ Import the bot instance
+import { bot } from "./discord-bot";
 
 export default {
   register() {},
 
-  bootstrap({ strapi }) {
+  async bootstrap({ strapi }) {
     const io = new Server(strapi.server.httpServer, { cors: { origin: "*" } });
-
     strapi.io = io;
     const connectedClients = new Map();
-
-    let liveUserCount = 0; // 🔥 Track the number of live users
+    let liveUserCount = 0;
 
     eventEmitter.emit("ioReady", io);
 
     io.on("connection", (socket) => {
       connectedClients.set(socket.id, socket);
-      liveUserCount++; // Increase count
-
-      // 🔥 Broadcast updated count to all clients
+      liveUserCount++;
       io.emit("liveUserCount", { count: liveUserCount });
 
       console.log(`✅ Visitor connected: ${socket.id} | Live Users: ${liveUserCount}`);
@@ -38,7 +34,6 @@ export default {
         const admin = await guild.members.fetch(adminUserId).catch(() => null);
         const isAdminOnline = admin?.presence?.status !== "offline";
 
-        // ✅ Always send message to Discord, adding [missed message] if admin is offline
         let discordMessage = `**${msg.sender}**: ${msg.text} *(wsid:${socket.id})*`;
         if (!isAdminOnline) {
           discordMessage += " [missed message]";
@@ -51,23 +46,46 @@ export default {
         );
         console.log("✅ Message sent to Discord");
 
-        // ❌ If admin is offline, send auto-reply to visitor
         if (!isAdminOnline) {
-          const autoReplyText = "The admin is currently offline. Your message has been forwarded.";
-          socket.emit("adminMessage", { text: autoReplyText, sender: "system" });
+          socket.emit("adminMessage", { text: "The admin is currently offline. Your message has been forwarded.", sender: "system" });
           console.log(`⚠️ Admin is offline. Auto-reply sent to visitor ${socket.id}`);
         }
       });
 
       socket.on("disconnect", () => {
         connectedClients.delete(socket.id);
-        liveUserCount = Math.max(0, liveUserCount - 1); // Prevent negative counts
-
-        // 🔥 Broadcast updated count to all clients
+        liveUserCount = Math.max(0, liveUserCount - 1);
         io.emit("liveUserCount", { count: liveUserCount });
 
         console.log(`❌ Visitor disconnected: ${socket.id} | Live Users: ${liveUserCount}`);
       });
     });
+
+    // ✅ **Auto-Create Admin User on First Run**
+    const adminExists = await strapi.db.query("admin::user").count();
+    if (!adminExists) {
+      console.log("🛠️ No admin user found. Creating default admin...");
+
+      try {
+        const superAdminRole = await strapi.db.query("admin::role").findOne({ where: { code: "strapi-super-admin" } });
+
+        await strapi.db.query("admin::user").create({
+          data: {
+            email: process.env.ADMIN_EMAIL || "admin@bitmutex.com",
+            firstname: "Bitmutex",
+            lastname: "Admin",
+            password: process.env.ADMIN_PASSWORD || "K4fecn6abc$$$",
+            isActive: true,
+            roles: [superAdminRole.id],
+          },
+        });
+
+        console.log("✅ Admin user created successfully!");
+      } catch (error) {
+        console.error("❌ Failed to create admin user:", error);
+      }
+    } else {
+      console.log("✅ Admin user already exists.");
+    }
   },
 };
