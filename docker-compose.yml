@@ -21,6 +21,7 @@ services:
     depends_on:
       - postgres
     environment:
+      AUTO_CREATE_ADMIN: true
       # Strapi Server Config
       HOST: 0.0.0.0
       PORT: 1337
