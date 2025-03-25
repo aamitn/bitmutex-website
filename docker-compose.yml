@@ -1,0 +1,133 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: bitmutex-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: strapi
+      POSTGRES_DB: strapi
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  strapi:
+    build: ./server
+    container_name: bitmutex-strapi
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      # Strapi Server Config
+      HOST: 0.0.0.0
+      PORT: 1337
+      NODE_ENV: development  # ✅ Ensure Strapi runs in dev mode
+
+      # Security Keys
+      APP_KEYS: "toBeModified1,toBeModified2"
+      API_TOKEN_SALT: tobemodified
+      ADMIN_JWT_SECRET: tobemodified
+      TRANSFER_TOKEN_SALT: tobemodified
+      JWT_SECRET: tobemodified
+
+      # Database Configuration
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: strapi
+      DATABASE_USERNAME: strapi
+      DATABASE_PASSWORD: strapi
+
+      # Preview Secret for Next.js
+      PREVIEW_SECRET: your-secret-key
+      CLIENT_URL: http://nextjs:3000
+
+      # Live Chat Discord Bot
+
+      DISCORD_BOT_TOKEN: xyz
+
+      DISCORD_CHANNEL_ID: 1349063933599678618
+      DISCORD_GUILD_ID: 1349059955885473823
+      DISCORD_ADMIN_ID: 146662188122243072
+
+      # Cal.com Webhook URL
+      CAL_WEBHOOK_URL: http://localhost:1337/api/cal-webhook
+
+      # SMTP Email Configuration
+      SMTP_HOST: smtp.zoho.in
+      SMTP_PORT: 587
+      SMTP_USERNAME: noreply@bitmutex.com
+      SMTP_PASSWORD: your-secure-password
+      SMTP_DEFAULT_FROM: noreply@bitmutex.com
+      SMTP_DEFAULT_REPLY_TO: support@bitmutex.com
+    volumes:
+    - strapi-uploads:/app/public/uploads
+    - ./seed-data.tar.gz:/seed-data.tar.gz  # ✅ Mount seed file into Strapi container
+    ports:
+      - "1337:1337"
+    entrypoint: |
+      /bin/sh -c '
+      if [ -f /seed-data.tar.gz ] && [ ! -f /app/.imported ]; then
+        echo "✅ Seed data found, importing for the first time..."
+        cp /seed-data.tar.gz /app/seed-data.tar.gz
+        yarn install
+        yarn strapi import -f /app/seed-data.tar.gz --force
+        touch /app/.imported
+      else
+        echo "⚠️ No seed data found or data already imported, skipping import..."
+      fi
+      echo "🚀 Starting Strapi..."
+      yarn develop'
+    healthcheck:  # ✅ Added healthcheck
+      test: ["CMD-SHELL", "curl -fs http://localhost:1337/_health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  nextjs:
+    build: ./client
+    container_name: bitmutex-nextjs
+    restart: always
+    depends_on:
+      strapi:
+        condition: service_healthy  # ✅ Ensures Strapi is fully up before Next.js starts
+    environment:
+      # Strapi Backend URL
+      STRAPI_BASE_URL: http://strapi:1337
+      NEXT_PUBLIC_STRAPI_BASE_URL: http://localhost:1337
+
+      # Next.js Frontend URL
+      NEXT_PUBLIC_BASE_URL: http://localhost:3000
+      HOST: 0.0.0.0
+
+      # API Secret for Previews
+      PREVIEW_SECRET: your-secret-key
+
+      # Public Status Page
+      NEXT_PUBLIC_STATUS_PAGE_URL: https://status.bitmutex.com/
+
+      # Appointment Scheduling
+      NEXT_PUBLIC_APPOINTMENT_URL: "https://cal.com/bitmutex"
+
+      # Receiver Email for Form Responses
+      NEXT_PUBLIC_ADMIN_EMAIL: amitnandileo@gmail.com
+
+      # Environment Mode
+      NODE_ENV: production
+
+      # Next.js Image Optimization
+      IMAGE_HOSTNAME: localhost
+    ports:
+      - "3000:3000"
+    entrypoint: ["/bin/sh", "-c", "
+      echo 'Waiting for Strapi to be ready...' && \
+      while ! curl -s http://strapi:1337; do sleep 2; done && \
+      echo 'Strapi is ready, building Next.js...' && \
+      yarn install && yarn build && yarn start "]
+
+volumes:
+  postgres-data:
+  strapi-uploads:
