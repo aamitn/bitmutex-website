@@ -61,9 +61,18 @@ export default {
       });
     });
 
+    
     // ✅ **Auto-Create Admin User on First Run**
     const adminExists = await strapi.db.query("admin::user").count();
     if (!adminExists) {
+
+      
+    // ✅ **Auto-Create Admin User Only if `AUTO_CREATE_ADMIN=true`**
+    if (process.env.AUTO_CREATE_ADMIN !== "true") {
+      console.log("ℹ️ AUTO_CREATE_ADMIN is not enabled. Skipping admin creation.");
+      return;
+    }
+
       console.log("🛠️ No admin user found. Creating default admin...");
 
       try {
@@ -74,7 +83,8 @@ export default {
             email: process.env.ADMIN_EMAIL || "admin@bitmutex.com",
             firstname: "Bitmutex",
             lastname: "Admin",
-            password: process.env.ADMIN_PASSWORD || "K4fecn6abc$$$",
+            //Password  Bcrypted 10 rounds for "strapiadmin"
+            password: process.env.ADMIN_PASSWORD || "$2a$10$joIlSsHxTGdb8XT7cfcVzO5JgUiQSWgbFwbNrT2D/sMbuyhc2y9zW",
             isActive: true,
             roles: [superAdminRole.id],
           },
@@ -87,5 +97,7 @@ export default {
     } else {
       console.log("✅ Admin user already exists.");
     }
+
+    
   },
 };
