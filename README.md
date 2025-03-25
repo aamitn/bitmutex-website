@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 # bitmutex-website
 Bitmutex Website Written in NextJs15 and Strapi5
 =======
@@ -99,7 +97,4 @@ Before navigating to our frontend, you will be prompted to create your first **S
 You can check out the `package.json` file for more details on what the script will do.
 
 If you have any questions about the project, please leave a comment or stop by Strapi's "open office" hours Monday through Friday at 12:30 PM CST. 
-<<<<<<< HEAD
->>>>>>> fdda054 (init commit)
-=======
->>>>>>> master
+
