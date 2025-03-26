@@ -60,7 +60,7 @@ export function Hero(data: Readonly<HeroProps>) {
   const parallaxZ = useTransform(mouseX, [-0.5, 0.5], ["5px", "-5px"]);
 
   return (
-    <section className="relative container max-w flex flex-col items-center gap-10 pb-28 pt-20 sm:gap-214 md:flex-row">
+    <section className="relative container max-w flex flex-col items-center gap-20 pb-18 pt-20 sm:gap-214 md:flex-row">
       <motion.div
         className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/40 to-secondary/40 blur-3xl opacity-20 transition-all duration-500"
         animate={{ opacity: 0.6 }}

@@ -1,24 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { fetchSuccessStories } from "@/data/loaders";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Briefcase, Search, MapPin } from "lucide-react";
+import { Briefcase, Search, MapPin, Eye, Link2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import dynamic from "next/dynamic";
-import { Eye, Link2 } from 'lucide-react'; // Import the icons you need
 
+// Dynamically load the map component (client-side only)
 const SuccessStoryMap = dynamic(() => import("@/components/custom/SuccessStoryMap"), { ssr: false });
 
-interface PageProps {
-  stories: SuccessStory[];
-}
+// Number of items per page for pagination
+const ITEMS_PER_PAGE = 9;
 
 interface Location {
   name: string;
@@ -39,14 +37,14 @@ interface Service {
   name: string;
 }
 
-interface SuccessStory {
+export interface SuccessStory {
   uuid: number;
   name: string;
   content: string;
   slug: string;
   websiteurl: string;
   industry: string;
-  location: Location[]; 
+  location: Location[];
   logo: string | null;
   glimpses: { url: string }[];
   casestudy: string | null;
@@ -55,25 +53,20 @@ interface SuccessStory {
   services: Service[];
 }
 
-const ITEMS_PER_PAGE = 9; // Change this as needed
+interface PageProps {
+  stories: SuccessStory[];
+}
 
 export default function SuccessStoriesClient({ stories }: PageProps) {
-  const [successStories, setSuccessStories] = useState<SuccessStory[]>([]);
+  // Initialize state with stories provided via SSR
+  const [successStories, setSuccessStories] = useState<SuccessStory[]>(stories);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [selectedTechStack, setSelectedTechStack] = useState<string[]>([]);
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
-    const loadStories = async () => {
-      const stories = await fetchSuccessStories();
-      setSuccessStories(stories);
-    };
-    loadStories();
-  }, []);
-
-  // Extract markers after data is fetched
+  // Markers for the map
   const markers = successStories
     .flatMap((story) =>
       story.location.map((loc) => ({
@@ -82,13 +75,15 @@ export default function SuccessStoriesClient({ stories }: PageProps) {
         name: story.name,
       }))
     )
-    .filter((loc) => loc.lat && loc.lon); // Remove invalid locations
+    .filter((loc) => loc.lat && loc.lon);
 
+  // Build filter options
   const allServices = [...new Set(successStories.flatMap((story) => story.services.map((s) => s.name)))];
   const allTechStacks = [...new Set(successStories.flatMap((story) => story.stack.map((s) => s.name)))];
   const allIndustries = [...new Set(successStories.map((story) => story.industry))];
 
-  const handleFilterChange = (value: string, selectedArray: string[], setSelectedArray: Function) => {
+  // Update filter selections
+  const handleFilterChange = (value: string, selectedArray: string[], setSelectedArray: (s: string[]) => void) => {
     setSelectedArray(
       selectedArray.includes(value)
         ? selectedArray.filter((item) => item !== value)
@@ -96,6 +91,7 @@ export default function SuccessStoriesClient({ stories }: PageProps) {
     );
   };
 
+  // Filter stories based on search and filter selections
   const filteredStories = successStories.filter((story) => {
     const matchesSearch =
       story.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -112,44 +108,36 @@ export default function SuccessStoriesClient({ stories }: PageProps) {
     return matchesSearch && matchesService && matchesTechStack && matchesIndustry;
   });
 
-  // Pagination Logic
+  // Pagination logic
   const totalPages = Math.ceil(filteredStories.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedStories = filteredStories.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
   return (
-    <div className="container  mx-auto flex flex-col py-20 px-4 gap-8 mt-8 mb-8">
-
-
-      {/* Flexbox for Side-by-Side Layout */}
+    <div className="container mx-auto flex flex-col py-20 px-4 gap-8 mt-8 mb-8">
+      {/* Top Section: Map & Writeup */}
       <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
-            
-            {/* Writeup Section (1/3 width on desktop) */}
-            <div className="w-full md:w-1/3 space-y-4 text-center md:text-left">
-              <h2 className="font-heading text-3xl font-bold text-gray-800 dark:text-slate-300">Our Global Presence</h2>
-              <p className="text-lg text-muted-foreground mt-3 max-w-xl mx-auto text-gray-600 dark:text-slate-400">
-                We’ve worked with clients across continents, delivering exceptional 
-                software solutions in various industries. From finance to healthcare, 
-                our expertise spans the globe.
-              </p>
+        {/* Writeup Section */}
+        <div className="w-full md:w-1/3 space-y-4 text-center md:text-left">
+          <h2 className="font-heading text-3xl font-bold text-gray-800 dark:text-slate-300">Our Global Presence</h2>
+          <p className="text-lg text-gray-600 dark:text-slate-400 mt-3 max-w-xl mx-auto">
+            We’ve worked with clients across continents, delivering exceptional software solutions in various industries.
+          </p>
+        </div>
+        {/* Map Section */}
+        {markers.length > 0 && (
+          <div className="w-full md:w-2/3 bg-white shadow-lg rounded-lg p-4 dark:bg-slate-800 dark:text-slate-300">
+            <h3 className="text-xl font-semibold text-gray-700 dark:text-slate-300 mb-4">Where We’ve Worked</h3>
+            <div className="w-full h-96 rounded-md overflow-hidden">
+              <SuccessStoryMap markers={markers} />
             </div>
-
-            {/* Map Section (2/3 width on desktop) */}
-            {markers.length > 0 && (
-              <div className="w-full md:w-2/3 bg-white shadow-lg rounded-lg p-4 dark:bg-slate-800 dark:text-slate-300">
-                <h3 className="text-xl font-semibold text-gray-700 dark:text-slate-300 mb-4">Where We’ve Worked</h3>
-                <div className="w-full h-96 rounded-md overflow-hidden">
-                  <SuccessStoryMap markers={markers} />
-                </div>
-              </div>
-            )}
-
           </div>
-
+        )}
+      </div>
 
       {/* Search Input */}
       <div className="w-full max-w-md mx-auto flex items-center border rounded-lg px-4 py-2 shadow-sm">
-        <Search className="w-5 h-5 text-gray-500 " />
+        <Search className="w-5 h-5 text-gray-500" />
         <Input
           type="text"
           placeholder="Search success stories..."
@@ -187,104 +175,94 @@ export default function SuccessStoriesClient({ stories }: PageProps) {
           </ScrollArea>
         </aside>
 
+        {/* Success Stories Grid */}
+        <main className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {paginatedStories.length > 0 ? (
+            paginatedStories.map((story) => (
+              <Card
+                key={story.uuid}
+                onClick={() => window.location.href = `/success-stories/${story.slug}`}
+                className="h-full flex flex-col rounded-3xl bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 hover:scale-105 overflow-hidden shadow-lg group transition-all duration-300"
+              >
+                {story.logo && (
+                  <img src={story.logo} alt={story.name} className="w-full h-32 object-contain p-4" />
+                )}
+                <CardHeader>
+                  <CardTitle>{story.name}</CardTitle>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
+                    <Briefcase className="w-4 h-4" /> {story.industry}
+                  </p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1 mt-1">
+                    <MapPin className="w-4 h-4" /> {story.location?.[0]?.name || "Unknown Location"}
+                  </p>
+                </CardHeader>
+                <CardContent className="flex-1 flex flex-col">
+                  <p className="text-gray-700 dark:text-gray-200 line-clamp-3">{story.content}</p>
+                  {/* Services Badges */}
+                  {story.services.length > 0 && (
+                    <div className="mt-3">
+                      <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-300">Services</h4>
+                      <div className="mt-1 flex flex-wrap gap-2">
+                        {story.services.map((service) => (
+                          <Badge key={service.name} className="bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">
+                            {service.name}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
-      {/* Success Stories Grid */}
-      <main className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {paginatedStories.length > 0 ? (
-          paginatedStories.map((story) => (
-          <Card
-            key={story.uuid}
-            onClick={() => window.location.href = `/success-stories/${story.slug}`}
-            className="h-full flex flex-col rounded-3xl bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 hover:scale-105 overflow-hidden shadow-lg group transition-all duration-300"
-          >
-             
-              {story.logo && (
-                <img src={story.logo} alt={story.name} className="w-full h-32 object-contain p-4" />
-              )}
-              <CardHeader>
-                <CardTitle>{story.name}</CardTitle>
-                <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
-                  <Briefcase className="w-4 h-4" /> {story.industry}
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1 mt-1">
-                <MapPin className="w-4 h-4" /> {story.location?.[0]?.name || "Unknown Location"}         
-                </p>
-              </CardHeader>
-              <CardContent className="flex-1 flex flex-col">
-                <p className="text-gray-700 dark:text-gray-200 line-clamp-3">{story.content}</p>
+                  {/* Tech Stack Badges */}
+                  {story.stack.length > 0 && (
+                    <div className="mt-2">
+                      <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-300">Tech Stack</h4>
+                      <div className="mt-1 flex flex-wrap gap-2">
+                        {story.stack.map((tech) => (
+                          <Badge key={tech.name} className="bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300">
+                            {tech.name}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
-              {/* Services Badges */}
-              {story.services.length > 0 && (
-                <div className="mt-3">
-                  <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-300">Services</h4>
-                  <div className="mt-1 flex flex-wrap gap-2">
-                    {story.services.map((service) => (
-                      <Badge key={service.name} className="bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">
-                        {service.name}
-                      </Badge>
-                    ))}
+                  <div className="mt-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
+                    <Link href={`/success-stories/${story.slug}`}>
+                      <Button className="mt-4 w-auto flex items-center space-x-1 p-2 text-sm">
+                        <Eye size={16} />
+                        <span>Read</span>
+                      </Button>
+                    </Link>
+                    <Link href={`/success-stories/${story.websiteurl}`}>
+                      <Button className="mt-4 w-auto flex items-center space-x-1 p-2 text-sm">
+                        <Link2 size={16} />
+                        <span>Visit Url</span>
+                      </Button>
+                    </Link>
                   </div>
-                </div>
-              )}
-
-              {/* Tech Stack Badges */}
-              {story.stack.length > 0 && (
-                <div className="mt-2">
-                  <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-300">Tech Stack</h4>
-                  <div className="mt-1 flex flex-wrap gap-2">
-                    {story.stack.map((tech) => (
-                      <Badge key={tech.name} className="bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300">
-                        {tech.name}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-
-            <div className="mt-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
-              <Link href={`/success-stories/${story.slug}`}>
-                <Button className="mt-4 w-auto flex items-center space-x-1 p-2 text-sm">
-                  <Eye size={16} /> {/* Lucide Eye Icon */}
-                  <span>Read</span>
-                </Button>
-              </Link>
-              <Link href={`/success-stories/${story.websiteurl}`}>
-                <Button className="mt-4 w-auto flex items-center space-x-1 p-2 text-sm">
-                  <Link2 size={16} /> {/* Lucide Link Icon */}
-                  <span>Visit Url</span> {/* Changed text to reflect the button's action */}
-                </Button>
-              </Link>
-            </div>
-
-
-              </CardContent>
-          
-            </Card>
-          ))
-        ) : (
-          <p className="text-center text-gray-500 col-span-full">No success stories found.</p>
-        )}
-      </main>
-
+                </CardContent>
+              </Card>
+            ))
+          ) : (
+            <p className="text-center text-gray-500 col-span-full">No success stories found.</p>
+          )}
+        </main>
       </div>
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
-      <div className="flex justify-center gap-4 mt-6">
-        <Button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>
-          Previous
-        </Button>
-        <span className="text-gray-700 dark:text-gray-300">
-          Page {currentPage} of {totalPages}
-        </span>
-        <Button disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)}>
-          Next
-        </Button>
-      </div>
+        <div className="flex justify-center gap-4 mt-6">
+          <Button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>
+            Previous
+          </Button>
+          <span className="text-gray-700 dark:text-gray-300">
+            Page {currentPage} of {totalPages}
+          </span>
+          <Button disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)}>
+            Next
+          </Button>
+        </div>
       )}
-
     </div>
   );
-};
-
+}
