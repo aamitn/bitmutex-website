@@ -10,6 +10,9 @@ import { cn } from "@/lib/utils";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { useTheme } from "next-themes"; // Light/Dark Mode Handling
 import { SparklesCore } from "./sparkles";
+import Image from "next/image";
+
+const baseUrl = process.env.NEXT_PUBLIC_STRAPI_BASE_URL || "http://localhost:1337";
 
 export function Testimonials(data: Readonly<TestimonialsProps>) {
     if (!data) return null;
@@ -49,7 +52,7 @@ export function Testimonials(data: Readonly<TestimonialsProps>) {
                             transition={{ duration: 0.5 }}
                             className="mx-6"
                         >
-                            <Card
+                                                     <Card
                                 className={cn(
                                     "relative w-96 p-6 rounded-2xl shadow-xl transition-all border backdrop-blur-lg overflow-hidden mb-2",
                                     theme === "dark"
@@ -72,22 +75,32 @@ export function Testimonials(data: Readonly<TestimonialsProps>) {
                                     <div className="flex items-center gap-4">
                                         {/* Testimonial Image with Glow */}
                                         {testimonial.image?.url && (
-                                            <motion.img
-                                                src={`http://localhost:1337${testimonial.image.url}`}
+           
+                                            <motion.div 
+                                            whileHover={{ scale: 1.1, boxShadow: "0px 0px 15px rgba(255, 255, 255, 0.4)" }}
+                                            className="inline-block"  // ensures proper layout for motion effects
+                                            >
+                                            <Image 
+                                                src={`${baseUrl}${testimonial.image.url}`}
                                                 alt={testimonial.firstname}
-                                                className="w-16 h-16 rounded-full object-cover border-2 shadow-lg"
-                                                whileHover={{ scale: 1.1, boxShadow: "0px 0px 15px rgba(255, 255, 255, 0.4)" }}
+                                                width={64} // Equivalent to w-16 (16 * 4)
+                                                height={64} // Equivalent to h-16
+                                                className="rounded-full object-cover border-2 shadow-lg"
                                             />
+                                            </motion.div>
                                         )}
                                         
                                         {/* Name & Job Title */}
                                         <div>
-                                            <p className="text-xl font-semibold">{testimonial.firstname} {testimonial.lastname}</p>
-                                            <span className="px-3 py-1 text-sm rounded-full font-semibold shadow-md transition-all 
-                                                bg-gradient-to-r from-blue-600 to-orange-600 text-white
-                                                dark:from-indigo-600 dark:to-orange-500 dark:text-gray-200 dark:text-card-foreground">
-                                                {testimonial.job}
-                                            </span>
+                                        <p className="text-xl font-semibold">
+                                            {testimonial.firstname} {testimonial.lastname}
+                                        </p>
+                                        <span className="w-auto px-3 py-1 text-sm rounded-full font-semibold shadow-md transition-all 
+                                            bg-gradient-to-r from-blue-600 to-orange-600 text-white
+                                            dark:from-indigo-600 dark:to-orange-500 dark:text-gray-200 
+                                            whitespace-nowrap overflow-hidden text-ellipsis">
+                                            {testimonial.job}
+                                        </span>
                                         </div>
                                     </div>
                                 </CardContent>
