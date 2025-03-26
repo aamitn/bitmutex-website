@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { useTheme } from "next-themes";
-
+import Image from "next/image";
 
 
 interface Logo {
@@ -64,12 +64,15 @@ export default function BrandKitClient({ logos }: BrandKitClientProps) {
       <div className="flex flex-wrap justify-center gap-6 ">
         {logos.map((logo) => (
           <div key={logo.id} className="relative border-none shadow-lg rounded-xl bg-white dark:bg-gray-800/40 hover:scale-105 transition-transform p-4 flex flex-col items-center group">
-            <img
-             src={logo.image.url}
-             alt={logo.company}
-             className={`h-24 object-contain rounded-lg transition-all ${theme === "light" ? "invert-[0.09]  brightness-110 contrast-125" : ""}`} />
-            <p className="mt-2 font-semibold">{logo.company}</p>
-
+            <Image
+              src={logo.image.url}
+              alt={logo.company}
+              width={96} // Set an appropriate width
+              height={96} // Set an appropriate height
+              className={`h-24 object-contain rounded-lg transition-all ${
+                theme === "light" ? "invert-[0.09] brightness-110 contrast-125" : ""
+              }`}
+            />
             {/* Download Button on Hover */}
             <Button
               onClick={() => handleDownload(logo.image.url, logo.image.name)}

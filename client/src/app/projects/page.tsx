@@ -8,6 +8,7 @@ import { fetchProjects } from "@/data/loaders";
 import { generateMetadataObject } from '@/lib/metadata';
 import  fetchContentType  from '@/lib/strapi/fetchContentType';
 import { Metadata } from "next";
+import Image from "next/image";
 
 type Project = {
   id: number;
@@ -136,8 +137,14 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
             {filteredProjects.map((project) => (
               <Link key={project.id} href={`/projects/${project.slug}`} className="block">
                 <Card className="relative flex flex-col sm:flex-row items-start gap-4 p-4 hover:shadow-md transition-shadow rounded-xl cursor-pointer group">
-                  {project.imageUrl && <img src={project.imageUrl} alt={project.name} className="w-24 h-24 object-cover rounded-lg" />}
-
+                {project.imageUrl &&
+                   <Image
+                    src={project.imageUrl}
+                    alt={project.name}
+                    width={200} 
+                    height={300} 
+                    className="w-24 h-24 object-cover rounded-lg"
+                    />}
                   {/* Category Pills - Positioned Top-Right */}
                   <div className="absolute top-2 right-2">
                     <span className="px-2 py-1 text-xs font-semibold text-white bg-blue-500 rounded-full">
