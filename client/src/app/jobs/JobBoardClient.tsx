@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Briefcase, MapPin, Calendar } from 'lucide-react';
+import Link from 'next/link'
 
 interface Job {
   documentID: string;
@@ -18,6 +19,8 @@ interface Job {
 interface JobBoardClientProps {
   initialJobs: Job[];
 }
+
+
 
 export default function JobBoardClient({ initialJobs }: JobBoardClientProps) {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -75,7 +78,7 @@ export default function JobBoardClient({ initialJobs }: JobBoardClientProps) {
                 id={`experience-${experience}`}
                 className="mr-2"
               />
-              <label htmlFor={`experience-${experience}`} className="text-sm text-gray-700">
+              <label htmlFor={`experience-${experience}`} className="text-sm text-gray-700 dark:text-slate-300/80">
                 {experience}
               </label>
             </div>
@@ -95,7 +98,7 @@ export default function JobBoardClient({ initialJobs }: JobBoardClientProps) {
                 id={`location-${location}`}
                 className="mr-2"
               />
-              <label htmlFor={`location-${location}`} className="text-sm text-gray-700">
+              <label htmlFor={`location-${location}`} className="text-sm text-gray-700 dark:text-slate-300/80">
                 {location}
               </label>
             </div>
@@ -105,49 +108,65 @@ export default function JobBoardClient({ initialJobs }: JobBoardClientProps) {
 
       {/* Job Listings */}
       <div className="flex-1">
-        <h1 className="text-3xl font-bold text-center mb-6">Job Openings</h1>
 
         {filteredJobs.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredJobs.map((job) => (
-              <Card key={job.documentID} className="relative flex flex-col p-4 hover:shadow-md transition-shadow rounded-xl">
-                <div className="flex-1 flex flex-col">
-                  <CardHeader className="p-0">
-                    <CardTitle className="text-lg font-semibold">{job.title}</CardTitle>
-                  </CardHeader>
+  {filteredJobs.map((job) => (
+    <Link href={`/jobs/${job.documentID}`} passHref key={job.documentID} className="block">
+      <Card 
+        className="group relative flex flex-col p-4 hover:shadow-lg transition-all rounded-xl cursor-pointer 
+                   hover:scale-[1.02] active:scale-[0.98] transform-gpu 
+                   bg-white dark:bg-gray-900 dark:hover:bg-gray-800 min-h-full"
+      >
+        <div className="flex flex-col flex-grow">
+          <CardHeader className="p-0">
+            <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white">{job.title}</CardTitle>
+          </CardHeader>
 
-                  <CardContent className="p-0 mt-2 flex flex-col flex-grow space-y-2">
-                    <p className="text-gray-600 text-sm break-words">{job.description}</p>
+          <CardContent className="p-0 mt-2 flex flex-col flex-grow space-y-2">
+            <p className="text-gray-600 dark:text-gray-400 text-sm break-words">{job.description}</p>
 
-                    <div className="flex items-center text-gray-500 text-sm">
-                      <MapPin className="h-5 w-5 mr-2 text-gray-500" />
-                      <span>{job.location}</span>
-                    </div>
+            <div className="flex items-center text-gray-500 text-sm dark:text-gray-400">
+              <MapPin className="h-5 w-5 mr-2 text-gray-500 dark:text-gray-300" />
+              <span>{job.location}</span>
+            </div>
 
-                    <div className="flex items-center text-gray-500 text-xs">
-                      <Calendar className="h-4 w-4 mr-2 text-gray-500" />
-                      <span>Posted on: {job.postedAt}</span>
-                    </div>
+            <div className="flex items-center text-gray-500 text-xs dark:text-gray-400">
+              <Calendar className="h-4 w-4 mr-2 text-gray-500 dark:text-gray-300" />
+              <span>Posted on: {job.postedAt}</span>
+            </div>
 
-                    <div className="flex items-center text-gray-500 text-xs">
-                      <Briefcase className="h-4 w-4 mr-2 text-gray-500" />
-                      <span>Experience: {job.experience}</span>
-                    </div>
-                  </CardContent>
+            <div className="flex items-center text-gray-500 text-xs dark:text-gray-400">
+              <Briefcase className="h-4 w-4 mr-2 text-gray-500 dark:text-gray-300" />
+              <span>Experience: {job.experience}</span>
+            </div>
+          </CardContent>
 
-                  <div className="flex flex-col mt-auto space-y-2">
-                    <div className="p-2 bg-red-100 text-red-700 rounded-lg text-sm font-semibold">
-                      <span>Application Deadline: {job.deadline}</span>
-                    </div>
+          <div className="flex flex-col mt-auto space-y-2 pt-5">
+            <div className="p-2 bg-red-100 text-red-700 rounded-lg text-sm font-semibold">
+              <span>Application Deadline: {job.deadline}</span>
+            </div>
 
-                    <Button asChild>
-                      <a href={`/jobs/${job.documentID}`}>View Details</a>
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            ))}
+            {/* ✅ Button Appears Only on Hover */}
+            <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <Button
+                className="px-5 py-2 text-sm font-medium rounded-lg transition-all duration-300 
+                          bg-gradient-to-r from-blue-600 to-indigo-600 text-white 
+                          hover:from-indigo-700 hover:to-blue-700 shadow-md 
+                          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 
+                          dark:from-gray-600 dark:to-gray-700 dark:hover:from-gray-700 dark:hover:to-gray-600 
+                          dark:text-gray-200 dark:shadow-lg"
+              >
+                View Details
+              </Button>
+            </div>
           </div>
+        </div>
+      </Card>
+    </Link>
+  ))}
+</div>
+
         ) : (
           <p className="text-center text-gray-500">No jobs found.</p>
         )}

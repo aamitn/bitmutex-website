@@ -13,6 +13,7 @@
 - **Docker-Compose Support** (For seamless development & deployment)
 - **Strapi Auto-Admin User Creation** (Creates admin user on first run)
 - **Health Check & Auto-Restart** (Ensures services stay healthy)
+- **Sitewide Dynamic SEO** (with Strapi SEO Plugin Integration) 
 
 ---
 

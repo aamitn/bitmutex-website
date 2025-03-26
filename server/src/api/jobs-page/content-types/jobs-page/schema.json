@@ -1,0 +1,29 @@
+{
+  "kind": "singleType",
+  "collectionName": "jobs_pages",
+  "info": {
+    "singularName": "jobs-page",
+    "pluralName": "jobs-pages",
+    "displayName": "Jobs Page",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "sub_heading": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

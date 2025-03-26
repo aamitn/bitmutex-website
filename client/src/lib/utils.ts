@@ -55,3 +55,11 @@ export function calculateReadingTime(text: string): number {
   const wordCount = text.split(/\s+/).length;
   return Math.ceil(wordCount / wordsPerMinute);
 }
+
+
+export function isValidUrl(url?: string): boolean {
+  if (!url) return false;
+  
+  const urlPattern = /^(\/[\w-./?%&=]*)$|^(https?:\/\/(localhost|\d{1,3}(\.\d{1,3}){3}|[\w.-]+)(:\d+)?(\/[\w-./?%&=]*)?)$/;  
+  return urlPattern.test(url);
+}
