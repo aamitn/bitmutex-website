@@ -368,6 +368,7 @@ export function Header({ data }: Readonly<HeaderProps>) {
               >
                 <Link
                   href={item.href}
+                  onClick={() => setIsOpen((prev) => !prev)}
                   className="block px-4 py-2 text-lg font-medium  dark:text-slate-400 text-orange-400 
             transition-all duration-300 hover:bg-gray-200 dark:hover:bg-gray-700 
             hover:text-blue-500 dark:hover:text-blue-400 rounded-md"
@@ -398,7 +399,11 @@ export function Header({ data }: Readonly<HeaderProps>) {
                     {isAppointment ? (
                       <span>{item.text}</span>
                     ) : (
-                      <Link href={baseHref} target={item.isExternal ? "_blank" : "_self"}>
+                      <Link 
+                      href={baseHref} 
+                      target={item.isExternal ? "_blank" : "_self"}
+                      onClick={() => setIsOpen((prev) => !prev)}
+                      >
                         {item.text}
                       </Link>
                     )}
