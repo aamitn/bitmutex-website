@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const pageData = await fetchContentType('industries-page', {
     populate: ["seo","seo.metaImage"],
   }, true)
-  console.log("industry Page Data:", pageData); // Debugging output
+  //console.log("industry Page Data:", pageData); // Debugging output
 
   
   if (!pageData) {

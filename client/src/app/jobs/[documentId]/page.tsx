@@ -1,11 +1,13 @@
-import fetchContentType from "@/lib/strapi/fetchContentType";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MapPin, DollarSign, Calendar, Clipboard, Briefcase } from 'lucide-react';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import RenderMarkdown from "@/components/custom/RenderMarkdown";
 import JobApplicationForm from "./JobApplicationForm";
 import JobActions from "./JobActions";  // ✅ Client Component for Buttons
-
+import { Metadata } from "next";
+import { strapiImage } from "@/lib/strapi/strapiImage";
+import fetchContentType from "@/lib/strapi/fetchContentType";
+import { generateMetadataObject } from "@/lib/metadata";
 
 interface PageProps {
   params: Promise<{ documentId: string }>;
@@ -24,6 +26,66 @@ interface Job {
   details: string;
 }
 
+export async function generateMetadata({ params }: { params: Promise<{ documentId: string }> }): Promise<Metadata> {
+  const BASE_URL_NEXT = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const resolveParams = await params;
+  const documentId = resolveParams.documentId;
+
+  const pageData = await fetchContentType("jobs", {
+    filters: { documentId },
+    populate: ["seo.metaImage"],
+  }, true);
+
+  if (!pageData) {
+    return {
+      title: "Job Not Found | Bitmutex Technologies",
+      description: "The requested job does not exist. Browse more job opportunities at Bitmutex Technologies.",
+      robots: "noindex, nofollow", // Prevent indexing non-existent jobs
+    };
+  }
+
+  const seo = pageData?.seo;
+  const metadata = generateMetadataObject(seo);
+
+  // ✅ Use `seo.metaTitle` if available, otherwise fallback to job title
+  const seotitle = seo?.metaTitle
+    ? `${seo.metaTitle} | Careers at Bitmutex`
+    : `${pageData.title || "Untitled Job"} | Careers at Bitmutex`;
+
+  // ✅ Use `seo.metaDescription`, otherwise fallback to job description
+  let seodescription = seo?.metaDescription || pageData.description || "";
+  if (seodescription.length > 150) {
+    seodescription = seodescription.substring(0, seodescription.lastIndexOf(" ", 150)) + "...";
+  }
+  seodescription += ` - Apply Today! - Deadline on : ${pageData.deadline}`;
+  // ✅ Assign metadata fields
+  metadata.title = seotitle;
+  metadata.description = seodescription;
+
+  // ✅ Override OpenGraph image (SEO preview image)
+  metadata.openGraph = {
+    ...(metadata.openGraph as any),
+    title: seotitle,
+    description: seodescription,
+
+    images: seo?.metaImage
+      ? [{ url: strapiImage(seo.metaImage.url) }]
+      : { url: `${BASE_URL_NEXT}/bmcs.png` },
+
+
+    url: `${BASE_URL_NEXT}/jobs/${documentId}`, // Canonical job URL
+    site_name: "Bitmutex",
+    locale: "en_US",
+    type: "article",
+  };
+
+  // ✅ Assign canonical URL
+  metadata.alternates = {
+    canonical: `${BASE_URL_NEXT}/jobs/${documentId}`,
+  };
+
+  return metadata;
+}
 
 export default async function JobDetailPage( { params }: PageProps ) {
   const resolvedParams = await params;

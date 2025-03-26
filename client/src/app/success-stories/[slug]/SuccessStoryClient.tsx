@@ -14,7 +14,8 @@ import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Download from "yet-another-react-lightbox/plugins/download";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
-
+import Image from 'next/image';
+import {isValidUrl} from "@/lib/utils"
 // Dynamic imports for Client Components
 const StoryMap = dynamic(() => import("@/components/custom/StoryMap"), { ssr: false });
 
@@ -89,7 +90,18 @@ export default function SuccessStoryClient({ story }: Props) {
         {/* Company Logo */}
         {story.logo && (
           <div className="flex justify-center p-6">
-            <img src={story.logo} alt={story.name} className="w-40 h-40 object-contain" />
+          <Image 
+            src={story.logo}
+            alt={story.name}
+            width={400}
+            height={300}
+            className="dark:invert object-cover transition-all duration-700 ease-out
+                      will-change-transform
+                      group-hover:scale-105 group-hover:brightness-110
+                      motion-safe:transform-gpu"
+            quality={90}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
           </div>
         )}
 
@@ -144,19 +156,26 @@ export default function SuccessStoryClient({ story }: Props) {
             </CardContent>
           </Card>
 
-
           {/* Case Study and Client Website Buttons */}
-          <div className="mt-6 flex space-x-4">
-            {story.casestudy && (
-              <Link href={story.casestudy} target="_blank">
-                <Button className="mt-2">View Case Study</Button>
+          <div className="mt-6 flex flex-wrap gap-4">
+            {isValidUrl(story.casestudy ?? undefined) ? (
+              <Link href={story.casestudy as string} target="_blank">
+                <Button className="mt-2">📄 View Case Study</Button>
               </Link>
+            ) : (
+              <Button className="mt-2 cursor-not-allowed opacity-50" disabled>
+                ❌ Case Study Unavailable
+              </Button>
             )}
 
-            {story.websiteurl && (
-              <Link href={story.websiteurl} target="_blank">
-                <Button className="mt-2">Visit Website</Button>
+            {isValidUrl(story.websiteurl ?? undefined) ? (
+              <Link href={story.websiteurl as string} target="_blank">
+                <Button className="mt-2">🌐 Visit Website</Button>
               </Link>
+            ) : (
+              <Button className="mt-2 cursor-not-allowed opacity-50" disabled>
+                ❌ Website Unavailable
+              </Button>
             )}
           </div>
 

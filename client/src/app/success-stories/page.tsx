@@ -3,7 +3,7 @@ import { fetchSuccessStories } from "@/data/loaders";
 import SuccessStoriesClient from "./SuccessStoriesClient";
 import  fetchContentType  from '@/lib/strapi/fetchContentType';
 import { generateMetadataObject } from '@/lib/metadata';
-
+import { strapiImage } from '@/lib/strapi/strapiImage';
 
 let heading: string = '', sub_heading: string = '', description: string = '';
 
@@ -52,6 +52,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     ...(metadata.openGraph as any), // Cast to 'any' to allow unknown properties
     title: seotitle, 
     description: seodescription,
+    
+    images: seo?.metaImage
+    ? [{ url: strapiImage(seo.metaImage.url) }]
+    : pageData?.image
+      ? [{ url: strapiImage(pageData.image.url) }]
+      : [{ url: `${BASE_URL_NEXT}/bmss.png`}], // Fallback to predefined placeholder
+    
+
     url: `${BASE_URL_NEXT}/success-stories`, // Add custom URL field
     site_name: "Bitmutex",
     locale: "en_US",

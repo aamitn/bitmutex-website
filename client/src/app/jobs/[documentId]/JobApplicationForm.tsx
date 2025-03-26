@@ -160,14 +160,18 @@ interface JobApplicationFormProps {
             placeholder="Your Email"
             value={applicationData.email}
             onChange={handleInputChange}
+            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+            title="Enter a valid email address (e.g., user@example.com)"
             required
           />
           <Input
-            type="text"
+            type="tel"
             name="phone"
             placeholder="Your Phone Number"
             value={applicationData.phone}
             onChange={handleInputChange}
+            pattern="^\+?[1-9]\d{7,14}$"
+            title="Enter a valid phone number with at least 8 digits (e.g., +12345678)"
             required
           />
           <Textarea
