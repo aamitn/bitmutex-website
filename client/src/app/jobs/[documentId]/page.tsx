@@ -6,6 +6,11 @@ import RenderMarkdown from "@/components/custom/RenderMarkdown";
 import JobApplicationForm from "./JobApplicationForm";
 import JobActions from "./JobActions";  // ✅ Client Component for Buttons
 
+
+interface PageProps {
+  params: Promise<{ documentId: string }>;
+}
+
 interface Job {
   id: string;
   documentId: string;
@@ -19,10 +24,12 @@ interface Job {
   details: string;
 }
 
-export default async function JobDetailPage({ params }: { params: { documentId: string } }) {
+
+export default async function JobDetailPage( { params }: PageProps ) {
+  const resolvedParams = await params;
   // ✅ Fetch job details via SSR
   const data = await fetchContentType("jobs", {
-    filters: { documentId: params.documentId },
+    filters: { documentId: resolvedParams.documentId },
     populate: "*",
   });
   console.log("your data");
