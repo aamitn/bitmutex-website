@@ -20,23 +20,22 @@
     "phone": {
       "type": "biginteger"
     },
-    "job": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::job.job"
-    },
     "coverLetter": {
       "type": "text"
     },
     "resume": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "job": {
+      "type": "string"
     }
   }
 }

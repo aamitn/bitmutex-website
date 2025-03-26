@@ -65,10 +65,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return metadata;
 }
 
-export default async function SuccessStoryPage({ 
-  searchParams 
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
-  const resolvedSearchParams = await searchParams; // Await the Promise
+
+  export default async function SuccessStoryPage() {
   const successStories = await fetchSuccessStories();
 
   return (
