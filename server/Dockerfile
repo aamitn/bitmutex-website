@@ -1,5 +1,5 @@
 # Use Node.js 20 as the base image
-FROM node:20-bookworm
+FROM node:20-alpine
 
 # Set working directory inside the container
 WORKDIR app
