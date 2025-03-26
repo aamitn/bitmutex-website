@@ -13,6 +13,7 @@ import { generateMetadataObject } from '@/lib/metadata';
 import  fetchContentType  from '@/lib/strapi/fetchContentType';
 import { strapiImage } from '@/lib/strapi/strapiImage';
 import {extractTextFromRichText} from "@/lib/utils";
+import Image from "next/image";
 
 
 
@@ -115,11 +116,13 @@ export default async function ProjectDetailPage({ params }: PageProps) {
       {/* Image + Description (Side by Side on Desktop) */}
       <div className="flex flex-col md:flex-row items-start gap-6">
         {project.imageUrl && (
-          <img
-            src={project.imageUrl}
-            alt={project.name}
-            className="w-full md:w-1/2 h-auto object-cover rounded-lg"
-          />
+          <Image
+          src={project.imageUrl}
+          alt={project.name}
+          width={800} // Adjust width based on expected size
+          height={600} // Adjust height to maintain aspect ratio
+          className="w-full md:w-1/2 h-auto object-cover rounded-lg"
+        />
         )}
 
         <div className="flex-1">

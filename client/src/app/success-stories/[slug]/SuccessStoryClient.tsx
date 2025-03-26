@@ -13,9 +13,8 @@ import "yet-another-react-lightbox/styles.css";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Download from "yet-another-react-lightbox/plugins/download";
-import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import Image from 'next/image';
-import {isValidUrl} from "@/lib/utils"
+import { isValidUrl } from "@/lib/utils"
 // Dynamic imports for Client Components
 const StoryMap = dynamic(() => import("@/components/custom/StoryMap"), { ssr: false });
 
@@ -90,18 +89,18 @@ export default function SuccessStoryClient({ story }: Props) {
         {/* Company Logo */}
         {story.logo && (
           <div className="flex justify-center p-6">
-          <Image 
-            src={story.logo}
-            alt={story.name}
-            width={400}
-            height={300}
-            className="dark:invert object-cover transition-all duration-700 ease-out
+            <Image
+              src={story.logo}
+              alt={story.name}
+              width={400}
+              height={300}
+              className="dark:invert object-cover transition-all duration-700 ease-out
                       will-change-transform
                       group-hover:scale-105 group-hover:brightness-110
                       motion-safe:transform-gpu"
-            quality={90}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
+              quality={90}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
           </div>
         )}
 
@@ -186,9 +185,11 @@ export default function SuccessStoryClient({ story }: Props) {
               <h4 className="text-lg font-semibold text-gray-900 dark:text-slate-300">Glimpses</h4>
               <div className="flex flex-wrap gap-4 mt-2">
                 {story.glimpses.map((glimpse: any, index: number) => (
-                  <img
+                  <Image
                     key={index}
                     src={glimpse.url}
+                    width={800} // Adjust width based on expected size
+                    height={600}
                     alt={`Glimpse ${index + 1}`}
                     className="w-40 h-40 object-cover rounded-lg shadow-md cursor-pointer"
                     onClick={() => {
@@ -208,11 +209,24 @@ export default function SuccessStoryClient({ story }: Props) {
               close={() => setIsOpen(false)}
               slides={lightboxImages}
               index={currentIndex}
-              plugins={[Thumbnails, Zoom, Download]}
+              plugins={[Zoom, Download]}
               render={{
                 slide: (slideProps) => {
-                  return <img src={slideProps.slide?.src} alt="lightbox" />;
+                  if (!slideProps.slide?.src) return null; // Handle undefined source gracefully
+
+                  return (
+                    <Image
+                      src={slideProps.slide.src}
+                      alt="lightbox"
+                      width={800} // Adjust width for better resolution
+                      height={600} // Maintain aspect ratio
+                      className="w-full h-auto object-contain rounded-lg"
+                      quality={90} // High-quality rendering
+                      priority
+                    />
+                  );
                 },
+
                 iconPrev: () => <ChevronLeft />,
                 iconNext: () => <ChevronRight />,
                 iconClose: () => <X />,

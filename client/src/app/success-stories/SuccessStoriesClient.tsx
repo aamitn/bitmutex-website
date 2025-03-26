@@ -11,6 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import dynamic from "next/dynamic";
+import Image from 'next/image';
 
 // Dynamically load the map component (client-side only)
 const SuccessStoryMap = dynamic(() => import("@/components/custom/SuccessStoryMap"), { ssr: false });
@@ -185,7 +186,14 @@ export default function SuccessStoriesClient({ stories }: PageProps) {
                 className="h-full flex flex-col rounded-3xl bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 hover:scale-105 overflow-hidden shadow-lg group transition-all duration-300"
               >
                 {story.logo && (
-                  <img src={story.logo} alt={story.name} className="w-full h-32 object-contain p-4" />
+                  <Image
+                  src={story.logo}
+                  alt={story.name}
+                  quality={95}
+                  width={800}
+                  height={400}
+                  className="w-full h-32 md:h-40 lg:h-72 xl:h-70 object-cover rounded-t-2xl shadow-lg transition-all duration-300 ease-in-out hover:brightness-110 hover:contrast-105"
+                />
                 )}
                 <CardHeader>
                   <CardTitle>{story.name}</CardTitle>
