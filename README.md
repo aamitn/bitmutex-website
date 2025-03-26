@@ -1,3 +1,5 @@
+![image](https://github.com/user-attachments/assets/6d84b1c9-2935-4f74-8ae0-de3213932e0e)
+
 
 # Bitmutex-Website - Batteries Included Business Starter Template  Strapi5 + Next15 + 
   
