@@ -52,13 +52,13 @@ export function Testimonials(data: Readonly<TestimonialsProps>) {
                             transition={{ duration: 0.5 }}
                             className="mx-6"
                         >
-                                                     <Card
-                                className={cn(
-                                    "relative w-96 p-6 rounded-2xl shadow-xl transition-all border backdrop-blur-lg overflow-hidden mb-2",
-                                    theme === "dark"
-                                        ? "bg-white/10 border-gray-800 text-white"
-                                        : "bg-gray-50 border-gray-200 text-black"
-                                )}
+                        <Card
+                            className={cn(
+                                "relative w-96 p-6 rounded-2xl shadow-xl transition-all border backdrop-blur-lg overflow-hidden mb-2",
+                                theme === "dark"
+                                    ? "bg-white/10 border-gray-800 text-white"
+                                    : "bg-gray-50 border-gray-200 text-black"
+                            )}
                             >
                                 {/* Inner Glow Animation */}
                                 <div className="absolute inset-0 opacity-20 pointer-events-none animate-pulse bg-gradient-to-br from-transparent via-primary/10 to-transparent"></div>
