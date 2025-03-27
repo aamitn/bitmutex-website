@@ -5,19 +5,19 @@ import type { HeroProps } from "@/types";
 import Link from "next/link";
 import { ArrowRight,PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { StrapiImage } from "@/components/custom/strapi-image";
+import { strapiImage } from "@/lib/strapi/strapiImage";
 import ParticleShape from "@/components/three/ParticleShape";
 import { useEffect, useState } from "react";
 import CalBookingModal from "@/components/custom/appointment";
 import { NavLink } from "@/types";
-
+import Image from "next/image";
 
 const appointmentUrl = process.env.NEXT_PUBLIC_APPOINTMENT_URL || "https://cal.com/bitmutexs";
 
 export function Hero(data: Readonly<HeroProps>) {
   if (!data) return null;
   const { heading, text, topLink, buttonLink, image } = data;
-
+  
   // Mouse position tracking for 3D parallax
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const mouseX = useMotionValue(0);
@@ -234,14 +234,14 @@ export function Hero(data: Readonly<HeroProps>) {
           }}
         >
           <div className="absolute inset-0" />
-          <StrapiImage
-            src={image.url}
-            alt="Bitmutex Dashboard"
-            width={1200}
-            height={850}
-            priority
-            className="rounded-xl  object-cover"
-          />
+          <Image
+          src={strapiImage(image.url)}
+          alt="Bitmutex Dashboard"
+          width={1200}
+          height={850}
+          priority
+          className="rounded-xl object-cover"
+        />
         </div>
       </motion.div>
 
