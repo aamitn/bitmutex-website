@@ -1,176 +1,251 @@
 "use client";
-
-import { useEffect, useState } from "react";
-import { Container } from "@/components/forms/container";
-import { Heading } from "@/components/elements/heading";
-import { Subheading } from "@/components/elements/subheading";
-import * as LucideIcons from "lucide-react";
-import { FC } from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { motion, useTransform, useMotionValue } from "framer-motion";
+import { Canvas } from "@react-three/fiber";
+import type { HeroProps } from "@/types";
+import Link from "next/link";
+import { ArrowRight,PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { motion, useAnimation } from "framer-motion";
-import type { ServiceBlockProps } from "@/types";
-import { useRouter } from "next/navigation";
+import { strapiImage } from "@/lib/strapi/strapiImage";
+import ParticleShape from "@/components/three/ParticleShape";
+import { useEffect, useState } from "react";
+import CalBookingModal from "@/components/custom/appointment";
+import { NavLink } from "@/types";
+import Image from "next/image";
+
+const appointmentUrl = process.env.NEXT_PUBLIC_APPOINTMENT_URL || "https://cal.com/bitmutexs";
 
 
-
-// Get the correct Lucide icon
-const getLucideIcon = (iconName: string): FC<any> => {
-  const pascalCaseName = iconName.split("-").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join("");;
-
-  // Check if the icon exists in the imported LucideIcons and return it
-  const Icon = (LucideIcons as any)[pascalCaseName];
-
-  // Fallback to a default icon if the requested icon does not exist
-  if (!Icon) {
-    return LucideIcons.AlertCircle;
-  }
-
-  return Icon;
-};
-
-export function ServiceBlock(data: Readonly<ServiceBlockProps>) {
+export function Hero(data: Readonly<HeroProps>) {
   if (!data) return null;
-  const { heading, sub_heading, services } = data;
-
-  // State to track scroll position for fade-in/out effects
-  const controls = useAnimation();
-  const [scrollY, setScrollY] = useState(0);
-  const router = useRouter();
+  const { heading, text, topLink, buttonLink, image } = data;
   
+  // Mouse position tracking for 3D parallax
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
+  // Apply mouse position to the motion values (smooth the movement)
   useEffect(() => {
-    controls.start({
-      opacity: scrollY > 100 ? 1 : 0.2,
-      scale: scrollY > 200 ? 1 : 0.95,
-      transition: { duration: 0.5, ease: "easeOut" },
-    });
-  }, [scrollY, controls]);
+    mouseX.set(mousePos.x / window.innerWidth - 0.5);
+    mouseY.set(mousePos.y / window.innerHeight - 0.5);
+  }, [mousePos, mouseX, mouseY]);
+
+  // Function to split the heading and highlight the third word with Tailwind classes
+  const splitHeading = (headingText: string, startIndex: number, wordCount: number) => {
+    const words = headingText.split(" ");
+
+    if (startIndex < 0 || startIndex >= words.length) return headingText; // Edge case handling
+
+    for (let i = startIndex; i < Math.min(startIndex + wordCount, words.length); i++) {
+      words[i] = `<span class="bg-gradient-to-br from-blue-500 via-indigo-500 to-orange-600 text-transparent bg-clip-text animate-pulse-gradient">${words[i]}</span>`;
+    }
+
+    return words.join(" ");
+  };
+
+
+
+
+  // 3D Parallax Effect calculation
+  const parallaxX = useTransform(mouseX, [-0.5, 0.5], ["-10px", "10px"]);
+  const parallaxY = useTransform(mouseY, [-0.5, 0.5], ["-5px", "5px"]);
+  const parallaxZ = useTransform(mouseX, [-0.5, 0.5], ["5px", "-5px"]);
 
   return (
-    <Container className="flex flex-col items-center justify-between pb-20 mt-4 mb-4">
-      {/* Header Section */}
+    <section className="relative container max-w flex flex-col items-center gap-20 pb-18 pt-20 sm:gap-214 md:flex-row">
       <motion.div
-        initial={{ opacity: 0, y: -30 }}
+        className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/40 to-secondary/40 blur-3xl opacity-20 transition-all duration-500"
+        animate={{ opacity: 0.6 }}
+        style={{
+          transform: `translate3d(${parallaxX.get()}, ${parallaxY.get()}, ${parallaxZ.get()})`,
+        }}
+      />
+
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative z-20 py-10 md:pt-40 text-center mb-10"
+        className="flex flex-1 flex-col items-center gap-8 md:items-start md:gap-10"
+        style={{
+          transform: `translate3d(${parallaxX.get()}, ${parallaxY.get()}, ${parallaxZ.get()})`,
+        }}
       >
-        <Heading as="h1" className="font-heading text-3xl font-semibold sm:text-4xl mb-2 text-slate-800 dark:text-slate-200">
-          {heading}
-        </Heading>
-        <Subheading as="h2" className="text-lg text-muted-foreground max-w-2xl">
-          {sub_heading}
-        </Subheading>
-      </motion.div>
+        <div className="flex flex-wrap gap-3">
+          {Array.isArray(topLink) &&
+            topLink.map((link: NavLink) => {
+              // Get the booking URL from environment variable
+              const appointmentUrl = process.env.NEXT_PUBLIC_APPOINTMENT_URL || "https://cal.com/bitmutex";
 
-      {/* Services Grid with Scroll-based Fade & Scale Effects */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={controls}
-        transition={{ duration: 1, ease: "easeOut" }}
-        className="w-full max-w-7xl mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-      >
-        {services && services.length > 0 ? (
-          services.map((service, index) => {
-            const ServiceIcon = getLucideIcon(service.icon);
+              // Check if the href contains "appointment" after a space
+              const parts = link.href.split(" ");
+              const isAppointment = parts.length > 1 && parts[1].toLowerCase() === "appointment";
+              const baseHref = parts[0]; // Extract the actual URL
 
-            // Dynamic sizing for Bento layout
-            const isLarge = index % 6 === 0 || index % 7 === 0;
-            const gridSpan = isLarge ? "lg:col-span-2 lg:row-span-2" : "lg:col-span-1";
-
-            // Vibrant, balanced gradient backgrounds
-            const bgGradients = [
-              "bg-gradient-to-br from-indigo-500 via-blue-600 to-purple-700",
-              "bg-gradient-to-br from-green-500 via-teal-600 to-blue-700",
-              "bg-gradient-to-br from-pink-500 via-red-500 to-orange-500",
-              "bg-gradient-to-br from-yellow-400 via-orange-500 to-red-600",
-            ];
-            const bgGradient = bgGradients[index % bgGradients.length];
-
-            return (
-              <motion.div
-                key={service.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.5 }}
-                className={`relative flex flex-col ${gridSpan} cursor-pointer transition-all duration-300`}
-                onClick={() => router.push(`/services/${service.slug}`)}
-              >
-                <Card 
-                  className="h-full flex flex-col shadow-lg hover:shadow-2xl backdrop-blur-xl bg-opacity-90 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden transform hover:-translate-y-1 hover:scale-[1.02] transition"
-                >
-                  {/* Icon and Title */}
-                  <CardHeader className="relative flex items-center justify-center py-6">
-                    <div className={`${bgGradient} p-5 rounded-xl shadow-md`}>
-                      {ServiceIcon && <ServiceIcon className="h-14 w-14 text-white" />}
-                    </div>
-                  </CardHeader>
-
-                  <Separator className="opacity-30" />
-
-                  {/* Content */}
-                  <CardContent className="p-6 flex flex-col flex-grow justify-between">
-                    <motion.h3
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.2, duration: 0.5 }}
-                      className="text-2xl font-semibold font-heading text-gray-900 dark:text-white tracking-tight"
-                    >
-                      {service.name}
-                    </motion.h3>
-
-                    <motion.p
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.4, duration: 0.5 }}
-                      className="text-gray-600 font-sans dark:text-gray-400 mt-3 flex-grow text-sm md:text-base leading-relaxed line-clamp-3
-                      flex-grow mt-3 transition-all duration-300 ease-in-out  hover:drop-shadow-md"
-                    >
-                      {service.description}
-                    </motion.p>
-
-                    {/* Learn More Button */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.6, duration: 0.5 }}
-                      className="mt-auto"
-                    >
-                      <Button
-                        variant="outline"
-                        className="mt-4 w-full border border-primary text-primary dark:text-white hover:bg-primary hover:text-white dark:hover:text-slate-700 transition-all"
-                        onClick={(e) => {
-                          e.stopPropagation(); // Prevent the card's onClick from firing
-                          router.push(`/services/${service.slug}`);
-                        }}
+              return (
+                <div key={link.text} className="flex flex-col sm:flex-row gap-3">
+                  {isAppointment ? (
+                    // Wrap inside CalBookingModal if it's an appointment link
+                    <CalBookingModal
+                      url={appointmentUrl}
+                      trigger={
+                        <div className="flex w-full sm:w-auto cursor-pointer items-center gap-1 rounded-full border bg-secondary px-3 py-0.5 hover:bg-secondary/60">
+                          <span className="flex items-center justify-center gap-1 text-sm text-secondary-foreground">
+                            {link.text}
+                            <ArrowRight size={16} />
+                          </span>
+                        </div>
+                      }
+                    />
+                  ) : (
+                    // Render normal link if not an appointment
+                    <div className="flex w-full sm:w-auto cursor-pointer items-center gap-1 rounded-full border bg-secondary px-3 py-0.5 hover:bg-secondary/60">
+                      <Link
+                        href={baseHref}
+                        target={link.isExternal ? "_blank" : "_self"}
+                        className="flex items-center justify-center gap-1 text-sm text-secondary-foreground"
                       >
-                        Learn More →
-                      </Button>
-                    </motion.div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            );
-          })
-        ) : (
-          <p className="text-gray-600 dark:text-gray-400 text-center col-span-full">
-            No services available.
-          </p>
-        )}
+                        {link.text}
+                        <ArrowRight size={16} />
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+
+        </div>
+
+
+        <h1
+          className="max-w-2xl text-5xl sm:text-6xl lg:text-6xl font-light backdrop:font-heading tracking-tight 
+                  leading-[1.15] sm:leading-[1.2] lg:leading-[1.15] 
+                  text-gray-900 dark:text-gray-100 
+                  md:max-w-3xl md:text-left text-center"
+          dangerouslySetInnerHTML={{ __html: splitHeading(heading, 2, 2), }}
+        />
+
+
+        <p className="pt-4 max-w-lg text-lg md:text-2xl font-light text-gray-800 dark:text-zinc-300 
+          font-sans tracking-tight leading-relaxed md:text-justify text-justify  text-muted-foreground 
+          transition-all duration-300 ease-in-out 
+        hover:text-gray-900 dark:hover:text-gray-100">
+          {text}
+        </p>
+
+
+        <div className="grid grid-cols-2 gap-3">
+          {buttonLink &&
+            buttonLink.map((link) => {
+              // Check if the href contains "appointment" at the end
+              const parts = link.href.split(" ");
+              const isAppointment = parts.length > 1 && parts[1].toLowerCase() === "appointment";
+              const baseHref = parts[0]; // Extract the first part as the actual URL
+
+              return isAppointment ? (
+                // Wrap inside CalBookingModal if it's an appointment link
+                <CalBookingModal
+                  key={link.text}
+                  url={appointmentUrl}
+                  trigger={
+                  <Button
+                    size="lg"
+                    variant={link.isPrimary ? "default" : "outline"}
+                    className={`relative h-12 sm:h-14 sm:px-10 cursor-pointer text-base font-semibold flex items-center gap-3 
+                      transition-all duration-300 ease-out transform rounded-xl overflow-hidden
+                      ${link.isPrimary 
+                        ? "border-orange-500 dark:border-orange-400 bg-gradient-to-r from-blue-500 to-indigo-500 dark:from-blue-600 dark:to-indigo-600 text-white shadow-[0px_4px_20px_rgba(59,130,246,0.4)] hover:shadow-[0px_6px_30px_rgba(59,130,246,0.6)] hover:scale-[1.05] active:scale-95" 
+                        : "border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-300 hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 bg-white/10 dark:bg-gray-900/10 backdrop-blur-lg"}`}
+                  >
+                    {/* Lucide Icon */}
+                    <PhoneCall className="w-5 h-5 text-white dark:text-gray-300 transition-all duration-300" />
+
+                    <span className="relative z-10">{link.text}</span>
+
+                    {/* Soft Glow Pulse Effect */}
+                    {link.isPrimary && (
+                      <span className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-all duration-500 
+                        bg-blue-500/30 blur-xl rounded-xl" 
+                      />
+                    )}
+                  </Button>
+                  }
+                />
+              ) : (
+                // Render normal button if not an appointment link
+                <Button
+                  key={link.text}
+                  size="lg"
+                  variant={link.isPrimary ? "default" : "outline"}
+                  asChild
+                  className={`relative h-12 sm:h-14 sm:px-10 cursor-pointer text-base font-medium overflow-hidden 
+                    transition-all duration-300 ease-out transform rounded-xl group
+                    ${link.isPrimary 
+                    ? "bg-blue-600 hover:bg-blue-700 text-white shadow-[0px_4px_20px_rgba(59,130,246,0.4)] hover:shadow-[0px_6px_30px_rgba(59,130,246,0.6)]" 
+                    : "border border-orange-500 dark:border-orange-400 text-gray-800 dark:text-gray-300 hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400   bg-orange-300/10 dark:bg-orange-900/20 backdrop-blur-lg"
+                    }`}
+                   >
+                  <Link href={baseHref} target={link.isExternal ? "_blank" : "_self"}>
+                    <span className="relative z-10">{link.text} {link.parentName}</span>
+                    
+                    {/* Subtle Background Animation (Glassmorphism Effect) */}
+                    {!link.isPrimary && (
+                      <span className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-all duration-300 
+                        bg-gradient-to-r from-blue-500/10 to-blue-500/20 dark:from-blue-500/20 dark:to-blue-500/30 
+                        rounded-xl blur-md" 
+                      />
+                    )}
+                  </Link>
+                </Button>
+              );
+            })}
+        </div>
+        
       </motion.div>
-    </Container>
+
+      <motion.div
+        className="mb-4 relative flex-1 flex flex-col gap-6 items-center justify-center md:justify-start w-full max-w-screen-xl"
+      >
+        {/* ParticleShape */}
+        <Canvas
+          style={{
+            transform: `translate3d(${parallaxX.get()}, ${parallaxY.get()}, ${parallaxZ.get()})`,
+          }}
+          className="mb-4 absolute inset-0 w-full h-full"
+          camera={{ position: [0, 8, 20], fov: 25 }}
+        >
+          <ambientLight intensity={0.5} />
+          <pointLight position={[5, 5, 5]} />
+          <ParticleShape />
+        </Canvas>
+
+        {/* Image */}
+        <div
+          className="relative w-full md:w-4/5 lg:w-3/4 xl:w-4/5 2xl:w-4/5 rounded-xl  overflow-hidden"
+          style={{
+            transform: `scale(1.1)`,
+          }}
+        >
+          <div className="absolute inset-0" />
+          <Image
+          src={strapiImage(image.url)}
+          alt="Bitmutex Dashboard"
+          width={1200}
+          height={850}
+          priority
+          className="rounded-xl object-cover"
+        />
+        </div>
+      </motion.div>
+
+    </section>
   );
 }
