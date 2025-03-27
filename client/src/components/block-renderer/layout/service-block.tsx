@@ -62,7 +62,7 @@ export function ServiceBlock(data: Readonly<ServiceBlockProps>) {
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative z-20 py-10 md:pt-40 text-center mb-10"
+        className="relative z-20 py-10 text-center mb-10"
       >
         <Heading as="h1" className="font-heading text-3xl font-semibold sm:text-4xl mb-2 text-slate-800 dark:text-slate-200">
           {heading}
