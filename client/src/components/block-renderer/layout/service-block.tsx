@@ -87,24 +87,15 @@ export function ServiceBlock(data: Readonly<ServiceBlockProps>) {
             const isLarge = index % 6 === 0 || index % 7 === 0;
             const gridSpan = isLarge ? "lg:col-span-2 lg:row-span-2" : "lg:col-span-1";
 
-            // Vibrant, balanced gradient backgrounds for light & dark mode
-            const bgGradientsLight = [
-              "bg-gradient-to-br from-sky-400 via-cyan-500 to-blue-600",
-              "bg-gradient-to-br from-emerald-400 via-teal-500 to-green-600",
-              "bg-gradient-to-br from-rose-400 via-pink-500 to-red-600",
-              "bg-gradient-to-br from-amber-400 via-orange-500 to-yellow-600",
+            // Vibrant, balanced gradient backgrounds
+            const bgGradients = [
+              "bg-gradient-to-br from-indigo-500 via-blue-600 to-purple-700",
+              "bg-gradient-to-br from-green-500 via-teal-600 to-blue-700",
+              "bg-gradient-to-br from-pink-500 via-red-500 to-orange-500",
+              "bg-gradient-to-br from-yellow-400 via-orange-500 to-red-600",
             ];
-            const bgGradientsDark = [
-              "bg-gradient-to-br from-indigo-800 via-blue-900 to-purple-950",
-              "bg-gradient-to-br from-green-800 via-teal-900 to-blue-950",
-              "bg-gradient-to-br from-pink-800 via-red-900 to-orange-950",
-              "bg-gradient-to-br from-yellow-800 via-orange-900 to-red-950",
-            ];
+            const bgGradient = bgGradients[index % bgGradients.length];
 
-            // Determine the appropriate gradient based on dark mode
-            const bgGradientLight = bgGradientsLight[index % bgGradientsLight.length];
-            const bgGradientDark = bgGradientsDark[index % bgGradientsDark.length];
-            
             return (
               <motion.div
                 key={service.id}
@@ -120,9 +111,9 @@ export function ServiceBlock(data: Readonly<ServiceBlockProps>) {
                 >
                   {/* Icon and Title */}
                   <CardHeader className="relative flex items-center justify-center py-6">
-                  <div className={`${bgGradientLight} dark:${bgGradientDark} p-5 rounded-xl shadow-md`}>
-                    <ServiceIcon className="h-14 w-14 text-white" />
-                  </div>
+                    <div className={`${bgGradient} p-5 rounded-xl shadow-md`}>
+                      {ServiceIcon && <ServiceIcon className="h-14 w-14 text-white" />}
+                    </div>
                   </CardHeader>
 
                   <Separator className="opacity-30" />
