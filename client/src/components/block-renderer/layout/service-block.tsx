@@ -125,7 +125,7 @@ export function ServiceBlock(data: Readonly<ServiceBlockProps>) {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.2, duration: 0.5 }}
-                      className="text-2xl font-semibold font-heading text-gray-900 dark:text-white tracking-tight"
+                      className="text-2xl font-bold font-heading text-gray-900 dark:text-white tracking-tight"
                     >
                       {service.name}
                     </motion.h3>
