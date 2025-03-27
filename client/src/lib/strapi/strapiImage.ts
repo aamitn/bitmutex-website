@@ -1,10 +1,10 @@
 import { unstable_noStore as noStore } from 'next/cache';
 
-export function strapiImage(url: string): string {
+export function strapiImage(url?: string): string {
   noStore();
-  if (url.startsWith("/")) {
+  if (!url) return ""; // Handle undefined/null cases
 
-    return process.env.NEXT_PUBLIC_STRAPI_BASE_URL + url
-  }
-  return url
+  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_BASE_URL || "http://localhost:1337";
+
+  return url.startsWith("/") ? `${baseUrl}${url}` : url;
 }
