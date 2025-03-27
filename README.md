@@ -22,7 +22,7 @@
 
 -  **Docker-Compose Support** (For seamless development & deployment)
 
--  **Native Built-In Live Chat** (Created with Socket io integrated within strapi)
+-  **Native Built-In Live Chat to Discord** (Powered by Socket.io integrated within strapi, No 3rd Party Service/Embed/Widgets)
 
 -  **Strapi Auto-Admin User Creation** (Creates admin user on first run)
 
@@ -32,7 +32,7 @@
 
 -  **Multiple Custom Collections, Reusable Blocks and Single Types**
 
-- **Real-Time Features** (Native Bult-In live chat without using any 3rd party service , built with socket.io and also provideds live website visitor count)
+-  **Real-Time Features** (Provides live website visitor count)
 
   
 
