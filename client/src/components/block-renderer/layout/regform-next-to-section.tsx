@@ -74,7 +74,7 @@ export function RegformNextToSection(data: Readonly<RegformNextToSectionProps>) 
           >
           <Heading 
             as="h1" 
-            className="text-7xl md:text-5xl lg:text-7xl font-heading font-semibold max-w-2xl leading-relaxed 
+            className="text-7xl md:text-4xl lg:text-7xl font-heading font-semibold max-w-2xl
                       bg-gradient-to-r from-blue-600 via-orange-500 to-blue-600 
                       dark:from-blue-600 dark:via-orange-500 dark:to-blue-400 
                       bg-clip-text text-transparent 
