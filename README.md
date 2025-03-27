@@ -21,6 +21,7 @@
 -  **PostgreSQL 15** (Database for Strapi)
 
 -  **Docker-Compose Support** (For seamless development & deployment)
+
 -  **Native Built-In Live Chat** (Created with Socket io integrated within strapi)
 
 -  **Strapi Auto-Admin User Creation** (Creates admin user on first run)
@@ -30,6 +31,8 @@
 -  **Sitewide Dynamic SEO** (with Strapi SEO Plugin Integration)
 
 -  **Multiple Custom Collections, Reusable Blocks and Single Types**
+
+- **Real-Time Features** (Native Bult-In live chat without using any 3rd party service , built with socket.io and also provideds live website visitor count)
 
   
 
