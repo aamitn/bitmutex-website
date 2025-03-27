@@ -187,17 +187,17 @@ export default function SuccessStoriesClient({ stories }: PageProps) {
               >
                 {story.logo && (
                   <Image
-                  src={story.logo}
-                  alt={story.name}
-                  quality={95}
-                  width={800}
-                  height={400}
-                  className="w-full h-32 md:h-40 lg:h-48 xl:h-56 object-cover rounded-t-2xl shadow-lg 
-                  transition-all duration-300 ease-in-out 
-                  hover:brightness-110 hover:contrast-105
-                  dark:filter dark:invert dark:brightness-85 dark:contrast-125
-                  dark:hover:grayscale-0 dark:hover:brightness-100 dark:hover:contrast-110"               
-                 />
+                    src={story.logo}
+                    alt={story.name}
+                    width={800}
+                    height={400}
+                    className="w-full h-32 md:h-40 lg:h-48 xl:h-56 o md:h-40 lg:h-48 xl:h-56 
+                      object-contain 
+                      rounded-t-2xl 
+                      transition-all duration-300 ease-in-out
+                      dark:filter dark:invert dark:brightness-85 dark:contrast-125"
+                    quality={95}
+                  />
                 )}
                 <CardHeader>
                   <CardTitle>{story.name}</CardTitle>
