@@ -21,7 +21,7 @@ export default function LiveUserCount() {
 
     // Listen for the live user count event
     newSocket.on("liveUserCount", (data: LiveUserCountData) => {
-      setLiveUsers(data.count);
+      setLiveUsers(Math.floor(data.count / 2));
     });
 
     // Cleanup function to disconnect on unmount
