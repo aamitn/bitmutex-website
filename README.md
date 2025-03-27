@@ -1,7 +1,7 @@
 ![image](https://github.com/user-attachments/assets/6d84b1c9-2935-4f74-8ae0-de3213932e0e)
 
 
-# Bitmutex-Website - Batteries Included Business Starter Template : Strapi5 + Next15 + Postgres + SocketIo
+# Bitmutex-Website - Batteries Included Business Starter Template : Strapi5 + Next15 + Postgres + SocketIO
   
 
 **Bitmutex-Website** - A modern, containerized businness website starter template with all the batteries included from SEO to Reusable Blocks 
