@@ -82,11 +82,11 @@ const TableOfContents = ({ containerClass }: TOCProps) => {
   };
 
   return (
-        <>
+    <>
 
-        <motion.nav
+      <motion.nav
         className="
-            hidden md:flex flex-col 
+            hidden lg:flex flex-col 
             md:fixed md:top-20 
             lg:left-20 md:right-4 
             sm:w-44 md:w-52 lg:w-64 
@@ -99,94 +99,92 @@ const TableOfContents = ({ containerClass }: TOCProps) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
         whileHover={{ scale: 1.02, transition: { duration: 0.3 } }} // Subtle hover effect
-        >
+      >
         <h3 className="text-lg font-semibold mb-3 text-center md:text-left">Table of Contents</h3>
         <ul className="space-y-2 text-sm">
-            {headings.map(({ id, text, level }) => (
+          {headings.map(({ id, text, level }) => (
             <motion.li
-                key={id}
-                className={`ml-${(level - 2) * 4}`}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: level * 0.1 }} // Staggered fade-in for items
+              key={id}
+              className={`ml-${(level - 2) * 4}`}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: level * 0.1 }} // Staggered fade-in for items
             >
-                <a
+              <a
                 href={`#${id}`}
-                className={`block px-3 py-1 rounded-md transition-all ${
-                    activeId === id ? 'bg-blue-600 text-white font-semibold' : 'hover:bg-gray-200 dark:hover:bg-gray-700'
-                }`}
+                className={`block px-3 py-1 rounded-md transition-all ${activeId === id ? 'bg-blue-600 text-white font-semibold' : 'hover:bg-gray-200 dark:hover:bg-gray-700'
+                  }`}
                 onClick={(e) => {
-                    e.preventDefault();
-                    handleScrollTo(id);
+                  e.preventDefault();
+                  handleScrollTo(id);
                 }}
-                >
+              >
                 {text}
-                </a>
+              </a>
             </motion.li>
-            ))}
+          ))}
         </ul>
-        </motion.nav>
+      </motion.nav>
 
 
 
-        {/* Mobile View (Floating Button & Sliding Panel) */}
-        <div className="fixed bottom-4 right-4 md:hidden">
+      {/* Mobile View (Floating Button & Sliding Panel) */}
+      <div className="fixed bottom-4 right-4 lg:hidden">
         {/* Floating Button */}
         <button
-            onClick={() => setIsMobileToCOpen(true)}
-            className="bg-blue-600 text-white p-3 rounded-full shadow-lg opacity-80 hover:opacity-100 transition-opacity"
-            aria-label="Table of Contents"
+          onClick={() => setIsMobileToCOpen(true)}
+          className="bg-blue-600 text-white p-3 rounded-full shadow-lg opacity-80 hover:opacity-100 transition-opacity"
+          aria-label="Table of Contents"
         >
-            <Book size={20} />
+          <Book size={20} />
         </button>
-        </div>
+      </div>
 
-        {/* Mobile TOC Panel */}
-        <AnimatePresence>
+      {/* Mobile TOC Panel */}
+      <AnimatePresence>
         {isMobileToCOpen && (
-            <motion.div
+          <motion.div
             className="z-[999] fixed inset-0 bg-black bg-opacity-50 flex flex-col"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsMobileToCOpen(false)}
-            >
+          >
             {/* Slide-up TOC Panel */}
             <motion.div
-                className="bg-white dark:bg-gray-900 p-6 max-h-[80vh] overflow-y-auto rounded-t-lg shadow-lg"
-                initial={{ y: "100%" }}
-                animate={{ y: 0 }}
-                exit={{ y: "100%" }}
-                transition={{ type: "spring", stiffness: 120, damping: 15 }}
-                onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside
+              className="bg-white dark:bg-gray-900 p-6 max-h-[80vh] overflow-y-auto rounded-t-lg shadow-lg"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", stiffness: 120, damping: 15 }}
+              onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside
             >
-                <h3 className="text-lg font-semibold mb-3 text-center">Table of Contents</h3>
-                <ul className="space-y-2 text-sm">
+              <h3 className="text-lg font-semibold mb-3 text-center">Table of Contents</h3>
+              <ul className="space-y-2 text-sm">
                 {headings.map(({ id, text, level }) => (
-                    <li key={id} className={`ml-${(level - 2) * 4}`}>
+                  <li key={id} className={`ml-${(level - 2) * 4}`}>
                     <button
-                        onClick={() => handleScrollTo(id)}
-                        className={`block w-full text-left px-3 py-1 rounded-md transition-all ${
-                        activeId === id ? "bg-blue-600 text-white font-semibold" : "hover:bg-gray-200 dark:hover:bg-gray-700"
+                      onClick={() => handleScrollTo(id)}
+                      className={`block w-full text-left px-3 py-1 rounded-md transition-all ${activeId === id ? "bg-blue-600 text-white font-semibold" : "hover:bg-gray-200 dark:hover:bg-gray-700"
                         }`}
                     >
-                        {text}
+                      {text}
                     </button>
-                    </li>
+                  </li>
                 ))}
-                </ul>
+              </ul>
 
-                {/* Close Button */}
-                <button
+              {/* Close Button */}
+              <button
                 onClick={() => setIsMobileToCOpen(false)}
                 className="mt-4 w-full bg-red-500 text-white py-2 rounded-md"
-                >
+              >
                 Close
-                </button>
+              </button>
             </motion.div>
-            </motion.div>
+          </motion.div>
         )}
-        </AnimatePresence>
+      </AnimatePresence>
     </>
   );
 };

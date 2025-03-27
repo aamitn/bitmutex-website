@@ -16,6 +16,7 @@ import { generateMetadataObject } from '@/lib/metadata';
 import  fetchContentType  from '@/lib/strapi/fetchContentType';
 import { strapiImage } from '@/lib/strapi/strapiImage';
 import { calculateReadingTime } from "@/lib/utils";
+import RelatedPosts from "@/components/custom/related-posts";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -114,10 +115,10 @@ export default async function SinglePost({ params }: PageProps) {
   return (
     <article className="pt-10 pb-16">
       <ReadingProgress />
-      <TableOfContents containerClass="post-content" />
+      <TableOfContents  containerClass="post-content" />
       <div className="container  max-w-6xl px-4">
         <header className="my-10 text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl mb-4">
+          <h1 className="font-heading text-4xl font-extrabold tracking-tight sm:text-5xl mb-4">
             {post.title} 
           </h1>
 
@@ -158,7 +159,7 @@ export default async function SinglePost({ params }: PageProps) {
         )}
 
           <p className="text-gray-500 dark:text-gray-400 text-sm">
-            Posted on {formatDate(post.publishedAt)} - {post.category.text} •{" "}
+            Posted on {formatDate(post.publishedAt)} • {post.category.text} • {" "}
             <span className="font-semibold">{readingTime} min read</span>
           </p>
 
@@ -249,6 +250,9 @@ export default async function SinglePost({ params }: PageProps) {
 
         </div>
 
+
+
+
         {/* Dynamic Content Blocks */}
         {blocks && (
           <div className="mt-6">
@@ -256,6 +260,11 @@ export default async function SinglePost({ params }: PageProps) {
           </div>
         )}
       </div>
+
+    {/*Related Posts */}
+    <RelatedPosts category={post.category}/>
+
+
     </article>
   );
 }
