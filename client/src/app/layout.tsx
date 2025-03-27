@@ -54,11 +54,11 @@ export default async function RootLayout({
 
   // Ensure full image URL for Next.js Image component
   const logoSrc = logo?.url
-  ? `${process.env.STRAPI_BASE_URL || "http://localhost:1337"}${logo.url}`
+  ? `${process.env.NEXT_PUBLIC_STRAPI_BASE_URL || "http://localhost:1337"}${logo.url}`
   : "";
 
   const logoWideSrc = logowide?.url
-  ? `${process.env.STRAPI_BASE_URL || "http://localhost:1337"}${logowide.url}`
+  ? `${process.env.NEXT_PUBLIC_STRAPI_BASE_URL || "http://localhost:1337"}${logowide.url}`
   : "";
 
 
