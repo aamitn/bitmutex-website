@@ -5,6 +5,10 @@
 @tailwind utilities;
 
 
+html, body {
+  overflow-x: hidden;
+ /* width: 100vw; */
+}
 
 body {
   font-family: Arial, Helvetica, sans-serif;

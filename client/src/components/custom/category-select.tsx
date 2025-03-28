@@ -16,7 +16,7 @@ export async function CategorySelect() {
   if (filteredCategories.length === 0) return null;
 
   return (
-    <div className="w-full flex gap-2 justify-center items-center">
+    <div className="w-full flex flex-wrap gap-2 justify-center items-center">
       {filteredCategories.map((category) => (
         <CategoryButton key={category.id} value={category.text}>
           {category.text.charAt(0).toUpperCase() + category.text.slice(1).toLowerCase()}
