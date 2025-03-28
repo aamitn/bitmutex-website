@@ -9,14 +9,14 @@ import { BlockRenderer } from "@/components/block-renderer";
 import ReadingProgress from "@/components/ui/ReadingProgress";
 import { CkeditorBlock } from "@/components/block-renderer/layout/ckeditor-block";
 import TableOfContents from "@/components/custom/TableOfContents";
-import { FaSquareXTwitter,FaSquareFacebook, FaLinkedin } from "react-icons/fa6";
+import { FaSquareXTwitter,FaSquareFacebook, FaLinkedin, FaSquareWhatsapp, FaSquareReddit  } from "react-icons/fa6";
 import {FiEye } from "react-icons/fi";
-import { FaRedditSquare } from "react-icons/fa";
 import { generateMetadataObject } from '@/lib/metadata';
 import  fetchContentType  from '@/lib/strapi/fetchContentType';
 import { strapiImage } from '@/lib/strapi/strapiImage';
 import { calculateReadingTime } from "@/lib/utils";
 import RelatedPosts from "@/components/custom/related-posts";
+import CopyToClipboardButton from "@/components/custom/CopyToClipboardButton";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -106,10 +106,14 @@ export default async function SinglePost({ params }: PageProps) {
   // Social share URLs
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:1337"; // Fallback URL
   const shareUrl = encodeURIComponent(`${baseUrl}/blog/${slug}`);
-  const twitterShare = `https://twitter.com/intent/tweet?url=${shareUrl}&text=${encodeURIComponent(post.title)}`;
+  const shareText = encodeURIComponent(`Check out our latest blog post:\n\n"${post.title}"\n\nRead more below:`);
+
+
+  const twitterShare = `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`;
   const facebookShare = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
-  const linkedinShare = `https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}`;
-  const redditShare = `https://www.reddit.com/submit?url=${shareUrl}&title=${encodeURIComponent(post.title)}`;
+  const linkedinShare = `https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}&text=${shareText}`;
+  const redditShare = `https://www.reddit.com/submit?url=${shareUrl}&title=${shareText}`;
+  const whatsappShare = `https://api.whatsapp.com/send?text=${shareText}%20${shareUrl}`; 
   
 
   return (
@@ -202,8 +206,20 @@ export default async function SinglePost({ params }: PageProps) {
               rel="noopener noreferrer"
               className="p-2 rounded-full hover:bg-blue-100 transition"
             >
-              <FaRedditSquare  className="w-5 h-5 text-orange-500" />
+              <FaSquareReddit  className="w-5 h-5 text-orange-500" />
             </a>
+
+            <a
+              href={whatsappShare}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-full hover:bg-blue-100 transition"
+            >
+              <FaSquareWhatsapp  className="w-5 h-5 text-orange-500" />
+            </a>
+
+            {/* Copy Link Button */}
+            <CopyToClipboardButton link={decodeURIComponent(shareUrl)} />
           </div>
 
           <StrapiImage
