@@ -187,7 +187,7 @@ export default async function RelatedPosts({ category }: RelatedPostsProps) {
                   "ring-1 ring-gray-950/5 dark:ring-white/10"
                 )}
               >
-                <Link href={`/posts/${post.slug}`} className="block">
+                <Link href={`/blog/${post.slug}`} className="block">
                   {post.thumbnail && (
                     <div className="relative overflow-hidden h-24">
                       <StrapiImage
