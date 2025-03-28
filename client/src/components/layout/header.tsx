@@ -294,7 +294,7 @@ export function Header({ data }: Readonly<HeaderProps>) {
           side="left"
           className="font-heading w-72 bg-white dark:bg-gray-900 backdrop-blur-md bg-opacity-90 dark:bg-opacity-75 
           border-r border-orange-400 dark:border-gray-700 shadow-lg dark:shadow-xl 
-          transition-all duration-300 ease-in-out"
+          transition-all duration-300 ease-in-out overflow-y-auto"
         >
 
 
@@ -315,7 +315,7 @@ export function Header({ data }: Readonly<HeaderProps>) {
               { group: groupedNavItems2, id: "group3" }
             ].map(({ group, id }) => {
               const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(
-                Object.fromEntries(Object.keys(group).map((key) => [key, false]))
+                Object.fromEntries(Object.keys(group).map((key) => [key, true]))
               );
 
               const toggleGroup = (groupName: string) => {

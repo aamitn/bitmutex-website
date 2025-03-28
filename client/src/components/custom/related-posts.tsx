@@ -92,7 +92,7 @@ export default async function RelatedPosts({ category }: RelatedPostsProps) {
                   "p-0 overflow-hidden"
                 )}
               >
-                <Link href={`/posts/${post.slug}`} className="block">
+                <Link href={`/blog/${post.slug}`} className="block">
                   {post.thumbnail && (
                     <div className="relative overflow-hidden">
                       <StrapiImage
