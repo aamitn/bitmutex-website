@@ -46,7 +46,7 @@ export function Hero(data: Readonly<HeroProps>) {
     if (startIndex < 0 || startIndex >= words.length) return headingText; // Edge case handling
 
     for (let i = startIndex; i < Math.min(startIndex + wordCount, words.length); i++) {
-      words[i] = `<span class="bg-gradient-to-br from-blue-500 via-indigo-500 to-orange-600 text-transparent bg-clip-text animate-pulse-gradient">${words[i]}</span>`;
+      words[i] = `<span class="font-bold bg-gradient-to-br from-blue-500 via-indigo-500 to-orange-600 text-transparent bg-clip-text animate-pulse-gradient">${words[i]}</span>`;
     }
 
     return words.join(" ");
@@ -126,16 +126,16 @@ export function Hero(data: Readonly<HeroProps>) {
 
 
         <h1
-          className="max-w-2xl text-5xl sm:text-6xl lg:text-6xl font-light backdrop:font-heading tracking-tight 
+          className="max-w-2xl text-5xl sm:text-6xl lg:text-6xl font-light font-heading backdrop:font-heading tracking-tight 
                   leading-[1.15] sm:leading-[1.2] lg:leading-[1.15] 
                   text-gray-900 dark:text-gray-100 
                   md:max-w-3xl md:text-left text-center"
-          dangerouslySetInnerHTML={{ __html: splitHeading(heading, 2, 2), }}
+          dangerouslySetInnerHTML={{ __html: splitHeading(heading, 2, 2), }}   // Specify NUmber of Words to Animate 
         />
 
 
         <p className="pt-4 max-w-lg text-lg md:text-2xl font-light text-gray-800 dark:text-zinc-300 
-          font-sans tracking-tight leading-relaxed md:text-justify text-justify  text-muted-foreground 
+          font-heading tracking-tight leading-relaxed md:text-justify text-justify  text-muted-foreground 
           transition-all duration-300 ease-in-out 
         hover:text-gray-900 dark:hover:text-gray-100">
           {text}
