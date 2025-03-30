@@ -169,7 +169,7 @@ export function PostBlock(data: Readonly<PostBlockProps>) {
         transition={{ delay: 1, duration: 0.6 }}
         className="mt-10"
       >
-        <Link href="/blogs">
+        <Link href="/blog">
           <button className="font-heading font-bold px-6 py-3 text-white dark:text-slate-800 bg-gradient-to-r from-blue-600 to-indigo-500 dark:from-blue-400 dark:to-indigo-400 rounded-lg shadow-md hover:bg-opacity-90 transition transform hover:scale-105">
             View All Blogs
           </button>
