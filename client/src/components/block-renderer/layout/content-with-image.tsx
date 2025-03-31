@@ -14,8 +14,9 @@ export function ContentWithImage(data: Readonly<ContentWithImageProps>) {
   const { theme } = useTheme();
 
   const glowBackground = theme === "light"
-  ? "radial-gradient(circle, rgba(0, 0, 0, 0.1) 10%, rgba(255, 255, 255, 0.5) 80%)"
+  ? "radial-gradient(circle closest-side, rgba(255, 255, 255, 0.4) 50%, rgba(0, 0, 0, 0.1) 90%)"
   : "radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0) 60%)";
+
 
   // Animation controls and refs for scroll triggering
   const controls = useAnimation();
