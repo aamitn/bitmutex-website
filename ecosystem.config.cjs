@@ -3,8 +3,8 @@ module.exports = {
     {
       name: "bitmutex-strapi", // Strapi backend
       cwd: "./server", // Change directory to the server folder
-      script: process.platform === "win32" ? "cmd" : "yarn",
-      args: process.platform === "win32" ? "/c yarn develop" : "develop",
+      script: process.platform === "win32" ? "cmd" : "pnpm",
+      args: process.platform === "win32" ? "/c pnpm develop" : "develop",
       env_file: "./.env",
       out_file: "./logs/strapi-out.log",
       error_file: "./logs/strapi-error.log",
@@ -20,8 +20,8 @@ module.exports = {
     {
       name: "bitmutex-nextjs", // Next.js frontend
       cwd: "./client", // Change directory to the client folder
-      script: process.platform === "win32" ? "cmd" : "yarn",
-      args: process.platform === "win32" ? "/c yarn start -p 3001" : "start -p 3001",
+      script: process.platform === "win32" ? "cmd" : "pnpm",
+      args: process.platform === "win32" ? "/c pnpm start -p 3001" : "start -p 3001",
       env_file: "./.env",
       out_file: "./logs/next-out.log",
       error_file: "./logs/next-error.log",
