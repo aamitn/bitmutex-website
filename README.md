@@ -75,7 +75,7 @@
   
 
 ```sh
-git  clone  https://github.com/aamitn/bitmutex-website.git
+git clone --depth=1 https://github.com/aamitn/bitmutex-website.git
 cd  bitmutex-website
 ```
 
