@@ -20,6 +20,11 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::logo.logo"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
     }
   }
 }

@@ -12,6 +12,7 @@ import { generateMetadataObject } from '@/lib/metadata';
 import  fetchContentType  from '@/lib/strapi/fetchContentType';
 import { Metadata } from "next";
 import { calculateReadingTime } from "@/lib/utils";
+import { strapiImage } from "@/lib/strapi/strapiImage";
 
 interface PageProps {
   searchParams: Promise<{ page?: string; query?: string; category?: string; view?: string }>;
@@ -90,6 +91,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     ...(metadata.openGraph as any), // Cast to 'any' to allow unknown properties
     title: seotitle, 
     description: seodescription,
+
+    images: seo?.metaImage
+    ? [{ url: strapiImage(seo.metaImage.url) }]
+    : { url: `${BASE_URL_NEXT}/bmblog.png` },
+
     url: `${BASE_URL_NEXT}/blog`, // Add custom URL field
     site_name: "Bitmutex",
     locale: "en_US",

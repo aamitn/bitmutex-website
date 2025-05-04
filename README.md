@@ -127,6 +127,15 @@ pnpm dev
   commands.
 > Use `/server/src/admin/vite.config.ts` to control admin dashboard domain access
 
+### 7️⃣  **Upgrade Strapi to Latest Version **
+  ```sh
+npx @strapi/upgrade latest 
+OR
+pnpx @strapi/upgrade latest 
+  ```
+  This will upgrade  strapi to its latest version. More info [here](https://docs.strapi.io/cms/upgrade-tool)
+
+
 ## ⚙️Cloud Native Setup Instructions
 
 
@@ -192,3 +201,7 @@ yarn  strapi  import  -f  /seed-data.tar.gz  --force
 ## 📞 Support
 
 If you encounter issues, feel free to [ open an issue](https://github.com/aamitn/bitmutex-website/issues/new/choose).
+
+
+
+Designed, Developed and Maintained by `Bitmutex Technologies`
