@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import StatusBadge from "@/components/custom/status-badge";
+import { GitHubBadge } from "@/components/custom/github-badge";
 import * as CookieConsent from "vanilla-cookieconsent";
 import * as LucideIcons from "lucide-react";
 import { ElementType } from "react";
@@ -131,6 +132,12 @@ export function Footer({ data }: Readonly<FooterProps>) {
             <div className="flex justify-center sm:justify-start w-full">
               <StatusBadge />
             </div>
+
+            {/* ✅ GitHub Repository Badge */}
+            <div className="flex justify-center sm:justify-start w-full">
+              <GitHubBadge repoUrl={"https://github.com/aamitn/bitmutex-website"} />
+            </div>
+
 
             {/* ✅ Cookie Preferences Link and theme toggle*/}
             <div className="flex items-center justify-center sm:justify-start w-full gap-3">

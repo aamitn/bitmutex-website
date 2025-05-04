@@ -9,6 +9,7 @@ import { generateMetadataObject } from '@/lib/metadata';
 import  fetchContentType  from '@/lib/strapi/fetchContentType';
 import { Metadata } from "next";
 import Image from "next/image";
+import { strapiImage } from "@/lib/strapi/strapiImage";
 
 type Project = {
   id: number;
@@ -65,6 +66,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     ...(metadata.openGraph as any), // Cast to 'any' to allow unknown properties
     title: seotitle, 
     description: seodescription,
+
+    images: seo?.metaImage
+      ? [{ url: strapiImage(seo.metaImage.url) }]
+      : { url: `${BASE_URL_NEXT}/bmproj.png` },
+
     url: `${BASE_URL_NEXT}/projects`, // Add custom URL field
     site_name: "Bitmutex",
     locale: "en_US",

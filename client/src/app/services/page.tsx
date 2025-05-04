@@ -8,7 +8,7 @@ import React from "react";
 import { generateMetadataObject } from '@/lib/metadata';
 import  fetchContentType  from '@/lib/strapi/fetchContentType';
 import { Metadata } from "next";
-
+import { strapiImage } from "@/lib/strapi/strapiImage";
 
 
 type ServiceItem = {
@@ -74,6 +74,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     ...(metadata.openGraph as any), // Cast to 'any' to allow unknown properties
     title: seotitle, 
     description: seodescription,
+
+    images: seo?.metaImage
+      ? [{ url: strapiImage(seo.metaImage.url) }]
+      : { url: `${BASE_URL_NEXT}/bmserv.png` },
+
     url: `${BASE_URL_NEXT}/services`, // Add custom URL field
     site_name: "Bitmutex",
     locale: "en_US",
