@@ -72,12 +72,12 @@
 
 ### 1️⃣ **Clone the Repository**
 
-  
 
 ```sh
 git clone --depth=1 https://github.com/aamitn/bitmutex-website.git
 cd  bitmutex-website
 ```
+##### omit the `--depth=1` if you want to download the repo with lifetime git history , genrally required for devs contributing to this project
 
 ### 2️⃣ **Install Dependencies and Setup Env File**
 
