@@ -1,0 +1,15 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://bitmutex.com
+
+# Sitemaps
+Sitemap: https://bitmutex.com/sitemap.xml
+
+#Delay
+Crawl-delay: 5
+
+#Restrict
+Disallow: /cgi-bin/
