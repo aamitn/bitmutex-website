@@ -11,7 +11,6 @@ import LiveUserCount from "@/components/custom/LiveUserCount";
 import 'vanilla-cookieconsent/dist/cookieconsent.css';
 import CookieConsentComponent from '@/components/cookie/CookieConsent';
 import ErrorPage from '@/components/custom/strapi-down-error-page';
-// import CalBookingModal from "@/components/custom/appointment";
 
 import LoginButtonServer from "@/components/custom/LoginButtonServer";
 
@@ -79,16 +78,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
 
-     {/*   <div className="flex justify-center items-center h-screen">
-            <CalBookingModal
-              url="https://cal.com/bitmutex"
-              trigger={
-                <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                  📅 Open Booking
-                </button>
-              }
-            />
-        </div> */}
+
 
          
           <Header data={{ ...topNav, logoSrc }} /> {/* Pass logoSrc */}

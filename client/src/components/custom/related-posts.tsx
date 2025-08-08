@@ -56,10 +56,10 @@ export default async function RelatedPosts({ category }: RelatedPostsProps) {
     }
 
     return (
-      <div className="w-full max-w-6xl mx-auto px-4 py-12">
+      <div className="w-full max-w-6xl mx-auto px-4 py-4">
         {/* Mobile & Default View (Full Width) */}
         <div className="block lg:hidden">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold tracking-tight flex items-center gap-3">
               Related Posts 
               <Badge 

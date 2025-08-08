@@ -11,6 +11,8 @@ import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { ThemeSwitcher } from "@/components/layout/theme-switcher";
 import { ChevronDown } from "lucide-react"; // Menu icons
 import CalBookingModal from "@/components/custom/appointment";
+import { ArrowRight,ExternalLink } from 'lucide-react';
+
 
 interface HeaderProps {
   data: {
@@ -90,13 +92,6 @@ export function Header({ data }: Readonly<HeaderProps>) {
   const { grouped: groupedNavItems1, independent: independentNavItems1 } = processNavItems(navItems1);
   const { grouped: groupedNavItems2, independent: independentNavItems2 } = processNavItems(navItems2);
 
-
-  useEffect(() => {
-    const handleScroll = () => setIsSticky(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <motion.header
       animate={{
@@ -128,58 +123,114 @@ export function Header({ data }: Readonly<HeaderProps>) {
         )}
       </Link>
 
-
       {/* Desktop Navigation */}
       <nav className="hidden md:flex items-center gap-8">
         {[groupedNavItems, groupedNavItems1, groupedNavItems2].map((group, index) =>
           Object.entries(group).map(([parentName, items]) => (
             <div key={`${parentName}-${index}`} className="relative group">
-
               {/* Parent Menu Button */}
               <Button
                 variant="ghost"
-                className="font-heading flex items-center text-lg font-bold transition-all duration-300 
-              hover:text-blue-500 dark:hover:text-blue-400 group-hover:scale-105 
-                hover:shadow-[0px_4px_12px_rgba(59,130,246,0.8)]"
+                className="font-heading flex items-center text-lg font-bold transition-all rounded-full duration-300 
+                  hover:text-blue-500 dark:hover:text-blue-400 group-hover:scale-105 
+                  hover:shadow-[0px_4px_12px_rgba(59,130,246,0.8)]"
                 onMouseEnter={() => setOpenDropdown(parentName)}
               >
                 {parentName}
                 <ChevronDown className="w-4 h-4 ml-1 transition-transform duration-300 group-hover:rotate-180" />
               </Button>
 
-              {/* Dropdown Menu with Stunning Animations */}
+              {/* Mega Menu Dropdown */}
               {openDropdown === parentName && (
                 <motion.div
-                  initial={{ opacity: 0, y: -15, scale: 0.9, filter: "blur(10px)" }}
+                  initial={{ opacity: 0, y: -15, scale: 0.95, filter: "blur(8px)" }}
                   animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, y: -10, scale: 0.98, filter: "blur(10px)" }}
+                  exit={{ opacity: 0, y: -10, scale: 0.98, filter: "blur(8px)" }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="absolute left-0 top-full mt-2 w-64 bg-white dark:bg-neutral-800 shadow-xl rounded-xl border border-gray-300 dark:border-gray-700 z-[9999]
-                backdrop-blur-md bg-opacity-80 dark:bg-opacity-75 transform-gpu"
+                  className="absolute left-0 top-full mt-2 w-[850px] max-w-[90vw] bg-neutral-300 dark:bg-neutral-800 shadow-xl rounded-xl border border-gray-300 dark:border-gray-700 z-[9999]
+                    backdrop-blur-md bg-opacity-80 dark:bg-opacity-75 transform-gpu"
                   onMouseEnter={() => setOpenDropdown(parentName)}
                   onMouseLeave={() => setOpenDropdown(null)}
                 >
-                  {items.map((item, idx) => (
-                    <motion.div
-                      key={item.text}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.05, duration: 0.06, ease: "easeOut" }}
-                      whileHover={{ scale: 1.02 }}
-                      className="transition-transform"
-                    >
+                  <div className="flex gap-6 p-6">
+                    
+                  {/* Left: Nav Items as Cards (Full Card Clickable) */}
+                  <div className="grid grid-cols-2 gap-4 w-2/3 border-orange-500">
+                    {items.map((item, idx) => (
                       <Link
+                        key={item.text}
                         href={item.href}
                         target={item.isExternal ? "_blank" : "_self"}
-                        className="block px-6 py-3 text-lg font-medium transition-all duration-300 
-                      text-gray-800 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-slate-700 
-                      hover:text-blue-600 dark:hover:text-blue-400 rounded-xl
-                      hover:shadow-lg"
+                        className="block"
                       >
-                        {item.text}
+                        <motion.div
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: idx * 0.05, duration: 0.1, ease: "easeOut" }}
+                          whileHover={{ scale: 1.03 }}
+                          className="relative bg-gradient-to-br from-slate-50 to-neutral-300 border border-neutral-200 border-b-0 dark:from-slate-800 dark:to-slate-700 dark:border-slate-600 rounded-xl p-4 transition-transform hover:shadow-md h-full overflow-hidden group"
+                        >
+                          <div className="flex justify-between items-center text-base font-semibold text-gray-800 dark:text-white group-hover:text-slate-700 dark:group-hover:text-slate-300">
+                            <div>{item.text}</div>
+                            {/* Add your icon component here. For example: */}
+                            {/* <ArrowRightIcon className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" /> */}
+                            <span className="ml-2 transition-transform group-hover:translate-x-1">
+                              <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                            </span>
+                          </div>
+                          {/* Accented bottom border with a professional orange-yellow gradient */}
+                          <div className="absolute inset-x-0 bottom-0 h-1 rounded-b-xl bg-gradient-to-r from-orange-400 to-yellow-400 transition-transform transform scale-x-0 group-hover:scale-x-100 origin-left" />
+                        </motion.div>
                       </Link>
-                    </motion.div>
-                  ))}
+                    ))}
+                  </div>
+
+                    {/* Right: Highlight Card */}
+                      <div className="w-1/3 bg-gradient-to-br from-blue-600 via-indigo-700 to-orange-500 text-white rounded-xl p-6 flex flex-col justify-between shadow-lg">
+                        <div>
+                          <h3 className="text-xl font-bold mb-2">🚀 Bitmutex One™</h3>
+                          <p className="text-sm leading-relaxed mb-4">
+                            Explore our suite of powerful tools designed to boost productivity and scale your business.
+                          </p>
+                          <ul className="space-y-2">
+                            <li>
+                              <Link
+                                href="/products/bm-cloud"
+                                className="text-lg font-semibold hover:underline hover:text-blue-200 transition-colors"
+                              >
+                                <div className="flex items-center space-x-2">
+                                  <span>BM Cloud</span>
+                                  <ExternalLink />
+                                </div>
+                              </Link>
+                            </li>
+                            <li>
+                              <Link 
+                                href="/products/bm-track" 
+                                className="text-lg font-semibold hover:underline hover:text-blue-200 transition-colors"
+                              >
+                                <div className="flex items-center space-x-2">
+                                  <span>BM TRAK</span>
+                                  <ExternalLink />
+                                </div>
+                              </Link>
+                            </li>
+                            <li>
+                              <Link 
+                                href="/products/bm-analytics" 
+                                className="text-lg font-semibold hover:underline hover:text-blue-200 transition-colors"
+                              >
+                                  <div className="flex items-center space-x-2">
+                                  <span>BM Analytics</span>
+                                  <ExternalLink />
+                                </div>
+                              </Link>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    
+                  </div>
                 </motion.div>
               )}
             </div>
@@ -197,13 +248,14 @@ export function Header({ data }: Readonly<HeaderProps>) {
               href={item.href}
               target={item.isExternal ? "_blank" : "_self"}
               className="text-lg font-heading font-bold transition-all duration-300 
-            text-gray-800  dark:text-slate-200 dark:shadow-white/90 hover:text-blue-500 dark:hover:text-blue-400"
+              text-gray-800 dark:text-slate-200 hover:text-blue-500 dark:hover:text-blue-400"
             >
               {item.text}
             </Link>
           </motion.div>
         ))}
       </nav>
+
 
 
       {/* CTA & Theme Toggle */}
@@ -225,12 +277,21 @@ export function Header({ data }: Readonly<HeaderProps>) {
                 asChild
                 className={`relative h-12 sm:h-9 sm:px-5 flex items-center gap-2 text-base font-medium rounded-lg
                   transition-all duration-300 ease-out border shadow-sm
-                  ${item.isPrimary 
-                    ? "bg-gray-900 text-white border-gray-900 hover:bg-gray-700 hover:border-gray-800 \
-                    dark:bg-gray-100 dark:text-gray-900 dark:border-gray-300 dark:hover:bg-gray-400  dark:hover:text-slate-800 "
-                    : "border-gray-600 dark:border-gray-600 text-gray-800 dark:text-gray-200 bg-transparent\
-                      hover:border-gray-400 dark:hover:border-gray-500 hover:bg-gray-300 dark:hover:bg-gray-600"
-                  }`}
+                ${item.isPrimary
+                  ? "text-white border-blue-900 \
+                    bg-gradient-to-r from-blue-900 to-blue-800 \
+                    hover:from-blue-800 hover:to-blue-700 \
+                    dark:from-blue-600 dark:to-blue-500 \
+                    dark:text-white dark:border-blue-400 \
+                    dark:hover:from-blue-500 dark:hover:to-blue-400\
+                    shadow-orange-500 dark:shadow-orange-700 hover:shadow-orange-700 dark:hover:shadow-orange-500"
+                  : "border-blue-700 dark:border-blue-600 \
+                    text-blue-800 dark:text-blue-300 bg-transparent \
+                    hover:border-blue-400 dark:hover:border-blue-400 \
+                    hover:bg-blue-100 dark:hover:bg-blue-900 \
+                    dark:hover:text-white\
+                     shadow-blue-500 dark:shadow-blue-700 hover:shadow-blue-700 dark:hover:shadow-blue-500"
+                }`}
               >
                 {isAppointment ? (
                   <span>{item.text}</span> // No <Link> for appointment

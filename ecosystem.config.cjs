@@ -4,7 +4,7 @@ module.exports = {
       name: "bitmutex-strapi", // Strapi backend
       cwd: "./server", // Change directory to the server folder
       script: process.platform === "win32" ? "cmd" : "pnpm",
-      args: process.platform === "win32" ? "/c pnpm develop" : "develop",
+      args: process.platform === "win32" ? "/c pnpm start" : "start",
       env_file: "./.env",
       out_file: "./logs/strapi-out.log",
       error_file: "./logs/strapi-error.log",

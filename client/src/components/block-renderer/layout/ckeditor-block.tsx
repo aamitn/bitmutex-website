@@ -15,9 +15,7 @@ interface CkeditorBlockProps {
 }
 
 export function CkeditorBlock({ content }: Readonly<CkeditorBlockProps>) {
-  if (!content) return null;
-
-  // Sanitize HTML
+    // Sanitize HTML
   const sanitizedContent = useMemo(
     () =>
       sanitizeHtml(content, {
@@ -35,13 +33,14 @@ export function CkeditorBlock({ content }: Readonly<CkeditorBlockProps>) {
     [content]
   );
 
+  if (!content) return null;
+
+  {/*
+     Render normal  content    :   <div> {parse(content)} </div> 
+     Render sanitized  content :   <div> {parse(sanitizedContent)} </div>
+  */}
+  
   return (
-    <section className="flex items-center justify-center px-1 py-1 mb-8">
-      <div className="w-full max-w-6xl bg-white dark:bg-neutral-950 rounded-2xl shadow-lg p-6 md:p-10 transition-all border dark:border-gray-700">
-        <div className="rich-text text-gray-800 dark:text-gray-200 leading-relaxed">
-          {parse(content)}
-        </div>
-      </div>
-    </section>
+        <div> {parse(sanitizedContent)} </div>
   );
 }

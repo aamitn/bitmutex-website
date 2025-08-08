@@ -60,7 +60,7 @@ const bot = new Client({
         }
       } else {
         // Auto-reply to all visitors if the user is offline
-        const autoReplyText = "The admin is currently offline. If you need assistance, please try again later.";
+        const autoReplyText = "Our staff is currently offline. If you need assistance, please drop your message along with your email/contact details";
         io.emit("adminMessage", { text: autoReplyText, sender: "system" });
         console.log(`⚠️ Admin is offline. Auto-reply sent to all visitors.`);
       }

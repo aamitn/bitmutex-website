@@ -8,11 +8,13 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import StatusBadge from "@/components/custom/status-badge";
 import { GitHubBadge } from "@/components/custom/github-badge";
+import  ShapeDivider  from "@/components/custom/ShapeDivider";
 import * as CookieConsent from "vanilla-cookieconsent";
 import * as LucideIcons from "lucide-react";
 import { ElementType } from "react";
 import React from "react";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import FooterBottom from "@/components/layout/FooterBottom";
 
 interface SocialLink {
   href: string;
@@ -63,27 +65,8 @@ export function Footer({ data }: Readonly<FooterProps>) {
 
   return (
     <footer className="relative bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-white mt-14">
-      {/* ✅ Shape Divider (Wavy Effect) placed inside footer at the correct level */}
-      <div className="absolute top-[-80px] left-0 w-full overflow-hidden leading-none backdrop-blur-md opacity-90 drop-shadow-lg">
-        <svg
-          className="relative block w-full h-28"
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M0,60 C300,180 600,-40 900,60 C1200,160 1500,-40 1800,60 L1800,120 L0,120 Z"
-            fill="url(#grad1)"
-          ></path>
-          <defs>
-            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style={{ stopColor: "#0858F6", stopOpacity: 0.9 }} />
-              <stop offset="100%" style={{ stopColor: "#FF914D", stopOpacity: 0.9 }} />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-
-
+      {/* Shape Divider */}
+      <ShapeDivider />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -192,43 +175,51 @@ export function Footer({ data }: Readonly<FooterProps>) {
                 placeholder="Enter your email"
                 className="flex-1 rounded-l-md bg-gray-300 text-gray-900 dark:bg-gray-700 dark:text-white border-none placeholder-gray-600 dark:placeholder-slate-300 focus:ring-2 focus:ring-orange-500"
               />
-              <Button className="rounded-r-md bg-gray-700 hover:bg-gray-500 text-white dark:bg-orange-500 dark:hover:bg-amber-500">
-                Subscribe
-              </Button>
+            <Button
+              className="rounded-r-md text-white
+                /* Normal State (dark blue gradient) */
+                bg-gradient-to-r from-blue-900 to-blue-700
+                hover:from-blue-800 hover:to-blue-600
+
+                /* Dark Mode (orange gradient) */
+                dark:bg-gradient-to-r dark:from-orange-600 dark:to-orange-400
+                dark:hover:from-amber-500 dark:hover:to-amber-300"
+            >
+              Subscribe
+            </Button>
             </div>
             <h4 className="text-lg font-semibold">Follow Us</h4>
             <Separator className="w-12 bg-gray-500 dark:bg-gray-600" />
 
-            <div className="flex gap-3">
+            <div className="flex gap-4">
               {socialLinks?.map((link: SocialLink) => {
-                const Icon = getLucideIcon(link.text); // Get the correct icon dynamically
+                const Icon = getLucideIcon(link.text);
                 return (
                   <Link
                     key={link.text}
                     href={link.href}
                     target="_blank"
-                    className="group relative p-2 rounded-full bg-slate-300 dark:bg-orange-600 
-                              hover:bg-indigo-200 dark:hover:bg-amber-500 
-                              transition-all duration-300 shadow-md hover:shadow-lg dark:shadow-gray-700"
+                    className="group relative flex items-center justify-center w-12 h-12 rounded-full
+                      bg-white shadow-xl
+                      dark:bg-gray-800 dark:shadow-inner dark:shadow-orange-500/20
+                      transition-all duration-300 transform hover:scale-110"
                   >
-                  <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br 
-                                from-white to-gray-100 dark:from-gray-800 dark:to-gray-900 
-                                shadow-sm group-hover:shadow-md transition-all duration-300 
-                                group-hover:scale-105 group-hover:bg-opacity-90">
-
-                      {Icon
-                        ? React.createElement(Icon, {
-                            className:
-                              "w-5 h-5 text-orange-600 dark:text-amber-200\
-                              group-hover:text-orange-400 dark:group-hover:text-blue-800 transition-all duration-300",
-                          })
-                        : React.createElement(LucideIcons.AlertCircle, {
-                            className:
-                              "w-5 h-5 text-blue-600 dark:text-orange-400\
-                              group-hover:text-blue-700 dark:group-hover:text-orange-300 transition-all duration-300",
-                          })}
+                    <div className="flex items-center justify-center w-full h-full rounded-full
+                      bg-gradient-to-br from-blue-800 to-blue-700 text-white
+                      group-hover:from-blue-600 group-hover:to-blue-800
+                      dark:from-orange-500 dark:to-orange-700 dark:text-white
+                      dark:group-hover:from-orange-600 dark:group-hover:to-orange-800
+                      transition-all duration-300">
+                      {Icon ? (
+                        React.createElement(Icon, {
+                          className: "w-6 h-6"
+                        })
+                      ) : (
+                        React.createElement(LucideIcons.AlertCircle, {
+                          className: "w-6 h-6"
+                        })
+                      )}
                     </div>
-
                   </Link>
                 );
               })}
@@ -238,10 +229,9 @@ export function Footer({ data }: Readonly<FooterProps>) {
         </motion.div>
       </motion.div>
 
-    {/* Copyright Section */}
-    <div className="font-heading border-t-2 border-gray-500 dark:border-gray-700 mt-10 pt-1 pb-1 text-center text-sm text-gray-600 dark:text-gray-400">
-      &copy; 2018 - {new Date().getFullYear()} {unicode_diamond} {text} {unicode_diamond} All rights reserved.
-    </div>
+    {/* Footer Bottom Section */}
+     <FooterBottom text="Bitmutex Technologies Pvt. Ltd." />
+
     </footer>
   );
 }

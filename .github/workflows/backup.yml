@@ -1,0 +1,34 @@
+name: Scheduled Backup via SSH
+
+on:
+  schedule:
+    - cron: '0 2 1,8,15,22 * *'  # Runs at 2:00 AM UTC on the 1st, 8th, 15th, and 22nd of every month.
+  workflow_dispatch:
+
+jobs:
+  backup_via_ssh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Run Backup on Remote Server via SSH
+        run: |
+          echo "Connecting to server to run backup..."
+          ssh -o StrictHostKeyChecking=no user@your_server_ip << 'EOF'
+            echo "Starting scheduled backup process..."
+            
+            # Navigate to the application root directory
+            cd /var/www/bitmutex-website
+            
+            # Run the backup script
+            echo "Executing pnpm run backup..."
+            pnpm run backup
+            
+            echo "Backup script finished."
+          EOF
