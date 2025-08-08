@@ -24,6 +24,11 @@ jobs:
           # SSH into the server and execute commands
           ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << 'EOF'
             echo "Starting deployment on server..."
+
+            # Define the application directory and repository URL
+            APP_DIR="/var/www/bitmutex-website"
+            REPO_URL="git@github.com:aamitn/bitmutex-website.git" # <-- Replace with your actual repository URL
+      
             
             # Check if the directory exists
             if [ ! -d "$APP_DIR" ]; then
