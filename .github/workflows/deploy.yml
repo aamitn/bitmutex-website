@@ -20,7 +20,7 @@ jobs:
       - name: Deploy and Build via SSH
         run: |
           # SSH into the server and execute commands
-          ssh -o StrictHostKeyChecking=no user@your_server_ip << 'EOF'
+          ssh -o StrictHostKeyChecking=no ubuntu@152.67.0.194<< 'EOF'
             echo "Starting deployment on server..."
             
             # Navigate to the application root directory
