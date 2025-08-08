@@ -18,13 +18,23 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Deploy and Build via SSH
+        env:
+          SSH_HOST: 152.67.0.194 
         run: |
           # SSH into the server and execute commands
-          ssh -o StrictHostKeyChecking=no ubuntu@152.67.0.194<< 'EOF'
+          ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << 'EOF'
             echo "Starting deployment on server..."
             
+            # Check if the directory exists
+            if [ ! -d "$APP_DIR" ]; then
+              echo "Directory $APP_DIR does not exist. Cloning repository..."
+              cd /var/www/
+              git clone "$REPO_URL" "$APP_DIR"
+            fi
+            
             # Navigate to the application root directory
-            cd /var/www/bitmutex-website
+            echo "Navigating to $APP_DIR..."
+            cd "$APP_DIR"
             
             # Update the local repository
             echo "Syncing repository..."
