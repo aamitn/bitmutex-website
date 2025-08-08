@@ -40,8 +40,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   
   if (!pageData) {
     return {
-      title: "Blog Not Found | Bitmutex Technologies",
-      description: "The requested blog/article does not exist. Browse more blogs by Bitmutex Technologies.",
+      title: "Page Not Found | Bitmutex Technologies",
+      description: "The requested page does not exist. Browse more services by Bitmutex Technologies.",
       robots: "noindex, nofollow", // Avoid indexing non-existent pages
     };
   }

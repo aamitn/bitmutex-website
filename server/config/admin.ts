@@ -4,6 +4,9 @@ export default ({ env }) => ({
   },
   apiToken: {
     salt: env('API_TOKEN_SALT'),
+    secrets: {
+      encryptionKey: env('ENCRYPTION_KEY'),
+    },
   },
   transfer: {
     token: {

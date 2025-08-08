@@ -39,18 +39,15 @@ export function Hero(data: Readonly<HeroProps>) {
     mouseY.set(mousePos.y / window.innerHeight - 0.5);
   }, [mousePos, mouseX, mouseY]);
 
-  // Function to split the heading and highlight the third word with Tailwind classes
-  const splitHeading = (headingText: string, startIndex: number, wordCount: number) => {
-    const words = headingText.split(" ");
+const splitHeading = (headingText: string, startIndex: number, wordCount: number) => {
+  const words = headingText.split(" ");
+  if (startIndex < 0 || startIndex >= words.length) return headingText; // Edge case handling
 
-    if (startIndex < 0 || startIndex >= words.length) return headingText; // Edge case handling
-
-    for (let i = startIndex; i < Math.min(startIndex + wordCount, words.length); i++) {
-      words[i] = `<span class="font-bold bg-gradient-to-br from-blue-500 via-indigo-500 to-orange-600 text-transparent bg-clip-text animate-pulse-gradient">${words[i]}</span>`;
-    }
-
-    return words.join(" ");
-  };
+  for (let i = startIndex; i < Math.min(startIndex + wordCount, words.length); i++) {
+    words[i] = `<span class="font-bold bg-gradient-to-r from-blue-600  via-cyan-500 to-orange-500 text-transparent bg-clip-text animate-pulse-gradient">${words[i]}</span>`;
+  }
+  return words.join(" ");
+};
 
 
 
@@ -126,7 +123,7 @@ export function Hero(data: Readonly<HeroProps>) {
 
 
         <h1
-          className="max-w-2xl text-5xl sm:text-6xl lg:text-6xl font-light font-heading backdrop:font-heading tracking-tight 
+          className="max-w-2xl text-5xl sm:text-6xl lg:text-6xl font-semibold font-heading backdrop:font-heading tracking-tight 
                   leading-[1.15] sm:leading-[1.2] lg:leading-[1.15] 
                   text-gray-900 dark:text-gray-100 
                   md:max-w-3xl md:text-left text-center"
@@ -134,7 +131,7 @@ export function Hero(data: Readonly<HeroProps>) {
         />
 
 
-        <p className="pt-4 max-w-lg text-lg md:text-2xl font-light text-gray-800 dark:text-zinc-300 
+        <p className="pt-4 max-w-lg text-lg md:text-2xl font-normal text-gray-800 dark:text-zinc-300 
           font-heading tracking-tight leading-relaxed md:text-justify text-justify  text-muted-foreground 
           transition-all duration-300 ease-in-out 
         hover:text-gray-900 dark:hover:text-gray-100">
@@ -156,15 +153,15 @@ export function Hero(data: Readonly<HeroProps>) {
                   key={link.text}
                   url={appointmentUrl}
                   trigger={
-                  <Button
-                    size="lg"
-                    variant={link.isPrimary ? "default" : "outline"}
-                    className={`relative h-12 sm:h-14 sm:px-10 cursor-pointer text-base font-semibold flex items-center gap-3 
-                      transition-all duration-300 ease-out transform rounded-xl overflow-hidden
-                      ${link.isPrimary 
-                        ? "border-orange-500 dark:border-orange-400 bg-gradient-to-r from-blue-500 to-indigo-500 dark:from-blue-600 dark:to-indigo-600 text-white shadow-[0px_4px_20px_rgba(59,130,246,0.4)] hover:shadow-[0px_6px_30px_rgba(59,130,246,0.6)] hover:scale-[1.05] active:scale-95" 
-                        : "border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-300 hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 bg-white/10 dark:bg-gray-900/10 backdrop-blur-lg"}`}
-                  >
+                    <Button
+                      size="lg"
+                      variant={link.isPrimary ? "default" : "outline"}
+                      className={`group relative h-12 w-full cursor-pointer overflow-hidden rounded-xl px-10 text-base font-semibold transition-all duration-300 ease-out sm:h-14 ${
+                        link.isPrimary
+                          ? "transform-gpu bg-gradient-to-br from-blue-600 to-indigo-700 text-white shadow-[0px_8px_25px_rgba(59,130,246,0.5)] transition-all duration-300 hover:scale-[1.03] hover:shadow-[0px_10px_35px_rgba(59,130,246,0.7)] active:scale-95 dark:from-blue-700 dark:to-indigo-800"
+                          : "transform-gpu border border-gray-300 bg-white/10 text-gray-800 backdrop-blur-lg transition-all duration-300 hover:border-blue-500 hover:text-blue-600 dark:border-gray-700 dark:text-gray-300 dark:hover:border-blue-400 dark:hover:text-blue-400"
+                      }`}
+                    >
                     {/* Lucide Icon */}
                     <PhoneCall className="w-5 h-5 text-white dark:text-gray-300 transition-all duration-300" />
 

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
-import { formatDate } from "@/lib/utils";
+import { formatDate, calculateReadingTime} from "@/lib/utils";
 import  RenderMarkdown  from "@/components/custom/RenderMarkdown";
 import { StrapiImage } from "@/components/custom/strapi-image";
 import { getBlogPostBySlug } from "@/data/loaders";
@@ -9,14 +9,14 @@ import { BlockRenderer } from "@/components/block-renderer";
 import ReadingProgress from "@/components/ui/ReadingProgress";
 import { CkeditorBlock } from "@/components/block-renderer/layout/ckeditor-block";
 import TableOfContents from "@/components/custom/TableOfContents";
-import { FaSquareXTwitter,FaSquareFacebook, FaLinkedin, FaSquareWhatsapp, FaSquareReddit  } from "react-icons/fa6";
 import {FiEye } from "react-icons/fi";
 import { generateMetadataObject } from '@/lib/metadata';
 import  fetchContentType  from '@/lib/strapi/fetchContentType';
 import { strapiImage } from '@/lib/strapi/strapiImage';
-import { calculateReadingTime } from "@/lib/utils";
 import RelatedPosts from "@/components/custom/related-posts";
-import CopyToClipboardButton from "@/components/custom/CopyToClipboardButton";
+import SocialShareButtons from "@/components/custom/SocialShareButtons";
+import Image from "next/image";
+import DisqusComments from "@/components/custom/DisqusComments"; // The updated component
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -132,11 +132,13 @@ export default async function SinglePost({ params }: PageProps) {
           <div className="mt-6 mb-4 flex items-center justify-center space-x-4 border-t pt-4">
             {/* Author Image (if available) */}
             {post.author.image?.url ? (
-              <img
-              src={post.author.image.url}
-              alt={post.author.image.alternativeText || post.author.firstname}
-              className="w-14 h-14 rounded-full object-cover border border-gray-300 dark:border-gray-700 shadow-sm"
-            />
+              <Image
+                src={post.author.image.url}
+                alt={post.author.image.alternativeText || post.author.firstname}
+                width={56} // Corresponds to w-14
+                height={56} // Corresponds to h-14
+                className="w-14 h-14 rounded-full object-cover border border-gray-300 dark:border-gray-700 shadow-sm"
+              />
             ) : (
               <div className="w-14 h-14 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 text-lg font-semibold">
                 {post.author.firstname.charAt(0)}
@@ -175,51 +177,7 @@ export default async function SinglePost({ params }: PageProps) {
 
           {/* Share Buttons */}
           <div className="flex justify-center gap-4 mt-4">
-            <a
-              href={twitterShare}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-full hover:bg-blue-100 transition"
-            >
-            <FaSquareXTwitter className="w-5 h-5 text-orange-500"/>
-            </a>
-            <a
-              href={facebookShare}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-full hover:bg-blue-100 transition"
-            >
-              <FaSquareFacebook className="w-5 h-5 text-orange-500" />
-            </a>
-            <a
-              href={linkedinShare}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-full hover:bg-blue-100 transition"
-            >
-              <FaLinkedin className="w-5 h-5 text-orange-500" />
-            </a>
-
-            <a
-              href={redditShare}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-full hover:bg-blue-100 transition"
-            >
-              <FaSquareReddit  className="w-5 h-5 text-orange-500" />
-            </a>
-
-            <a
-              href={whatsappShare}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-full hover:bg-blue-100 transition"
-            >
-              <FaSquareWhatsapp  className="w-5 h-5 text-orange-500" />
-            </a>
-
-            {/* Copy Link Button */}
-            <CopyToClipboardButton link={decodeURIComponent(shareUrl)} />
+            <SocialShareButtons slug={slug} title={post.title} />
           </div>
 
           <StrapiImage
@@ -231,43 +189,39 @@ export default async function SinglePost({ params }: PageProps) {
             className="w-full rounded-lg mt-8 shadow-lg"
           />
         </header>
+          {/* Post Content START */}
+          <div className="post-content">
+            <section className="flex items-center justify-center md:px-1 md:py-1">
+              <div className="full-width-element relative w-full bg-white dark:bg-neutral-950 md:max-w-7xl md:rounded-2xl md:shadow-lg md:p-10 md:border dark:md:border-gray-700 transition-all">
+                {/* Accent Gradient Border */}
+                <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-500 via-yellow-400 to-orange-500 rounded-t-2xl"></div>
 
-        <div className="post-content">
+                {/* The rest of the content remains unchanged */}
+                <div className="rich-text prose max-w-none text-gray-800 dark:text-gray-200 leading-relaxed">
+                  {/* The content rendering logic remains unchanged */}
+                  {post.content && (
+                    <div className="mb-8">
+                      <RenderMarkdown content={post.content} />
+                    </div>
+                  )}
 
-        {/* Main Blog Content */}
-        {post.content && (
-          <div className="text-lg leading-relaxed text-gray-800">
-            <RenderMarkdown content={post.content} />
-          </div>
-        )}
+                  {post.content1 && (
+                    <div className="mb-8">
+                      <RenderMarkdown content={post.content1} />
+                    </div>
+                  )}
 
-        {/* Render ckeditor content1 markdown  */}
-        {post.content1 && (
-
-              <section className="flex items-center justify-center px-1 py-1">
-                <div className="w-full max-w-7xl bg-white dark:bg-neutral-950 rounded-2xl shadow-lg p-6 md:p-10 transition-all border dark:border-gray-700">
-                  <div className="rich-text text-gray-800 dark:text-gray-200 leading-relaxed">
-                  <RenderMarkdown content={post.content1} />
-                  </div>
+                  {post.content2 && (
+                    <div className="mb-8">
+                      <CkeditorBlock content={post.content2} />
+                    </div>
+                  )}
                 </div>
-              </section>
-        )}
 
-        
-
-        {/* Render ckeditor content2 markdown  */}
-          {post.content2 && (
-          <div
-            className="mt-6 text-lg leading-relaxed text-gray-800"
-          >
-             <CkeditorBlock content={post.content2} />
+              </div>
+            </section>
           </div>
-        )}
-
-        </div>
-
-
-
+          {/* Post Content END */}
 
         {/* Dynamic Content Blocks */}
         {blocks && (
@@ -275,11 +229,14 @@ export default async function SinglePost({ params }: PageProps) {
             <BlockRenderer blocks={blocks} />
           </div>
         )}
+
       </div>
 
     {/*Related Posts */}
     <RelatedPosts category={post.category}/>
 
+    {/* Disqus Comments Section using disqus-react */}
+    <DisqusComments post={{ slug: post.slug, title: post.title }} />
 
     </article>
   );

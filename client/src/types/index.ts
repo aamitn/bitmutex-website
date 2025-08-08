@@ -26,7 +26,7 @@ type ComponentType =
   | "blocks.video"
   | "blocks.text";
 
-interface Base<T extends ComponentType, D extends {} = {}> {
+interface Base<T extends ComponentType, D extends object = Record<string, never>> {
   __component: T;
   id: string;
   createdAt: string;

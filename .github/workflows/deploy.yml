@@ -1,0 +1,100 @@
+name: Deploy Strapi & Next.js via SSH
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy and Build via SSH
+        run: |
+          # SSH into the server and execute commands
+          ssh -o StrictHostKeyChecking=no user@your_server_ip << 'EOF'
+            echo "Starting deployment on server..."
+            
+            # Navigate to the application root directory
+            cd /var/www/bitmutex-website
+            
+            # Update the local repository
+            echo "Syncing repository..."
+            pnpm run repo:sync
+            
+            echo "Setting environment variables..."
+            
+            # -----------------------------------------------------
+            # Next Frontend Client variables
+            # -----------------------------------------------------
+            export STRAPI_BASE_URL="https://strapiadmin.bitmutex.com"
+            export NEXT_PUBLIC_STRAPI_BASE_URL="https://strapiadmin.bitmutex.com"
+            export PREVIEW_SECRET="${{ secrets.PREVIEW_SECRET }}"
+            export NEXT_PUBLIC_BASE_URL="https://bitmutex.com"
+            export HOST="localhost"
+            export NEXT_PUBLIC_STATUS_PAGE_URL="https://status.bitmutex.com"
+            export SMTP_HOST="smtp.zoho.in"
+            export SMTP_PORT="587"
+            export SMTP_USER="noreply@bitmutex.com"
+            export SMTP_PASS="${{ secrets.SMTP_PASS }}"
+            export NEXT_PUBLIC_APPOINTMENT_URL="https://cal.com/bitmutex"
+            export ADMIN_EMAIL="amitnandileo@gmail.com"
+            export NODE_ENV="production"
+            export IMAGE_HOSTNAME="localhost"
+            
+            # -----------------------------------------------------
+            # Strapi Backend Server variables
+            # -----------------------------------------------------
+            export PORT="1337"
+            export APP_KEYS="${{ secrets.APP_KEYS }}"
+            export API_TOKEN_SALT="${{ secrets.API_TOKEN_SALT }}"
+            export ADMIN_JWT_SECRET="${{ secrets.ADMIN_JWT_SECRET }}"
+            export TRANSFER_TOKEN_SALT="${{ secrets.TRANSFER_TOKEN_SALT }}"
+            export JWT_SECRET="${{ secrets.JWT_SECRET }}"
+            
+            export CLIENT_URL="http://localhost:3000"
+            
+            export DISCORD_BOT_TOKEN="${{ secrets.DISCORD_BOT_TOKEN }}"
+            export DISCORD_CHANNEL_ID="1349063933599678618"
+            export DISCORD_GUILD_ID="1349059955885473823"
+            export DISCORD_ADMIN_ID="146662188122243072"
+            
+            export DATABASE_CLIENT="postgres"
+            export DATABASE_NAME="${{ secrets.DATABASE_NAME }}"
+            export DATABASE_USERNAME="${{ secrets.DATABASE_USERNAME }}"
+            export DATABASE_PASSWORD="${{ secrets.DATABASE_PASSWORD }}"
+            
+            export SMTP_USERNAME="smtp.zoho.in"
+            export SMTP_PASSWORD="${{ secrets.SMTP_PASS }}"
+            export SMTP_DEFAULT_FROM="noreply@bitmutex.com"
+            export SMTP_DEFAULT_REPLY_TO="support@bitmtuex.com"
+            
+            export AUTO_CREATE_ADMIN="true"
+            export ADMIN_PASSWORD="${{ secrets.ADMIN_PASSWORD }}"
+            
+            # Install root dependencies (pnpm run spawn takes care of nested installs)
+            echo "Installing root dependencies..."
+            pnpm install
+            
+            # Run the spawn script which installs client & server dependencies
+            echo "Running pnpm spawn to install dependencies for client and server..."
+            pnpm run spawn
+            
+            # Build the application
+            echo "Building the application with pnpm build..."
+            pnpm run build
+            
+            # Reload the applications with PM2 for zero-downtime
+            echo "Reloading PM2 processes for a graceful restart..."
+            pm2 reload ecosystem.config.cjs
+            
+            echo "Deployment complete!"
+          EOF

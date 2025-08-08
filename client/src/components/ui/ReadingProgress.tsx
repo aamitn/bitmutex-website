@@ -27,8 +27,8 @@ export default function ReadingProgress() {
   if (!mounted) return null;
 
   const currentTheme = theme || resolvedTheme;
-  const strokeColor = currentTheme === "dark" ? "#FACC15" : "#FF9900"; // Yellow for dark mode, orange for light mode
-  const bgStrokeColor = currentTheme === "dark" ? "#4B5563" : "#E5E7EB"; // Dark gray for dark mode, light gray for light mode
+  const strokeColor = currentTheme === "dark" ? "#FACC15" : "#E67E22"; // Yellow for dark mode, orange for light mode
+  const bgStrokeColor = currentTheme === "dark" ? "#6d7b8f" : "#E5E7EB"; // Dark gray for dark mode, light gray for light mode
   const bgOpacity = currentTheme === "dark" ? "bg-white/30" : "bg-black/40"; // Adjusted opacity for better readability
 
   return (
@@ -93,7 +93,7 @@ const ProgressCircle: React.FC<ProgressCircleProps> = ({ scrollProgress, strokeC
       {/* Percentage Display */}
       <span className="absolute inset-0 flex items-center justify-center 
                       text-[10px] sm:text-[12px] font-semibold 
-                      text-gray-100 dark:text-gray-900">
+                      text-gray-100 dark:text-slate-200">
         {Math.round(scrollProgress)}%
       </span>
     </div>

@@ -14,6 +14,25 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+@media (max-width: 767px) {
+  body {
+    /* Set margin and padding to 0 to remove any default spacing */
+    margin: 0;
+    padding: 0;
+  }
+
+    /* Used in Blog Slug Page Content */
+  .full-width-element {
+    /* Ensure the element takes up the full width of the viewport */
+    width: 100%;
+    /* Remove any padding or margin on the element itself */
+    padding: 1;
+    margin: 1;
+    /* This ensures content doesn't create horizontal scrollbars */
+    box-sizing: border-box; 
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -81,119 +100,263 @@ body {
 
 
 /******************************************* 
-  Rich Text Styles
+  Rich Text Styles - Mobile Optimized & Modern
 *******************************************/ 
 
-/* Headers */
+/* Responsive Headers */
 .rich-text h1 {
-  @apply text-4xl font-bold mb-4 text-primary;
+  @apply text-2xl sm:text-3xl md:text-4xl font-bold mb-5 text-primary leading-tight tracking-tight;
 }
 
 .rich-text h2 {
-  @apply text-3xl font-bold mb-4 text-primary;
+  @apply text-xl sm:text-2xl md:text-3xl font-bold mb-5 text-primary leading-tight;
 }
 
 .rich-text h3 {
-  @apply text-2xl font-bold mb-4 text-primary;
+  @apply text-lg sm:text-xl md:text-2xl font-bold mb-4 text-primary leading-tight;
 }
 
 .rich-text h4 {
-  @apply text-xl font-bold mb-4 text-primary;
+  @apply text-base sm:text-lg md:text-xl font-bold mb-4 text-primary;
 }
 
 .rich-text h5 {
-  @apply text-lg font-bold mb-4 text-primary;
+  @apply text-sm sm:text-base md:text-lg font-bold mb-3 text-primary;
 }
 
 .rich-text h6 {
-  @apply text-base font-bold mb-4 text-primary;
+  @apply text-xs sm:text-sm md:text-base font-bold mb-3 text-primary uppercase tracking-wider;
 }
 
-/* Horizontal rules */
+/* Horizontal Rules */
 .rich-text hr {
-  @apply border-accent-foreground my-8;
+  @apply border-t border-muted-foreground my-6 opacity-70;
 }
 
+/* Links - Touch-friendly & Accessible */
 .rich-text a {
-  @apply text-primary underline;
+  @apply text-primary underline underline-offset-2 hover:text-primary/80 
+        transition-colors duration-200 break-words;
 }
 
-/* Typographic replacements */
+.rich-text a:hover,
+.rich-text a:focus {
+  @apply opacity-90;
+}
+
+/* Paragraphs - Optimized for mobile reading */
 .rich-text p {
-  @apply mb-4 text-lg text-muted-foreground;
+  @apply mb-5 text-base leading-relaxed text-muted-foreground tracking-normal;
 }
 
 /* Emphasis */
 .rich-text strong {
-  @apply font-bold text-slate-700 dark:text-gray-300;
+  @apply font-bold text-foreground;
 }
 
 .rich-text em {
-  @apply italic;
+  @apply italic text-foreground;
 }
 
 .rich-text del {
-  @apply line-through;
+  @apply line-through text-muted-foreground;
 }
 
-/* Blockquotes */
+/* Blockquotes - Mobile refined */
 .rich-text blockquote {
-  @apply border-l-4 border-accent-foreground pl-4 py-2 mb-4;
+  @apply border-l-4 border-accent-foreground pl-4 py-3 my-6 bg-muted/30 dark:bg-muted/20 
+         rounded-r-lg text-muted-foreground italic leading-relaxed;
 }
 
-/* Lists */
-.rich-text ul {
-  @apply list-disc pl-4 mb-4;
-}
-
-.rich-text ol {
-  @apply list-decimal pl-4 mb-4;
+/* Lists - Mobile spacing & nesting */
+.rich-text ul, .rich-text ol {
+  @apply pl-5 sm:pl-6 mb-5 space-y-2;
 }
 
 .rich-text li {
-  @apply mb-2 text-muted-foreground;
+  @apply leading-relaxed text-muted-foreground;
 }
 
-.rich-text li > ul {
-  @apply list-disc pl-4 mb-2;
-}
-
+/* Nested lists - better hierarchy */
+.rich-text li > ul,
 .rich-text li > ol {
-  @apply list-decimal pl-4 mb-2 text-muted-foreground;
+  @apply mt-2 mb-0;
 }
 
-/* Code blocks */
+.rich-text ul ul, .rich-text ol ol,
+.rich-text ul ol, .rich-text ol ul {
+  @apply mt-2;
+}
+
+/* Code Blocks - Mobile scrollable */
 .rich-text pre {
-  @apply font-mono bg-gray-300 dark:bg-gray-800 text-zinc-800  dark:text-gray-200 rounded p-4  my-6;
+  @apply font-mono text-xs sm:text-sm bg-muted dark:bg-gray-800 text-foreground 
+         rounded-lg p-3 sm:p-4 my-5 overflow-x-auto break-words max-w-full;
+  tab-size: 2;
+  word-break: keep-all;
+  white-space: pre-wrap;
 }
 
+/* Inline code */
 .rich-text code {
-  @apply font-mono dark:bg-slate-800 bg-gray-300 text-zinc-800 dark:text-zinc-300 rounded px-2 py-1;
+  @apply font-mono text-xs sm:text-sm px-1.5 py-0.5 rounded bg-muted dark:bg-gray-800 
+         text-foreground;
 }
 
-/* Tables */
+/* Tables - Responsive & mobile-friendly */
 .rich-text table {
-  @apply w-full border-collapse border-gray-300 my-6;
+  @apply w-full border-collapse my-6 overflow-hidden rounded-lg overflow-x-auto;
+}
+
+.rich-text th,
+.rich-text td {
+  @apply px-3 sm:px-4 py-3 text-left text-sm sm:text-base border-b border-border;
 }
 
 .rich-text th {
-  @apply bg-gray-900 text-left py-2 px-4 font-semibold border-b border-gray-300;
+  @apply bg-muted/50 dark:bg-muted/30 font-semibold text-foreground;
 }
 
-.rich-text td {
-  @apply py-2 px-4 border-b border-gray-300;
+.rich-text tr:last-child td {
+  @apply border-b-0;
 }
 
-/* Images */
+/* Make tables scrollable on mobile */
+.rich-text table {
+  display: block;
+  width: 100%;
+}
+
+.rich-text thead, .rich-text tbody, .rich-text tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.rich-text th, .rich-text td {
+  display: table-cell;
+}
+
+/* Images - Full-width, responsive, and safe */
 .rich-text img {
-  @apply w-full object-cover rounded-xl my-6;
+  @apply w-full h-auto object-cover rounded-xl my-6 max-w-full 
+         shadow-sm transition-shadow duration-300;
 }
 
-/* Custom containers */
+.rich-text img:hover {
+  @apply shadow-md;
+}
+
+/* Ensure figures don't add extra margin */
+.rich-text figure {
+  @apply m-0;
+}
+
+.rich-text figure img {
+  @apply w-full h-auto;
+}
+
+.rich-text figcaption {
+  @apply text-center text-sm text-muted-foreground mt-2 italic;
+}
+
+/* Custom Containers */
 .rich-text .warning {
-  @apply bg-yellow-100 border-yellow-500 text-yellow-700 px-4 py-2 rounded-lg mb-4;
+  @apply bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-500 
+         text-yellow-800 dark:text-yellow-200 p-4 rounded-r-lg my-6;
 }
 
+/* Info/Note blocks (optional extension) */
+.rich-text .info {
+  @apply bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 
+         text-blue-800 dark:text-blue-200 p-4 rounded-r-lg my-6;
+}
+
+/* Responsive adjustments for small screens */
+@media (max-width: 640px) {
+  .rich-text h1 { @apply text-2xl; }
+  .rich-text h2 { @apply text-xl; }
+  .rich-text h3 { @apply text-lg; }
+  .rich-text p { @apply text-base leading-relaxed; }
+  .rich-text pre { @apply text-xs p-3; }
+  .rich-text code { @apply text-xs; }
+  .rich-text blockquote { @apply pl-3; }
+  .rich-text ul, .rich-text ol { @apply pl-5; }
+}
+
+
+/* Print & accessibility: Modern, professional link styling */
+.rich-text a[href^="http"]:not([href*="localhost"]) {
+  position: relative;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1.5px;
+  color: rgba(200, 95, 50, 1);
+  transition: color 0.3s ease, text-decoration-color 0.3s ease;
+}
+
+/* External link icon (always present) */
+.rich-text a[href^="http"]:not([href*="localhost"]):after {
+  content: "↗";
+  font-size: 0.9em;
+  opacity: 0.7;
+  margin-left: 0.25em;
+  display: inline-block;
+}
+
+/* Hidden URL span (shown on hover) */
+.rich-text a[href^="http"]:not([href*="localhost"])::before {
+  content: " (" attr(href) ")";
+  font-size: 0.9em;
+  opacity: 0;
+  visibility: hidden;
+  margin-left: 0.25em;
+  display: inline-block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.9);
+  color :rgba(255, 255, 250);
+  padding: 2px 6px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transform: translateY(-4px);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Show URL tooltip on hover */
+.rich-text a[href^="http"]:not([href*="localhost"]):hover::before {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Optional: keep icon subtle */
+.rich-text a[href^="http"]:not([href*="localhost"]):hover::after {
+  opacity: 0.5;
+}
+
+@media print {
+  .rich-text pre {
+    overflow: visible;
+    white-space: pre-wrap;
+  }
+  .rich-text img {
+    max-height: 60vh;
+    object-fit: contain;
+  }
+  .rich-text a[href^="http"]:not([href*="localhost"]):after {
+    content: " (" attr(href) ") ";
+    font-size: 0.7em;
+    opacity: 0.6;
+    transform: none;
+    margin-left: 0.5em;
+  }
+  .rich-text a:after {
+    color: #000;
+  }
+}
 
 
 
@@ -237,17 +400,10 @@ body {
 }
 
 .animate-pulse-gradient {
-  background-image: linear-gradient(
-    45deg,
-    var(--text-gradient-light-1),
-    var(--text-gradient-light-2),
-    var(--text-gradient-light-3)
-  );
   background-size: 200% 200%;
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  font-weight: 400;
   letter-spacing: 0.4px;
   text-shadow: 0px 3px 6px var(--shadow-light);
   animation: pulseGradient 4s infinite ease-in-out;
@@ -282,3 +438,4 @@ body {
 .leaflet-bottom {
   z-index: 1000 !important; /* Keep controls above the map */
 }
+

@@ -114,7 +114,7 @@ export default function NotFoundPage() {
             transition={{ duration: 0.5, delay: 0.7 }}
             className="text-gray-800 dark:text-gray-200"
           >
-            Oops! The page you're looking for doesn't exist.
+            Oops! The page you&apos;re looking for doesn&apos;t exist.
           </motion.p>
 
           {/* Button */}

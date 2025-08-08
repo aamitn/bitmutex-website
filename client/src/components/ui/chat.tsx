@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import { MessageCircleMore } from "lucide-react";
 
 export default function Chat() {
   const [message, setMessage] = useState("");
@@ -68,9 +69,9 @@ export default function Chat() {
           >
             <Button
               onClick={() => setIsOpen(true)}
-              className="p-4 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-xl hover:scale-105 transition-transform"
+              className="p-4 rounded-full bg-gradient-to-r from-blue-500 to-blue-800 text-white shadow-xl hover:scale-105 transition-transform"
             >
-              💬 Chat
+              <MessageCircleMore /> Chat
             </Button>
           </motion.div>
         )}
