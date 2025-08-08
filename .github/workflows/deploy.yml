@@ -27,7 +27,7 @@ jobs:
 
             # Define the application directory and repository URL
             APP_DIR="/var/www/bitmutex-website"
-            REPO_URL="https://github.com/bitmutex-website.git" # <-- Replace with your actual repository URL
+            REPO_URL="https://github.com/aamitn/bitmutex-website.gitt" # <-- Replace with your actual repository URL
       
             
             # Check if the directory exists
