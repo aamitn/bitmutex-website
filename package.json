@@ -6,25 +6,31 @@
   "scripts": {
     "client": "pnpm dev --prefix ../client/",
     "server": "pnpm dev --prefix ../server/",
-    "setup:client": "cd client && pnpm install && node --loader ts-node/esm ../copy-env.mts ./",
-    "setup:server": "cd server && pnpm install && node --loader ts-node/esm ../copy-env.mts ./",
-    "spawn": "pnpm install && pnpm setup:client && pnpm setup:server",
+    "setup:client": "cd client && pnpm install && node --import tsx ../copy-env.mts ./",
+    "setup:server": "cd server && pnpm install && node --import tsx ../copy-env.mts ./",
+    "setup:root": "pnpm install && node --import tsx ./copy-env.mts ./",
+    "spawn": "pnpm setup:client && pnpm setup:server && pnpm setup:root",
     "dev": "pnpm concurrently \"cd server && pnpm develop\" \"npx wait-on http://localhost:1337 && cd client && pnpm dev\"",
-    "build": "pnpm concurrently --kill-others \"cd server && pnpm develop\" \"npx wait-on http://localhost:1337 && cd client && pnpm build && echo 'Build Successful!' && exit 0 || echo ' Build Failed!' && exit 1\"",
-    "start": "pnpm concurrently \"cd server && pnpm develop\" \"npx wait-on http://localhost:1337 && cd client && pnpm start\"",
+    "build": "pnpm concurrently --kill-others \"cd server && pnpm build && pnpm start\" \"npx wait-on http://localhost:1337 && cd client && pnpm build && echo 'Build Successful!' && exit 0 || echo ' Build Failed!' && exit 1\"",
+    "start": "pnpm concurrently \"cd server && pnpm start\" \"npx wait-on http://localhost:1337 && cd client && pnpm start\"",
     "seed": "cd server && pnpm strapi import -f ../seed-data.tar.gz --force",
     "export": "cd server && pnpm strapi export --no-encrypt -f ../seed-data",
-    "repo:upstream": "git fetch upstream && git merge upstream/main"
+    "repo:upstream": "git fetch upstream && git merge upstream/main",
+    "repo:sync": "git pull origin main",
+    "backup": "pnpm run export && node --import tsx ./r2-backup.mts"
   },
   "dependencies": {
-    "@types/node": "^22.5.2",
+    "@types/node": "^24.2.0",
     "bitmutex-strapi-next-app": "file:",
-    "concurrently": "^8.2.2",
-    "typescript": "^5.0.0",
-    "wait-on": "^8.0.1"
+    "concurrently": "^9.2.0",
+    "dotenv": "^17.2.1",
+    "typescript": "^5.9.2",
+    "wait-on": "^8.0.4"
   },
   "devDependencies": {
-    "ts-node": "^10.9.2"
+    "@aws-sdk/client-s3": "^3.863.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.3"
   },
   "license": "Apache-2.0"
 }

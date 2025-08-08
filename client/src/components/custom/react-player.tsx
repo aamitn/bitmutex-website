@@ -9,7 +9,7 @@ interface ReactPlayerProps {
 export default function CustomReactPlayer({ videoUrl }: ReactPlayerProps) {
   return (
     <ReactPlayer
-      url={videoUrl}
+      src={videoUrl}
       width="100%"
       height="100%"
       controls

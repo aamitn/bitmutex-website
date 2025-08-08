@@ -16,7 +16,7 @@ const useTypewriter = (words: string[], speed: number = 100, eraseSpeed: number 
   useEffect(() => {
     const currentWord = words[currentWordIndex];
 
-    let timeout = setTimeout(() => {
+    const timeout = setTimeout(() => {
       if (!isDeleting) {
         if (charIndex < currentWord.length) {
           setDisplayedText((prev) => currentWord.slice(0, prev.length + 1));

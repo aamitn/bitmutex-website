@@ -40,7 +40,7 @@ const RenderMarkdown: React.FC<RenderMarkdownProps> = ({ content }) => {
           const match = /language-(\w+)/.exec(className || "");
           return match ? (
             <div className="rounded-lg shadow-sm overflow-hidden my-4">
-              {/* @ts-ignore */}
+              {/* @ts-expect-error The SyntaxHighlighter component has incompatible prop types for 'children' from ReactMarkdown */}
               <SyntaxHighlighter style={materialDark} language={match[1]} PreTag="div" {...props}>
                 {String(children).trim()}
               </SyntaxHighlighter>

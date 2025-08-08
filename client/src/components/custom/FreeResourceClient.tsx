@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpRight, Copy, Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import Image from "next/image";
 
 interface Resource {
   id: number;
@@ -97,7 +98,13 @@ export default function FreeResourceClient({ resources }: { resources: Resource[
               return (
                 <Card key={resource.id} className="h-full flex flex-col shadow-lg bg-white dark:bg-gray-950 text-black dark:text-white border-gray-300 dark:border-gray-700 rounded-2xl">
                   {meta ? (
-                    <img src={meta.image} alt={meta.title} className="w-full h-40 object-cover rounded-t-2xl" />
+                      <Image
+                        src={meta.image}
+                        alt={meta.title}
+                        width={600} // Adjust width as needed for your layout
+                        height={160} // Adjust height to match your desired h-40 (which is 160px)
+                        className="w-full h-40 object-cover rounded-t-2xl"
+                      />          
                   ) : (
                     <Skeleton className="w-full h-40" />
                   )}

@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { StrapiImage } from "@/components/custom/strapi-image";
 import { motion, useAnimation, useInView } from "framer-motion";
 import { useTheme } from "next-themes";
+import type { Easing } from "framer-motion";
 
 export function ContentWithImage(data: Readonly<ContentWithImageProps>) {
   if (!data) return null;
@@ -26,6 +27,8 @@ export function ContentWithImage(data: Readonly<ContentWithImageProps>) {
   const isTextInView = useInView(textRef, { once: false, amount: 0.3 });
   const isImageInView = useInView(imageRef, { once: false, amount: 0.3 });
 
+  const easing: Easing = [0.22, 1, 0.36, 1];
+
   // Define different animations based on `reverse`
   const imageVariants = reverse
     ? {
@@ -36,9 +39,9 @@ export function ContentWithImage(data: Readonly<ContentWithImageProps>) {
           scale: 1,
           transition: {
             duration: 0.8,
-            ease: [0.22, 1, 0.36, 1]
-          }
-        }
+            ease: easing,
+          },
+        },
       }
     : {
         hidden: { opacity: 0, scale: 0.9, y: 30 },
@@ -48,9 +51,9 @@ export function ContentWithImage(data: Readonly<ContentWithImageProps>) {
           y: 0,
           transition: {
             duration: 0.8,
-            ease: [0.22, 1, 0.36, 1]
-          }
-        }
+            ease: easing,
+          },
+        },
       };
 
   const textContainerVariants = {
@@ -71,7 +74,7 @@ export function ContentWithImage(data: Readonly<ContentWithImageProps>) {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.22, 1, 0.36, 1]
+        ease: easing
       }
     }
   };

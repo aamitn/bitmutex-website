@@ -40,7 +40,11 @@ export const GET = async (request: Request) => {
 
   // Enable Draft Mode by setting the cookie
   const draft = await draftMode();
-  status === 'draft' ? draft.enable() : draft.disable();
+   if (status === 'draft') {
+    draft.enable();
+  } else {
+    draft.disable();
+  }
 
   // Redirect to the path from the fetched post
   redirect(finalPath);
