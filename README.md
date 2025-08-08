@@ -1,6 +1,6 @@
 # Bitmutex-Website - Batteries Included Business Starter Template : Strapi5 + Next15 + Postgres + SocketIO
 
-**Bitmutex-Website** - A `modern`, `cloud-native` `enterprise-grade` business website `starter template` with all the batteries included from SEO to Reusable Blocks. Built using `Strapi 5` at Backend and `NextJs 15 SSR` with `React 19` in Frontend as a BFF (Backend For Frontend).
+**Bitmutex-Website** - A `modern`, `cloud-native` `ready-to-use` business website `starter template` with all the batteries included from SEO to Reusable Blocks. Built using `Strapi 5` at Backend and `NextJs 15 SSR` with `React 19` in Frontend as a BFF (Backend For Frontend).
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=bugs)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
