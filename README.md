@@ -2,6 +2,7 @@
 
 **Bitmutex-Website** - A `modern`, `cloud-native` `ready-to-use` business website `starter template` with all the batteries included from SEO to Reusable Blocks. Built using `Strapi 5` at Backend and `NextJs 15 SSR` with `React 19` in Frontend as a BFF (Backend For Frontend).
 
+[![Deploy Strapi & Next.js via SSH](https://github.com/aamitn/bitmutex-website/actions/workflows/deploy.yml/badge.svg)](https://github.com/aamitn/bitmutex-website/actions/workflows/deploy.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=bugs)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
