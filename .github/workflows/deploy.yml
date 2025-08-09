@@ -109,41 +109,8 @@ jobs:
             echo "Building the application..."
             pnpm run build
       
-            # Load environment variables so pm2 is in PATH
-            source ~/.zshrc
-
-            echo "Managing PM2 processes..."
-
-            # Function to check and start/reload PM2 apps
-            manage_pm2_app() {
-              local app_name=$1
-              local start_only_flag=$2
-
-              if pm2 list | grep -q "$app_name"; then
-                echo "Reloading $app_name..."
-                pm2 reload "$app_name"
-              else
-                echo "Starting $app_name..."
-                pm2 start ecosystem.config.cjs --only "$app_name"
-              fi
-            }
-
-            # Manage both apps
-            manage_pm2_app "bitmutex-strapi"
-            manage_pm2_app "bitmutex-nextjs"
-
-            # Save process list
-            pm2 save
-
-            # Setup PM2 startup dynamically
-            echo "Setting up PM2 startup..."
-            STARTUP_CMD=$(pm2 startup systemd -u ubuntu --hp /home/ubuntu | grep 'sudo' | tail -n 1)
-            if [ -n "$STARTUP_CMD" ]; then
-              echo "Running startup command..."
-              eval "$STARTUP_CMD"
-            else
-              echo "Could not detect PM2 startup command."
-            fi
+            echo "Reloading PM2..."
+            pm2 reload ecosystem.config.cjs
       
             echo "Deployment complete!"
           EOF
