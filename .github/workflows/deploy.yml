@@ -19,12 +19,10 @@ jobs:
 
       - name: Deploy and Build via SSH
         env:
-          SSH_HOST: 152.67.0.194 
+          SSH_HOST: 152.67.0.194
         run: |
-          # SSH into the server and execute commands
-          ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << EOF
+          ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << 'EOF'
             echo "Starting deployment on server..."
-
             APP_DIR="/var/www/bitmutex-website"
             REPO_URL="https://github.com/aamitn/bitmutex-website.git"
 
@@ -39,18 +37,12 @@ jobs:
             echo "Navigating to $APP_DIR..."
             cd "$APP_DIR"
             
-            # Discard any local changes before pulling
-            echo "Discarding local changes to ensure clean merge..."
-            git reset --hard
-            git clean -fd
-            
-            # Update the local repository
-            # git pull origin main via repo:sync script in package json in root project
+            # Update the local repository BEFORE doing anything else
             echo "Syncing repository..."
             pnpm run repo:sync
-            
-            echo "Setting environment variables..."
 
+            echo "Setting environment variables..."
+            
             # -----------------------------------------------------
             # Project Root Variables
             # -----------------------------------------------------
@@ -83,7 +75,6 @@ jobs:
             IMAGE_HOSTNAME="localhost"
             EOC
 
-            
             # -----------------------------------------------------
             # Strapi Backend Server variables
             # -----------------------------------------------------
