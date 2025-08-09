@@ -90,13 +90,15 @@ jobs:
             
             # Use printf to handle special characters properly
             printf 'DATABASE_PASSWORD=%s\n' "$DATABASE_PASSWORD" >> ./server/.env
-            printf 'ADMIN_PASSWORD=%s\n' "$ADMIN_PASSWORD" >> ./server/.env
-            
+
             echo "SMTP_USERNAME=smtp.zoho.in" >> ./server/.env
             echo "SMTP_PASSWORD=${{ secrets.SMTP_PASS }}" >> ./server/.env
             echo "SMTP_DEFAULT_FROM=noreply@bitmutex.com" >> ./server/.env
             echo "SMTP_DEFAULT_REPLY_TO=support@bitmtuex.com" >> ./server/.env
             echo "AUTO_CREATE_ADMIN=true" >> ./server/.env
+
+            # Use printf to handle special characters properly
+            printf 'ADMIN_PASSWORD=%s\n' "$ADMIN_PASSWORD" >> ./server/.env
       
             echo "Installing root dependencies..."
             pnpm install
@@ -106,10 +108,10 @@ jobs:
       
             echo "Building the application..."
             pnpm run build
+            
             echo "Checking if PM2 processes are running..."
-            # Check if PM2 processes are running by name
-            pm2 list | grep -E "bitmutex-strapi|bitmutex-nextjs" | grep -q "online"
-            if [ \$? -eq 0 ]; then
+            # Check if PM2 processes are running by name and use a more robust if condition
+            if pm2 list | grep -E "bitmutex-strapi|bitmutex-nextjs" | grep -q "online"; then
               echo "PM2 processes found. Reloading..."
               pm2 reload ecosystem.config.cjs
             else
