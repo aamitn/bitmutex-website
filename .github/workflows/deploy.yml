@@ -27,7 +27,7 @@ jobs:
           SSH_HOST: 152.67.0.194 
         run: |
           # SSH into the server and execute commands
-          ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << 'EOF'
+          ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << EOF
             echo "Starting deployment on server..."
             
             # Check if the directory exists
