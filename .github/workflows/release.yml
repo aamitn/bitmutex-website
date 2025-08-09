@@ -1,9 +1,11 @@
-name: Release on Tag
+name: Auto Release
 
 on:
   push:
+    branches:
+      - "**"       # all branches
     tags:
-      - 'v*'
+      - "v*"       # all tags starting with v
 
 jobs:
   release:
@@ -15,41 +17,62 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get previous tag
+      - name: Detect previous tag
         id: prev_tag
         run: |
-          prev_tag=$(git describe --tags --abbrev=0 $(git rev-list --tags --skip=1 --max-count=1))
+          prev_tag=$(git describe --tags --abbrev=0 $(git rev-list --tags --skip=1 --max-count=1) 2>/dev/null || echo "none")
           echo "previous_tag=$prev_tag" >> $GITHUB_OUTPUT
 
       - name: Generate changelog
         id: changelog
         run: |
-          # Count commits
-          commit_count=$(git rev-list --count ${{ steps.prev_tag.outputs.previous_tag }}..HEAD)
+          # If we have a previous tag, use it, otherwise just log recent commits
+          if [ "${{ steps.prev_tag.outputs.previous_tag }}" != "none" ]; then
+            commit_range="${{ steps.prev_tag.outputs.previous_tag }}..HEAD"
+          else
+            commit_range="HEAD~10..HEAD"
+          fi
+
+          commit_count=$(git rev-list --count $commit_range)
 
           echo "## 📝 Changelog" > changelog.md
           echo "" >> changelog.md
           echo "| Commit | Message | Author | Date |" >> changelog.md
           echo "| ------ | ------- | ------ | ---- |" >> changelog.md
 
-          git log ${{ steps.prev_tag.outputs.previous_tag }}..HEAD \
+          git log $commit_range \
             --pretty=format:"| [%h](https://github.com/${{ github.repository }}/commit/%H) | %s | %an | %ad |" \
             --date=short >> changelog.md
 
-          # Save commit count & changelog
           echo "commit_count=$commit_count" >> $GITHUB_OUTPUT
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
           cat changelog.md >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+      - name: Set release name & tag
+        id: set_names
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            tag_name="${GITHUB_REF#refs/tags/}"
+            release_name="$tag_name"
+          else
+            branch="${GITHUB_REF#refs/heads/}"
+            short_sha=$(git rev-parse --short HEAD)
+            tag_name="snapshot-${branch}-${short_sha}"
+            release_name="Snapshot - ${branch}"
+          fi
+
+          echo "tag_name=$tag_name" >> $GITHUB_OUTPUT
+          echo "release_name=$release_name" >> $GITHUB_OUTPUT
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.ref_name }}
-          name: "Release ${{ github.ref_name }}"
+          tag_name: ${{ steps.set_names.outputs.tag_name }}
+          name: ${{ steps.set_names.outputs.release_name }}
           body: |
             ## 📦 Release Information
-            **Tag:** `${{ github.ref_name }}`
+            **Tag/Name:** `${{ steps.set_names.outputs.tag_name }}`
             **Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
             **Author:** ${{ github.actor }}
             **Repository:** [${{ github.repository }}](https://github.com/${{ github.repository }})
