@@ -32,7 +32,7 @@ jobs:
             if [ ! -d "$APP_DIR" ]; then
               echo "Directory $APP_DIR does not exist. Cloning repository..."
               cd /var/www/
-              git clone "$REPO_URL" "APP_DIR"
+              git clone "$REPO_URL" "$APP_DIR"
             fi
             
             # Navigate to the application root directory
