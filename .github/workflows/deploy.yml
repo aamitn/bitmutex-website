@@ -31,7 +31,7 @@ jobs:
             echo "Starting deployment on server..."
             
             # Check if the directory exists
-            if [ ! -d "$APP_DIR" ]; then
+            if [ ! -d "${{ env.APP_DIR }}" ]; then
               echo "Directory $APP_DIR does not exist. Cloning repository..."
               cd /var/www/
               git clone "${{ env.REPO_URL }}" "${{ env.APP_DIR }}"
