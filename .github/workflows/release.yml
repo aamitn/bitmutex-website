@@ -1,0 +1,64 @@
+name: Release on Tag
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get previous tag
+        id: prev_tag
+        run: |
+          prev_tag=$(git describe --tags --abbrev=0 $(git rev-list --tags --skip=1 --max-count=1))
+          echo "previous_tag=$prev_tag" >> $GITHUB_OUTPUT
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          # Count commits
+          commit_count=$(git rev-list --count ${{ steps.prev_tag.outputs.previous_tag }}..HEAD)
+
+          echo "## 📝 Changelog" > changelog.md
+          echo "" >> changelog.md
+          echo "| Commit | Message | Author | Date |" >> changelog.md
+          echo "| ------ | ------- | ------ | ---- |" >> changelog.md
+
+          git log ${{ steps.prev_tag.outputs.previous_tag }}..HEAD \
+            --pretty=format:"| [%h](https://github.com/${{ github.repository }}/commit/%H) | %s | %an | %ad |" \
+            --date=short >> changelog.md
+
+          # Save commit count & changelog
+          echo "commit_count=$commit_count" >> $GITHUB_OUTPUT
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          cat changelog.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: "Release ${{ github.ref_name }}"
+          body: |
+            ## 📦 Release Information
+            **Tag:** `${{ github.ref_name }}`
+            **Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+            **Author:** ${{ github.actor }}
+            **Repository:** [${{ github.repository }}](https://github.com/${{ github.repository }})
+            **Previous Tag:** `${{ steps.prev_tag.outputs.previous_tag }}`
+            **Commit Range:** `${{ steps.prev_tag.outputs.previous_tag }}..${{ github.ref_name }}`
+            **Number of Commits:** `${{ steps.changelog.outputs.commit_count }}`
+            **Branch:** `${{ github.ref_name }}`
+
+            ---
+            ${{ steps.changelog.outputs.changelog }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
