@@ -21,87 +21,87 @@ jobs:
         env:
           SSH_HOST: 152.67.0.194
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << EOF
-            echo "Starting deployment on server..."
-            APP_DIR="/var/www/bitmutex-website"
-            REPO_URL="https://github.com/aamitn/bitmutex-website.git"
-      
+          ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST "
+            echo 'Starting deployment on server...'
+            APP_DIR='/var/www/bitmutex-website'
+            REPO_URL='https://github.com/aamitn/bitmutex-website.git'
+
             # Check if the directory exists and clone if it doesn't
-            if [ ! -d "\$APP_DIR" ]; then
-              echo "Directory \$APP_DIR does not exist. Cloning repository..."
+            if [ ! -d \"$APP_DIR\" ]; then
+              echo 'Directory $APP_DIR does not exist. Cloning repository...'
               cd /var/www/
-              git clone "\$REPO_URL" "\$APP_DIR"
+              git clone \"$REPO_URL\" \"$APP_DIR\"
             fi
             
-            cd "\$APP_DIR"
-      
-            echo "Discarding local changes..."
+            cd \"$APP_DIR\"
+
+            echo 'Discarding local changes...'
             git reset --hard
             git clean -fd
-      
-            echo "Syncing repository..."
+
+            echo 'Syncing repository...'
             pnpm run repo:sync
-      
-            echo "Setting environment variables..."
-      
+
+            echo 'Setting environment variables...'
+
             # Root .env
-            echo "CLOUDFLARE_R2_ACCOUNT_ID=${{ secrets.CLOUDFLARE_R2_ACCOUNT_ID }}" > ./.env
-            echo "CLOUDFLARE_R2_ACCESS_KEY_ID=${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}" >> ./.env
-            echo "CLOUDFLARE_R2_SECRET_ACCESS_KEY=${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}" >> ./.env
-            echo "CLOUDFLARE_R2_BUCKET_NAME=bitmutex-website-strapi-backup" >> ./.env
-      
+            printf 'CLOUDFLARE_R2_ACCOUNT_ID=%s\n' '${{ secrets.CLOUDFLARE_R2_ACCOUNT_ID }}' > ./.env
+            printf 'CLOUDFLARE_R2_ACCESS_KEY_ID=%s\n' '${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}' >> ./.env
+            printf 'CLOUDFLARE_R2_SECRET_ACCESS_KEY=%s\n' '${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}' >> ./.env
+            echo 'CLOUDFLARE_R2_BUCKET_NAME=bitmutex-website-strapi-backup' >> ./.env
+
             # Client .env
             mkdir -p ./client
-            echo "STRAPI_BASE_URL=https://strapiadmin.bitmutex.com" > ./client/.env
-            echo "NEXT_PUBLIC_STRAPI_BASE_URL=https://strapiadmin.bitmutex.com" >> ./client/.env
-            echo "PREVIEW_SECRET=${{ secrets.PREVIEW_SECRET }}" >> ./client/.env
-            echo "NEXT_PUBLIC_BASE_URL=https://bitmutex.com" >> ./client/.env
-            echo "HOST=localhost" >> ./client/.env
-            echo "NEXT_PUBLIC_STATUS_PAGE_URL=https://status.bitmutex.com" >> ./client/.env
-            echo "SMTP_HOST=smtp.zoho.in" >> ./client/.env
-            echo "SMTP_PORT=587" >> ./client/.env
-            echo "SMTP_USER=noreply@bitmutex.com" >> ./client/.env
-            echo "SMTP_PASS=${{ secrets.SMTP_PASS }}" >> ./client/.env
-            echo "NEXT_PUBLIC_APPOINTMENT_URL=https://cal.com/bitmutex" >> ./client/.env
-            echo "ADMIN_EMAIL=amitnandileo@gmail.com" >> ./client/.env
-            echo "NODE_ENV=production" >> ./client/.env
-            echo "IMAGE_HOSTNAME=localhost" >> ./client/.env
-      
+            echo 'STRAPI_BASE_URL=https://strapiadmin.bitmutex.com' > ./client/.env
+            echo 'NEXT_PUBLIC_STRAPI_BASE_URL=https://strapiadmin.bitmutex.com' >> ./client/.env
+            printf 'PREVIEW_SECRET=%s\n' '${{ secrets.PREVIEW_SECRET }}' >> ./client/.env
+            echo 'NEXT_PUBLIC_BASE_URL=https://bitmutex.com' >> ./client/.env
+            echo 'HOST=localhost' >> ./client/.env
+            echo 'NEXT_PUBLIC_STATUS_PAGE_URL=https://status.bitmutex.com' >> ./client/.env
+            echo 'SMTP_HOST=smtp.zoho.in' >> ./client/.env
+            echo 'SMTP_PORT=587' >> ./client/.env
+            echo 'SMTP_USER=noreply@bitmutex.com' >> ./client/.env
+            printf 'SMTP_PASS=%s\n' '${{ secrets.SMTP_PASS }}' >> ./client/.env
+            echo 'NEXT_PUBLIC_APPOINTMENT_URL=https://cal.com/bitmutex' >> ./client/.env
+            echo 'ADMIN_EMAIL=amitnandileo@gmail.com' >> ./client/.env
+            echo 'NODE_ENV=production' >> ./client/.env
+            echo 'IMAGE_HOSTNAME=localhost' >> ./client/.env
+
             # Server .env
             mkdir -p ./server
-            echo "PORT=1337" > ./server/.env
-            echo "APP_KEYS=${{ secrets.APP_KEYS }}" >> ./server/.env
-            echo "API_TOKEN_SALT=${{ secrets.API_TOKEN_SALT }}" >> ./server/.env
-            echo "ADMIN_JWT_SECRET=${{ secrets.ADMIN_JWT_SECRET }}" >> ./server/.env
-            echo "TRANSFER_TOKEN_SALT=${{ secrets.TRANSFER_TOKEN_SALT }}" >> ./server/.env
-            echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> ./server/.env
-            echo "CLIENT_URL=http://localhost:3000" >> ./server/.env
-            echo "DISCORD_BOT_TOKEN=${{ secrets.DISCORD_BOT_TOKEN }}" >> ./server/.env
-            echo "DISCORD_CHANNEL_ID=1349063933599678618" >> ./server/.env
-            echo "DISCORD_GUILD_ID=1349059955885473823" >> ./server/.env
-            echo "DISCORD_ADMIN_ID=146662188122243072" >> ./server/.env
-            echo "DATABASE_CLIENT=postgres" >> ./server/.env
-            echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> ./server/.env
-            echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> ./server/.env
-            echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> ./server/.env
-            echo "SMTP_USERNAME=smtp.zoho.in" >> ./server/.env
-            echo "SMTP_PASSWORD=${{ secrets.SMTP_PASS }}" >> ./server/.env
-            echo "SMTP_DEFAULT_FROM=noreply@bitmutex.com" >> ./server/.env
-            echo "SMTP_DEFAULT_REPLY_TO=support@bitmtuex.com" >> ./server/.env
-            echo "AUTO_CREATE_ADMIN=true" >> ./server/.env
-            echo "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}" >> ./server/.env
-      
-            echo "Installing root dependencies..."
+            echo 'PORT=1337' > ./server/.env
+            printf 'APP_KEYS=%s\n' '${{ secrets.APP_KEYS }}' >> ./server/.env
+            printf 'API_TOKEN_SALT=%s\n' '${{ secrets.API_TOKEN_SALT }}' >> ./server/.env
+            printf 'ADMIN_JWT_SECRET=%s\n' '${{ secrets.ADMIN_JWT_SECRET }}' >> ./server/.env
+            printf 'TRANSFER_TOKEN_SALT=%s\n' '${{ secrets.TRANSFER_TOKEN_SALT }}' >> ./server/.env
+            printf 'JWT_SECRET=%s\n' '${{ secrets.JWT_SECRET }}' >> ./server/.env
+            echo 'CLIENT_URL=http://localhost:3000' >> ./server/.env
+            printf 'DISCORD_BOT_TOKEN=%s\n' '${{ secrets.DISCORD_BOT_TOKEN }}' >> ./server/.env
+            echo 'DISCORD_CHANNEL_ID=1349063933599678618' >> ./server/.env
+            echo 'DISCORD_GUILD_ID=1349059955885473823' >> ./server/.env
+            echo 'DISCORD_ADMIN_ID=146662188122243072' >> ./server/.env
+            echo 'DATABASE_CLIENT=postgres' >> ./server/.env
+            printf 'DATABASE_NAME=%s\n' '${{ secrets.DATABASE_NAME }}' >> ./server/.env
+            printf 'DATABASE_USERNAME=%s\n' '${{ secrets.DATABASE_USERNAME }}' >> ./server/.env
+            printf 'DATABASE_PASSWORD=%s\n' '${{ secrets.DATABASE_PASSWORD }}' >> ./server/.env
+            echo 'SMTP_USERNAME=smtp.zoho.in' >> ./server/.env
+            printf 'SMTP_PASSWORD=%s\n' '${{ secrets.SMTP_PASS }}' >> ./server/.env
+            echo 'SMTP_DEFAULT_FROM=noreply@bitmutex.com' >> ./server/.env
+            echo 'SMTP_DEFAULT_REPLY_TO=support@bitmtuex.com' >> ./server/.env
+            echo 'AUTO_CREATE_ADMIN=true' >> ./server/.env
+            printf 'ADMIN_PASSWORD=%s\n' '${{ secrets.ADMIN_PASSWORD }}' >> ./server/.env
+
+            echo 'Installing root dependencies...'
             pnpm install
-      
-            echo "Installing client & server dependencies..."
+
+            echo 'Installing client & server dependencies...'
             pnpm run spawn
-      
-            echo "Building the application..."
+
+            echo 'Building the application...'
             pnpm run build
-      
-            echo "Reloading PM2..."
+
+            echo 'Reloading PM2...'
             pm2 reload ecosystem.config.cjs
-      
-            echo "Deployment complete!"
-          EOF
+
+            echo 'Deployment complete!'
+          "
