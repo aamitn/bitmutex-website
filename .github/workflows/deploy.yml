@@ -21,6 +21,7 @@ jobs:
         env:
           SSH_HOST: 152.67.0.194
         run: |
+          # Pass secrets as environment variables to the remote shell
           ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << EOF
             echo "Starting deployment on server..."
             APP_DIR="/var/www/bitmutex-website"
@@ -69,7 +70,7 @@ jobs:
             
             # Server .env
             mkdir -p ./server
-
+            
             # Use printf to safely escape passwords before writing to the file
             printf -v ADMIN_PASSWORD_ESCAPED '%q' "${{ secrets.ADMIN_PASSWORD }}"
             printf -v DATABASE_PASSWORD_ESCAPED '%q' "${{ secrets.DATABASE_PASSWORD }}"
