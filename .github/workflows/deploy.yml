@@ -39,7 +39,7 @@ jobs:
             
             # Navigate to the application root directory
             echo "Navigating to $APP_DIR..."
-            cd "$APP_DIR"
+            cd "${{ env.APP_DIR }}"
             
             # Update the local repository
             # git pull origin main via repo:sync script in package json in root project
