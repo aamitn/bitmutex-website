@@ -41,6 +41,11 @@ jobs:
             echo "Navigating to $APP_DIR..."
             cd "${{ env.APP_DIR }}"
             
+            # Discard any local changes before pulling
+            echo "Discarding local changes to ensure clean merge..."
+            git reset --hard
+            git clean -fd
+            
             # Update the local repository
             # git pull origin main via repo:sync script in package json in root project
             echo "Syncing repository..."
