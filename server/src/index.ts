@@ -47,7 +47,7 @@ export default {
         console.log("✅ Message sent to Discord");
 
         if (!isAdminOnline) {
-          socket.emit("adminMessage", { text: "The admin is currently offline. Your message has been forwarded.", sender: "system" });
+          socket.emit("adminMessage", { text: "Our staff is currently offline. If you need assistance, please drop your message along with your email/contact details.", sender: "system" });
           console.log(`⚠️ Admin is offline. Auto-reply sent to visitor ${socket.id}`);
         }
       });
@@ -98,6 +98,5 @@ export default {
       console.log("✅ Admin user already exists.");
     }
 
-    
   },
 };
