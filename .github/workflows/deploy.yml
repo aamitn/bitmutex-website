@@ -21,12 +21,11 @@ jobs:
         env:
           SSH_HOST: 152.67.0.194
         run: |
-          # Pass secrets as environment variables to the remote shell
           ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << EOF
             echo "Starting deployment on server..."
             APP_DIR="/var/www/bitmutex-website"
             REPO_URL="https://github.com/aamitn/bitmutex-website.git"
-            
+      
             # Check if the directory exists and clone if it doesn't
             if [ ! -d "\$APP_DIR" ]; then
               echo "Directory \$APP_DIR does not exist. Cloning repository..."
@@ -35,22 +34,22 @@ jobs:
             fi
             
             cd "\$APP_DIR"
-            
+      
             echo "Discarding local changes..."
             git reset --hard
             git clean -fd
-            
+      
             echo "Syncing repository..."
             pnpm run repo:sync
-            
+      
             echo "Setting environment variables..."
-            
+      
             # Root .env
             echo "CLOUDFLARE_R2_ACCOUNT_ID=${{ secrets.CLOUDFLARE_R2_ACCOUNT_ID }}" > ./.env
             echo "CLOUDFLARE_R2_ACCESS_KEY_ID=${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}" >> ./.env
             echo "CLOUDFLARE_R2_SECRET_ACCESS_KEY=${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}" >> ./.env
             echo "CLOUDFLARE_R2_BUCKET_NAME=bitmutex-website-strapi-backup" >> ./.env
-            
+      
             # Client .env
             mkdir -p ./client
             echo "STRAPI_BASE_URL=https://strapiadmin.bitmutex.com" > ./client/.env
@@ -67,15 +66,9 @@ jobs:
             echo "ADMIN_EMAIL=amitnandileo@gmail.com" >> ./client/.env
             echo "NODE_ENV=production" >> ./client/.env
             echo "IMAGE_HOSTNAME=localhost" >> ./client/.env
-            
+      
             # Server .env
             mkdir -p ./server
-            
-            # Use printf to safely escape passwords before writing to the file
-            printf -v ADMIN_PASSWORD_ESCAPED '%q' "${{ secrets.ADMIN_PASSWORD }}"
-            printf -v DATABASE_PASSWORD_ESCAPED '%q' "${{ secrets.DATABASE_PASSWORD }}"
-            printf -v SMTP_PASSWORD_ESCAPED '%q' "${{ secrets.SMTP_PASS }}"
-
             echo "PORT=1337" > ./server/.env
             echo "APP_KEYS=${{ secrets.APP_KEYS }}" >> ./server/.env
             echo "API_TOKEN_SALT=${{ secrets.API_TOKEN_SALT }}" >> ./server/.env
@@ -90,25 +83,25 @@ jobs:
             echo "DATABASE_CLIENT=postgres" >> ./server/.env
             echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> ./server/.env
             echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> ./server/.env
-            echo "DATABASE_PASSWORD=${DATABASE_PASSWORD_ESCAPED}" >> ./server/.env
+            echo 'DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}' >> ./server/.env
             echo "SMTP_USERNAME=smtp.zoho.in" >> ./server/.env
-            echo "SMTP_PASSWORD=${SMTP_PASSWORD_ESCAPED}" >> ./server/.env
+            echo "SMTP_PASSWORD=${{ secrets.SMTP_PASS }}" >> ./server/.env
             echo "SMTP_DEFAULT_FROM=noreply@bitmutex.com" >> ./server/.env
             echo "SMTP_DEFAULT_REPLY_TO=support@bitmtuex.com" >> ./server/.env
             echo "AUTO_CREATE_ADMIN=true" >> ./server/.env
-            echo "ADMIN_PASSWORD=${ADMIN_PASSWORD_ESCAPED}" >> ./server/.env
-            
+            echo 'ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}' >> ./server/.env
+      
             echo "Installing root dependencies..."
             pnpm install
-            
+      
             echo "Installing client & server dependencies..."
             pnpm run spawn
-            
+      
             echo "Building the application..."
             pnpm run build
-            
+      
             echo "Reloading PM2..."
             pm2 reload ecosystem.config.cjs
-            
+      
             echo "Deployment complete!"
           EOF
