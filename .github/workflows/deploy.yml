@@ -106,9 +106,21 @@ jobs:
       
             echo "Building the application..."
             pnpm run build
-      
-            echo "Reloading PM2..."
-            pm2 reload ecosystem.config.cjs
-      
+            echo "Checking if PM2 processes are running..."
+            # Check if PM2 processes are running by name
+            pm2 list | grep -E "bitmutex-strapi|bitmutex-nextjs" | grep -q "online"
+            if [ \$? -eq 0 ]; then
+              echo "PM2 processes found. Reloading..."
+              pm2 reload ecosystem.config.cjs
+            else
+              echo "No PM2 processes found. Starting and saving..."
+              pm2 start ecosystem.config.cjs
+              pm2 save
+              # Configure PM2 to start on system boot
+              echo "Configuring PM2 to start on boot..."
+              sudo pm2 startup
+            fi
+
+            
             echo "Deployment complete!"
           EOF
