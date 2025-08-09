@@ -41,7 +41,8 @@ jobs:
       
             echo "Discarding local changes..."
             git reset --hard
-            git clean -fd
+            # Remove all untracked files except uploads
+            git clean -fd -e "${APP_DIR}/server/public/uploads" -e "${APP_DIR}/server/public/uploads/*"
       
             echo "Syncing repository..."
             pnpm run repo:sync
