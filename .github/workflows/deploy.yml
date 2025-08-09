@@ -90,7 +90,7 @@ jobs:
             
             # Use printf to handle special characters properly
             printf 'DATABASE_PASSWORD=%s\n' "$DATABASE_PASSWORD" >> ./server/.env
-
+            
             echo "SMTP_USERNAME=smtp.zoho.in" >> ./server/.env
             echo "SMTP_PASSWORD=${{ secrets.SMTP_PASS }}" >> ./server/.env
             echo "SMTP_DEFAULT_FROM=noreply@bitmutex.com" >> ./server/.env
@@ -108,21 +108,51 @@ jobs:
       
             echo "Building the application..."
             pnpm run build
+      
+            # Check the status of both processes
+            STRAPI_RUNNING=$(pm2 list | grep -c "bitmutex-strapi.*online" || echo "0")
+            NEXTJS_RUNNING=$(pm2 list | grep -c "bitmutex-nextjs.*online" || echo "0")
             
-            echo "Checking if PM2 processes are running..."
-            # Check if PM2 processes are running by name and use a more robust if condition
-            if pm2 list | grep -E "bitmutex-strapi|bitmutex-nextjs" | grep -q "online"; then
-              echo "PM2 processes found. Reloading..."
+            if [ "$STRAPI_RUNNING" -eq 1 ] && [ "$NEXTJS_RUNNING" -eq 1 ]; then
+              echo "Both processes are running, reloading all..."
               pm2 reload ecosystem.config.cjs
             else
-              echo "No PM2 processes found. Starting and saving..."
-              pm2 start ecosystem.config.cjs
-              pm2 save
-              # Configure PM2 to start on system boot
-              echo "Configuring PM2 to start on boot..."
-              sudo pm2 startup
+              echo "One or both processes are not running, managing individually..."
+              
+              # Check if we need to setup PM2 startup (when starting processes)
+              NEED_STARTUP=false
+              
+              # Handle bitmutex-strapi
+              if [ "$STRAPI_RUNNING" -eq 1 ]; then
+                echo "bitmutex-strapi is running, reloading..."
+                pm2 reload bitmutex-strapi
+              else
+                echo "bitmutex-strapi is not running, starting..."
+                pm2 start ecosystem.config.cjs --only bitmutex-strapi
+                NEED_STARTUP=true
+              fi
+              
+              # Handle bitmutex-nextjs
+              if [ "$NEXTJS_RUNNING" -eq 1 ]; then
+                echo "bitmutex-nextjs is running, reloading..."
+                pm2 reload bitmutex-nextjs
+              else
+                echo "bitmutex-nextjs is not running, starting..."
+                pm2 start ecosystem.config.cjs --only bitmutex-nextjs
+                NEED_STARTUP=true
+              fi
+              
+              # Setup PM2 startup if we started any processes
+              if [ "$NEED_STARTUP" = true ]; then
+                echo "Setting up PM2 startup to auto-start processes on boot..."
+                pm2 startup systemd -u ubuntu --hp /home/ubuntu
+                echo "PM2 startup configuration completed."
+              fi
             fi
-
             
+            # Save PM2 configuration
+            echo "Saving PM2 configuration..."
+            pm2 save
+      
             echo "Deployment complete!"
           EOF
