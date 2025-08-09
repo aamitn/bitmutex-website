@@ -23,6 +23,8 @@ jobs:
           ssh -o StrictHostKeyChecking=no user@your_server_ip << 'EOF'
             echo "Starting scheduled backup process..."
             
+            source ~/.zshrc
+
             # Navigate to the application root directory
             cd /var/www/bitmutex-website
             

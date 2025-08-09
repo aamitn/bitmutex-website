@@ -22,6 +22,10 @@ jobs:
           SSH_HOST: 152.67.0.194
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << 'EOF'
+            
+            # Get System and User Envs
+            source ~/.zshrc
+
             echo "Starting deployment on server..."
             APP_DIR="/var/www/bitmutex-website"
             REPO_URL="https://github.com/aamitn/bitmutex-website.git"
@@ -105,6 +109,9 @@ jobs:
       
             echo "Installing client & server dependencies..."
             pnpm run spawn
+
+            echo "Stopping Strapi as it need to be restarted during build process..."
+            pm2 stop bitmutex-strapi 
       
             echo "Building the application..."
             pnpm run build
