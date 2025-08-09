@@ -8,6 +8,11 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      SSH_HOST: 152.67.0.194
+      SSH_PRIVATE_KEY :  ${{ secrets.SSH_PRIVATE_KEY }}
+      REPO_URL: "https://github.com/aamitn/bitmutex-website.git"
+      APP_DIR:  "/var/www/bitmutex-website"
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -15,7 +20,7 @@ jobs:
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ env.SSH_PRIVATE_KEY }}
 
       - name: Deploy and Build via SSH
         env:
@@ -24,17 +29,12 @@ jobs:
           # SSH into the server and execute commands
           ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << 'EOF'
             echo "Starting deployment on server..."
-
-            # Define the application directory and repository URL
-            APP_DIR="/var/www/bitmutex-website"
-            REPO_URL="https://github.com/aamitn/bitmutex-website.git" # <-- Replace with your actual repository URL
-      
             
             # Check if the directory exists
             if [ ! -d "$APP_DIR" ]; then
               echo "Directory $APP_DIR does not exist. Cloning repository..."
               cd /var/www/
-              git clone "$REPO_URL" "$APP_DIR"
+              git clone "${{ env.REPO_URL }}" "${{ env.APP_DIR }}"
             fi
             
             # Navigate to the application root directory
@@ -42,58 +42,72 @@ jobs:
             cd "$APP_DIR"
             
             # Update the local repository
+            # git pull origin main via repo:sync script in package json in root project
             echo "Syncing repository..."
             pnpm run repo:sync
             
             echo "Setting environment variables..."
+
+            # -----------------------------------------------------
+            # Project Root Variables
+            # -----------------------------------------------------
+            # Create a project root .env file for root scripts
+            cat > ./.env << 'EOC'
+            CLOUDFLARE_R2_ACCOUNT_ID="${{ secrets.CLOUDFLARE_R2_ACCOUNT_ID }}"
+            CLOUDFLARE_R2_ACCESS_KEY_ID="${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}"
+            CLOUDFLARE_R2_SECRET_ACCESS_KEY="${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}"
+            CLOUDFLARE_R2_BUCKET_NAME="bitmutex-website-strapi-backup"
+            EOC
             
             # -----------------------------------------------------
             # Next Frontend Client variables
             # -----------------------------------------------------
-            export STRAPI_BASE_URL="https://strapiadmin.bitmutex.com"
-            export NEXT_PUBLIC_STRAPI_BASE_URL="https://strapiadmin.bitmutex.com"
-            export PREVIEW_SECRET="${{ secrets.PREVIEW_SECRET }}"
-            export NEXT_PUBLIC_BASE_URL="https://bitmutex.com"
-            export HOST="localhost"
-            export NEXT_PUBLIC_STATUS_PAGE_URL="https://status.bitmutex.com"
-            export SMTP_HOST="smtp.zoho.in"
-            export SMTP_PORT="587"
-            export SMTP_USER="noreply@bitmutex.com"
-            export SMTP_PASS="${{ secrets.SMTP_PASS }}"
-            export NEXT_PUBLIC_APPOINTMENT_URL="https://cal.com/bitmutex"
-            export ADMIN_EMAIL="amitnandileo@gmail.com"
-            export NODE_ENV="production"
-            export IMAGE_HOSTNAME="localhost"
+            # Next.js Client .env file
+            cat > ./client/.env << 'EOC'
+            STRAPI_BASE_URL="https://strapiadmin.bitmutex.com"
+            NEXT_PUBLIC_STRAPI_BASE_URL="https://strapiadmin.bitmutex.com"
+            PREVIEW_SECRET="${{ secrets.PREVIEW_SECRET }}"
+            NEXT_PUBLIC_BASE_URL="https://bitmutex.com"
+            HOST="localhost"
+            NEXT_PUBLIC_STATUS_PAGE_URL="https://status.bitmutex.com"
+            SMTP_HOST="smtp.zoho.in"
+            SMTP_PORT="587"
+            SMTP_USER="noreply@bitmutex.com"
+            SMTP_PASS="${{ secrets.SMTP_PASS }}"
+            NEXT_PUBLIC_APPOINTMENT_URL="https://cal.com/bitmutex"
+            ADMIN_EMAIL="amitnandileo@gmail.com"
+            NODE_ENV="production"
+            IMAGE_HOSTNAME="localhost"
+            EOC
+
             
             # -----------------------------------------------------
             # Strapi Backend Server variables
             # -----------------------------------------------------
-            export PORT="1337"
-            export APP_KEYS="${{ secrets.APP_KEYS }}"
-            export API_TOKEN_SALT="${{ secrets.API_TOKEN_SALT }}"
-            export ADMIN_JWT_SECRET="${{ secrets.ADMIN_JWT_SECRET }}"
-            export TRANSFER_TOKEN_SALT="${{ secrets.TRANSFER_TOKEN_SALT }}"
-            export JWT_SECRET="${{ secrets.JWT_SECRET }}"
-            
-            export CLIENT_URL="http://localhost:3000"
-            
-            export DISCORD_BOT_TOKEN="${{ secrets.DISCORD_BOT_TOKEN }}"
-            export DISCORD_CHANNEL_ID="1349063933599678618"
-            export DISCORD_GUILD_ID="1349059955885473823"
-            export DISCORD_ADMIN_ID="146662188122243072"
-            
-            export DATABASE_CLIENT="postgres"
-            export DATABASE_NAME="${{ secrets.DATABASE_NAME }}"
-            export DATABASE_USERNAME="${{ secrets.DATABASE_USERNAME }}"
-            export DATABASE_PASSWORD="${{ secrets.DATABASE_PASSWORD }}"
-            
-            export SMTP_USERNAME="smtp.zoho.in"
-            export SMTP_PASSWORD="${{ secrets.SMTP_PASS }}"
-            export SMTP_DEFAULT_FROM="noreply@bitmutex.com"
-            export SMTP_DEFAULT_REPLY_TO="support@bitmtuex.com"
-            
-            export AUTO_CREATE_ADMIN="true"
-            export ADMIN_PASSWORD="${{ secrets.ADMIN_PASSWORD }}"
+            # Strapi Server .env file
+            cat > ./server/.env << 'EOS'
+            PORT="1337"
+            APP_KEYS="${{ secrets.APP_KEYS }}"
+            API_TOKEN_SALT="${{ secrets.API_TOKEN_SALT }}"
+            ADMIN_JWT_SECRET="${{ secrets.ADMIN_JWT_SECRET }}"
+            TRANSFER_TOKEN_SALT="${{ secrets.TRANSFER_TOKEN_SALT }}"
+            JWT_SECRET="${{ secrets.JWT_SECRET }}"
+            CLIENT_URL="http://localhost:3000"
+            DISCORD_BOT_TOKEN="${{ secrets.DISCORD_BOT_TOKEN }}"
+            DISCORD_CHANNEL_ID="1349063933599678618"
+            DISCORD_GUILD_ID="1349059955885473823"
+            DISCORD_ADMIN_ID="146662188122243072"
+            DATABASE_CLIENT="postgres"
+            DATABASE_NAME="${{ secrets.DATABASE_NAME }}"
+            DATABASE_USERNAME="${{ secrets.DATABASE_USERNAME }}"
+            DATABASE_PASSWORD="${{ secrets.DATABASE_PASSWORD }}"
+            SMTP_USERNAME="smtp.zoho.in"
+            SMTP_PASSWORD="${{ secrets.SMTP_PASS }}"
+            SMTP_DEFAULT_FROM="noreply@bitmutex.com"
+            SMTP_DEFAULT_REPLY_TO="support@bitmtuex.com"
+            AUTO_CREATE_ADMIN="true"
+            ADMIN_PASSWORD="${{ secrets.ADMIN_PASSWORD }}"
+            EOS
             
             # Install root dependencies (pnpm run spawn takes care of nested installs)
             echo "Installing root dependencies..."

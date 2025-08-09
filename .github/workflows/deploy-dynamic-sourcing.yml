@@ -1,0 +1,135 @@
+name: Deploy Strapi & Next.js via SSH
+
+on:
+    workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy and Build via SSH
+        env:
+            # All environment variables defined here
+            SSH_HOST: 152.67.0.194
+            STRAPI_BASE_URL: "https://strapiadmin.bitmutex.com"
+            NEXT_PUBLIC_STRAPI_BASE_URL: "https://strapiadmin.bitmutex.com"
+            PREVIEW_SECRET: ${{ secrets.PREVIEW_SECRET }}
+            NEXT_PUBLIC_BASE_URL: "https://bitmutex.com"
+            HOST: "localhost"
+            NEXT_PUBLIC_STATUS_PAGE_URL: "https://status.bitmutex.com"
+            SMTP_HOST: "smtp.zoho.in"
+            SMTP_PORT: "587"
+            SMTP_USER: "noreply@bitmutex.com"
+            SMTP_PASS: ${{ secrets.SMTP_PASS }}
+            NEXT_PUBLIC_APPOINTMENT_URL: "https://cal.com/bitmutex"
+            ADMIN_EMAIL: "amitnandileo@gmail.com"
+            NODE_ENV: "production"
+            IMAGE_HOSTNAME: "localhost"
+            PORT: "1337"
+            APP_KEYS: ${{ secrets.APP_KEYS }}
+            API_TOKEN_SALT: ${{ secrets.API_TOKEN_SALT }}
+            ADMIN_JWT_SECRET: ${{ secrets.ADMIN_JWT_SECRET }}
+            TRANSFER_TOKEN_SALT: ${{ secrets.TRANSFER_TOKEN_SALT }}
+            JWT_SECRET: ${{ secrets.JWT_SECRET }}
+            CLIENT_URL: "http://localhost:3000"
+            DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+            DISCORD_CHANNEL_ID: "1349063933599678618"
+            DISCORD_GUILD_ID: "1349059955885473823"
+            DISCORD_ADMIN_ID: "146662188122243072"
+            DATABASE_CLIENT: "postgres"
+            DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+            DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+            DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+            SMTP_USERNAME: "smtp.zoho.in"
+            SMTP_PASSWORD: ${{ secrets.SMTP_PASS }}
+            SMTP_DEFAULT_FROM: "noreply@bitmutex.com"
+            SMTP_DEFAULT_REPLY_TO: "support@bitmtuex.com"
+            AUTO_CREATE_ADMIN: "true"
+            ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+            CLOUDFLARE_R2_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_R2_ACCOUNT_ID }}
+            CLOUDFLARE_R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
+            CLOUDFLARE_R2_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
+            CLOUDFLARE_R2_BUCKET_NAME: "bitmutex-website-strapi-backup"
+        run: |
+            # SSH into the server and execute commands
+            ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << 'EOF'
+                echo "Starting deployment on server..."
+                
+                # Define the application directory and repository URL
+                APP_DIR="/var/www/bitmutex-website"
+                REPO_URL="https://github.com/aamitn/bitmutex-website.git"
+        
+                if [ ! -d "$APP_DIR" ]; then
+                echo "Directory $APP_DIR does not exist. Cloning repository..."
+                cd /var/www/
+                git clone "$REPO_URL" "$APP_DIR"
+                fi
+        
+                cd "$APP_DIR"
+
+                echo "Syncing repository..."
+                pnpm run repo:sync
+        
+                # Create an .env.sh file to source all variables
+                echo "Creating environment script..."
+                cat > ./.env.sh << 'EOS'
+                export STRAPI_BASE_URL="$STRAPI_BASE_URL"
+                export NEXT_PUBLIC_STRAPI_BASE_URL="$NEXT_PUBLIC_STRAPI_BASE_URL"
+                export PREVIEW_SECRET="$PREVIEW_SECRET"
+                export NEXT_PUBLIC_BASE_URL="$NEXT_PUBLIC_BASE_URL"
+                export HOST="$HOST"
+                export NEXT_PUBLIC_STATUS_PAGE_URL="$NEXT_PUBLIC_STATUS_PAGE_URL"
+                export SMTP_HOST="$SMTP_HOST"
+                export SMTP_PORT="$SMTP_PORT"
+                export SMTP_USER="$SMTP_USER"
+                export SMTP_PASS="$SMTP_PASS"
+                export NEXT_PUBLIC_APPOINTMENT_URL="$NEXT_PUBLIC_APPOINTMENT_URL"
+                export ADMIN_EMAIL="$ADMIN_EMAIL"
+                export NODE_ENV="$NODE_ENV"
+                export IMAGE_HOSTNAME="$IMAGE_HOSTNAME"
+                export PORT="$PORT"
+                export APP_KEYS="$APP_KEYS"
+                export API_TOKEN_SALT="$API_TOKEN_SALT"
+                export ADMIN_JWT_SECRET="$ADMIN_JWT_SECRET"
+                export TRANSFER_TOKEN_SALT="$TRANSFER_TOKEN_SALT"
+                export JWT_SECRET="$JWT_SECRET"
+                export CLIENT_URL="$CLIENT_URL"
+                export DISCORD_BOT_TOKEN="$DISCORD_BOT_TOKEN"
+                export DISCORD_CHANNEL_ID="$DISCORD_CHANNEL_ID"
+                export DISCORD_GUILD_ID="$DISCORD_GUILD_ID"
+                export DISCORD_ADMIN_ID="$DISCORD_ADMIN_ID"
+                export DATABASE_CLIENT="$DATABASE_CLIENT"
+                export DATABASE_NAME="$DATABASE_NAME"
+                export DATABASE_USERNAME="$DATABASE_USERNAME"
+                export DATABASE_PASSWORD="$DATABASE_PASSWORD"
+                export SMTP_USERNAME="$SMTP_USERNAME"
+                export SMTP_PASSWORD="$SMTP_PASSWORD"
+                export SMTP_DEFAULT_FROM="$SMTP_DEFAULT_FROM"
+                export SMTP_DEFAULT_REPLY_TO="$SMTP_DEFAULT_REPLY_TO"
+                export AUTO_CREATE_ADMIN="$AUTO_CREATE_ADMIN"
+                export ADMIN_PASSWORD="$ADMIN_PASSWORD"
+                export CLOUDFLARE_R2_ACCOUNT_ID="$CLOUDFLARE_R2_ACCOUNT_ID
+                export CLOUDFLARE_R2_ACCESS_KEY_ID="$CLOUDFLARE_R2_ACCESS_KEY_ID"
+                export CLOUDFLARE_R2_SECRET_ACCESS_KEY="$CLOUDFLARE_R2_SECRET_ACCESS_KEY"
+                export CLOUDFLARE_R2_BUCKET_NAME="bitmutex-website-strapi-backup"
+                EOS
+    
+        
+                echo "Installing dependencies and running build scripts..."
+                source ./.env.sh && pnpm install
+                source ./.env.sh && pnpm run spawn
+                source ./.env.sh && pnpm run build
+                
+                echo "Reloading PM2 processes for a graceful restart..."
+                source ./.env.sh && pm2 reload ecosystem.config.cjs
+                
+                echo "Deployment complete!"
+            EOF
