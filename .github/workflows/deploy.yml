@@ -71,8 +71,9 @@ jobs:
             echo "ADMIN_EMAIL=amitnandileo@gmail.com" >> ./client/.env
             echo "NODE_ENV=production" >> ./client/.env
             echo "IMAGE_HOSTNAME=localhost" >> ./client/.env
+            echo "NEXT_PUBLIC_GITHUB_TOKEN=${{ secrets.NEXT_PUBLIC_GITHUB_TOKEN }}" >> ./client/.env
       
-            # Server .env with base64 decoding for passwords
+            # Server .env with base64 decoding for admin and db passwords
             mkdir -p ./server
             echo "PORT=1337" > ./server/.env
             echo "APP_KEYS=${{ secrets.APP_KEYS }}" >> ./server/.env

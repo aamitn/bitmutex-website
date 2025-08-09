@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SeparatorVertical} from 'lucide-react';
 import Link from "next/link";
+import { GitHubVersion } from "@/components/custom/GitHubVersion";
 
 // Define the props for the FooterBottom component.
 // This allows you to pass in the copyright text.
@@ -113,12 +114,20 @@ const FooterBottom: React.FC<FooterBottomProps> = ({ text }) => {
             <Link href="/terms-and-conditions" className="flex items-center gap-3">
               <span className="text-gray-500 dark:text-gray-500">Terms &amp; Conditions</span>
             </Link>
-
           </div>
-          
-          {/* Stylish date and time display */}
+
+          {/* GitHub version */}
+          <span className="text-zinc-600 dark:text-zinc-400 ">
+            <span className="hidden md:inline px-2">App Version: </span>
+              <GitHubVersion owner="aamitn" repo="winhider" compact={true}/>
+          </span> 
+
+
+
+          {/* date and time display */}
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2 bg-gradient-to-r from-white/70 to-gray-50/70 dark:from-gray-800/70 dark:to-gray-700/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-gray-200/50 dark:border-gray-600/50 shadow-sm hover:shadow-md transition-all duration-300">
+              
               <div className="flex flex-col items-end">
                 <span className="font-mono font-bold text-xs text-gray-700 dark:text-gray-300 tabular-nums leading-tight">
                   {formatTime(currentTime)}
