@@ -37,6 +37,12 @@ jobs:
             echo "Navigating to $APP_DIR..."
             cd "$APP_DIR"
             
+            # Discard any local changes before pulling
+            echo "Discarding local changes to ensure clean merge..."
+            git reset --hard
+            git clean -fd
+
+
             # Update the local repository BEFORE doing anything else
             echo "Syncing repository..."
             pnpm run repo:sync
