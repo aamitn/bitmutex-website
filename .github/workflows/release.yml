@@ -34,19 +34,24 @@ jobs:
 
           commit_count=$(git rev-list --count $commit_range)
 
-          echo "## 📝 Changelog" > changelog.md
-          echo "" >> changelog.md
-          echo "| Commit | Message | Author | Date |" >> changelog.md
-          echo "| ------ | ------- | ------ | ---- |" >> changelog.md
-
-          git log $commit_range \
-            --pretty=format:"| [%h](https://github.com/${{ github.repository }}/commit/%H) | %s | %an | %ad |" \
-            --date=short >> changelog.md
+          {
+            echo "## 📝 Changelog"
+            echo ""
+            echo "| Commit | Message | Author | Date |"
+            echo "| ------ | ------- | ------ | ---- |"
+            git log $commit_range \
+              --pretty=format:"| [%h](https://github.com/${{ github.repository }}/commit/%H) | %s | %an | %ad |" \
+              --date=short
+          } > changelog.md
 
           echo "commit_count=$commit_count" >> $GITHUB_OUTPUT
-          echo "changelog<<EOF" >> $GITHUB_OUTPUT
-          cat changelog.md >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+
+          # ✅ Correct multi-line syntax for GitHub Actions
+          {
+            echo "changelog<<EOF"
+            cat changelog.md
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
 
       - name: Calculate Lines of Code
         id: loc
