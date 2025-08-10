@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import { Header, Footer } from "@/components/layout";
 import { getGlobalPageData } from "@/data/loaders";
+import { GoogleAnalytics } from '@next/third-parties/google'
 import Chat from "@/components/ui/chat";
 import LiveUserCount from "@/components/custom/LiveUserCount";
 import 'vanilla-cookieconsent/dist/cookieconsent.css';
@@ -71,15 +72,13 @@ export default async function RootLayout({
           fontHeading.variable
         )}
       >
+        <GoogleAnalytics gaId="G-7VWD8QMZ5X" />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-
-
-
          
           <Header data={{ ...topNav, logoSrc }} /> {/* Pass logoSrc */}
           <LoginButtonServer />
