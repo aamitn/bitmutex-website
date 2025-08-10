@@ -1,4 +1,4 @@
-name: Deploy Strapi & Next.js via SSH
+name: Deploy Strapi & Next.js via SSH to OCI
 
 on:
   push:
