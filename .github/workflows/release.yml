@@ -34,6 +34,7 @@ jobs:
 
           commit_count=$(git rev-list --count $commit_range)
 
+          # Generate changelog content
           {
             echo "## 📝 Changelog"
             echo ""
@@ -46,12 +47,10 @@ jobs:
 
           echo "commit_count=$commit_count" >> $GITHUB_OUTPUT
 
-          # ✅ Correct multi-line syntax for GitHub Actions
-          {
-            echo "changelog<<EOF"
-            cat changelog.md
-            echo "EOF"
-          } >> $GITHUB_OUTPUT
+          # Fixed multi-line syntax for GitHub Actions
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          cat changelog.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Calculate Lines of Code
         id: loc
@@ -60,11 +59,11 @@ jobs:
           sudo apt-get install -y cloc
 
           # Count lines in /server and /client
-          server_loc=$(cloc server --quiet --exclude-dir=node_modules --json | jq '.SUM.code // 0')
-          client_loc=$(cloc client --quiet --exclude-dir=node_modules --json | jq '.SUM.code // 0')
+          server_loc=$(cloc server --quiet --exclude-dir=node_modules --json 2>/dev/null | jq '.SUM.code // 0' 2>/dev/null || echo "0")
+          client_loc=$(cloc client --quiet --exclude-dir=node_modules --json 2>/dev/null | jq '.SUM.code // 0' 2>/dev/null || echo "0")
 
           # Count total lines for the repo
-          total_loc=$(cloc . --quiet --exclude-dir=node_modules --json | jq '.SUM.code // 0')
+          total_loc=$(cloc . --quiet --exclude-dir=node_modules --json 2>/dev/null | jq '.SUM.code // 0' 2>/dev/null || echo "0")
 
           # Calculate "others" as total - server - client
           others_loc=$((total_loc - server_loc - client_loc))
