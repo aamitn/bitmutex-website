@@ -92,6 +92,7 @@ jobs:
           cat > release_notes.md << 'NOTES_EOF'
           ## 📦 Release Information
           **Tag/Name:** `${{ steps.set_names.outputs.tag_name }}`
+          **Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
           **Author:** ${{ github.actor }}
           **Repository:** [${{ github.repository }}](https://github.com/${{ github.repository }})
           **Previous Tag:** `${{ steps.prev_tag.outputs.previous_tag }}`
