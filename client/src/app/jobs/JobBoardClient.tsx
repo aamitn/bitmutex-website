@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Briefcase, MapPin, Calendar } from 'lucide-react';
-import Link from 'next/link'
+import { Briefcase, MapPin, Calendar } from "lucide-react";
+import Link from "next/link";
 
 interface Job {
   documentID: string;
@@ -20,18 +20,18 @@ interface JobBoardClientProps {
   initialJobs: Job[];
 }
 
-
-
 export default function JobBoardClient({ initialJobs }: JobBoardClientProps) {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [experienceFilter, setExperienceFilter] = useState<Set<string>>(new Set());
   const [locationFilter, setLocationFilter] = useState<Set<string>>(new Set());
 
-  // Extract filter options
-  const experienceOptions = Array.from(new Set(initialJobs.map(job => job.experience).filter(Boolean)));
-  const locationOptions = Array.from(new Set(initialJobs.map(job => job.location).filter(Boolean)));
+  const experienceOptions = Array.from(
+    new Set(initialJobs.map((job) => job.experience).filter(Boolean))
+  );
+  const locationOptions = Array.from(
+    new Set(initialJobs.map((job) => job.location).filter(Boolean))
+  );
 
-  // Filtering logic
   const filteredJobs = initialJobs.filter((job) => {
     return (
       (!searchTerm ||
@@ -41,140 +41,156 @@ export default function JobBoardClient({ initialJobs }: JobBoardClientProps) {
       (locationFilter.size === 0 || locationFilter.has(job.location))
     );
   });
-  const toggleFilter = (filterSet: Set<string>, value: string, setFilter: (s: Set<string>) => void) => {
+
+  const toggleFilter = (
+    filterSet: Set<string>,
+    value: string,
+    setFilter: (s: Set<string>) => void
+  ) => {
     const newSet = new Set(filterSet);
-    
-    if (newSet.has(value)) {
-      newSet.delete(value);
-    } else {
-      newSet.add(value);
-    }
-    
+    if (newSet.has(value)) newSet.delete(value);
+    else newSet.add(value);
     setFilter(newSet);
   };
 
   return (
-    <div className="container mx-auto p-6 mt-20 mb-20 gap-6 flex flex-col md:flex-row">
+    <div className="container mx-auto p-6 mt-20 mb-20 gap-8 flex flex-col md:flex-row">
       {/* Sidebar with Filters */}
-      <div className="w-full md:w-1/4 lg:w-1/5 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg mb-6 md:mb-0">
-        <h2 className="text-xl font-semibold mb-4">Filters</h2>
+      <aside className="w-full md:w-1/4 lg:w-1/5 p-6 bg-white dark:bg-gray-900 rounded-2xl shadow-lg sticky top-24 h-fit">
+        <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2">
+          Filters
+        </h2>
 
         {/* Search Input */}
-        <div className="mb-4">
+        <div className="mb-6">
           <input
             type="text"
-            placeholder="Search Jobs"
-            className="w-full p-2 border border-gray-300 rounded-lg"
+            placeholder="Search jobs..."
+            className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            aria-label="Search jobs"
           />
         </div>
 
         {/* Experience Filter */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium">Experience</label>
-          {experienceOptions.map((experience) => (
-            <div key={experience} className="flex items-center mb-2">
-              <input
-                type="checkbox"
-                value={experience}
-                checked={experienceFilter.has(experience)}
-                onChange={() => toggleFilter(experienceFilter, experience, setExperienceFilter)}
-                id={`experience-${experience}`}
-                className="mr-2"
-              />
-              <label htmlFor={`experience-${experience}`} className="text-sm text-gray-700 dark:text-slate-300/80">
-                {experience}
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200">
+            Experience
+          </h3>
+          <div className="flex flex-col gap-3 max-h-48 overflow-y-auto pr-2">
+            {experienceOptions.map((experience) => (
+              <label
+                key={experience}
+                htmlFor={`experience-${experience}`}
+                className="inline-flex items-center cursor-pointer text-gray-700 dark:text-gray-300 select-none"
+              >
+                <input
+                  id={`experience-${experience}`}
+                  type="checkbox"
+                  value={experience}
+                  checked={experienceFilter.has(experience)}
+                  onChange={() =>
+                    toggleFilter(experienceFilter, experience, setExperienceFilter)
+                  }
+                  className="form-checkbox h-5 w-5 text-indigo-600 rounded focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-700"
+                />
+                <span className="ml-3">{experience}</span>
               </label>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Location Filter */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium">Location</label>
-          {locationOptions.map((location) => (
-            <div key={location} className="flex items-center mb-2">
-              <input
-                type="checkbox"
-                value={location}
-                checked={locationFilter.has(location)}
-                onChange={() => toggleFilter(locationFilter, location, setLocationFilter)}
-                id={`location-${location}`}
-                className="mr-2"
-              />
-              <label htmlFor={`location-${location}`} className="text-sm text-gray-700 dark:text-slate-300/80">
-                {location}
+        <div>
+          <h3 className="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200">
+            Location
+          </h3>
+          <div className="flex flex-col gap-3 max-h-48 overflow-y-auto pr-2">
+            {locationOptions.map((location) => (
+              <label
+                key={location}
+                htmlFor={`location-${location}`}
+                className="inline-flex items-center cursor-pointer text-gray-700 dark:text-gray-300 select-none"
+              >
+                <input
+                  id={`location-${location}`}
+                  type="checkbox"
+                  value={location}
+                  checked={locationFilter.has(location)}
+                  onChange={() =>
+                    toggleFilter(locationFilter, location, setLocationFilter)
+                  }
+                  className="form-checkbox h-5 w-5 text-indigo-600 rounded focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-700"
+                />
+                <span className="ml-3">{location}</span>
               </label>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      </aside>
 
       {/* Job Listings */}
-      <div className="flex-1">
-
+      <main className="flex-1">
         {filteredJobs.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredJobs.map((job) => (
-            <Link href={`/jobs/${job.documentID}`} passHref key={job.documentID} className="block">
-              <Card 
-                className="group relative flex flex-col p-4 hover:shadow-lg transition-all rounded-xl cursor-pointer 
-                          hover:scale-[1.02] active:scale-[0.98] transform-gpu 
-                          bg-white dark:bg-gray-900 dark:hover:bg-gray-800 min-h-full"
-              >
-                <div className="flex flex-col flex-grow">
-                  <CardHeader className="p-0">
-                    <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white">{job.title}</CardTitle>
-                  </CardHeader>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredJobs.map((job) => (
+              <Link
+              href={`/jobs/${job.documentID}`}
+              key={job.documentID}
+              className="block group bg-white dark:bg-gray-900 rounded-2xl shadow-md hover:shadow-xl transition-shadow transform hover:-translate-y-1 hover:scale-[1.02] duration-300 cursor-pointer p-6 flex flex-col min-h-full"
+              aria-label={`View details for ${job.title}`}
+            >
+              <CardHeader className="p-0 mb-4">
+                <CardTitle className="text-xl font-extrabold text-gray-900 dark:text-white line-clamp-2">
+                  {job.title}
+                </CardTitle>
+              </CardHeader>
 
-                  <CardContent className="p-0 mt-2 flex flex-col flex-grow space-y-2">
-                    <p className="text-gray-600 dark:text-gray-400 text-sm break-words">{job.description}</p>
+              <CardContent className="p-0 flex flex-col flex-grow space-y-4 text-gray-700 dark:text-gray-300">
+                <p className="text-sm leading-relaxed line-clamp-3">{job.description}</p>
 
-                    <div className="flex items-center text-gray-500 text-sm dark:text-gray-400">
-                      <MapPin className="h-5 w-5 mr-2 text-gray-500 dark:text-gray-300" />
-                      <span>{job.location}</span>
-                    </div>
+                <div className="flex flex-wrap gap-4 text-sm">
+                  <div className="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-medium">
+                    <MapPin className="h-5 w-5" />
+                    <span>{job.location}</span>
+                  </div>
 
-                    <div className="flex items-center text-gray-500 text-xs dark:text-gray-400">
-                      <Calendar className="h-4 w-4 mr-2 text-gray-500 dark:text-gray-300" />
-                      <span>Posted on: {job.postedAt}</span>
-                    </div>
+                  <div className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+                    <Calendar className="h-4 w-4" />
+                    <span>Posted: {job.postedAt}</span>
+                  </div>
 
-                    <div className="flex items-center text-gray-500 text-xs dark:text-gray-400">
-                      <Briefcase className="h-4 w-4 mr-2 text-gray-500 dark:text-gray-300" />
-                      <span>Experience: {job.experience}</span>
-                    </div>
-                  </CardContent>
-
-                  <div className="flex flex-col mt-auto space-y-2 pt-5">
-                    <div className="p-2 bg-red-100 text-red-700 rounded-lg text-sm font-semibold">
-                      <span>Application Deadline: {job.deadline}</span>
-                    </div>
-
-                    {/* ✅ Button Appears Only on Hover */}
-                    <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <Button
-                        className="px-5 py-2 text-sm font-medium rounded-lg transition-all duration-300 
-                                  bg-gradient-to-r from-blue-600 to-indigo-600 text-white 
-                                  hover:from-indigo-700 hover:to-blue-700 shadow-md 
-                                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 
-                                  dark:from-gray-600 dark:to-gray-700 dark:hover:from-gray-700 dark:hover:to-gray-600 
-                                  dark:text-gray-200 dark:shadow-lg"
-                      >
-                        View Details
-                      </Button>
-                    </div>
+                  <div className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+                    <Briefcase className="h-4 w-4" />
+                    <span>{job.experience} exp.</span>
                   </div>
                 </div>
-              </Card>
+              </CardContent>
+
+              <footer className="mt-auto pt-6">
+                <div className="bg-red-50 dark:bg-red-900 text-red-700 dark:text-red-400 rounded-xl py-2 px-4 font-semibold text-sm w-max">
+                  Application Deadline: {job.deadline}
+                </div>
+
+                {/* Button appears only on hover */}
+                <div className="mt-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <Button
+                    className="w-full py-3 text-base font-semibold rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg transition-transform transform group-hover:scale-105 focus:outline-none focus:ring-4 focus:ring-indigo-400"
+                  >
+                    View Details
+                  </Button>
+                </div>
+              </footer>
             </Link>
-          ))}
-        </div>
+            ))}
+          </div>
         ) : (
-          <p className="text-center text-gray-500">No jobs found.</p>
+          <p className="text-center text-gray-500 dark:text-gray-400 text-lg mt-20">
+            No jobs found matching your criteria.
+          </p>
         )}
-      </div>
+      </main>
     </div>
   );
 }

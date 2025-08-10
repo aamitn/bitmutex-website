@@ -186,7 +186,7 @@ export default async function SinglePost({ params }: PageProps) {
             width={800}
             height={600}
             priority
-            className="w-full rounded-lg mt-8 shadow-lg"
+            className="w-full max-w-sm sm:max-w-2xl lg:max-w-5xl h-56 sm:h-72 md:h-80 lg:h-[500px] xl:h-[550px] mx-auto mt-4 mb-4 sm:mt-6 sm:mb-6 lg:mt-8 lg:mb-8 rounded-lg sm:rounded-xl lg:rounded-2xl shadow-lg sm:shadow-xl lg:shadow-2xl object-fill transition-all duration-300 sm:duration-500 lg:duration-700 hover:scale-102 sm:hover:scale-105 hover:shadow-xl sm:hover:shadow-2xl lg:hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] hover:brightness-105 sm:hover:brightness-110 filter"
           />
         </header>
           {/* Post Content START */}

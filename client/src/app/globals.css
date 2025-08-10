@@ -190,16 +190,27 @@ body {
 
 /* Code Blocks - Mobile scrollable */
 .rich-text pre {
-  @apply font-mono text-xs sm:text-sm bg-muted dark:bg-gray-800 text-foreground 
-         rounded-lg p-3 sm:p-4 my-5 overflow-x-auto break-words max-w-full;
+  /* Core layout and typography */
+  @apply font-mono text-sm leading-relaxed
+         bg-gray-100 dark:bg-slate-900 text-gray-800 dark:text-gray-200
+         rounded-2xl shadow-md transition-all duration-300;
+
+  /* Spacing and overflow */
+  @apply p-0 m-0;
+
+  /* Custom styling for code readability */
   tab-size: 2;
-  word-break: keep-all;
-  white-space: pre-wrap;
+  white-space: pre;
+
+  /* Hover effect for a touch of interactivity */
+  &:hover {
+    @apply shadow-xl;
+  }
 }
 
 /* Inline code */
 .rich-text code {
-  @apply font-mono text-xs sm:text-sm px-1.5 py-0.5 rounded bg-muted dark:bg-gray-800 
+  @apply font-mono text-xs sm:text-sm px-0 py-0.5 rounded bg-muted dark:bg-gray-800 
          text-foreground;
 }
 
@@ -368,6 +379,8 @@ body {
   --text-gradient-light-2: #5856d6;
   --text-gradient-light-3: #ff9500;
   --shadow-light: rgba(0, 0, 0, 0.2);
+  --code-text: #3a414c;       /* slate-700 */
+  --line-number: #6d7b76;     /* slate-600 */
 }
 
 .dark {
@@ -376,6 +389,8 @@ body {
   --text-gradient-light-2: #5e5ce6;
   --text-gradient-light-3: #ff9f0a;
   --shadow-light: rgba(255, 255, 255, 0.2);
+  --code-text: #cbd5e1;       /* slate-300 */
+  --line-number: #94a3b8;     /* slate-400 */
 }
 
 @keyframes pulseGradient {
