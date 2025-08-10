@@ -72,6 +72,8 @@ jobs:
             echo "NODE_ENV=production" >> ./client/.env
             echo "IMAGE_HOSTNAME=localhost" >> ./client/.env
             echo "NEXT_PUBLIC_GITHUB_TOKEN=${{ secrets.NEXT_PUBLIC_GITHUB_TOKEN }}" >> ./client/.env
+            echo "NEXT_PUBLIC_ALGOLIA_APP_ID=${{ secrets.NEXT_PUBLIC_ALGOLIA_APP_ID }}" >> ./client/.env
+            echo "NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY=${{ secrets.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY }}" >> ./client/.env
       
             # Server .env with base64 decoding for admin and db passwords
             mkdir -p ./server
@@ -105,6 +107,12 @@ jobs:
 
             # Use printf to handle special characters properly
             printf 'ADMIN_PASSWORD=%s\n' "$ADMIN_PASSWORD" >> ./server/.env
+
+            # Algolia Search Settings
+            echo "ALGOLIA_APP_ID=${{ secrets.ALGOLIA_APP_ID }}" >> ./server/.env
+            echo "ALGOLIA_ADMIN_KEY=${{ secrets.ALGOLIA_ADMIN_KEY }}" >> ./server/.env
+          
+
       
             echo "Installing root dependencies..."
             pnpm install

@@ -6,12 +6,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetClose } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { ThemeSwitcher } from "@/components/layout/theme-switcher";
-import { ChevronDown } from "lucide-react"; // Menu icons
+import { ChevronDown } from "lucide-react";
 import CalBookingModal from "@/components/custom/appointment";
 import { ArrowRight,ExternalLink } from 'lucide-react';
+import SearchWidget from "@/components/custom/SearchWidget";
 
 
 interface HeaderProps {
@@ -260,6 +261,7 @@ export function Header({ data }: Readonly<HeaderProps>) {
 
       {/* CTA & Theme Toggle */}
       <div className="hidden md:flex items-center gap-4">
+      <SearchWidget />
       <div className="flex flex-wrap gap-3">
         {Array.isArray(cta) &&
           cta.map((item, index) => {
@@ -316,6 +318,9 @@ export function Header({ data }: Readonly<HeaderProps>) {
 
       {/* Mobile Navbar */}
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
+        <div className="w-full absolute top-2 left-72 px-4 md:hidden">
+          <SearchWidget />
+        </div>
         <SheetTrigger asChild>
           {/* Mobile Menu Button (Animated Hamburger) */}
           <button
@@ -420,7 +425,7 @@ export function Header({ data }: Readonly<HeaderProps>) {
                 </div>
               ));
             })}
-
+           
             {/* Independent Links */}
             {[...independentNavItems, ...independentNavItems1, ...independentNavItems2].map((item) => (
               <motion.div
