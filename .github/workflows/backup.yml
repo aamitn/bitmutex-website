@@ -18,9 +18,11 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Run Backup on Remote Server via SSH
+        env:
+          SSH_HOST: 152.67.0.194
         run: |
           echo "Connecting to server to run backup..."
-          ssh -o StrictHostKeyChecking=no user@your_server_ip << 'EOF'
+          ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << 'EOF'
             echo "Starting scheduled backup process..."
             
             source ~/.zshrc
