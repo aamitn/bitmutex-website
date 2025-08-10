@@ -33,8 +33,9 @@ jobs:
           fi
 
           commit_count=$(git rev-list --count $commit_range)
+          echo "commit_count=$commit_count" >> $GITHUB_OUTPUT
 
-          # Generate changelog content
+          # Generate changelog and save to file
           {
             echo "## 📝 Changelog"
             echo ""
@@ -44,13 +45,6 @@ jobs:
               --pretty=format:"| [%h](https://github.com/${{ github.repository }}/commit/%H) | %s | %an | %ad |" \
               --date=short
           } > changelog.md
-
-          echo "commit_count=$commit_count" >> $GITHUB_OUTPUT
-
-          # Fixed multi-line syntax for GitHub Actions
-          echo "changelog<<EOF" >> $GITHUB_OUTPUT
-          cat changelog.md >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Calculate Lines of Code
         id: loc
@@ -89,31 +83,36 @@ jobs:
           echo "tag_name=$tag_name" >> $GITHUB_OUTPUT
           echo "release_name=$release_name" >> $GITHUB_OUTPUT
 
+      - name: Create release notes
+        run: |
+          cat > release_notes.md << 'NOTES_EOF'
+          ## 📦 Release Information
+          **Tag/Name:** `${{ steps.set_names.outputs.tag_name }}`
+          **Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          **Author:** ${{ github.actor }}
+          **Repository:** [${{ github.repository }}](https://github.com/${{ github.repository }})
+          **Previous Tag:** `${{ steps.prev_tag.outputs.previous_tag }}`
+          **Commit Range:** `${{ steps.prev_tag.outputs.previous_tag }}..${{ github.ref_name }}`
+          **Number of Commits:** `${{ steps.changelog.outputs.commit_count }}`
+          **Branch:** `${{ github.ref_name }}`
+
+          ### 📊 Lines of Code
+          | Section  | LOC |
+          |----------|-----|
+          | Server   | `${{ steps.loc.outputs.server_loc }}` |
+          | Client   | `${{ steps.loc.outputs.client_loc }}` |
+          | Others   | `${{ steps.loc.outputs.others_loc }}` |
+          | **Total**| `${{ steps.loc.outputs.total_loc }}` |
+
+          ---
+          NOTES_EOF
+          cat changelog.md >> release_notes.md
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.set_names.outputs.tag_name }}
           name: ${{ steps.set_names.outputs.release_name }}
-          body: |
-            ## 📦 Release Information
-            **Tag/Name:** `${{ steps.set_names.outputs.tag_name }}`
-            **Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
-            **Author:** ${{ github.actor }}
-            **Repository:** [${{ github.repository }}](https://github.com/${{ github.repository }})
-            **Previous Tag:** `${{ steps.prev_tag.outputs.previous_tag }}`
-            **Commit Range:** `${{ steps.prev_tag.outputs.previous_tag }}..${{ github.ref_name }}`
-            **Number of Commits:** `${{ steps.changelog.outputs.commit_count }}`
-            **Branch:** `${{ github.ref_name }}`
-
-            ### 📊 Lines of Code
-            | Section  | LOC |
-            |----------|-----|
-            | Server   | `${{ steps.loc.outputs.server_loc }}` |
-            | Client   | `${{ steps.loc.outputs.client_loc }}` |
-            | Others   | `${{ steps.loc.outputs.others_loc }}` |
-            | **Total**| `${{ steps.loc.outputs.total_loc }}` |
-
-            ---
-            ${{ steps.changelog.outputs.changelog }}
+          body_path: release_notes.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
