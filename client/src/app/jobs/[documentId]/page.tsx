@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, DollarSign, Calendar, Clipboard, Briefcase } from 'lucide-react';
+import { MapPin, DollarSign, Calendar, Clipboard, Briefcase, ArrowLeft } from 'lucide-react';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import RenderMarkdown from "@/components/custom/RenderMarkdown";
 import JobApplicationForm from "./JobApplicationForm";
-import JobActions from "./JobActions";  // ✅ Client Component for Buttons
+import JobActions from "./JobActions"; // ✅ Client Component for Buttons
 import { Metadata } from "next";
 import { strapiImage } from "@/lib/strapi/strapiImage";
 import fetchContentType from "@/lib/strapi/fetchContentType";
@@ -40,46 +40,39 @@ export async function generateMetadata({ params }: { params: Promise<{ documentI
     return {
       title: "Job Not Found | Bitmutex Technologies",
       description: "The requested job does not exist. Browse more job opportunities at Bitmutex Technologies.",
-      robots: "noindex, nofollow", // Prevent indexing non-existent jobs
+      robots: "noindex, nofollow",
     };
   }
 
   const seo = pageData?.seo;
   const metadata = generateMetadataObject(seo);
 
-  // ✅ Use `seo.metaTitle` if available, otherwise fallback to job title
   const seotitle = seo?.metaTitle
     ? `${seo.metaTitle} | Careers at Bitmutex`
     : `${pageData.title || "Untitled Job"} | Careers at Bitmutex`;
 
-  // ✅ Use `seo.metaDescription`, otherwise fallback to job description
   let seodescription = seo?.metaDescription || pageData.description || "";
   if (seodescription.length > 150) {
     seodescription = seodescription.substring(0, seodescription.lastIndexOf(" ", 150)) + "...";
   }
   seodescription += ` - Apply Today! - Deadline on : ${pageData.deadline}`;
-  // ✅ Assign metadata fields
+
   metadata.title = seotitle;
   metadata.description = seodescription;
 
-  // ✅ Override OpenGraph image (SEO preview image)
   metadata.openGraph = {
     ...(metadata.openGraph as any),
     title: seotitle,
     description: seodescription,
-
     images: seo?.metaImage
       ? [{ url: strapiImage(seo.metaImage.url) }]
       : { url: `${BASE_URL_NEXT}/bmcs.png` },
-
-
-    url: `${BASE_URL_NEXT}/jobs/${documentId}`, // Canonical job URL
+    url: `${BASE_URL_NEXT}/jobs/${documentId}`,
     site_name: "Bitmutex",
     locale: "en_US",
     type: "article",
   };
 
-  // ✅ Assign canonical URL
   metadata.alternates = {
     canonical: `${BASE_URL_NEXT}/jobs/${documentId}`,
   };
@@ -87,25 +80,23 @@ export async function generateMetadata({ params }: { params: Promise<{ documentI
   return metadata;
 }
 
-export default async function JobDetailPage( { params }: PageProps ) {
+export default async function JobDetailPage({ params }: PageProps) {
   const resolvedParams = await params;
-  // ✅ Fetch job details via SSR
   const data = await fetchContentType("jobs", {
     filters: { documentId: resolvedParams.documentId },
     populate: "*",
   });
-  console.log("your data");
-  console.log(data);
 
-  // ✅ Ensure data exists & extract the first job object
   if (!data || !Array.isArray(data.data) || data.data.length === 0) {
-    return <div className="container mx-auto p-6 mt-20 mb-20 text-red-500">Job not found.</div>;
+    return (
+      <div className="container mx-auto px-6 py-12 mt-20 text-center text-red-500 text-lg">
+        🚫 Job not found.
+      </div>
+    );
   }
 
-  // ✅ Extract the first job from the array
   const jobData = data.data[0];
 
-  // ✅ Map job details properly
   const job: Job = {
     id: jobData.id,
     documentId: jobData.documentId,
@@ -115,70 +106,100 @@ export default async function JobDetailPage( { params }: PageProps ) {
     salary: jobData.salary || "Not disclosed",
     experience: jobData.experience || "Not specified",
     deadline: jobData.deadline || "No deadline",
-    createdAt: new Date(jobData.createdAt).toLocaleDateString(),
-    details: jobData.details || "**No additional details available.**",  // ✅ Ensure `details` is always valid
+    createdAt: new Date(jobData.createdAt).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
+    details: jobData.details || "**No additional details available.**",
   };
 
   return (
-    <div className="container mx-auto p-6 mt-20 mb-20">
-      <Card className="p-4 flex flex-col sm:flex-row gap-6 bg-white dark:bg-slate-900 shadow-lg rounded-lg">
-        <div className="flex-1">
-          <CardHeader className="p-0">
-            <CardTitle className="text-2xl font-semibold text-gray-800 dark:text-slate-200">
-              {job.title}
-            </CardTitle>
-          </CardHeader>
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-16 mb-12">
+      {/* Breadcrumb or Back Button */}
+      <div className="mb-6">
+        <JobActions />
+      </div>
 
-          <CardContent className="p-0 mt-2 space-y-4">
-            <p className="text-gray-600 text-sm dark:text-slate-300">{job.description}</p>
-
-            <div className="flex items-center text-gray-500 text-sm dark:text-orange-500">
-              <MapPin className="mr-2 text-gray-600 dark:text-orange-500" />
-              {job.location}
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-10">
+        {/* Left Column: Job Details */}
+        <div className="xl:col-span-2 space-y-6">
+          {/* Main Job Card */}
+          <Card className="bg-white dark:bg-slate-800 shadow-xl rounded-2xl overflow-hidden border border-gray-100 dark:border-slate-700 transition-all duration-300 hover:shadow-2xl">
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-slate-800 p-6 border-b border-gray-100 dark:border-slate-700">
+              <CardHeader className="p-0">
+                <CardTitle className="text-3xl font-bold text-gray-900 dark:text-white leading-tight">
+                  {job.title}
+                </CardTitle>
+              </CardHeader>
+              <p className="text-gray-600 dark:text-slate-300 mt-2 text-sm md:text-base">
+                {job.description}
+              </p>
             </div>
 
-            <div className="flex items-center text-gray-500 text-sm">
-              <DollarSign className="mr-2 text-gray-600 dark:text-orange-500" />
-              {job.salary} (in INR LPA)
-            </div>
+            <CardContent className="p-6 space-y-5">
+              {/* Job Info Badges */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex items-center space-x-3 text-gray-700 dark:text-slate-300">
+                  <MapPin className="h-5 w-5 text-blue-500 flex-shrink-0" />
+                  <span className="text-sm md:text-base"><strong>Location:</strong> {job.location}</span>
+                </div>
 
-            <div className="flex items-center text-gray-500 text-sm dark:text-slate-300">
-              <Briefcase className="mr-2 text-gray-600 dark:text-orange-500" />
-              {job.experience}
-            </div>
+                <div className="flex items-center space-x-3 text-gray-700 dark:text-slate-300">
+                  <DollarSign className="h-5 w-5 text-green-500 flex-shrink-0" />
+                  <span className="text-sm md:text-base"><strong>Salary:</strong> {job.salary} LPA</span>
+                </div>
 
-            <div className="flex items-center text-gray-500 text-xs dark:text-slate-300">
-              <Calendar className="mr-2 text-gray-600 dark:text-orange-500" />
-              Posted on: {job.createdAt}
-            </div>
+                <div className="flex items-center space-x-3 text-gray-700 dark:text-slate-300">
+                  <Briefcase className="h-5 w-5 text-purple-500 flex-shrink-0" />
+                  <span className="text-sm md:text-base"><strong>Experience:</strong> {job.experience}</span>
+                </div>
 
-            <div className="flex items-center text-gray-500 text-xs dark:text-slate-300">
-              <Clipboard className="mr-2 text-gray-600 dark:text-orange-500" />
-              Deadline: {job.deadline}
-            </div>
+                <div className="flex items-center space-x-3 text-gray-700 dark:text-slate-300">
+                  <Calendar className="h-5 w-5 text-orange-500 flex-shrink-0" />
+                  <span className="text-sm md:text-base"><strong>Posted:</strong> {job.createdAt}</span>
+                </div>
 
-            {/* ✅ Job Details Accordion with Markdown Rendering */}
-            <Accordion type="single" collapsible defaultValue="job-details">
-              <AccordionItem value="job-details">
-                <AccordionTrigger className="flex items-center text-sm text-blue-600 mt-2">
-                  Job Details
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-500 text-sm mt-2">
-                  <div className="rich-text markdown-content">
-                    <RenderMarkdown content={job.details} />  {/* ✅ Properly Render Markdown */}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </CardContent>
+                <div className="flex items-center space-x-3 text-gray-700 dark:text-slate-300">
+                  <Clipboard className="h-5 w-5 text-red-500 flex-shrink-0" />
+                  <span className="text-sm md:text-base"><strong>Deadline:</strong> {job.deadline}</span>
+                </div>
+              </div>
+
+              {/* Job Details Accordion */}
+              <Accordion type="single" collapsible defaultValue="job-details" className="mt-6">
+                <AccordionItem value="job-details" className="border-b border-gray-200 dark:border-slate-700">
+                  <AccordionTrigger className="text-lg font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">
+                    📄 Job Details
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-700 dark:text-slate-300 mt-3 leading-relaxed">
+                    <RenderMarkdown content={job.details} />
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </CardContent>
+          </Card>
         </div>
-      </Card>
 
-      {/* ✅ Job Actions (Apply & Go Back Buttons) */}
-      <JobActions />
+        {/* Right Column: Application Form (Sticky) */}
+        <div className="xl:col-span-1">
+          <div className="sticky top-24">
+            <Card className="bg-white dark:bg-slate-800 shadow-lg rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden transition-transform duration-300 hover:scale-[1.01]">
+              <div className="bg-blue-600 text-white p-4 text-center font-semibold rounded-t-2xl">
+                🚀 Apply Now
+              </div>
+              <CardContent className="p-6">
+                <JobApplicationForm jobId={job.documentId} jobName={job.title} />
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
 
-      {/* ✅ Job Application Form (Client Component) */}
-      <JobApplicationForm jobId={job.documentId} jobName={job.title}  />
+      {/* Optional: Add a footer separator or CTA */}
+      <div className="mt-12 text-center text-gray-500 dark:text-slate-400 text-sm">
+        Thank you for considering a career at <span className="font-semibold text-blue-600 dark:text-blue-400">Bitmutex</span>.
+      </div>
     </div>
   );
 }

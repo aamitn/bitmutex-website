@@ -5,6 +5,7 @@ import { BlockRenderer } from "@/components/block-renderer";
 import { generateMetadataObject } from "@/lib/metadata"; // ✅ SEO Helper
 import { Metadata } from "next";
 import { strapiImage } from '@/lib/strapi/strapiImage';
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
   const pages = await getAllPagesSlugs();
@@ -88,7 +89,7 @@ export default async function PageBySlugRoute({ params }: PageProps) {
   const data = await getPageBySlug(slug, status);
   const blocks = data?.data[0]?.blocks;
 
-  if (!blocks) return null;
+  if (!blocks) notFound(); // Trigger Next.js 404 page
 
   return <div>{blocks ? <BlockRenderer blocks={blocks} /> : null}</div>;
 }

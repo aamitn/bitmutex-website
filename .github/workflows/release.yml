@@ -26,7 +26,6 @@ jobs:
       - name: Generate changelog
         id: changelog
         run: |
-          # If we have a previous tag, use it, otherwise just log recent commits
           if [ "${{ steps.prev_tag.outputs.previous_tag }}" != "none" ]; then
             commit_range="${{ steps.prev_tag.outputs.previous_tag }}..HEAD"
           else
@@ -48,6 +47,27 @@ jobs:
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
           cat changelog.md >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Calculate Lines of Code
+        id: loc
+        run: |
+          # Install cloc for counting lines of code
+          sudo apt-get install -y cloc
+
+          # Count lines in /server and /client
+          server_loc=$(cloc server --quiet --exclude-dir=node_modules --json | jq '.SUM.code // 0')
+          client_loc=$(cloc client --quiet --exclude-dir=node_modules --json | jq '.SUM.code // 0')
+
+          # Count total lines for the repo
+          total_loc=$(cloc . --quiet --exclude-dir=node_modules --json | jq '.SUM.code // 0')
+
+          # Calculate "others" as total - server - client
+          others_loc=$((total_loc - server_loc - client_loc))
+
+          echo "server_loc=$server_loc" >> $GITHUB_OUTPUT
+          echo "client_loc=$client_loc" >> $GITHUB_OUTPUT
+          echo "others_loc=$others_loc" >> $GITHUB_OUTPUT
+          echo "total_loc=$total_loc" >> $GITHUB_OUTPUT
 
       - name: Set release name & tag
         id: set_names
@@ -80,6 +100,14 @@ jobs:
             **Commit Range:** `${{ steps.prev_tag.outputs.previous_tag }}..${{ github.ref_name }}`
             **Number of Commits:** `${{ steps.changelog.outputs.commit_count }}`
             **Branch:** `${{ github.ref_name }}`
+
+            ### 📊 Lines of Code
+            | Section  | LOC |
+            |----------|-----|
+            | Server   | `${{ steps.loc.outputs.server_loc }}` |
+            | Client   | `${{ steps.loc.outputs.client_loc }}` |
+            | Others   | `${{ steps.loc.outputs.others_loc }}` |
+            | **Total**| `${{ steps.loc.outputs.total_loc }}` |
 
             ---
             ${{ steps.changelog.outputs.changelog }}
