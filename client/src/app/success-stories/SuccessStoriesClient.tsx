@@ -85,9 +85,13 @@ export default function SuccessStoriesClient({ stories }: PageProps) {
   .filter((marker): marker is NonNullable<typeof marker> => marker !== null);
 
   // Build filter options
-  const allServices = [...new Set(stories.flatMap((s) => s.services.map((svc) => svc.name)))].sort();
-  const allTechStacks = [...new Set(stories.flatMap((s) => s.stack.map((t) => t.name)))].sort();
-  const allIndustries = [...new Set(stories.map((s) => s.industry))].sort();
+  const allServices = [...new Set(stories.flatMap((s) => s.services.map((svc) => svc.name)))]
+    .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }))
+  const allTechStacks = [...new Set(stories.flatMap((s) => s.stack.map((t) => t.name)))]
+    .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }))
+  const allIndustries = [...new Set(stories.map((s) => s.industry))]
+    .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }))
+
 
   // Filter stories
   const filteredStories = stories.filter((story) => {

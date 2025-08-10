@@ -6,9 +6,9 @@ services:
     container_name: bitmutex-postgres
     restart: always
     environment:
-      POSTGRES_USER: strapi
-      POSTGRES_PASSWORD: strapi
-      POSTGRES_DB: strapi
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234qwer
+      POSTGRES_DB: strapi-bitmutex
     volumes:
       - postgres-data:/var/lib/postgresql/data
     ports:
@@ -21,53 +21,60 @@ services:
     depends_on:
       - postgres
     environment:
-      AUTO_CREATE_ADMIN: true
-      # Strapi Server Config
+      # Core server config
       HOST: 0.0.0.0
       PORT: 1337
-      NODE_ENV: development  # ✅ Ensure Strapi runs in dev mode
+      NODE_ENV: production
 
       # Security Keys
-      APP_KEYS: "toBeModified1,toBeModified2"
-      API_TOKEN_SALT: tobemodified
-      ADMIN_JWT_SECRET: tobemodified
-      TRANSFER_TOKEN_SALT: tobemodified
-      JWT_SECRET: tobemodified
+      APP_KEYS: "randomkey6,randomkey7"
+      API_TOKEN_SALT: randomkey5
+      ADMIN_JWT_SECRET: randomkey4
+      TRANSFER_TOKEN_SALT: randomkey3
+      JWT_SECRET: randomkey1
+      ENCRYPTION_KEY: randomkey
 
-      # Database Configuration
-      DATABASE_CLIENT: postgres
-      DATABASE_HOST: postgres
-      DATABASE_PORT: 5432
-      DATABASE_NAME: strapi
-      DATABASE_USERNAME: strapi
-      DATABASE_PASSWORD: strapi
-
-      # Preview Secret for Next.js
+      # Preview & client URLs
       PREVIEW_SECRET: your-secret-key
-      CLIENT_URL: http://nextjs:3000
+      CLIENT_URL: http://localhost:3000
 
       # Live Chat Discord Bot
-
-      DISCORD_BOT_TOKEN: xyz
-
+      DISCORD_BOT_TOKEN: youdiscordbototken
       DISCORD_CHANNEL_ID: 1349063933599678618
       DISCORD_GUILD_ID: 1349059955885473823
       DISCORD_ADMIN_ID: 146662188122243072
 
-      # Cal.com Webhook URL
+      # Database Config
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: strapi-bitmutex
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: 1234qwer
+
+      # Cal.com webhook
       CAL_WEBHOOK_URL: http://localhost:1337/api/cal-webhook
 
-      # SMTP Email Configuration
+      # SMTP
       SMTP_HOST: smtp.zoho.in
       SMTP_PORT: 587
       SMTP_USERNAME: noreply@bitmutex.com
-      SMTP_PASSWORD: your-secure-password
+      SMTP_PASSWORD: SMTP_PASSWORD_HERE
       SMTP_DEFAULT_FROM: noreply@bitmutex.com
-      SMTP_DEFAULT_REPLY_TO: support@bitmutex.com
+      SMTP_DEFAULT_REPLY_TO: support@bitmtuex.com
+
+      # Admin user auto-creation
+      AUTO_CREATE_ADMIN: false
+      ADMIN_EMAIL: admin@bitmutex.com
+      ADMIN_PASSWORD: $2a$10$joIlSsHxTGdb8XT7cfcVzO5JgUiQSWgbFwbNrT2D/sMbuyhc2y9zW
+
+      # Algolia
+      ALGOLIA_APP_ID: algoliappid
+      ALGOLIA_ADMIN_KEY: algoliadminkey
     volumes:
-    - strapi-uploads:/app/public/uploads
-    - ./server/public/uploads:/app/public/uploads 
-    - ./seed-data.tar.gz:/seed-data.tar.gz  # ✅ Mount seed file into Strapi container
+      - strapi-uploads:/app/public/uploads
+      - ./server/public/uploads:/app/public/uploads
+      - ./seed-data.tar.gz:/seed-data.tar.gz
     ports:
       - "1337:1337"
     entrypoint: |
@@ -75,17 +82,15 @@ services:
       if [ -f /seed-data.tar.gz ] && [ ! -f /app/.imported ]; then
         echo "✅ Seed data found, importing for the first time..."
         cp /seed-data.tar.gz /app/seed-data.tar.gz
-
         yarn strapi import -f /app/seed-data.tar.gz --force
         touch /app/.imported
       else
-        yarn strapi import -f /app/seed-data.tar.gz --force
         echo "⚠️ No seed data found or data already imported, skipping import..."
       fi
       echo "🚀 Starting Strapi..."
       yarn develop
       '
-    healthcheck:  # ✅ Added healthcheck
+    healthcheck:
       test: ["CMD-SHELL", "curl -fs http://localhost:1337/_health || exit 1"]
       interval: 10s
       timeout: 2s
@@ -97,33 +102,41 @@ services:
     restart: always
     depends_on:
       strapi:
-        condition: service_healthy  # ✅ Ensures Strapi is fully up before Next.js starts
+        condition: service_healthy
     environment:
-      # Strapi Backend URL
-      STRAPI_BASE_URL: http://strapi:1337
+      # Strapi URLs
+      STRAPI_BASE_URL: http://localhost:1337
       NEXT_PUBLIC_STRAPI_BASE_URL: http://localhost:1337
 
-      # Next.js Frontend URL
+      # Next.js base URL
       NEXT_PUBLIC_BASE_URL: http://localhost:3000
-      HOST: 0.0.0.0
+      HOST: localhost
 
-      # API Secret for Previews
-      PREVIEW_SECRET: your-secret-key
-
-      # Public Status Page
-      NEXT_PUBLIC_STATUS_PAGE_URL: https://status.bitmutex.com/
+      # Status Page
+      NEXT_PUBLIC_STATUS_PAGE_URL: https://status.bitmutex.com
 
       # Appointment Scheduling
       NEXT_PUBLIC_APPOINTMENT_URL: "https://cal.com/bitmutex"
 
-      # Receiver Email for Form Responses
-      NEXT_PUBLIC_ADMIN_EMAIL: amitnandileo@gmail.com
+      # Admin Email
+      ADMIN_EMAIL: test@gmail.com
+      NEXT_PUBLIC_ADMIN_EMAIL: test@gmail.com
 
       # Environment Mode
       NODE_ENV: production
 
-      # Next.js Image Optimization
+      # Image Host
       IMAGE_HOSTNAME: localhost
+
+      # GitHub Token
+      NEXT_PUBLIC_GITHUB_TOKEN: ghtoken
+
+      # Algolia Public
+      NEXT_PUBLIC_ALGOLIA_APP_ID: algoliappid
+      NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY: algoliatoken
+
+      # API Secret for Previews
+      PREVIEW_SECRET: your-secret-key
     ports:
       - "3000:3000"
     entrypoint: ["/bin/sh", "-c", "

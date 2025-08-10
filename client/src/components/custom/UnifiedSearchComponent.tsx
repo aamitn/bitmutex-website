@@ -197,7 +197,7 @@ function generateSlug(title: string): string {
     .replace(/\s+/g, '-') // Replace spaces with hyphens
     .replace(/-+/g, '-') // Replace multiple hyphens with single
     .trim()
-    .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+    .replace(/^(-+)|(-+)$/g, '') // Remove leading/trailing hyphens
 }
 
 // Utility function to get the appropriate link for each content type
