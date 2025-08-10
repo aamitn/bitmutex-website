@@ -4,6 +4,7 @@ import remarkGfm from "remark-gfm"; // GitHub-Flavored Markdown (tables, task li
 import rehypeRaw from "rehype-raw"; // Allow raw HTML inside Markdown
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"; // Syntax Highlighting
 import { materialDark } from "react-syntax-highlighter/dist/esm/styles/prism"; // Theme
+import CodeBlockWithCopy from "./CodeBlockWithCopy"; 
 
 interface RenderMarkdownProps {
   content: string;
@@ -34,16 +35,15 @@ const RenderMarkdown: React.FC<RenderMarkdownProps> = ({ content }) => {
         blockquote: (props) => (
           <blockquote className="border-l-4 pl-5 italic text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-sm" {...props} />
         ),
-        hr: () => <hr className="border-gray-300 my-6" />, // Custom HR styling
+        hr: () => <hr className="border-gray-500 dark:border-gray-300 my-6" />, // Custom HR styling
 
         code({ node, className, children, ...props }) {
           const match = /language-(\w+)/.exec(className || "");
           return match ? (
             <div className="rounded-lg shadow-sm overflow-hidden my-4">
-              {/* @ts-expect-error The SyntaxHighlighter component has incompatible prop types for 'children' from ReactMarkdown */}
-              <SyntaxHighlighter style={materialDark} language={match[1]} PreTag="div" {...props}>
+              <CodeBlockWithCopy language={match[1]}>
                 {String(children).trim()}
-              </SyntaxHighlighter>
+              </CodeBlockWithCopy>
             </div>
           ) : (
             <code className="bg-gray-200 dark:bg-gray-700 text-sm p-1 rounded-md text-red-600 dark:text-red-400 font-mono" {...props}>
