@@ -15,6 +15,7 @@ import { ElementType } from "react";
 import React from "react";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 import FooterBottom from "@/components/layout/FooterBottom";
+import Trustpilot from '@/app/metrics/Trustpilot'
 
 interface SocialLink {
   href: string;
@@ -116,11 +117,12 @@ export function Footer({ data }: Readonly<FooterProps>) {
               <StatusBadge />
             </div>
 
+        
+
             {/* ✅ GitHub Repository Badge */}
             <div className="flex justify-center sm:justify-start w-full">
               <GitHubBadge repoUrl={"https://github.com/aamitn/bitmutex-website"} />
             </div>
-
 
             {/* ✅ Cookie Preferences Link and theme toggle*/}
             <div className="flex items-center justify-center sm:justify-start w-full gap-3">
@@ -225,10 +227,17 @@ export function Footer({ data }: Readonly<FooterProps>) {
               })}
             </div>
 
+          {/* Trustpilot Widget Below Social Media */}
+          <div className="mt-6 mr-32 w-full flex justify-end">
+            <Trustpilot showWidget={true} showIntent={false} />
+          </div>
+          
+
           </div>
         </motion.div>
       </motion.div>
 
+          
     {/* Footer Bottom Section */}
      <FooterBottom text="Bitmutex Technologies Pvt. Ltd." />
 

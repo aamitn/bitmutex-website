@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { AlertCircle, CheckCircle2, Loader2, Github, Tag, ExternalLink } from 'lucide-react';
+import { AlertCircle, Loader2, Tag, ExternalLink } from 'lucide-react';
+import { FaGithub } from "react-icons/fa";
 import { cn } from '@/lib/utils';
 
 // Define the props for the GitHubVersion component
@@ -168,7 +169,7 @@ export function GitHubVersion({
               Fetching latest release...
             </span>
             <div className="flex items-center gap-2 text-xs text-slate-400">
-              <Github className="w-3 h-3 text-slate-400" />
+              <FaGithub className="w-3 h-3 text-slate-400" />
               <span>{owner}/{repo}</span>
             </div>
           </div>
@@ -186,7 +187,7 @@ export function GitHubVersion({
               Version unavailable
             </span>
             <div className="flex items-center gap-2 text-xs text-slate-400">
-              <Github className="w-3 h-3" />
+              <FaGithub className="w-3 h-3" />
               <span>{owner}/{repo}</span>
             </div>
           </div>
@@ -219,7 +220,7 @@ export function GitHubVersion({
             
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2 text-xs text-slate-400">
-                <Github className="w-3 h-3 text-slate-400" />
+                <FaGithub className="w-3 h-3 text-slate-400" />
                 <span className="font-medium">{owner}/{repo}</span>
               </div>
               

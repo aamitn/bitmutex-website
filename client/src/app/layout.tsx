@@ -6,14 +6,14 @@ import { cn } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import { Header, Footer } from "@/components/layout";
 import { getGlobalPageData } from "@/data/loaders";
-import { GoogleAnalytics } from '@next/third-parties/google'
 import Chat from "@/components/ui/chat";
 import LiveUserCount from "@/components/custom/LiveUserCount";
 import 'vanilla-cookieconsent/dist/cookieconsent.css';
 import CookieConsentComponent from '@/components/cookie/CookieConsent';
 import ErrorPage from '@/components/custom/strapi-down-error-page';
-
 import LoginButtonServer from "@/components/custom/LoginButtonServer";
+import Metrics from './metrics'
+
 
 const fontSans = Inter({
   variable: "--font-sans",
@@ -24,6 +24,7 @@ const fontHeading = Nunito({
   variable: "--font-heading",
   subsets: ["latin"],
 });
+
 
 
 export default async function RootLayout({
@@ -71,8 +72,10 @@ export default async function RootLayout({
           fontSans.variable,
           fontHeading.variable
         )}
-      >
-        <GoogleAnalytics gaId="G-7VWD8QMZ5X" />
+       >
+
+        <Metrics /> {/* Analytics */}
+        
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

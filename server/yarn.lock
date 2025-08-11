@@ -15,6 +15,122 @@
     sanitize-html "2.13.0"
     yup "0.32.9"
 
+"@algolia/client-abtesting@5.23.2":
+  version "5.23.2"
+  resolved "https://registry.npmjs.org/@algolia/client-abtesting/-/client-abtesting-5.23.2.tgz"
+  integrity sha512-EudQGeYEzviwqPH8WoqP5VTQssE/PW6sEdL0zzOyKt2bWnWoUp5Rnm67sCbxYDR44JpUchbkul0PfWrSYsBPjQ==
+  dependencies:
+    "@algolia/client-common" "5.23.2"
+    "@algolia/requester-browser-xhr" "5.23.2"
+    "@algolia/requester-fetch" "5.23.2"
+    "@algolia/requester-node-http" "5.23.2"
+
+"@algolia/client-analytics@5.23.2":
+  version "5.23.2"
+  resolved "https://registry.npmjs.org/@algolia/client-analytics/-/client-analytics-5.23.2.tgz"
+  integrity sha512-zmJrkZqWFu+ft+VRcttZZJhw5ElkhBtOArRzQOu9sRnrSSodBOdPRhAfvu8tG93Hv67wh5qQaTBwLxM58AxuMg==
+  dependencies:
+    "@algolia/client-common" "5.23.2"
+    "@algolia/requester-browser-xhr" "5.23.2"
+    "@algolia/requester-fetch" "5.23.2"
+    "@algolia/requester-node-http" "5.23.2"
+
+"@algolia/client-common@5.23.2":
+  version "5.23.2"
+  resolved "https://registry.npmjs.org/@algolia/client-common/-/client-common-5.23.2.tgz"
+  integrity sha512-xaE6o4BMdqYBe0iB7JjX6G9/Qeqx6TSs9T4d6VJ0JHPsEyklSwIbKRiomPeYD7vzt2P4t45Io6QBhifOUP+0qg==
+
+"@algolia/client-insights@5.23.2":
+  version "5.23.2"
+  resolved "https://registry.npmjs.org/@algolia/client-insights/-/client-insights-5.23.2.tgz"
+  integrity sha512-F85hpMszbr5ZGt8gFdl7WOugELRF4z3R1nD9n3t7PZ/2alV7IR75UQY8/jMQDwij/lrnVaKbLeIvKKy6K7ncZw==
+  dependencies:
+    "@algolia/client-common" "5.23.2"
+    "@algolia/requester-browser-xhr" "5.23.2"
+    "@algolia/requester-fetch" "5.23.2"
+    "@algolia/requester-node-http" "5.23.2"
+
+"@algolia/client-personalization@5.23.2":
+  version "5.23.2"
+  resolved "https://registry.npmjs.org/@algolia/client-personalization/-/client-personalization-5.23.2.tgz"
+  integrity sha512-TuGaGKiQvQqFNR4c3Vdl+JBe6dkEPmRzVyIdWLrurOPEmFmVCKRxtSnLr0TVFl6de/JfDAXuchvtvLHFxv9P2A==
+  dependencies:
+    "@algolia/client-common" "5.23.2"
+    "@algolia/requester-browser-xhr" "5.23.2"
+    "@algolia/requester-fetch" "5.23.2"
+    "@algolia/requester-node-http" "5.23.2"
+
+"@algolia/client-query-suggestions@5.23.2":
+  version "5.23.2"
+  resolved "https://registry.npmjs.org/@algolia/client-query-suggestions/-/client-query-suggestions-5.23.2.tgz"
+  integrity sha512-fg2tZf7Sf51Icjfrea0dnfbfwlJ7kXMcRsWSJN3DZhEi/Y4mMmK9L0Cq8sby6HDzxy5T8xEWNWC3TMx5FvrJ6w==
+  dependencies:
+    "@algolia/client-common" "5.23.2"
+    "@algolia/requester-browser-xhr" "5.23.2"
+    "@algolia/requester-fetch" "5.23.2"
+    "@algolia/requester-node-http" "5.23.2"
+
+"@algolia/client-search@5.23.2":
+  version "5.23.2"
+  resolved "https://registry.npmjs.org/@algolia/client-search/-/client-search-5.23.2.tgz"
+  integrity sha512-XiTjt0qgsJk9OqvDpMwTgUaPAYNSQcMILRfSYiorgiyc71yYM7Lq1vRSVxhB0m51mrViWj4rIR6kSiJRXebqvQ==
+  dependencies:
+    "@algolia/client-common" "5.23.2"
+    "@algolia/requester-browser-xhr" "5.23.2"
+    "@algolia/requester-fetch" "5.23.2"
+    "@algolia/requester-node-http" "5.23.2"
+
+"@algolia/ingestion@1.23.2":
+  version "1.23.2"
+  resolved "https://registry.npmjs.org/@algolia/ingestion/-/ingestion-1.23.2.tgz"
+  integrity sha512-7ClIghvUFZTomBipD8Kor9Z5llcAM3lHUBG3VFOvUsOxOJcaMMONlBXyoFDfI1na+u14lVaGehY2oIEfY1eB0w==
+  dependencies:
+    "@algolia/client-common" "5.23.2"
+    "@algolia/requester-browser-xhr" "5.23.2"
+    "@algolia/requester-fetch" "5.23.2"
+    "@algolia/requester-node-http" "5.23.2"
+
+"@algolia/monitoring@1.23.2":
+  version "1.23.2"
+  resolved "https://registry.npmjs.org/@algolia/monitoring/-/monitoring-1.23.2.tgz"
+  integrity sha512-kF7KKd0iIIlaD70flFS+8+DNxRvIzrG9A22iWG5LDX225Kl6pITroq+qIUweqqyyoqJBYuIXKZGDGtnahEwQxw==
+  dependencies:
+    "@algolia/client-common" "5.23.2"
+    "@algolia/requester-browser-xhr" "5.23.2"
+    "@algolia/requester-fetch" "5.23.2"
+    "@algolia/requester-node-http" "5.23.2"
+
+"@algolia/recommend@5.23.2":
+  version "5.23.2"
+  resolved "https://registry.npmjs.org/@algolia/recommend/-/recommend-5.23.2.tgz"
+  integrity sha512-nAgS2O5ww8J4fgW6GAiybAdr0uH7MV74srPdx51cPJRpQBEge4WnYBaOWx1/a53qI0xwNtQudnEyBGUzsSYaAw==
+  dependencies:
+    "@algolia/client-common" "5.23.2"
+    "@algolia/requester-browser-xhr" "5.23.2"
+    "@algolia/requester-fetch" "5.23.2"
+    "@algolia/requester-node-http" "5.23.2"
+
+"@algolia/requester-browser-xhr@5.23.2":
+  version "5.23.2"
+  resolved "https://registry.npmjs.org/@algolia/requester-browser-xhr/-/requester-browser-xhr-5.23.2.tgz"
+  integrity sha512-yw6IzgQcwr4cZuoQCEoQui9G0rhVRGCyhPhW+gmrXe6oVr4qB50FV6mWGLA170+iqGVjPn/DVuOhExjBzcViTQ==
+  dependencies:
+    "@algolia/client-common" "5.23.2"
+
+"@algolia/requester-fetch@5.23.2":
+  version "5.23.2"
+  resolved "https://registry.npmjs.org/@algolia/requester-fetch/-/requester-fetch-5.23.2.tgz"
+  integrity sha512-8rmSybTwIqmGx3P0qkOEUkkyeIewglaKq6yUnxnVkBJbd4USfIZsw9cME1YUEHeZI7aOhTQg9QteUHSKXclF5A==
+  dependencies:
+    "@algolia/client-common" "5.23.2"
+
+"@algolia/requester-node-http@5.23.2":
+  version "5.23.2"
+  resolved "https://registry.npmjs.org/@algolia/requester-node-http/-/requester-node-http-5.23.2.tgz"
+  integrity sha512-IHpUiW3d3oVE5tCYqQN7X71/EbXI7f8WxU85eWW1UYEWEknqW3csdGctyIW7+qMHFfxeDymI1Wln/gGHHIXLIw==
+  dependencies:
+    "@algolia/client-common" "5.23.2"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.16.7", "@babel/code-frame@^7.27.1":
   version "7.27.1"
   resolved "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.27.1.tgz"
@@ -3002,7 +3118,7 @@
     semver "7.5.4"
     umzug "3.8.1"
 
-"@strapi/design-system@^2.0.0-rc.10", "@strapi/design-system@^2.0.0-rc.16", "@strapi/design-system@2.0.0-rc.18":
+"@strapi/design-system@^2.0.0-rc.10", "@strapi/design-system@^2.0.0-rc.11", "@strapi/design-system@^2.0.0-rc.16", "@strapi/design-system@2.0.0-rc.18":
   version "2.0.0-rc.18"
   resolved "https://registry.npmjs.org/@strapi/design-system/-/design-system-2.0.0-rc.18.tgz"
   integrity sha512-/19KcoJd36smfVI1uBCFPDfhrDA5Z5kWJpJ5obdtXLwl+T5ktmrhUJ+ReuLztOK/zafxZj8BQmbHJ0CJGBgm4A==
@@ -3111,7 +3227,7 @@
     yup "0.32.9"
     zod "3.25.67"
 
-"@strapi/icons@^2.0.0 || ^2.0.0-beta || ^2.0.0-alpha", "@strapi/icons@^2.0.0-rc.10", "@strapi/icons@^2.0.0-rc.16", "@strapi/icons@2.0.0-rc.18":
+"@strapi/icons@^2.0.0 || ^2.0.0-beta || ^2.0.0-alpha", "@strapi/icons@^2.0.0-rc.10", "@strapi/icons@^2.0.0-rc.11", "@strapi/icons@^2.0.0-rc.16", "@strapi/icons@2.0.0-rc.18":
   version "2.0.0-rc.18"
   resolved "https://registry.npmjs.org/@strapi/icons/-/icons-2.0.0-rc.18.tgz"
   integrity sha512-OPMoSeZzTBqU35OOK9fA8iiKhKk8TIaDIzI0+r7mgoD9bP35GaZ+AAZQpFOfQjwguJeKYkFagAoYiWYwAgxkPg==
@@ -3269,7 +3385,7 @@
     react-redux "8.1.3"
     yup "0.32.9"
 
-"@strapi/sdk-plugin@^5.3.0":
+"@strapi/sdk-plugin@^5.2.7", "@strapi/sdk-plugin@^5.3.0":
   version "5.3.2"
   resolved "https://registry.npmjs.org/@strapi/sdk-plugin/-/sdk-plugin-5.3.2.tgz"
   integrity sha512-BQTVhnLIIOg9nfP1VbH3Uw4AXZKyy8ULU1u6lhiMFlNZCn8P4rG22pnWiBWEVU3dR9aWdaFSZLrYzVDFeoNxUQ==
@@ -3291,7 +3407,7 @@
     typescript "5.4.4"
     yup "0.32.9"
 
-"@strapi/strapi@^5.0.0", "@strapi/strapi@^5.0.6", "@strapi/strapi@^5.9.0", "@strapi/strapi@5.21.0":
+"@strapi/strapi@^5.0.0", "@strapi/strapi@^5.0.6", "@strapi/strapi@^5.1.0", "@strapi/strapi@^5.9.0", "@strapi/strapi@5.21.0":
   version "5.21.0"
   resolved "https://registry.npmjs.org/@strapi/strapi/-/strapi-5.21.0.tgz"
   integrity sha512-jy5D3x/cGftJ+BFu8pa3EnzELEoXH0j80AnjHW7zaCY1brI9ksdqc5ENcArRGVvbBJGNuZWdUF45tB7yb8ONYw==
@@ -3479,7 +3595,7 @@
     yup "0.32.9"
     zod "3.25.67"
 
-"@strapi/utils@5.21.0":
+"@strapi/utils@^5.12.3", "@strapi/utils@5.21.0":
   version "5.21.0"
   resolved "https://registry.npmjs.org/@strapi/utils/-/utils-5.21.0.tgz"
   integrity sha512-w3pJzi0KnxOe7grpaJOgZOSUz6p7k2UYJXKgV/6Kia6+Pqjb8UkV3gNFOJucJyK9LVf1aD6dDUAFUXPWGQiv/A==
@@ -3710,18 +3826,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/hoist-non-react-statics@^3.3.1", "@types/hoist-non-react-statics@>= 3.3.1":
+"@types/hoist-non-react-statics@^3.3.1", "@types/hoist-non-react-statics@>= 3.3.1", "@types/hoist-non-react-statics@3":
   version "3.3.5"
   resolved "https://registry.npmjs.org/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.5.tgz"
   integrity sha512-SbcrWzkKBw2cdwRTwQAswfpB9g9LJWfjtUeW/jvNwbhC8cpmmNYVePa+ncbUe0rGTQ7G3Ff6mYUN2VMfLVr+Sg==
-  dependencies:
-    "@types/react" "*"
-    hoist-non-react-statics "^3.3.0"
-
-"@types/hoist-non-react-statics@3":
-  version "3.3.6"
-  resolved "https://registry.npmjs.org/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.6.tgz"
-  integrity sha512-lPByRJUer/iN/xa4qpyL0qmL11DqNW81iU/IG1S3uvRUq4oKagz8VCxZjiWkumgt66YT3vOdDgZ0o32sGKtCEw==
   dependencies:
     "@types/react" "*"
     hoist-non-react-statics "^3.3.0"
@@ -4301,6 +4409,25 @@ ajv@8.16.0:
     require-from-string "^2.0.2"
     uri-js "^4.4.1"
 
+algoliasearch@5.23.2:
+  version "5.23.2"
+  resolved "https://registry.npmjs.org/algoliasearch/-/algoliasearch-5.23.2.tgz"
+  integrity sha512-IhKP22Czzg8Y9HaF6aIb5aAHK2HBj4VAzLLnKEPUnxqDwxpryH9sXbm0NkeY7Cby9GlF81wF+AG/VulKDFBphg==
+  dependencies:
+    "@algolia/client-abtesting" "5.23.2"
+    "@algolia/client-analytics" "5.23.2"
+    "@algolia/client-common" "5.23.2"
+    "@algolia/client-insights" "5.23.2"
+    "@algolia/client-personalization" "5.23.2"
+    "@algolia/client-query-suggestions" "5.23.2"
+    "@algolia/client-search" "5.23.2"
+    "@algolia/ingestion" "1.23.2"
+    "@algolia/monitoring" "1.23.2"
+    "@algolia/recommend" "5.23.2"
+    "@algolia/requester-browser-xhr" "5.23.2"
+    "@algolia/requester-fetch" "5.23.2"
+    "@algolia/requester-node-http" "5.23.2"
+
 ansi-align@^3.0.0:
   version "3.0.1"
   resolved "https://registry.npmjs.org/ansi-align/-/ansi-align-3.0.1.tgz"
@@ -4482,6 +4609,7 @@ babel-plugin-macros@^3.1.0:
     react-dom "^18.0.0"
     react-router-dom "^6.0.0"
     socket.io "^4.8.1"
+    strapi-plugin-strapi-algolia "^2.0.4"
     strapi-plugin-yt-clips "0.0.2"
     styled-components "^6.0.0"
 
@@ -5508,6 +5636,11 @@ deep-extend@^0.6.0:
   version "0.6.0"
   resolved "https://registry.npmjs.org/deep-extend/-/deep-extend-0.6.0.tgz"
   integrity sha512-LOHxIOaPYdHlJRtCQfDIVZtfw/ufM8+rVj649RIHzcm/vGwQRXFt6OPqIFWsm2XEMrNIEtWR64sY1LEKD2vAOA==
+
+deep-reduce@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/deep-reduce/-/deep-reduce-1.0.5.tgz"
+  integrity sha512-REnEaD3jD45AaJM39lQ8+20Q7vOriqsOPlDpQeWYmSA0K1K87yOuc72abDt6TTtenZ122wOz2Fc8K8NJ8hM7aQ==
 
 deepmerge@^2.1.1:
   version "2.2.1"
@@ -9632,6 +9765,22 @@ react-intl@^6.6.8:
     intl-messageformat "10.7.7"
     tslib "2"
 
+react-intl@^6.8.4:
+  version "6.8.9"
+  resolved "https://registry.npmjs.org/react-intl/-/react-intl-6.8.9.tgz"
+  integrity sha512-TUfj5E7lyUDvz/GtovC9OMh441kBr08rtIbgh3p0R8iF3hVY+V2W9Am7rb8BpJ/29BH1utJOqOOhmvEVh3GfZg==
+  dependencies:
+    "@formatjs/ecma402-abstract" "2.2.4"
+    "@formatjs/icu-messageformat-parser" "2.9.4"
+    "@formatjs/intl" "2.10.15"
+    "@formatjs/intl-displaynames" "6.8.5"
+    "@formatjs/intl-listformat" "7.7.5"
+    "@types/hoist-non-react-statics" "3"
+    "@types/react" "16 || 17 || 18"
+    hoist-non-react-statics "3"
+    intl-messageformat "10.7.7"
+    tslib "2"
+
 react-intl@^7.1.5:
   version "7.1.5"
   resolved "https://registry.npmjs.org/react-intl/-/react-intl-7.1.5.tgz"
@@ -9749,7 +9898,7 @@ react-remove-scroll@2.5.5:
     use-callback-ref "^1.3.0"
     use-sidecar "^1.1.2"
 
-react-router-dom@^6.0.0, react-router-dom@^6.29.0:
+react-router-dom@^6.0.0, react-router-dom@^6.27.0, react-router-dom@^6.29.0:
   version "6.30.0"
   resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.30.0.tgz"
   integrity sha512-x30B78HV5tFk8ex0ITwzC9TTZMua4jGyA9IUlH1JLQYQTFyxr/ZxwOJq7evg1JX1qGVUcvhsmQSKdPncQrjTgA==
@@ -10722,6 +10871,18 @@ stdin-discarder@^0.2.2:
   resolved "https://registry.npmjs.org/stdin-discarder/-/stdin-discarder-0.2.2.tgz"
   integrity sha512-UhDfHmA92YAlNnCfhmq0VeNL5bDbiZGg7sZ2IvPsXubGkiNa9EC+tUTsjBRsYUAz87btI6/1wf4XoVvQ3uRnmQ==
 
+strapi-plugin-strapi-algolia@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.npmjs.org/strapi-plugin-strapi-algolia/-/strapi-plugin-strapi-algolia-2.0.4.tgz"
+  integrity sha512-mNbcT7NrIdpZaKYyGquBSBNhdGCpbCB+kCtRhhgguhgJ0/Qlk2I0dtCkz+WM/55HRCl9PqaWDipiQ4gGcWZHfg==
+  dependencies:
+    "@strapi/design-system" "^2.0.0-rc.11"
+    "@strapi/icons" "^2.0.0-rc.11"
+    "@strapi/utils" "^5.12.3"
+    algoliasearch "5.23.2"
+    deep-reduce "^1.0.5"
+    react-intl "^6.8.4"
+
 strapi-plugin-yt-clips@0.0.2:
   version "0.0.2"
   resolved "https://registry.npmjs.org/strapi-plugin-yt-clips/-/strapi-plugin-yt-clips-0.0.2.tgz"
@@ -10868,7 +11029,7 @@ style-mod@^4.0.0, style-mod@^4.1.0:
   resolved "https://registry.npmjs.org/style-mod/-/style-mod-4.1.2.tgz"
   integrity sha512-wnD1HyVqpJUI2+eKZ+eo1UwghftP6yuFheBqqe+bWCotBjC2K1YnteJILRMs3SM4V/0dLEW1SC27MWP5y+mwmw==
 
-styled-components@^6.0.0, styled-components@^6.1.15:
+styled-components@^6.0.0, styled-components@^6.1.13, styled-components@^6.1.15:
   version "6.1.15"
   resolved "https://registry.npmjs.org/styled-components/-/styled-components-6.1.15.tgz"
   integrity sha512-PpOTEztW87Ua2xbmLa7yssjNyUF9vE7wdldRfn1I2E6RTkqknkBYpj771OxM/xrvRGinLy2oysa7GOd7NcZZIA==
@@ -11094,15 +11255,10 @@ ts-mixer@^6.0.4:
   resolved "https://registry.npmjs.org/ts-mixer/-/ts-mixer-6.0.4.tgz"
   integrity sha512-ufKpbmrugz5Aou4wcr5Wc1UUFWOLhq+Fm6qa6P0w0K5Qw2yhaUoiWszhCVuNQyNwrlGiscHOmqYoAox1PtvgjA==
 
-tslib@^2.0.0, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.4.0, tslib@^2.6.2, tslib@^2.6.3:
+tslib@^2.0.0, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.4.0, tslib@^2.6.2, tslib@^2.6.3, tslib@2:
   version "2.6.3"
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.6.3.tgz"
   integrity sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==
-
-tslib@2:
-  version "2.8.1"
-  resolved "https://registry.npmjs.org/tslib/-/tslib-2.8.1.tgz"
-  integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
 
 tslib@2.6.2:
   version "2.6.2"
