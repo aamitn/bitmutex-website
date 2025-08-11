@@ -1,5 +1,4 @@
 import sdk from "@/lib/sdk";
-import test from "node:test";
 const PAGE_SIZE = 9;
 
 export async function getGlobalPageData() {
