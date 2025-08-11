@@ -58,25 +58,55 @@ const FooterBottom: React.FC<FooterBottomProps> = ({ text }) => {
       <footer className="relative border-t border-gray-200/70 dark:border-gray-800/70 bg-gradient-to-r from-gray-50/80 via-white/60 to-gray-50/80 dark:from-gray-900/80 dark:via-gray-800/60 dark:to-gray-900/80 mt-10 pt-5 pb-5 backdrop-blur-sm">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/[0.02] via-purple-500/[0.02] to-pink-500/[0.02]"></div>
         <div className="container mx-auto px-4 relative">
-          <div className="flex items-center justify-between text-sm">
-            <div className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-              <span className="flex items-center gap-1">
-                <span className="text-gray-800 dark:text-gray-200 font-medium">&copy;</span>
-                <span>2018 - {currentYear}</span>
-              </span>
-              <div className="w-1 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
-              <span className="font-semibold bg-gradient-to-r from-gray-800 to-gray-600 dark:from-gray-200 dark:to-gray-400 bg-clip-text text-transparent">
-                {text}
-              </span>
-              <div className="w-1 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full"></div>
-              <span className="text-gray-500 dark:text-gray-500">All rights reserved</span>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-0 text-sm">
+            {/* Left section - Copyright and links */}
+            <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 text-gray-600 dark:text-gray-400">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <span className="flex items-center gap-1">
+                  <span className="text-gray-800 dark:text-gray-200 font-medium">&copy;</span>
+                  <span>2018 - {currentYear}</span>
+                </span>
+                <div className="hidden sm:block w-1 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
+                <SeparatorVertical size={12} className="block sm:hidden" />
+                <span className="font-semibold bg-gradient-to-r from-gray-800 to-gray-600 dark:from-gray-200 dark:to-gray-400 bg-clip-text text-transparent">
+                  {text}
+                </span>
+              </div>
+              
+              <div className="flex items-center gap-2 text-xs sm:text-sm">
+                <div className="hidden sm:block w-1 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full"></div>
+                <SeparatorVertical size={12} className="block sm:hidden" />
+                <span className="text-gray-500 dark:text-gray-500">All rights reserved</span>
+                <span className="text-gray-400">|</span>
+                <Link href="/privacy-policy" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+                  <span className="text-gray-500 dark:text-gray-500">
+                    <span className="hidden sm:inline">Privacy Policy</span>
+                    <span className="sm:hidden">Privacy</span>
+                  </span>
+                </Link>
+                <SeparatorVertical size={12} className="hidden sm:block" />
+                <span className="text-gray-400 sm:hidden">|</span>
+                <Link href="/terms-and-conditions" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+                  <span className="text-gray-500 dark:text-gray-500">
+                    <span className="hidden sm:inline">Terms &amp; Conditions</span>
+                    <span className="sm:hidden">Terms</span>
+                  </span>
+                </Link>
+              </div>
             </div>
-            
-            {/* Loading placeholder for date and time */}
-            <div className="flex items-center gap-3">
+
+            {/* Right section - Version and time */}
+            <div className="flex flex-col sm:flex-row items-center gap-3">
+              <span className="text-zinc-600 dark:text-zinc-400 text-xs sm:text-sm">
+                <span className="hidden md:inline px-2">App Version: </span>
+                <span className="md:hidden">Version: </span>
+                <GitHubVersion owner="aamitn" repo="bitmutex-website" compact={true}/>
+              </span>
+              
+              {/* Loading placeholder for date and time */}
               <div className="bg-gradient-to-r from-white/70 to-gray-50/70 dark:from-gray-800/70 dark:to-gray-700/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-gray-200/50 dark:border-gray-600/50 shadow-sm">
                 <div className="flex items-center gap-2">
-                  <div className="flex flex-col items-end gap-0.5">
+                  <div className="flex flex-col items-center sm:items-end gap-0.5">
                     <div className="w-16 h-3 bg-gray-300 dark:bg-gray-600 rounded animate-pulse"></div>
                     <div className="w-12 h-2 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
                   </div>
@@ -94,41 +124,55 @@ const FooterBottom: React.FC<FooterBottomProps> = ({ text }) => {
     <footer className="relative border-t border-zinc-300 dark:border-zinc-700 bg-gradient-to-r from-gray-50/80 via-white/60 to-gray-50/80 dark:from-gray-900/80 dark:via-gray-800/60 dark:to-gray-900/80 mt-5 pt-2 pb-2 backdrop-blur-sm">
       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/[0.02] via-purple-500/[0.02] to-pink-500/[0.02]"></div>
       <div className="container mx-auto px-4 relative">
-        <div className="flex items-center justify-between text-sm">
-          <div className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-            <span className="flex items-center gap-1">
-              <span className="text-gray-800 dark:text-gray-200 font-medium">&copy;</span>
-              <span>2018 - {currentYear}</span>
-            </span>
-            <SeparatorVertical size={12} />
-            <span className="font-semibold bg-gradient-to-r from-gray-800 to-gray-600 dark:from-gray-200 dark:to-gray-400 bg-clip-text text-transparent">
-              {text}
-            </span>
-            <SeparatorVertical size={12} />
-            <span className="text-gray-500 dark:text-gray-500">All rights reserved</span>
-            |
-            <Link href="/privacy-policy" className="flex items-center gap-3">
-              <span className="text-gray-500 dark:text-gray-500">Privacy Policy</span>
-            </Link>
-            <SeparatorVertical size={12} />
-            <Link href="/terms-and-conditions" className="flex items-center gap-3">
-              <span className="text-gray-500 dark:text-gray-500">Terms &amp; Conditions</span>
-            </Link>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-0 text-sm">
+          
+          {/* Left section - Copyright and links */}
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 text-gray-600 dark:text-gray-400">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <span className="flex items-center gap-1">
+                <span className="text-gray-800 dark:text-gray-200 font-medium">&copy;</span>
+                <span>2018 - {currentYear}</span>
+              </span>
+              <div className="hidden sm:block w-1 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
+              <SeparatorVertical size={12} className="block sm:hidden" />
+              <span className="font-semibold bg-gradient-to-r from-gray-800 to-gray-600 dark:from-gray-200 dark:to-gray-400 bg-clip-text text-transparent">
+                {text}
+              </span>
+            </div>
+            
+            <div className="flex items-center gap-2 text-xs sm:text-sm">
+              <div className="hidden sm:block w-1 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full"></div>
+              <SeparatorVertical size={12} className="block sm:hidden" />
+              <span className="text-gray-500 dark:text-gray-500">All rights reserved</span>
+              <span className="text-gray-400">|</span>
+              <Link href="/privacy-policy" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+                <span className="text-gray-500 dark:text-gray-500">
+                  <span className="hidden sm:inline">Privacy Policy</span>
+                  <span className="sm:hidden">Privacy</span>
+                </span>
+              </Link>
+              <SeparatorVertical size={12} className="hidden sm:block" />
+              <span className="text-gray-400 sm:hidden">|</span>
+              <Link href="/terms-and-conditions" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+                <span className="text-gray-500 dark:text-gray-500">
+                  <span className="hidden sm:inline">Terms &amp; Conditions</span>
+                  <span className="sm:hidden">Terms</span>
+                </span>
+              </Link>
+            </div>
           </div>
 
-          {/* GitHub version */}
-          <span className="text-zinc-600 dark:text-zinc-400 ">
-            <span className="hidden md:inline px-2">App Version: </span>
-              <GitHubVersion owner="aamitn" repo="winhider" compact={true}/>
-          </span> 
-
-
-
-          {/* date and time display */}
-          <div className="flex items-center gap-3">
+          {/* Right section - Version and time */}
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <span className="text-zinc-600 dark:text-zinc-400 text-xs sm:text-sm">
+              <span className="hidden md:inline px-2">App Version: </span>
+              <span className="md:hidden">Version: </span>
+              <GitHubVersion owner="aamitn" repo="bitmutex-website" compact={true}/>
+            </span>
+            
+            {/* Date and time display */}
             <div className="flex items-center gap-2 bg-gradient-to-r from-white/70 to-gray-50/70 dark:from-gray-800/70 dark:to-gray-700/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-gray-200/50 dark:border-gray-600/50 shadow-sm hover:shadow-md transition-all duration-300">
-              
-              <div className="flex flex-col items-end">
+              <div className="flex flex-col items-center sm:items-end">
                 <span className="font-mono font-bold text-xs text-gray-700 dark:text-gray-300 tabular-nums leading-tight">
                   {formatTime(currentTime)}
                 </span>
