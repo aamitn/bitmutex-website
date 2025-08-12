@@ -11,19 +11,24 @@ import { useEffect, useState } from "react";
 import CalBookingModal from "@/components/custom/appointment";
 import { NavLink } from "@/types";
 import Image from "next/image";
-import ModelViewer from '@/components/custom/ModelViewer'; 
-
+import ModelViewer from '@/components/custom/ModelViewer';
 
 const appointmentUrl = process.env.NEXT_PUBLIC_APPOINTMENT_URL || "https://cal.com/bitmutexs";
 
 export function Hero(data: Readonly<HeroProps>) {
-  if (!data) return null;
-  const { heading, text, topLink, buttonLink, image } = data;
-  
-  // Mouse position tracking for 3D parallax
+  // All hooks must be called unconditionally at the top of the component
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+
+  // 3D Parallax Effect calculation
+  const parallaxX = useTransform(mouseX, [-0.5, 0.5], ["-10px", "10px"]);
+  const parallaxY = useTransform(mouseY, [-0.5, 0.5], ["-5px", "5px"]);
+  const parallaxZ = useTransform(mouseX, [-0.5, 0.5], ["5px", "-5px"]);
+
+  // Now, we can check for conditional rendering after all hooks have been called
+  if (!data) return null;
+  const { heading, text, topLink, buttonLink, image } = data;
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -45,18 +50,11 @@ const splitHeading = (headingText: string, startIndex: number, wordCount: number
   if (startIndex < 0 || startIndex >= words.length) return headingText; // Edge case handling
 
   for (let i = startIndex; i < Math.min(startIndex + wordCount, words.length); i++) {
-    words[i] = `<span class="font-bold bg-gradient-to-r from-blue-600  via-cyan-500 to-orange-500 text-transparent bg-clip-text animate-pulse-gradient">${words[i]}</span>`;
+    words[i] = `<span class="font-bold bg-gradient-to-r from-blue-600 via-cyan-500 to-orange-500 text-transparent bg-clip-text animate-pulse-gradient">${words[i]}</span>`;
   }
   return words.join(" ");
 };
 
-
-
-
-  // 3D Parallax Effect calculation
-  const parallaxX = useTransform(mouseX, [-0.5, 0.5], ["-10px", "10px"]);
-  const parallaxY = useTransform(mouseY, [-0.5, 0.5], ["-5px", "5px"]);
-  const parallaxZ = useTransform(mouseX, [-0.5, 0.5], ["5px", "-5px"]);
 
   return (
     <section className="relative container max-w flex flex-col items-center gap-20 pb-18 pt-20 sm:gap-214 md:flex-row">
@@ -124,17 +122,17 @@ const splitHeading = (headingText: string, startIndex: number, wordCount: number
 
 
         <h1
-          className="max-w-2xl text-5xl sm:text-6xl lg:text-6xl font-semibold font-heading backdrop:font-heading tracking-tight 
-                  leading-[1.15] sm:leading-[1.2] lg:leading-[1.15] 
-                  text-gray-900 dark:text-gray-100 
-                  md:max-w-3xl md:text-left text-center"
-          dangerouslySetInnerHTML={{ __html: splitHeading(heading, 2, 2), }}   // Specify NUmber of Words to Animate 
+          className="max-w-2xl text-5xl sm:text-6xl lg:text-6xl font-semibold font-heading backdrop:font-heading tracking-tight
+                     leading-[1.15] sm:leading-[1.2] lg:leading-[1.15]
+                     text-gray-900 dark:text-gray-100
+                     md:max-w-3xl md:text-left text-center"
+          dangerouslySetInnerHTML={{ __html: splitHeading(heading, 2, 2), }}    // Specify NUmber of Words to Animate
         />
 
 
-        <p className="pt-4 max-w-lg text-lg md:text-2xl font-normal text-gray-800 dark:text-zinc-300 
-          font-heading tracking-tight leading-relaxed md:text-justify text-justify  text-muted-foreground 
-          transition-all duration-300 ease-in-out 
+        <p className="pt-4 max-w-lg text-lg md:text-2xl font-normal text-gray-800 dark:text-zinc-300
+          font-heading tracking-tight leading-relaxed md:text-justify text-justify  text-muted-foreground
+          transition-all duration-300 ease-in-out
         hover:text-gray-900 dark:hover:text-gray-100">
           {text}
         </p>
@@ -170,11 +168,11 @@ const splitHeading = (headingText: string, startIndex: number, wordCount: number
 
                     {/* Soft Glow Pulse Effect */}
                     {link.isPrimary && (
-                      <span className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-all duration-500 
-                        bg-blue-500/30 blur-xl rounded-xl" 
+                      <span className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-all duration-500
+                        bg-blue-500/30 blur-xl rounded-xl"
                       />
                     )}
-                  </Button>
+                    </Button>
                   }
                 />
               ) : (
@@ -184,21 +182,21 @@ const splitHeading = (headingText: string, startIndex: number, wordCount: number
                   size="lg"
                   variant={link.isPrimary ? "default" : "outline"}
                   asChild
-                  className={`relative h-12 sm:h-14 sm:px-10 cursor-pointer text-base font-medium overflow-hidden 
+                  className={`relative h-12 sm:h-14 sm:px-10 cursor-pointer text-base font-medium overflow-hidden
                     transition-all duration-300 ease-out transform rounded-xl group
-                    ${link.isPrimary 
-                    ? "bg-blue-600 hover:bg-blue-700 text-white shadow-[0px_4px_20px_rgba(59,130,246,0.4)] hover:shadow-[0px_6px_30px_rgba(59,130,246,0.6)]" 
-                    : "border border-orange-500 dark:border-orange-400 text-gray-800 dark:text-gray-300 hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400   bg-orange-300/10 dark:bg-orange-900/20 backdrop-blur-lg"
+                    ${link.isPrimary
+                    ? "bg-blue-600 hover:bg-blue-700 text-white shadow-[0px_4px_20px_rgba(59,130,246,0.4)] hover:shadow-[0px_6px_30px_rgba(59,130,246,0.6)]"
+                    : "border border-orange-500 dark:border-orange-400 text-gray-800 dark:text-gray-300 hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 bg-orange-300/10 dark:bg-orange-900/20 backdrop-blur-lg"
                     }`}
                    >
                   <Link href={baseHref} target={link.isExternal ? "_blank" : "_self"}>
                     <span className="relative z-10">{link.text} {link.parentName}</span>
-                    
+
                     {/* Subtle Background Animation (Glassmorphism Effect) */}
                     {!link.isPrimary && (
-                      <span className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-all duration-300 
-                        bg-gradient-to-r from-blue-500/10 to-blue-500/20 dark:from-blue-500/20 dark:to-blue-500/30 
-                        rounded-xl blur-md" 
+                      <span className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-all duration-300
+                        bg-gradient-to-r from-blue-500/10 to-blue-500/20 dark:from-blue-500/20 dark:to-blue-500/30
+                        rounded-xl blur-md"
                       />
                     )}
                   </Link>
@@ -206,7 +204,7 @@ const splitHeading = (headingText: string, startIndex: number, wordCount: number
               );
             })}
         </div>
-        
+
       </motion.div>
 
       <motion.div
@@ -247,3 +245,5 @@ const splitHeading = (headingText: string, startIndex: number, wordCount: number
     </section>
   );
 }
+
+export default Hero;
