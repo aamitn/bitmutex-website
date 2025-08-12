@@ -8,7 +8,7 @@ import { generateMetadataObject } from '@/lib/metadata';
 import fetchContentType from '@/lib/strapi/fetchContentType';
 import { Metadata } from "next";
 import { strapiImage } from "@/lib/strapi/strapiImage";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Sparkles } from "lucide-react";
 
 type Industry = {
   uuid: string;
@@ -202,19 +202,21 @@ export default async function IndustryPage() {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-xl"></div>
             <div className="relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 rounded-3xl p-12">
-              <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Don&apos;t See Your Industry?
+              <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-sky-700 bg-clip-text text-transparent">
+                Don&apos;t See Your Sector?
               </h3>
               <p className="text-slate-600 dark:text-slate-400 text-lg mb-8 max-w-2xl mx-auto">
                 We work across various sectors and can customize our solutions for your specific industry needs. Let&apos;s discuss how we can help transform your business.
               </p>
-              <Button 
-                size="lg"
-                className="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 px-8 py-4 text-lg hover:scale-105 hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300"
-              >
-                Get in Touch
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-              </Button>
+                  {/* Call to Action Section */}
+                  <div className="text-center dark:border-slate-800/50">
+                    <Link href="/contact"> {/* <-- Add your desired path here */}
+                      <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
+                        <span>Get in Touch</span>
+                        <ArrowUpRight className="w-5 h-5" />
+                      </div>
+                    </Link>
+                  </div>
             </div>
           </div>
         </div>

@@ -320,7 +320,7 @@ const CodeBlockWithCopy: React.FC<CodeBlockWithCopyProps> = ({
               margin: 0,
               padding: '1.5rem',
               background: 'transparent',
-              fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace',
+              fontFamily: '"Jetbrains Mono"',
             }}
             className="text-slate-800 dark:text-slate-200" 
           >

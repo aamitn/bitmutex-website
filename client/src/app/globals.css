@@ -174,7 +174,7 @@ body {
 }
 
 .rich-text li {
-  @apply leading-relaxed text-muted-foreground;
+  @apply leading-relaxed text-muted-foreground text-base text-zinc-600 dark:text-zinc-300;
 }
 
 /* Nested lists - better hierarchy */

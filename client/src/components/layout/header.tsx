@@ -11,9 +11,8 @@ import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { ThemeSwitcher } from "@/components/layout/theme-switcher";
 import { ChevronDown } from "lucide-react";
 import CalBookingModal from "@/components/custom/appointment";
-import { ArrowRight,ExternalLink } from 'lucide-react';
+import { ArrowRight,ExternalLink, Rocket } from 'lucide-react';
 import SearchWidget from "@/components/custom/SearchWidget";
-
 
 interface HeaderProps {
   data: {
@@ -186,50 +185,73 @@ export function Header({ data }: Readonly<HeaderProps>) {
                     ))}
                   </div>
 
-                    {/* Right: Highlight Card */}
-                      <div className="w-1/3 bg-gradient-to-br from-blue-600 via-indigo-700 to-orange-500 text-white rounded-xl p-6 flex flex-col justify-between shadow-lg">
-                        <div>
-                          <h3 className="text-xl font-bold mb-2">🚀 Bitmutex One™</h3>
-                          <p className="text-sm leading-relaxed mb-4">
-                            Explore our suite of powerful tools designed to boost productivity and scale your business.
-                          </p>
-                          <ul className="space-y-2">
-                            <li>
-                              <Link
-                                href="/products/bm-cloud"
-                                className="text-lg font-semibold hover:underline hover:text-blue-200 transition-colors"
-                              >
-                                <div className="flex items-center space-x-2">
-                                  <span>BM Cloud</span>
-                                  <ExternalLink />
-                                </div>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link 
-                                href="/products/bm-track" 
-                                className="text-lg font-semibold hover:underline hover:text-blue-200 transition-colors"
-                              >
-                                <div className="flex items-center space-x-2">
-                                  <span>BM TRAK</span>
-                                  <ExternalLink />
-                                </div>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link 
-                                href="/products/bm-analytics" 
-                                className="text-lg font-semibold hover:underline hover:text-blue-200 transition-colors"
-                              >
-                                  <div className="flex items-center space-x-2">
-                                  <span>BM Analytics</span>
-                                  <ExternalLink />
-                                </div>
-                              </Link>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
+                {/* Right: Highlight Card */}
+                <div className="w-1/3 bg-gradient-to-br from-blue-600 via-indigo-700 to-orange-500 text-white rounded-xl p-6 flex flex-col justify-between shadow-lg">
+                  <div>
+                    <div className="flex items-center space-x-2">
+                      <Rocket />
+                      <h3 className="text-xl font-bold">Bitmutex One™</h3>
+                    </div>
+                    <p className="text-sm leading-relaxed mb-4">
+                      Explore our suite of powerful tools designed to scale your business.
+                    </p>
+                    <ul className="space-y-2">
+                      <li>
+                        <a
+                          href="https://space.bitmutex.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-lg font-semibold hover:underline hover:text-blue-200 transition-colors"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <span>BM Space</span>
+                            <ExternalLink />
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="https://dev.bitmutex.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-lg font-semibold hover:underline hover:text-blue-200 transition-colors"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <span>BM Dev</span>
+                            <ExternalLink />
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="https://forge.bitmutex.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-lg font-semibold hover:underline hover:text-blue-200 transition-colors"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <span>BM Forge</span>
+                            <ExternalLink />
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="https://track.bitmutex.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-lg font-semibold hover:underline hover:text-blue-200 transition-colors"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <span>BM Track</span>
+                            <ExternalLink />
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
                     
                   </div>
                 </motion.div>
@@ -313,6 +335,7 @@ export function Header({ data }: Readonly<HeaderProps>) {
           })}
        </div>
       <ThemeSwitcher />
+    {/*  <ThemeSwitcher variant="toggle"/>  Second variant */}
     </div>
 
 
