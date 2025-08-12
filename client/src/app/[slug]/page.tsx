@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const resolveParams = await params;
   const slug = await resolveParams?.slug;
 
-  // ✅ Fetch page data for the given slug
+  // Fetch page data for the given slug
   const { isEnabled: isDraftMode } = await draftMode();
   const status = isDraftMode ? "draft" : "published";
   const data = await getPageBySlug(slug, status);
@@ -38,10 +38,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const pageData = data.data[0]; // Extract the page data
   const seo = pageData?.seo;
 
-  // ✅ Generate metadata using the helper function
+  //  Generate metadata using the helper function
   const metadata = generateMetadataObject(seo);
 
-  // ✅ Ensure fallback values if SEO fields are missing
+  //  Ensure fallback values if SEO fields are missing
   const title = seo?.metaTitle
     ? `${seo.metaTitle} | Bitmutex`
     : `${pageData.title || "Untitled"} | Bitmutex`;
@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     images: seo?.metaImage 
     ? [{ url: strapiImage(seo?.metaImage.url) }] 
     : [{ url: `${BASE_URL}/pages-fallback.png`}],
-    url: `${BASE_URL}/${slug}`, // ✅ Dynamic URL
+    url: `${BASE_URL}/${slug}`, //  Dynamic URL
     site_name: "Bitmutex",
     locale: "en_US",
     type: "website",

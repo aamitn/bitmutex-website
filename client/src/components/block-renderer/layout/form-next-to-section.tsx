@@ -6,14 +6,16 @@ import { ContactForm } from "@/components/forms/contact-form";
 import type { FormNextToSectionProps } from "@/types";
 import Link from "next/link";
 import {
-  IconBrandGithub,
   IconBrandLinkedin,
   IconBrandX,
   IconMapPin,
   IconPhone,
   IconMail,
   IconBrandWhatsapp,
+  IconGitBranch,
+  IconBrandFacebook
 } from "@tabler/icons-react";
+
 
 export function FormNextToSection(data: Readonly<FormNextToSectionProps>) {
   const { heading, sub_heading, section } = data;
@@ -27,23 +29,30 @@ export function FormNextToSection(data: Readonly<FormNextToSectionProps>) {
   const socials = [
     {
       title: "twitter",
-      href: "https://twitter.com/strapijs",
+      href: "https://twitter.com/bitmutex",
       icon: (
         <IconBrandX className="h-6 w-6 text-gray-600 dark:text-gray-300 transition-colors duration-300 hover:text-blue-500 dark:hover:text-blue-400" />
       ),
     },
     {
-      title: "github",
-      href: "https://github.com/strapi",
+      title: "git-forgejo",
+      href: "https://forge.bitmtuex.com",
       icon: (
-        <IconBrandGithub className="h-6 w-6 text-gray-600 dark:text-gray-300 transition-colors duration-300 hover:text-gray-900 dark:hover:text-white" />
+        <IconGitBranch className="h-6 w-6 text-gray-600 dark:text-gray-300 transition-colors duration-300 hover:text-gray-900 dark:hover:text-white" />
       ),
     },
     {
       title: "linkedin",
-      href: "https://linkedin.com/strapi",
+      href: "https://linkedin.com/bitmutex",
       icon: (
         <IconBrandLinkedin className="h-6 w-6 text-gray-600 dark:text-gray-300 transition-colors duration-300 hover:text-blue-700 dark:hover:text-blue-400" />
+      ),
+    },
+    {
+      title: "facebook",
+      href: "https://facebook.com/bitmutex",
+      icon: (
+        <IconBrandFacebook className="h-6 w-6 text-gray-600 dark:text-gray-300 transition-colors duration-300 hover:text-blue-700 dark:hover:text-blue-400" />
       ),
     },
   ];
@@ -165,7 +174,7 @@ export function FormNextToSection(data: Readonly<FormNextToSectionProps>) {
               </div>
             </div>
             
-            {/* WhatsApp Chat Button with improved styling */}
+            {/* WhatsApp Chat Button*/}
             <div className="pt-2">
               <Link 
                 href="https://wa.me/919038556097" 

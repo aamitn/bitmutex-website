@@ -1,95 +1,140 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { useTheme } from "next-themes";
 
-// 🚀 Bitmutex-Themed Predefined Color Gradients
+// 🚀 Bitmutex-Themed Predefined Color Gradients for modern UI
+// These gradients are carefully chosen for a high-tech, professional look.
 const lightModeColors = [
-  new THREE.Color(0x002147), // Rich Navy Blue (Darker, for depth)
-  new THREE.Color(0x0502CF), // Rich Blue (More contrast)
-  new THREE.Color(0xFF7300), // Bright Orange
+  new THREE.Color(0x0096FF), // Bright Sky Blue
+  new THREE.Color(0x002147), // Rich Navy Blue (for contrast)
+  new THREE.Color(0xFF7300), // Vibrant Orange
 ];
 
 const darkModeColors = [
-  new THREE.Color(0x0096FF), // Electric Blue
-  new THREE.Color(0xFF4500), // Fiery Orange
-  new THREE.Color(0x001F3F), // Deep Midnight Blue
+  new THREE.Color(0x00FFFF), // Cyan-Aqua (for an energetic feel)
+  new THREE.Color(0xFF4500), // Fiery Orange (a striking accent)
+  new THREE.Color(0x2A0944), // Deep Purple-Black (for depth and mystery)
 ];
+
+// Define a few new, more visually interesting shapes
+const shapes = ["sphere", "cube", "torus", "helix", "vortex"];
+const PARTICLE_COUNT = 3000;
 
 // Particle Shape Component
 const ParticleShape = () => {
-  const meshRef = useRef<THREE.Points>(null);
+  // We use a group to apply the rotation to the entire particle system
+  const groupRef = useRef<THREE.Group>(null);
   const particles = useRef<THREE.BufferGeometry>(null);
   const { theme } = useTheme(); // Detects light/dark mode
-  const [positions, setPositions] = useState<Float32Array>(generateShapePositions("sphere"));
-  const [targetPositions, setTargetPositions] = useState<Float32Array>(generateShapePositions("cube"));
 
+  // Memoize initial positions and colors to calculate them only once or on theme change
+  const { initialPositions, colors } = useMemo(() => {
+    const initial = generateShapePositions("sphere", PARTICLE_COUNT);
+    const initialColors = generateGradientColors(initial, theme, lightModeColors, darkModeColors);
+    
+    return {
+      initialPositions: initial,
+      colors: initialColors,
+    };
+  }, [theme]);
+
+  // Use state for the target positions, so changes trigger a re-render
+  const [targetPositions, setTargetPositions] = useState<Float32Array>(generateShapePositions("cube", PARTICLE_COUNT));
+  const positionsRef = useRef<Float32Array>(initialPositions);
+
+  // State to hold the current target for transitions
+  const [currentShapeIndex, setCurrentShapeIndex] = useState(0);
+
+  // Set up geometry attributes on initial load and theme change
   useEffect(() => {
     if (particles.current) {
-      particles.current.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-      particles.current.setAttribute("color", new THREE.BufferAttribute(generateGradientColors(positions, theme), 3));
+      // Set initial geometry positions and colors
+      particles.current.setAttribute("position", new THREE.BufferAttribute(positionsRef.current, 3));
+      particles.current.setAttribute("color", new THREE.BufferAttribute(colors, 3));
     }
-  }, [positions, theme]); // Recalculate colors on theme change
+  }, [colors]);
 
+  // Animate the rotation and particle transitions
   useFrame(() => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += 0.002; // Smooth rotation
+    if (groupRef.current) {
+      groupRef.current.rotation.y += 0.001; // Slower, more subtle rotation
+      groupRef.current.rotation.x += 0.0005;
     }
 
     const positionAttr = particles.current?.getAttribute("position");
     if (positionAttr) {
+      // Smoother, more elegant transition using a smaller lerp factor
       for (let i = 0; i < positionAttr.array.length; i++) {
-        positionAttr.array[i] += (targetPositions[i] - positionAttr.array[i]) * 0.05;
+        (positionAttr.array as Float32Array)[i] += (targetPositions[i] - (positionAttr.array as Float32Array)[i]) * 0.02;
       }
       positionAttr.needsUpdate = true;
     }
   });
 
+  // Cycle through shapes with a dynamic transition effect
   useEffect(() => {
-    const shapes = ["sphere", "cube", "cylinder", "torus", "wave","infinity", "lambda"];
     const interval = setInterval(() => {
-      const nextShape = shapes[Math.floor(Math.random() * shapes.length)] as any;
-      
-      // Burst effect: Scatter before reshaping
-      setTargetPositions(generateScatterEffect());
-      
+      // 1. Scatter effect: Burst out before reforming
+      setTargetPositions(generateScatterEffect(PARTICLE_COUNT));
+
       setTimeout(() => {
-        setTargetPositions(generateShapePositions(nextShape));
+        // 2. Select next shape and transition
+        const nextIndex = (currentShapeIndex + 1) % shapes.length;
+        setTargetPositions(generateShapePositions(shapes[nextIndex] as any, PARTICLE_COUNT));
+        setCurrentShapeIndex(nextIndex);
       }, 1000);
-    }, 4000);
+    }, 5000); // Wait 5 seconds before the next transition
 
     return () => clearInterval(interval);
-  }, []);
+  }, [currentShapeIndex]); // The dependency array is now correct
 
   return (
-    <points ref={meshRef}>
-      <bufferGeometry ref={particles} />
-      <pointsMaterial size={0.5} transparent opacity={0.8} vertexColors />
-    </points>
+    <group ref={groupRef}>
+      <points>
+        <bufferGeometry attach="geometry" ref={particles} />
+        {/*
+          Modern material for a professional, glowing effect:
+          - `sizeAttenuation`: Ensures particles look the same size regardless of distance.
+          - `blending`: Additive blending creates a light, glowing, and overlapping effect.
+          - `depthWrite`: Disabling this prevents particles from occluding each other, enhancing the glow.
+          - `size`: Smaller size for a more sophisticated, high-density feel.
+        */}
+        <pointsMaterial 
+          attach="material"
+          size={0.25} 
+          transparent 
+          opacity={0.8} 
+          vertexColors 
+          sizeAttenuation={true}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+        />
+      </points>
+    </group>
   );
 };
 
-// 🌟 Generate Colors Based on Predefined Gradient & Theme
-const generateGradientColors = (positions: Float32Array, theme: string | undefined) => {
-  const colors = new Float32Array(positions.length);
-  const gradientColors = theme === "dark" ? darkModeColors : lightModeColors;
 
-  // Ensure gradientColors array has at least one color to prevent undefined access
+// 🌟 Generate Colors Based on Predefined Gradient & Theme
+const generateGradientColors = (positions: Float32Array, theme: string | undefined, lightColors: THREE.Color[], darkColors: THREE.Color[]) => {
+  const colors = new Float32Array(positions.length);
+  const gradientColors = theme === "dark" ? darkColors : lightColors;
+
   if (gradientColors.length === 0) {
     console.error("No colors defined for theme:", theme);
-    return colors; // Return an empty color array
+    return colors;
   }
 
   const steps = gradientColors.length - 1;
 
   for (let i = 0; i < positions.length; i += 3) {
-    const t = (positions[i] + 5) / 10; // Normalize position to [0,1]
+    const t = (positions[i] + 5) / 10;
     let index = Math.floor(t * steps);
     let nextIndex = index + 1;
 
-    // 🔥 Clamp indices to avoid out-of-bounds errors
     index = Math.max(0, Math.min(index, steps));
     nextIndex = Math.max(0, Math.min(nextIndex, steps));
 
@@ -104,12 +149,10 @@ const generateGradientColors = (positions: Float32Array, theme: string | undefin
   return colors;
 };
 
-
 // ✨ Generate Particle Positions for Different Shapes
-const generateShapePositions = (shape: "sphere" | "cube" | "cylinder" | "torus"  | "wave" | "infinity" | "lambda") => {  
-  const count = 2200;
+const generateShapePositions = (shape: string, count: number): Float32Array => {
   const positions = new Float32Array(count * 3);
-
+  
   if (shape === "sphere") {
     for (let i = 0; i < count; i++) {
       const phi = Math.acos(-1 + (2 * i) / count);
@@ -124,69 +167,46 @@ const generateShapePositions = (shape: "sphere" | "cube" | "cylinder" | "torus" 
       positions[i * 3 + 1] = (Math.random() - 0.5) * 8;
       positions[i * 3 + 2] = (Math.random() - 0.5) * 8;
     }
-  } else if (shape === "cylinder") {
-    for (let i = 0; i < count; i++) {
-      const angle = (i / count) * Math.PI * 2;
-      positions[i * 3] = Math.cos(angle) * 5;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
-      positions[i * 3 + 2] = Math.sin(angle) * 5;
-    }
   } else if (shape === "torus") {
+    const mainRadius = 4;
+    const tubeRadius = 1;
     for (let i = 0; i < count; i++) {
-      const angle = (i / count) * Math.PI * 2;
-      const radius = 4 + Math.sin(angle * 5) * 1.5;
-      positions[i * 3] = Math.cos(angle) * radius;
-      positions[i * 3 + 1] = Math.sin(angle * 5) * 2;
-      positions[i * 3 + 2] = Math.sin(angle) * radius;
+      const u = (i / count) * Math.PI * 2;
+      const v = (Math.random() - 0.5) * Math.PI * 2;
+      positions[i * 3] = (mainRadius + tubeRadius * Math.cos(v)) * Math.cos(u);
+      positions[i * 3 + 1] = (mainRadius + tubeRadius * Math.cos(v)) * Math.sin(u);
+      positions[i * 3 + 2] = tubeRadius * Math.sin(v);
     }
-  }  else if (shape === "wave") {
+  } else if (shape === "helix") {
+    const radius = 3;
+    const height = 10;
     for (let i = 0; i < count; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 8;
-      positions[i * 3 + 1] = Math.sin(positions[i * 3] * 2) * 2;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 8;
+      const t = (i / count) * Math.PI * 8;
+      positions[i * 3] = radius * Math.cos(t);
+      positions[i * 3 + 1] = (i / count - 0.5) * height;
+      positions[i * 3 + 2] = radius * Math.sin(t);
     }
-  }
-
-  else if (shape === "infinity") {
-    const a = 5; // Size of the infinity shape
+  } else if (shape === "vortex") {
+    const radius = 0.5;
+    const height = 10;
     for (let i = 0; i < count; i++) {
-      const t = (i / count) * Math.PI * 2 * 4; // Spread particles along the curve
-  
-      positions[i * 3] = a * (Math.cos(t) / (1 + Math.sin(t) ** 2)); // X-axis (horizontal loop)
-      positions[i * 3 + 1] = a * (Math.cos(t) * Math.sin(t) / (1 + Math.sin(t) ** 2)); // Y-axis (vertical variation)
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 1.5; // Slight depth variation for 3D effect
+      const t = (i / count) * Math.PI * 10;
+      const r = (i / count) * radius * height;
+      positions[i * 3] = r * Math.cos(t);
+      positions[i * 3 + 1] = (i / count - 0.5) * height;
+      positions[i * 3 + 2] = r * Math.sin(t);
     }
-  }
-
-  else if (shape === "lambda") {
-    const height = 6; // Height of the lambda symbol
-    const width = 4; // Spacing between diagonal strokes
-    const midPoint = Math.floor(count * 0.5); // Middle point to divide two strokes
-  
-    for (let i = 0; i < count; i++) {
-      const t = i / count;
-  
-      if (i < midPoint) {
-        // Left diagonal stroke: Moves from bottom left to top middle
-        positions[i * 3] = -width / 2 + t * (width / 2); // X moves right
-        positions[i * 3 + 1] = -height / 2 + t * height; // Y moves up
-        positions[i * 3 + 2] = (Math.random() - 0.5) * 1; // Small Z variation for 3D effect
-      } else {
-        // Right diagonal stroke: Moves from bottom right to top middle
-        const ti = (i - midPoint) / midPoint; // Normalize second half
-        positions[i * 3] = width / 2 - ti * (width / 2); // X moves left
-        positions[i * 3 + 1] = -height / 2 + ti * height; // Y moves up
-        positions[i * 3 + 2] = (Math.random() - 0.5) * 1; // Small Z variation
-      }
-    }
+  } else {
+    // Default to sphere if shape is unknown
+    return generateShapePositions("sphere", count);
   }
 
   return positions;
 };
 
+
 // 💥 Scatter Effect (Particles Move Out Before Reforming)
-const generateScatterEffect = () => {
-  const count = 2200;
+const generateScatterEffect = (count: number) => {
   const positions = new Float32Array(count * 3);
   for (let i = 0; i < count; i++) {
     positions[i * 3] = (Math.random() - 0.5) * 20;

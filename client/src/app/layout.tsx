@@ -1,6 +1,6 @@
 import "./globals.css";
 
-import { Inter, Nunito } from "next/font/google";
+import { Saira, JetBrains_Mono, IBM_Plex_Sans } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { cn } from "@/lib/utils";
 import { notFound } from "next/navigation";
@@ -15,13 +15,19 @@ import LoginButtonServer from "@/components/custom/LoginButtonServer";
 import Metrics from './metrics'
 
 
-const fontSans = Inter({
+const fontSans = Saira({
   variable: "--font-sans",
   subsets: ["latin"],
 });
 
-const fontHeading = Nunito({
+const fontHeading = IBM_Plex_Sans({
   variable: "--font-heading",
+  subsets: ["latin"],
+  weight: ["300","400", "500", "600"] 
+});
+
+const fontMono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
 });
 
@@ -40,7 +46,7 @@ export default async function RootLayout({
     console.error("Error fetching global data, strapi is down", error);
     return (
       <html lang="en">
-      <body className={cn("min-h-screen font-sans antialiased", fontSans.variable, fontHeading.variable)}>
+      <body className={cn("min-h-screen font-sans antialiased", fontSans.variable, fontHeading.variable, fontMono.variable)}>
         <ErrorPage /> 
       </body>
     </html>
@@ -70,7 +76,8 @@ export default async function RootLayout({
         className={cn(
           "min-h-screen font-sans antialiased",
           fontSans.variable,
-          fontHeading.variable
+          fontHeading.variable,
+          fontMono.variable
         )}
        >
 
