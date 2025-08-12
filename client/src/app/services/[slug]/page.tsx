@@ -10,7 +10,7 @@ import { Metadata } from "next";
 import { generateMetadataObject } from '@/lib/metadata';
 import fetchContentType from '@/lib/strapi/fetchContentType';
 import { strapiImage } from '@/lib/strapi/strapiImage';
-import { ArrowLeft, ArrowUpRight, Sparkles, ChevronRight, Zap, Target, Settings } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, ChevronRight, Zap, Target } from "lucide-react";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -107,7 +107,7 @@ export default async function ServicePage({ params }: PageProps) {
   const IconComponent = getLucideIcon(service.icon);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-blue-950">
+    <div className="py-20 min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-blue-950">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/10 to-purple-600/10 rounded-full blur-3xl animate-pulse"></div>
@@ -164,20 +164,16 @@ export default async function ServicePage({ params }: PageProps) {
                   {service.description}
                 </p>
 
-                {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                    <Sparkles className="w-5 h-5 mr-2" />
-                    Get Started
-                  </Button>
-                  <Button 
-                    variant="outline"
-                    className="bg-white/50 dark:bg-slate-800/50 backdrop-blur border-white/30 dark:border-slate-700/50 hover:bg-white/80 dark:hover:bg-slate-700/80 px-8 py-3 rounded-xl transition-all duration-300"
-                  >
-                    Learn More
-                    <ArrowUpRight className="w-5 h-5 ml-2" />
-                  </Button>
-                </div>
+                  {/* Call to Action Section */}
+                  <div className="text-center dark:border-slate-800/50">
+                    <Link href="/connect"> {/* <-- Add your desired path here */}
+                      <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
+                        <span>Get started</span>
+                        <ArrowUpRight className="w-5 h-5" />
+                      </div>
+                    </Link>
+                  </div>
+
               </div>
             </CardHeader>
           </Card>
@@ -283,21 +279,16 @@ export default async function ServicePage({ params }: PageProps) {
             </p>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-              <Settings className="w-5 h-5 mr-2" />
-              Start Your Project
-            </Button>
-            <Link href="/contact">
-              <Button 
-                variant="outline"
-                className="bg-white/50 dark:bg-slate-800/50 backdrop-blur border-white/30 dark:border-slate-700/50 hover:bg-white/80 dark:hover:bg-slate-700/80 px-8 py-4 rounded-xl transition-all duration-300"
-              >
-                Contact Our Team
-                <ArrowUpRight className="w-5 h-5 ml-2" />
-              </Button>
-            </Link>
-          </div>
+            {/* Call to Action Section */}
+            <div className="text-center dark:border-slate-800/50">
+              <Link href="/connect"> {/* <-- Add your desired path here */}
+                <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
+                  <span>Get started</span>
+                  <ArrowUpRight className="w-5 h-5" />
+                </div>
+              </Link>
+            </div>
+
         </div>
       </div>
     </div>

@@ -16,7 +16,7 @@ export function Brands(data: Readonly<BrandsProps>) {
   return (
     <div className="relative py-10 md:py-40 overflow-hidden bg-transparent">
       {/* Section Heading */}
-      <Heading className="pt-4 text-cyan-950 dark:text-slate-300">{heading}</Heading>
+      <Heading className="pt-4 text-slate-950 dark:text-gray-200 font-heading">{heading}</Heading>
       <Subheading className="max-w-3xl mx-auto text-cyan-950 dark:text-slate-300">{sub_heading}</Subheading>
 
       {/* Wrap Marquee in a div to handle hover events */}

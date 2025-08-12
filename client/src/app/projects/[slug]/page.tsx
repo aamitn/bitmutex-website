@@ -123,14 +123,14 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           <div className="mb-12">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
               <div>
-                <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 dark:from-white dark:via-blue-100 dark:to-white bg-clip-text text-transparent leading-tight">
+                <h1 className="text-4xl py-1 md:text-5xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 dark:from-white dark:via-blue-100 dark:to-white bg-clip-text text-transparent leading-tight">
                   {project.name}
                 </h1>
                 {project.category && (
                   <div className="mt-4">
                     <Badge 
-                      variant="secondary" 
-                      className="px-4 py-2 text-sm font-medium bg-gradient-to-r from-blue-500 to-purple-600 text-white border-0 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                      variant="default" 
+                      className="px-3 py-2 rounded-full text-xs font-medium bg-gradient-to-r from-blue-500 to-sky-600 text-white border-0 hover:from-blue-600 hover:to-sky-700 transition-all duration-300 hover:scale-105 hover:shadow-lg"
                     >
                       {project.category}
                     </Badge>
@@ -155,7 +155,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                 {project.hostedurl && (
                   <Button 
                     asChild
-                    className="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 hover:scale-105 hover:shadow-lg transition-all duration-300"
+                    className="group bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white border-0 hover:scale-105 hover:shadow-lg transition-all duration-300"
                   >
                     <a href={project.hostedurl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                       <FaExternalLinkAlt className="h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -227,9 +227,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         {/* Enhanced Call-to-Action Section */}
         {(project.repourl || project.hostedurl) && (
           <div className="mt-16">
-            <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 rounded-2xl p-1 shadow-xl hover:shadow-2xl transition-all duration-500">
+            <div className="bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-600 rounded-2xl p-1 shadow-xl hover:shadow-2xl transition-all duration-500">
               <div className="bg-white dark:bg-slate-900 rounded-[calc(1rem-2px)] p-8 text-center">
-                <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-sky-600 bg-clip-text text-transparent">
                   Ready to Explore?
                 </h3>
                 <p className="text-slate-600 dark:text-slate-400 mb-6 text-lg">
@@ -240,7 +240,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                     <Button 
                       asChild
                       size="lg"
-                      className="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 hover:scale-105 hover:shadow-lg transition-all duration-300 px-8 py-3"
+                      className="group bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white border-0 hover:scale-105 hover:shadow-lg transition-all duration-300 px-8 py-3"
                     >
                       <a href={project.hostedurl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3">
                         <FaExternalLinkAlt className="h-5 w-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

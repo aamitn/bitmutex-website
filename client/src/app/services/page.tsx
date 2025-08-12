@@ -193,11 +193,14 @@ export default async function ServicesPage() {
 
         {/* Call to Action Section */}
         <div className="text-center mt-20 pt-16 border-t border-slate-200/50 dark:border-slate-800/50">
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
-            <span>Ready to get started?</span>
-            <ArrowUpRight className="w-5 h-5" />
-          </div>
-        </div>
+          <Link href="/connect"> {/* <-- Add your desired path here */}
+            <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
+              <span>Ready to get started?</span>
+              <ArrowUpRight className="w-5 h-5" />
+            </div>
+          </Link>
+       </div>
+
       </div>
     </div>
   );

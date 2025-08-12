@@ -5,14 +5,13 @@ import { FC } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import sanitizeHtml from "sanitize-html";
 import Link from "next/link";
 import { Metadata } from "next";
 import { generateMetadataObject } from '@/lib/metadata';
 import fetchContentType from '@/lib/strapi/fetchContentType';
 import { strapiImage } from '@/lib/strapi/strapiImage';
-import { ArrowLeft, TrendingUp, Target, Lightbulb, CheckCircle2, AlertTriangle, Sparkles } from "lucide-react";
+import { ArrowLeft,ArrowRight, ArrowUpRight, TrendingUp, Target, CheckCircle2, AlertTriangle, Sparkles } from "lucide-react";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -324,28 +323,32 @@ export default async function IndustryDetailPage({ params }: PageProps) {
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-xl"></div>
               <div className="relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 rounded-3xl p-12">
-                <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-sky-700 bg-clip-text text-transparent">
                   Ready to Transform Your {industry.name} Business?
                 </h3>
                 <p className="text-slate-600 dark:text-slate-400 text-lg mb-8 max-w-2xl mx-auto">
                   Let&apos;s discuss how our tailored solutions can address your specific challenges and unlock new opportunities in the {industry.name} sector.
                 </p>
-                <div className="flex flex-wrap justify-center gap-4">
-                  <Button 
-                    size="lg"
-                    className="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 px-8 py-4 text-lg hover:scale-105 hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300"
-                  >
-                    <Lightbulb className="mr-2 w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
-                    Get Consultation
-                  </Button>
-                  <Button 
-                    variant="outline"
-                    size="lg"
-                    className="group bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-slate-200 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-800 px-8 py-4 text-lg hover:scale-105 hover:shadow-lg transition-all duration-300"
-                  >
-                    View Case Studies
-                  </Button>
-                </div>
+                  {/* Call to Action Section */}
+                  <div className="text-center mt-10 dark:border-slate-800/50">
+                    <div className="flex justify-center gap-4"> {/* Use flexbox to align buttons */}
+                      {/* Primary Button */}
+                      <Link href="/connect">
+                        <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
+                          <span>Get Consultation</span>
+                          <ArrowUpRight className="w-5 h-5" />
+                        </div>
+                      </Link>
+
+                      {/* Secondary Button */}
+                      <Link href="/success-stories">
+                        <div className="inline-flex items-center gap-2 px-6 py-3 bg-slate-700 text-white font-semibold rounded-full hover:bg-slate-600 transition-all duration-300 hover:scale-105 shadow-lg cursor-pointer">
+                          <span>View Case Studies</span>
+                          <ArrowRight className="w-5 h-5" />
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
               </div>
             </div>
           </div>

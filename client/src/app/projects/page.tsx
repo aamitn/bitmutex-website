@@ -280,9 +280,11 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
           </p>
           
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button className="bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 text-white px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+          <Link href="/connect">
+            <Button className="bg-gradient-to-r from-blue-600 to-orange-400 hover:from-blue-700 hover:to-orange-600 text-white px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
               Get Started
             </Button>
+            </Link>
             <Link href="/contact">
               <Button 
                 variant="outline"
