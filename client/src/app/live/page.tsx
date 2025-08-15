@@ -1,11 +1,18 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
-import { Play, Radio, Signal, Zap, Users, Clipboard, X } from "lucide-react";
+import { Play, Radio, Signal, Zap, Users, Clipboard, X, RotateCcw } from "lucide-react";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
+import { usePathname } from "next/navigation";
 
-const dashStream = "https://live.bitmutex.com/dash/test_src.mpd";
-const hlsStream = "https://live.bitmutex.com/hls/test.m3u8";
+
+const streamKey = process.env.NEXT_PUBLIC_STREAM_KEY || "fallback-key";
+
+const dashStream = `https://live.bitmutex.com/dash/${streamKey}_src.mpd`;
+const hlsStream = `https://live.bitmutex.com/hls/${streamKey}.m3u8`;
+console.log("DASH Stream URL:", dashStream);
+console.log("HLS Stream URL:", hlsStream);
+
 const  genericHlsUrl= "https://live.bitmutex.com/dash/<key>_src.mpd";
 const  genericDashUrl = "https://live.bitmutex.com/hls/<key>.m3u8";
 const rtmpServerUrl = "rtmp://152.67.172.75/live/<key>";
@@ -36,12 +43,21 @@ const StreamInfoPopover = ({ hlsUrl, dashUrl, rtmpServer }: { hlsUrl: string, da
 
   return (
     <div className="relative" ref={popoverRef}>
-      <button 
-        onClick={() => setIsOpen(!isOpen)} 
-        className="p-2 rounded-full bg-gray-200/50 backdrop-blur-lg border border-gray-300 hover:bg-gray-300 dark:bg-gray-800/50 dark:border-gray-700 dark:hover:bg-gray-700 transition-colors"
-      >
-        <Signal size={20} className="text-gray-600 dark:text-gray-400" />
-      </button>
+      <div className="flex items-center gap-3 p-2 bg-gray-100/50 dark:bg-gray-900/50 rounded-xl backdrop-blur-lg border border-gray-300 dark:border-gray-700">
+        <button 
+          onClick={() => setIsOpen(!isOpen)} 
+          className="p-2 rounded-full bg-gray-200/50 backdrop-blur-lg border border-gray-300 hover:bg-gray-300 dark:bg-gray-800/50 dark:border-gray-700 dark:hover:bg-gray-700 transition-colors"
+        >
+          <Signal size={20} className="text-gray-600 dark:text-gray-400" />
+        </button>
+
+        <button 
+          onClick={() => window.location.reload()} 
+          className="p-2 rounded-full bg-gray-200/50 backdrop-blur-lg border border-gray-300 hover:bg-gray-300 dark:bg-gray-800/50 dark:border-gray-700 dark:hover:bg-gray-700 transition-colors"
+        >
+          <RotateCcw size={20} className="text-gray-600 dark:text-gray-400" />
+        </button>
+      </div>
       
       {isOpen && (
         <div className="absolute left-1/2 -translate-x-1/2 mt-3 w-96 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg z-50 p-4 transition-all duration-300 ease-out transform scale-100 opacity-100">
@@ -121,6 +137,8 @@ function VideoPlayer({
   const videoRef = useRef<HTMLVideoElement>(null);
   const playerRef = useRef<any>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false); 
+  
 
   useEffect(() => {
     if (videoRef.current) {
@@ -133,16 +151,36 @@ function VideoPlayer({
       playerRef.current = videojs(videoRef.current, {
         controls: true,
         autoplay: false,
+        pip: true,
         preload: "auto",
         fluid: true,
         responsive: true,
+        userActions: {
+          hotkeys: true
+        },
         sources: [{ src, type }],
         playbackRates: [0.5, 1, 1.25, 1.5, 2],
+        poster: "https://i.ibb.co/PzxzqC7R/streamsoon.jpg", // thumbnail before playback
+        aspectRatio: "16:9",         // keep consistent aspect ratio
+        html5: {
+          hls: { overrideNative: true },  // HLS options
+          nativeAudioTracks: false,
+          nativeVideoTracks: false
+        },
         plugins: {},
+      });
+
+      videojs.addLanguage('en', {
+        "Play": "▶ Play",
+        "Pause": "⏸ Pause",
+        "Video Not Supported": "Video cannot be played.",
+        "The media could not be loaded, either because the server or network failed or because the format is not supported.": 
+          "Oops! Something went wrong or we are not live yet, check back later! 🤖",
       });
 
       playerRef.current.ready(() => {
         setIsLoading(false);
+        setHasError(false);
       });
 
       playerRef.current.on('loadstart', () => {
@@ -151,10 +189,13 @@ function VideoPlayer({
 
       playerRef.current.on('canplay', () => {
         setIsLoading(false);
+        setHasError(false);
       });
 
-      playerRef.current.on('error', () => {
+      playerRef.current.on("error", () => {
+        console.error("Video.js player error:", playerRef.current.error());
         setIsLoading(false);
+        setHasError(true); // Mark as error
       });
     }
 
@@ -182,16 +223,27 @@ function VideoPlayer({
       style={{ display: hidden ? "none" : "block" }}
     >
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 via-gray-800 to-black shadow-2xl dark:from-gray-950 dark:via-gray-900 dark:to-gray-800">
-        {/* Stream info overlay */}
-        <div className="absolute top-4 left-4 z-20 flex items-center gap-3">
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-500/90 backdrop-blur-sm">
-            <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-            <span className="text-emerald text-sm font-medium">LIVE</span>
-          </div>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-sm text-white/90 dark:bg-white/10 dark:text-gray-200">
-            <Users size={14} />
-          </div>
+      {/* Stream info overlay */}
+      <div className="absolute top-4 left-4 z-20 flex items-center gap-3">
+        <div
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-sm ${
+            hasError ? "bg-gray-500/80" : "bg-red-500/90"
+          }`}
+        >
+          <div
+            className={`w-2 h-2 rounded-full ${
+              hasError ? "bg-red-600 animate-none" : "bg-emerald-400 animate-pulse"
+            }`}
+          ></div>
+          <span className={`text-sm font-medium ${hasError ? "text-white" : "text-emerald"}`}>
+            {hasError ? "OFFLINE" : "LIVE"}
+          </span>
         </div>
+
+        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-sm text-white/90 dark:bg-white/10 dark:text-gray-200">
+          <Users size={14} />
+        </div>
+      </div>
 
         {/* Stream quality badge */}
         <div className="absolute top-4 right-4 z-20">
@@ -351,6 +403,7 @@ export default function LivePage() {
         </div>
 
       </div>
+
     </div>
   );
 }
