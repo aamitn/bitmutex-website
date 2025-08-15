@@ -77,7 +77,7 @@ jobs:
             echo "NEXT_PUBLIC_GOOGLE_ANALYTICS=G-7VWD8QMZ5X" >> ./client/.env
             echo "NEXT_PUBLIC_MICROSOFT_CLARITY=st6s5h8mr2" >> ./client/.env
             echo "NEXT_PUBLIC_LINKEDIN_PARTNER_ID=8634577" >> ./client/.env
-            echo "NEXT_PUBLIC_META_PIXEL_ID=1234567890" >> ./client/.env
+            echo "NEXT_PUBLIC_META_PIXEL_ID=392477801481824" >> ./client/.env
             echo "NEXT_PUBLIC_TRUSTPILOT_INTENT_KEY=YqW4fUPXceqlZGwZ" >> ./client/.env
             echo "NEXT_PUBLIC_STREAM_KEY=${{ secrets.NEXT_PUBLIC_STREAM_KEY }}" >> ./client/.env
             
@@ -100,6 +100,8 @@ jobs:
             echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> ./server/.env
             echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> ./server/.env
             
+
+            
             # Decode base64 encoded passwords
             DATABASE_PASSWORD=$(echo "${{ secrets.DATABASE_PASSWORD_BASE64 }}" | base64 -d)
             ADMIN_PASSWORD=$(echo "${{ secrets.ADMIN_PASSWORD_BASE64 }}" | base64 -d)
@@ -119,6 +121,9 @@ jobs:
             # Algolia Search Settings
             echo "ALGOLIA_APP_ID=${{ secrets.ALGOLIA_APP_ID }}" >> ./server/.env
             echo "ALGOLIA_ADMIN_KEY=${{ secrets.ALGOLIA_ADMIN_KEY }}" >> ./server/.env
+
+            # Sentry Settings
+            echo "SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> ./server/.env
           
 
       
