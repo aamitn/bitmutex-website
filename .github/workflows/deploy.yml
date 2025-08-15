@@ -79,6 +79,7 @@ jobs:
             echo "NEXT_PUBLIC_LINKEDIN_PARTNER_ID=8634577" >> ./client/.env
             echo "NEXT_PUBLIC_META_PIXEL_ID=1234567890" >> ./client/.env
             echo "NEXT_PUBLIC_TRUSTPILOT_INTENT_KEY=YqW4fUPXceqlZGwZ" >> ./client/.env
+            echo "NEXT_PUBLIC_STREAM_KEY=${{ secrets.NEXT_PUBLIC_STREAM_KEY }}" >> ./client/.env
             
 
 

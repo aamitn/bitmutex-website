@@ -16,7 +16,7 @@ import { strapiImage } from '@/lib/strapi/strapiImage';
 import RelatedPosts from "@/components/custom/related-posts";
 import SocialShareButtons from "@/components/custom/SocialShareButtons";
 import Image from "next/image";
-import DisqusComments from "@/components/custom/DisqusComments"; // The updated component
+import DisqusComments from "@/components/custom/DisqusComments"; 
 
 interface PageProps {
   params: Promise<{ slug: string }>;
