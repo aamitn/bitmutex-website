@@ -18,11 +18,12 @@
   },
   "dependencies": {
     "@_sh/strapi-plugin-ckeditor": "^5.0.2",
-    "@strapi/plugin-cloud": "5.21.0",
+    "@strapi/plugin-cloud": "5.22.0",
+    "@strapi/plugin-sentry": "^5.22.0",
     "@strapi/plugin-seo": "^2.0.5",
-    "@strapi/plugin-users-permissions": "5.21.0",
+    "@strapi/plugin-users-permissions": "5.22.0",
     "@strapi/provider-email-nodemailer": "^5.11.3",
-    "@strapi/strapi": "5.21.0",
+    "@strapi/strapi": "5.22.0",
     "@types/socket.io": "^3.0.2",
     "axios": "^1.8.4",
     "backend": "file:",
@@ -34,6 +35,7 @@
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
     "socket.io": "^4.8.1",
+    "strapi-cache": "^1.5.7",
     "strapi-plugin-strapi-algolia": "^2.0.4",
     "strapi-plugin-yt-clips": "0.0.2",
     "styled-components": "^6.0.0"
