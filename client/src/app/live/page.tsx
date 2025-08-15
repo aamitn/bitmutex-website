@@ -214,107 +214,105 @@ function VideoPlayer({
   }, [hidden]);
 
   return (
-    <div 
+    <div
       className={`relative transition-all duration-700 ease-out transform ${
-        hidden 
-          ? 'opacity-0 scale-95 pointer-events-none absolute' 
-          : 'opacity-100 scale-100'
+        hidden ? "opacity-0 scale-95 pointer-events-none absolute" : "opacity-100 scale-100"
       }`}
       style={{ display: hidden ? "none" : "block" }}
     >
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 via-gray-800 to-black shadow-2xl dark:from-gray-950 dark:via-gray-900 dark:to-gray-800">
-      {/* Stream info overlay */}
-      <div className="absolute top-4 left-4 z-20 flex items-center gap-3">
-        <div
-          className={`flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-sm ${
-            hasError ? "bg-gray-500/80" : "bg-red-500/90"
-          }`}
-        >
+  
+        {/* Stream info overlay */}
+        <div className="absolute top-4 left-4 z-20 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
           <div
-            className={`w-2 h-2 rounded-full ${
-              hasError ? "bg-red-600 animate-none" : "bg-emerald-400 animate-pulse"
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-sm ${
+              hasError ? "bg-gray-500/80" : "bg-red-500/90"
             }`}
-          ></div>
-          <span className={`text-sm font-medium ${hasError ? "text-white" : "text-emerald"}`}>
-            {hasError ? "OFFLINE" : "LIVE"}
-          </span>
+          >
+            <div
+              className={`w-2 h-2 rounded-full ${
+                hasError ? "bg-red-600 animate-none" : "bg-emerald-400 animate-pulse"
+              }`}
+            ></div>
+            <span className={`text-xs sm:text-sm font-medium ${hasError ? "text-white" : "text-emerald"}`}>
+              {hasError ? "OFFLINE" : "LIVE"}
+            </span>
+          </div>
+  
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-sm text-white/90 dark:bg-white/10 dark:text-gray-200 text-xs sm:text-sm">
+            <Users size={14} />
+          </div>
         </div>
-
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-sm text-white/90 dark:bg-white/10 dark:text-gray-200">
-          <Users size={14} />
-        </div>
-      </div>
-
+  
         {/* Stream quality badge */}
         <div className="absolute top-4 right-4 z-20">
-          <div className="px-3 py-1.5 rounded-full bg-sky-500/90 backdrop-blur-sm text-white text-sm font-medium">
+          <div className="px-2 sm:px-3 py-1 rounded-full bg-sky-500/90 backdrop-blur-sm text-white text-xs sm:text-sm font-medium">
             {streamType.toUpperCase()}
           </div>
         </div>
-
+  
         {/* Video container */}
-        <div className="relative aspect-video bg-gradient-to-br from-gray-800 to-gray-900 dark:from-gray-900 dark:to-black">
+        <div className="relative aspect-video sm:aspect-[16/9] bg-gradient-to-br from-gray-800 to-gray-900 dark:from-gray-900 dark:to-black">
           {isLoading && (
             <div className="absolute inset-0 flex items-center justify-center bg-gray-900 dark:bg-black">
               <div className="text-center">
-                <div className="w-16 h-16 border-4 border-sky-500/30 border-t-sky-500 rounded-full animate-spin mx-auto mb-4"></div>
-                <p className="text-white/80 text-lg font-medium dark:text-gray-300">Connecting to stream...</p>
-                <p className="text-white/50 text-sm mt-1 dark:text-gray-400">Initializing {streamType.toUpperCase()} player</p>
+                <div className="w-12 h-12 sm:w-16 sm:h-16 border-4 border-sky-500/30 border-t-sky-500 rounded-full animate-spin mx-auto mb-2 sm:mb-4"></div>
+                <p className="text-white/80 text-sm sm:text-lg font-medium dark:text-gray-300">Connecting to stream...</p>
+                <p className="text-white/50 text-xs sm:text-sm mt-1 dark:text-gray-400">Initializing {streamType.toUpperCase()} player</p>
               </div>
             </div>
           )}
-          
-          <video 
-            ref={videoRef} 
-            className="video-js vjs-default-skin w-full h-full"
-            data-setup="{}"
-          />
+          <video ref={videoRef} className="video-js vjs-default-skin w-full h-full" data-setup="{}" />
         </div>
-
+  
         {/* Bottom gradient overlay */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent pointer-events-none dark:from-black/80"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-24 sm:h-32 bg-gradient-to-t from-black/60 to-transparent pointer-events-none dark:from-black/80"></div>
       </div>
-
+  
       {/* Stream stats */}
-      <div className="mt-6 grid grid-cols-3 gap-4">
-        <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20 rounded-xl p-4 backdrop-blur-sm dark:from-blue-900/30 dark:to-blue-800/10 dark:border-blue-500/30">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-500/20 rounded-lg">
-              <Signal size={20} className="text-blue-400" />
+      <div className="mt-4 sm:mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        {/* Quality */}
+        <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20 rounded-xl p-3 sm:p-4 backdrop-blur-sm dark:from-blue-900/30 dark:to-blue-800/10 dark:border-blue-500/30">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="p-2 sm:p-2.5 bg-blue-500/20 rounded-lg">
+              <Signal size={18} className="text-blue-400" />
             </div>
             <div>
-              <p className="text-slate-800/90 font-medium dark:text-gray-200">Quality</p>
-              <p className="text-slate-800/60 text-sm dark:text-gray-400">1080p HD</p>
+              <p className="text-slate-800/90 font-medium text-sm sm:text-base dark:text-gray-200">Quality</p>
+              <p className="text-slate-800/60 text-xs sm:text-sm dark:text-gray-400">1080p HD</p>
             </div>
           </div>
         </div>
-
-        <div className="bg-gradient-to-br from-green-500/10 to-green-600/5 border border-green-500/20 rounded-xl p-4 backdrop-blur-sm dark:from-green-900/30 dark:to-green-800/10 dark:border-green-500/30">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-green-500/20 rounded-lg">
-              <Zap size={20} className="text-green-400" />
+  
+        {/* Latency */}
+        <div className="bg-gradient-to-br from-green-500/10 to-green-600/5 border border-green-500/20 rounded-xl p-3 sm:p-4 backdrop-blur-sm dark:from-green-900/30 dark:to-green-800/10 dark:border-green-500/30">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="p-2 sm:p-2.5 bg-green-500/20 rounded-lg">
+              <Zap size={18} className="text-green-400" />
             </div>
             <div>
-              <p className="text-slate-800/90 font-medium dark:text-gray-200">Latency</p>
-              <p className="text-slate-800/60 text-sm dark:text-gray-400">&le;2.3s</p>
+              <p className="text-slate-800/90 font-medium text-sm sm:text-base dark:text-gray-200">Latency</p>
+              <p className="text-slate-800/60 text-xs sm:text-sm dark:text-gray-400">&le;2.3s</p>
             </div>
           </div>
         </div>
-
-        <div className="bg-gradient-to-br from-sky-500/10 to-sky-600/5 border border-sky-500/20 rounded-xl p-4 backdrop-blur-sm dark:from-sky-900/30 dark:to-sky-800/10 dark:border-sky-500/30">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-sky-500/20 rounded-lg">
-              <Radio size={20} className="text-sky-400" />
+  
+        {/* Bitrate */}
+        <div className="bg-gradient-to-br from-sky-500/10 to-sky-600/5 border border-sky-500/20 rounded-xl p-3 sm:p-4 backdrop-blur-sm dark:from-sky-900/30 dark:to-sky-800/10 dark:border-sky-500/30">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="p-2 sm:p-2.5 bg-sky-500/20 rounded-lg">
+              <Radio size={18} className="text-sky-400" />
             </div>
             <div>
-              <p className="text-slate-800/90 font-medium dark:text-gray-200">Bitrate</p>
-              <p className="text-slate-800/60 text-sm dark:text-gray-400">&ge;4.2 Mbps</p>
+              <p className="text-slate-800/90 font-medium text-sm sm:text-base dark:text-gray-200">Bitrate</p>
+              <p className="text-slate-800/60 text-xs sm:text-sm dark:text-gray-400">&ge;4.2 Mbps</p>
             </div>
           </div>
         </div>
       </div>
     </div>
   );
+  
 }
 
 export default function LivePage() {
@@ -346,31 +344,32 @@ export default function LivePage() {
         </div>
 
         {/* Protocol Selector */}
-        <div className="flex justify-center items-center gap-4 mb-12">
-          <div className="bg-gray-200/50 backdrop-blur-lg rounded-2xl p-2 border border-gray-300 dark:bg-gray-800/50 dark:border-gray-700">
-            <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
+          <div className="bg-gray-200/50 backdrop-blur-lg rounded-2xl p-2 border border-gray-300 dark:bg-gray-800/50 dark:border-gray-700 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row gap-2">
               <button
                 onClick={() => setActiveTab("hls")}
-                className={`px-8 py-4 rounded-xl font-medium transition-all duration-300 ${
+                className={`px-4 py-2 sm:px-8 sm:py-4 rounded-xl font-medium transition-all duration-300 w-full sm:w-auto ${
                   activeTab === "hls"
                     ? "bg-gradient-to-r from-blue-600 to-sky-500 text-white shadow-lg shadow-sky-500/25 dark:shadow-sky-500/30"
                     : "text-gray-600 hover:text-gray-800 hover:bg-gray-300/50 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-700"
                 }`}
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center gap-2 text-sm sm:text-base">
                   <Play size={18} />
                   HLS Stream
                 </div>
               </button>
+
               <button
                 onClick={() => setActiveTab("dash")}
-                className={`px-8 py-4 rounded-xl font-medium transition-all duration-300 ${
+                className={`px-4 py-2 sm:px-8 sm:py-4 rounded-xl font-medium transition-all duration-300 w-full sm:w-auto ${
                   activeTab === "dash"
                     ? "bg-gradient-to-r from-blue-600 to-sky-500 text-white shadow-lg shadow-sky-500/25 dark:shadow-sky-500/30"
                     : "text-gray-600 hover:text-gray-800 hover:bg-gray-300/50 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-700"
                 }`}
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center gap-2 text-sm sm:text-base">
                   <Zap size={18} />
                   DASH Stream
                 </div>
@@ -379,12 +378,15 @@ export default function LivePage() {
           </div>
 
           {/* New StreamInfoPopover component */}
-          <StreamInfoPopover 
-            hlsUrl={genericHlsUrl} 
-            dashUrl={genericDashUrl}
-            rtmpServer={rtmpServerUrl}
-          />
+          <div className="w-full sm:w-auto">
+            <StreamInfoPopover 
+              hlsUrl={genericHlsUrl} 
+              dashUrl={genericDashUrl}
+              rtmpServer={rtmpServerUrl}
+            />
+          </div>
         </div>
+
 
         {/* Video Players */}
         <div className="max-w-6xl mx-auto">
