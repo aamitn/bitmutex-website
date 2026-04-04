@@ -1,0 +1,22 @@
+version = 1
+
+[[apps]]
+name = "bitmutex-strapi"
+# Use .cmd so Rust knows exactly what executable to spawn on Windows
+command = "pnpm.cmd start"
+cwd = "./server"
+env_file = "./.env"
+restart_policy = "always"
+
+[apps.env]
+NODE_ENV = "production"
+
+[[apps]]
+name = "bitmutex-nextjs"
+command = "pnpm.cmd start -p 3000"
+cwd = "./client"
+env_file = "./.env"
+restart_policy = "always"
+
+[apps.env]
+NODE_ENV = "production"

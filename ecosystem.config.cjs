@@ -21,7 +21,7 @@ module.exports = {
       name: "bitmutex-nextjs", // Next.js frontend
       cwd: "./client", // Change directory to the client folder
       script: process.platform === "win32" ? "cmd" : "pnpm",
-      args: process.platform === "win32" ? "/c pnpm start -p 3001" : "start -p 3001",
+      args: process.platform === "win32" ? "/c pnpm start -p 3000" : "start -p 3000",
       env_file: "./.env",
       out_file: "./logs/next-out.log",
       error_file: "./logs/next-error.log",
