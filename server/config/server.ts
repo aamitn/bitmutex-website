@@ -4,4 +4,6 @@ export default ({ env }) => ({
   app: {
     keys: env.array('APP_KEYS'),
   },
+  url: 'https://strapiadmin.bitmutex.com', //backend fqdn url
+  proxy: true, 
 });
