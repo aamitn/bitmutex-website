@@ -130,6 +130,10 @@ pnpm dev
   -- Navigate to project root and run `pm2 start ecosystem.config.cjs`
   -- Run `pm2 list` to check status and go to [`http://localhost:1337] and [http://localhost:3001]`
   -- If all started successfully, then autostart the app on machine restart using `pm2 save` and `pm2 startup`
+> If using  `oxmgr` , just close any other running instances
+  -- Navigate to project root and run `oxmgr apply oxfile.toml`
+  -- Run `pm2 list` to check status and go to [`http://localhost:1337] and [http://localhost:3001]`
+  -- If all started successfully, then autostart the app on machine restart using `oxmgr service install` and `oxmgr ui` to monitor. 
   commands.
 > Use `/server/src/admin/vite.config.ts` to control admin dashboard domain access
 

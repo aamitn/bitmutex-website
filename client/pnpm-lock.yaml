@@ -4363,11 +4363,6 @@ packages:
     resolution: {integrity: sha512-x0AQKGwryDdD94s1it+Jolb6j1mg4Q+c7g1PlCIG6dXBdipVPaZmg71fxaFZJgx1k326DFnRaWrLxQ72/TKd2A==}
     engines: {node: '>=14', npm: '>=6'}
 
-  videojs-resolution-switcher@0.4.2:
-    resolution: {integrity: sha512-h5N98W929SkbFCG7n0g59mgQQfCw5gqDspD3L68zYqG/R7yf0SSdJn1qrfPn/NricA/I+6W+AvZlD+g60sAiZA==}
-    peerDependencies:
-      video.js: ^5.8
-
   videojs-vtt.js@0.15.5:
     resolution: {integrity: sha512-yZbBxvA7QMYn15Lr/ZfhhLPrNpI/RmCSCqgIff57GC2gIrV5YfyzLfLyZMj0NnZSAz8syB4N0nHXpZg9MyrMOQ==}
 
@@ -6578,7 +6573,6 @@ snapshots:
       video.js: 8.23.4
       videojs-contrib-dash: 5.1.1
       videojs-hls-quality-selector: 2.0.0
-      videojs-resolution-switcher: 0.4.2(video.js@8.23.4)
       yet-another-react-lightbox: 3.25.0(@types/react-dom@19.1.7(@types/react@19.1.9))(@types/react@19.1.9)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       youtubei.js: 15.0.1
       zod: 4.0.15
@@ -9526,10 +9520,6 @@ snapshots:
   videojs-hls-quality-selector@2.0.0:
     dependencies:
       global: 4.4.0
-      video.js: 8.23.4
-
-  videojs-resolution-switcher@0.4.2(video.js@8.23.4):
-    dependencies:
       video.js: 8.23.4
 
   videojs-vtt.js@0.15.5:
