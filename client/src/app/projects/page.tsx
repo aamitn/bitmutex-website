@@ -104,18 +104,18 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-blue-600/10 to-orange-600/10 border border-blue-200/30 dark:border-orange-800/30 mb-4">
             <FolderOpen className="w-3 h-3 text-blue-600 dark:text-orange-400" />
-            <span className="text-xs font-medium text-blue-700 dark:text-orange-300 tracking-wide uppercase">
+            <span className="font-sans text-xs font-medium text-blue-700 dark:text-orange-300 tracking-wide uppercase">
               {heading || "Portfolio"}
             </span>
           </div>
 
           {/* Main Heading */}
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white leading-tight mb-3">
+          <h1 className="font-heading text-3xl md:text-4xl font-bold text-slate-900 dark:text-white leading-tight mb-3">
             {sub_heading || "Featured Projects"}
           </h1>
 
           {/* Description */}
-          <p className="text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg mx-auto">
+          <p className="font-sans text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg mx-auto">
             {description || "Explore our collection of innovative projects."}
           </p>
         </div>
@@ -127,11 +127,11 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
               <CardHeader className="p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <Filter className="w-5 h-5 text-blue-600 dark:text-orange-400" />
-                  <h2 className="text-xl font-bold text-slate-900 dark:text-white">Filters</h2>
+                  <h2 className="font-heading text-xl font-bold text-slate-900 dark:text-white">Filters</h2>
                 </div>
               </CardHeader>
 
-              <CardContent className="p-6 pt-0 space-y-6">
+              <CardContent className="font-sans p-6 pt-0 space-y-6">
                 <form method="GET" className="space-y-6">
                   {/* Search Input */}
                   <div className="relative">
@@ -147,7 +147,7 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
 
                   {/* Category Select */}
                   <div>
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">
+                    <label className="font-heading font-bold text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">
                       Category
                     </label>
                     <Select name="category" defaultValue={selectedCategory}>
@@ -213,7 +213,7 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
                       {/* Category Badge */}
                       <div className="absolute top-2 right-2 z-20">
                         <div className="flex items-center gap-1 px-2 py-0.5 bg-gradient-to-r from-blue-500/90 to-orange-500/90 backdrop-blur-sm rounded-full text-white shadow-sm">
-                          <span className="text-[10px] font-medium capitalize">
+                          <span className="font-sans text-[10px] font-medium capitalize">
                             {project.category || "N/A"}
                           </span>
                         </div>
@@ -234,14 +234,14 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
                       <div className="relative z-10 p-4">
                         {/* Title and Arrow */}
                         <div className="flex items-start justify-between gap-2 mb-2">
-                          <CardTitle className="text-base font-semibold text-slate-900 dark:text-white leading-tight group-hover:text-blue-600 dark:group-hover:text-orange-400 transition-colors duration-300">
+                          <CardTitle className="font-heading text-base font-semibold text-slate-900 dark:text-white leading-tight group-hover:text-blue-600 dark:group-hover:text-orange-400 transition-colors duration-300">
                             {project.name}
                           </CardTitle>
                           <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-500 dark:group-hover:text-orange-400 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 flex-shrink-0 mt-0.5" />
                         </div>
 
                         {/* Description */}
-                        <p className="text-slate-600 dark:text-slate-400 text-xs leading-relaxed line-clamp-2">
+                        <p className="font-sans text-slate-600 dark:text-slate-400 text-xs leading-relaxed line-clamp-2">
                           {project.description}
                         </p>
                       </div>

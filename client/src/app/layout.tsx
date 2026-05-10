@@ -1,6 +1,6 @@
 import "./globals.css";
 
-import { Saira, JetBrains_Mono, IBM_Plex_Sans } from "next/font/google";
+import { JetBrains_Mono, Fraunces, Exo_2, Caveat  } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { cn } from "@/lib/utils";
 import { notFound } from "next/navigation";
@@ -14,20 +14,36 @@ import ErrorPage from '@/components/custom/strapi-down-error-page';
 import LoginButtonServer from "@/components/custom/LoginButtonServer";
 import Metrics from './metrics'
 
-
-const fontSans = Saira({
+// Font Configuration using next/font with CSS variables for Tailwind integration
+/*
+Prefered fonts:
+- Sorts Mill Goudy
+- IM Fell English  -> GREAT
+- Fraunces
+- Manrope  -> GREAT
+- Caveat
+- Google Sans Flex
+- Sora
+- Exo 2
+- Expletus Sans 
+*/
+const fontSans = Exo_2 ({
   variable: "--font-sans",
   subsets: ["latin"],
 });
 
-const fontHeading = IBM_Plex_Sans({
+const fontHeading = Fraunces({
   variable: "--font-heading",
   subsets: ["latin"],
-  weight: ["300","400", "500", "600"] 
 });
 
 const fontMono = JetBrains_Mono({
   variable: "--font-mono",
+  subsets: ["latin"],
+});
+
+const fontSpecial = Caveat({
+  variable: "--font-special",
   subsets: ["latin"],
 });
 
@@ -46,7 +62,7 @@ export default async function RootLayout({
     console.error("Error fetching global data, strapi is down", error);
     return (
       <html lang="en">
-      <body className={cn("min-h-screen font-sans antialiased", fontSans.variable, fontHeading.variable, fontMono.variable)}>
+      <body className={cn("min-h-screen font-sans antialiased", fontSans.variable, fontHeading.variable, fontMono.variable, fontSpecial.variable)}>
         <ErrorPage /> 
       </body>
     </html>
@@ -74,10 +90,12 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body 
         className={cn(
-          "min-h-screen font-sans antialiased",
+          "min-h-screen",
           fontSans.variable,
           fontHeading.variable,
-          fontMono.variable
+          fontMono.variable,
+          fontSpecial.variable,
+          "antialiased"
         )}
        >
 

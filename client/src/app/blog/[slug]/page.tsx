@@ -148,13 +148,13 @@ export default async function SinglePost({ params }: PageProps) {
 
             {/* Author Details */}
             <div>
-            <p className="text-gray-900 dark:text-gray-100 font-semibold text-lg">
+            <p className="font-heading text-gray-900 dark:text-gray-100 font-semibold text-lg">
               {post.author.firstname} {post.author.lastname}
             </p>
               {post.author.email && (
                   <a
                   href={`mailto:${post.author.email}`}
-                  className="text-blue-600 dark:text-orange-400 text-sm hover:underline transition duration-200"
+                  className="font-sans text-blue-600 dark:text-orange-400 text-sm hover:underline transition duration-200"
                 >
                   {post.author.email}
                   
@@ -196,9 +196,9 @@ export default async function SinglePost({ params }: PageProps) {
                 {/* Accent Gradient Border */}
                 <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-500 via-yellow-400 to-orange-500 rounded-t-2xl"></div>
 
-                {/* The rest of the content remains unchanged */}
+                {/* The rest of the content */}
                 <div className="rich-text prose max-w-none text-gray-800 dark:text-gray-200 leading-relaxed">
-                  {/* The content rendering logic remains unchanged */}
+                  {/* The content rendering logic */}
                   {post.content && (
                     <div className="mb-8">
                       <RenderMarkdown content={post.content} />

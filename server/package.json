@@ -5,6 +5,7 @@
   "description": "A Strapi 5 Backend application",
   "scripts": {
     "develop": "strapi develop",
+    "dev": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
@@ -14,19 +15,20 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite": "^8.0.11"
   },
   "dependencies": {
     "@_sh/strapi-plugin-ckeditor": "^5.0.2",
-    "@strapi/plugin-cloud": "5.22.0",
-    "@strapi/plugin-sentry": "^5.22.0",
+    "@strapi/plugin-cloud": "5.45.0",
+    "@strapi/plugin-sentry": "^5.45.0",
     "@strapi/plugin-seo": "^2.0.5",
-    "@strapi/plugin-users-permissions": "5.22.0",
+    "@strapi/plugin-users-permissions": "5.45.0",
     "@strapi/provider-email-nodemailer": "^5.11.3",
-    "@strapi/strapi": "5.22.0",
+    "@strapi/strapi": "5.45.0",
     "@types/socket.io": "^3.0.2",
     "axios": "^1.8.4",
-    "backend": "file:",
+
     "better-sqlite3": "12.2.0",
     "discord.js": "^14.18.0",
     "mysql2": "^3.14.3",
@@ -35,10 +37,27 @@
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
     "socket.io": "^4.8.1",
-    "strapi-cache": "^1.5.7",
-    "strapi-plugin-strapi-algolia": "^2.0.4",
-    "strapi-plugin-yt-clips": "0.0.2",
+    "strapi-cache": "^1.10.0",
+    "strapi-plugin-strapi-algolia": "^2.2.1",
+    "strapi-plugin-yt-clips": "^0.0.2",
     "styled-components": "^6.0.0"
+  },
+  "overrides": {
+    "@strapi/design-system": ">=2.2.0",
+    "@strapi/sdk-plugin": ">=6.1.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@strapi/design-system": ">=2.2.0",
+      "@strapi/sdk-plugin": ">=6.1.0"
+    },
+    "onlyBuiltDependencies": [
+      "@swc/core",
+      "better-sqlite3",
+      "core-js-pure",
+      "esbuild",
+      "sharp"
+    ]
   },
   "author": {
     "name": "A Strapi developer"
@@ -47,8 +66,12 @@
     "uuid": "0ed328b8-5ec8-4297-a829-addd80414c09"
   },
   "engines": {
-    "node": ">=18.0.0 <=20.x.x",
+    "node": ">=18.0.0 <=24.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "trustedDependencies": [
+    "@swc/core",
+    "core-js-pure"
+  ]
 }

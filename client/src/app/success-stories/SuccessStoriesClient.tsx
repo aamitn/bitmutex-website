@@ -137,11 +137,11 @@ export default function SuccessStoriesClient({ stories }: PageProps) {
       <section className="mb-16 bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden border border-gray-100 dark:border-slate-700 p-6 transition-all duration-300">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div className="space-y-4 text-center lg:text-left">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">🌍 Global Impact</h2>
-            <p className="text-gray-600 dark:text-slate-300 leading-relaxed">
+            <h2 className="font-heading text-2xl font-bold text-gray-900 dark:text-white">🌍 Global Impact</h2>
+            <p className="font-sans text-gray-600 dark:text-slate-300 leading-relaxed">
               We’ve delivered transformative software solutions to clients in over 15 countries — from startups to enterprises.
             </p>
-            <div className="flex justify-center lg:justify-start gap-4 mt-4">
+            <div className="font-sans flex justify-center lg:justify-start gap-4 mt-4">
               <Badge variant="secondary" className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
                 {stories.length} Clients
               </Badge>
@@ -191,22 +191,22 @@ export default function SuccessStoriesClient({ stories }: PageProps) {
         {/* Sidebar Filters */}
         <aside
           className={`xl:col-span-1 transition-all duration-300 ease-in-out ${
-            isFilterOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
-          } md:max-h-full md:opacity-100`}
+            isFilterOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0 overflow-hidden"
+          } xl:max-h-full xl:opacity-100`}  // ← xl: instead of md: to match your grid breakpoint
         >
           <Card className="bg-white dark:bg-slate-800 shadow-lg rounded-2xl overflow-hidden border border-gray-100 dark:border-slate-700">
             <CardHeader>
-              <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white">🔍 Filters</CardTitle>
+              <CardTitle className="font-heading text-lg font-semibold text-gray-900 dark:text-white">🔍 Filters</CardTitle>
             </CardHeader>
             <CardContent>
-              <ScrollArea className="h-80 pr-2">
+              <ScrollArea className="h-[600px] pr-2">  {/* ← was h-80 (320px), now 600px */}
                 {[
                   { title: "Industry", options: allIndustries, state: selectedIndustries, setState: setSelectedIndustries },
                   { title: "Services", options: allServices, state: selectedServices, setState: setSelectedServices },
                   { title: "Tech Stack", options: allTechStacks, state: selectedTechStack, setState: setSelectedTechStack },
                 ].map(({ title, options, state, setState }) => (
                   <div key={title} className="mb-6">
-                    <h3 className="text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">{title}</h3>
+                    <h3 className="font-heading text-lg font-medium text-gray-700 dark:text-slate-300 mb-2">{title}</h3>
                     <div className="space-y-2">
                       {options.map((opt) => (
                         <div key={opt} className="flex items-center">
@@ -257,7 +257,7 @@ export default function SuccessStoriesClient({ stories }: PageProps) {
                     )}
 
                     <CardHeader className="pb-3">
-                      <CardTitle className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 line-clamp-1">
+                      <CardTitle className="font-heading text-lg font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 line-clamp-1">
                         {story.name}
                       </CardTitle>
                       <div className="flex items-center text-sm text-gray-500 dark:text-slate-400 gap-2">
@@ -271,7 +271,7 @@ export default function SuccessStoriesClient({ stories }: PageProps) {
                     </CardHeader>
 
                     <CardContent className="flex-1 space-y-3">
-                      <p className="text-sm text-gray-600 dark:text-slate-300 line-clamp-3">
+                      <p className="font-sans text-sm text-gray-600 dark:text-slate-300 line-clamp-3">
                         {story.content}
                       </p>
 
@@ -281,7 +281,7 @@ export default function SuccessStoriesClient({ stories }: PageProps) {
                           <Badge
                             key={service.name}
                             variant="secondary"
-                            className="mr-1 mb-1 text-xs bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
+                            className="font-sans mr-1 mb-1 text-xs bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
                           >
                             {service.name}
                           </Badge>
@@ -290,7 +290,7 @@ export default function SuccessStoriesClient({ stories }: PageProps) {
                           <Badge
                             key={tech.name}
                             variant="secondary"
-                            className="mr-1 mb-1 text-xs bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300"
+                            className="font-sans mr-1 mb-1 text-xs bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300"
                           >
                             {tech.name}
                           </Badge>

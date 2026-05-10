@@ -114,7 +114,7 @@ export function Header({ data }: Readonly<HeaderProps>) {
       shadow-md dark:shadow-white/90 dark:text-slate-300 text-slate-800 transition-colors duration-300"
     >
 
-      {/* Logo */}
+      {/* Company Logo (or Placeholder) */}
       <Link href="/" className="flex items-center gap-3">
         {logoSrc ? (
           <Image src={logoSrc} alt={logoText} width={40} height={40} className="h-10 w-auto" />
@@ -190,12 +190,12 @@ export function Header({ data }: Readonly<HeaderProps>) {
                   <div>
                     <div className="flex items-center space-x-2">
                       <Rocket />
-                      <h3 className="text-xl font-bold">Bitmutex One™</h3>
+                      <h3 className="text-xl font-bold font-heading">Bitmutex One™</h3>
                     </div>
-                    <p className="text-sm leading-relaxed mb-4">
+                    <p className="font-sans text-sm leading-relaxed mb-4">
                       Explore our suite of powerful tools designed to scale your business.
                     </p>
-                    <ul className="space-y-2">
+                    <ul className="space-y-2 font-heading">
                       <li>
                         <a
                           href="https://space.bitmutex.com"

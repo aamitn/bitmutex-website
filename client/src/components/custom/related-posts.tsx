@@ -153,7 +153,7 @@ export default async function RelatedPosts({ category }: RelatedPostsProps) {
           "dark:scrollbar-track-gray-800 dark:scrollbar-thumb-gray-600 md:hidden"
         )}>
           <div className="sticky top-0 bg-white/90 dark:bg-black/70 backdrop-blur-md z-10 pb-2 border-b">
-            <h2 className="text-xl font-bold tracking-tight flex items-center justify-between">
+            <h2 className="font-heading text-xl font-bold tracking-tight flex items-center justify-between">
               Related in 
               <Badge 
                 variant="secondary" 
@@ -165,6 +165,7 @@ export default async function RelatedPosts({ category }: RelatedPostsProps) {
                   px-2 py-1
                   text-xs
                   rounded-full
+                  font-sans
                 "
               >
                 {category.text}

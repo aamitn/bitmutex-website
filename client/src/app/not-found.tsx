@@ -345,20 +345,20 @@ export default function NotFoundPage() {
           <div className="space-y-8 text-center lg:text-left">
             <motion.div variants={itemVariants} className="space-y-4">
               <motion.h1 
-                className="text-6xl lg:text-8xl font-black bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 dark:from-orange-400 dark:via-amber-500 dark:to-yellow-500 bg-clip-text text-transparent"
+                className="font-sans text-6xl lg:text-8xl font-black bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 dark:from-orange-400 dark:via-amber-500 dark:to-yellow-500 bg-clip-text text-transparent"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 404
               </motion.h1>
-              <h2 className="text-2xl lg:text-4xl font-bold text-gray-800 dark:text-slate-100">
+              <h2 className="font-heading text-2xl lg:text-4xl font-bold text-gray-800 dark:text-slate-100">
                 Page Not Found
               </h2>
             </motion.div>
 
             <motion.p 
               variants={itemVariants}
-              className="text-lg text-gray-600 dark:text-slate-300 leading-relaxed max-w-md mx-auto lg:mx-0"
+              className="font-sans text-lg text-gray-600 dark:text-slate-300 leading-relaxed max-w-md mx-auto lg:mx-0"
             >
               The page you&apos;re looking for seems to have vanished into the digital void. 
               Don&apos;t worry, even the best explorers get lost sometimes.
@@ -419,23 +419,27 @@ export default function NotFoundPage() {
         </div>
       </motion.div>
 
-      <style jsx>{`
-        @keyframes blob {
-          0% { transform: translate(0px, 0px) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
-          100% { transform: translate(0px, 0px) scale(1); }
-        }
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-      `}</style>
+    <style>{`
+      @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+      }
+
+      .animate-blob {
+        animation: blob 7s infinite;
+      }
+
+      .animation-delay-2000 {
+        animation-delay: 2s;
+      }
+
+      .animation-delay-4000 {
+        animation-delay: 4s;
+      }
+    `}</style>
+    
     </div>
   );
 }

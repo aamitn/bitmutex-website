@@ -63,17 +63,17 @@ export function FormNextToSection(data: Readonly<FormNextToSectionProps>) {
       <div className="md:col-span-7 flex relative z-20 items-center w-full justify-center px-4 py-16 lg:py-20 sm:px-10  pt-20 md:pt-5 lg:px-12 xl:px-16">
         <div className={`w-full max-w-lg transition-all duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="mb-10">
-          <h1 className="text-3xl font-bold leading-tight tracking-tight text-slate-800 dark:text-slate-100 mb-2 text-center md:text-left">
+          <h1 className="font-heading text-3xl font-bold leading-tight tracking-tight text-slate-800 dark:text-slate-100 mb-2 text-center md:text-left">
             {heading}
           </h1>
           <div className="h-1 w-20 bg-orange-600 dark:bg-orange-500 rounded mb-6 mx-auto md:mx-0"></div>
-            <p className="text-slate-600 dark:text-slate-300 text-lg max-w-md">
+            <p className="font-sans text-slate-600 dark:text-slate-300 text-lg max-w-md">
               {sub_heading}
             </p>
           </div>
 
           {/* Contact Form with subtle shadow */}
-          <div className="w-full bg-white dark:bg-gray-900 rounded-xl shadow-xl dark:shadow-gray-800/30 p-6 transition-all duration-300 hover:shadow-2xl dark:hover:shadow-gray-800/50">
+          <div className="font-sans w-full bg-white dark:bg-gray-900 rounded-xl shadow-xl dark:shadow-gray-800/30 p-6 transition-all duration-300 hover:shadow-2xl dark:hover:shadow-gray-800/50">
             <ContactForm />
           </div>
 
@@ -107,9 +107,9 @@ export function FormNextToSection(data: Readonly<FormNextToSectionProps>) {
         <div className={`relative z-20 max-w-md w-full bg-white/10 dark:bg-gray-900/20 backdrop-blur-sm rounded-2xl p-8 border border-white/20 transition-all duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           {/* Section Heading & Subheading */}
           <div className="text-center mb-8">
-            <h2 className="font-bold text-2xl text-white">{section.heading}</h2>
+            <h2 className="font-heading font-bold text-2xl text-white">{section.heading}</h2>
             <div className="h-1 w-16 bg-amber-500 mx-auto rounded my-4"></div>
-            <p className="font-medium text-amber-400 mb-2">{section.sub_heading}</p>
+            <p className="font-sans font-medium text-amber-400 mb-2">{section.sub_heading}</p>
           </div>
 
           {/* Contact Information with improved icons */}
@@ -119,7 +119,7 @@ export function FormNextToSection(data: Readonly<FormNextToSectionProps>) {
                 <IconMapPin className="h-5 w-5 text-amber-400" />
               </div>
               <div>
-                <p className="font-semibold text-lg text-white mb-1">Our Location</p>
+                <p className="font-heading font-semibold text-lg text-white mb-1">Our Location</p>
                 <p className="text-gray-200">11A Eastern Park, First Road, Kolkata</p>
                 <Link 
                   href="https://maps.app.goo.gl/8JSMb8m5VJRqG8Xx5" 
@@ -149,7 +149,7 @@ export function FormNextToSection(data: Readonly<FormNextToSectionProps>) {
                 <IconPhone className="h-5 w-5 text-amber-400" />
               </div>
               <div>
-                <p className="font-semibold text-lg text-white mb-1">Phone</p>
+                <p className="font-heading font-semibold text-lg text-white mb-1">Phone</p>
                 <Link 
                   href="tel:+1234567890" 
                   className="text-gray-200 hover:text-amber-400 transition-colors"
@@ -164,7 +164,7 @@ export function FormNextToSection(data: Readonly<FormNextToSectionProps>) {
                 <IconMail className="h-5 w-5 text-amber-400" />
               </div>
               <div>
-                <p className="font-semibold text-lg text-white mb-1">Email</p>
+                <p className="font-heading font-semibold text-lg text-white mb-1">Email</p>
                 <Link 
                   href="mailto:support@bitmutex.com" 
                   className="text-gray-200 hover:text-amber-400 transition-colors"

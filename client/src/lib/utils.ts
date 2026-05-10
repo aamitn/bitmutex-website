@@ -63,3 +63,30 @@ export function isValidUrl(url?: string): boolean {
   const urlPattern = /^(\/[\w-./?%&=]*)$|^(https?:\/\/(localhost|\d{1,3}(\.\d{1,3}){3}|[\w.-]+)(:\d+)?(\/[\w-./?%&=]*)?)$/;  
   return urlPattern.test(url);
 }
+
+
+export function formatLPA(salary: string): string {
+  // Handle range like "500000-800000"
+  if (salary.includes("-")) {
+    const [min, max] = salary.split("-").map((s) => parseFloat(s.trim()) / 100000);
+    if (!isNaN(min) && !isNaN(max)) {
+      const fmtMin = min < 1 ? `${parseFloat((min * 100000).toLocaleString("en-IN"))}` : `${min}L`;
+      const fmtMax = max < 1 ? `${parseFloat((max * 100000).toLocaleString("en-IN"))}` : `${max}L`;
+      return `${fmtMin} – ${fmtMax} per annum`;
+    }
+  }
+
+  const num = parseFloat(salary);
+  if (isNaN(num)) return salary; // fallback for "Not disclosed" etc.
+
+  const lpa = num / 100000;
+
+  // Below 1 lakh — show raw value in Indian format (e.g. 75,000)
+  if (lpa < 1) {
+    return `${num.toLocaleString("en-IN")} per annum`;
+  }
+
+  // Avoid trailing zeros: 1200000 → 12, not 12.0
+  const formatted = Number.isInteger(lpa) ? lpa : parseFloat(lpa.toFixed(2));
+  return `${formatted} LPA`;
+}

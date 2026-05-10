@@ -100,8 +100,8 @@ const TableOfContents = ({ containerClass }: TOCProps) => {
         transition={{ duration: 0.5, ease: 'easeOut' }}
         whileHover={{ scale: 1.02, transition: { duration: 0.3 } }} // Subtle hover effect
       >
-        <h3 className="text-lg font-semibold mb-3 text-center md:text-left">Table of Contents</h3>
-        <ul className="space-y-2 text-sm">
+        <h3 className="font-heading text-lg font-semibold mb-3 text-center md:text-left">Table of Contents</h3>
+        <ul className="font-sans space-y-2 text-sm">
           {headings.map(({ id, text, level }) => (
             <motion.li
               key={id}

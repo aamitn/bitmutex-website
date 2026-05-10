@@ -79,7 +79,7 @@ export function Footer({ data }: Readonly<FooterProps>) {
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
           <div className="flex flex-col items-center sm:items-start space-y-4">
 
-            {/* ✅ Company Logo (or Placeholder) */}
+            {/* Company Logo Wide(or Placeholder) */}
             <div className="w-[180px] h-[60px] flex items-center justify-center">
               {logoWideSrc ? (
                 <Image
@@ -97,7 +97,7 @@ export function Footer({ data }: Readonly<FooterProps>) {
             </div>
 
             {/* ✅ Company Description */}
-            <p className="text-sm text-gray-600 dark:text-gray-400 text-center sm:text-left">
+            <p className="font-heading text-sm text-gray-600 dark:text-gray-400 text-center sm:text-left">
               {text}
             </p>
 
@@ -107,7 +107,7 @@ export function Footer({ data }: Readonly<FooterProps>) {
               index === 0 ? (
                 <span key={index} className="mr-1">{part}</span> // Normal text for the word
               ) : (
-                <span key={index} className="font-semibold text-gray-600 dark:text-gray-300">{part}</span> // Bold for the number
+                <span key={index} className="font-sans font-semibold text-gray-600 dark:text-gray-300">{part}</span> // Bold for the number
               )
             )}
           </div>
@@ -150,12 +150,12 @@ export function Footer({ data }: Readonly<FooterProps>) {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 dark:text-orange-500 text-slate-800">
             {Object.entries(groupedNavItems).map(([parent, items]) => (
               <div key={parent} className="space-y-2">
-                <h4 className="text-lg font-semibold">{parent}</h4>
+                <h4 className="font-heading text-lg font-semibold">{parent}</h4>
                 <Separator className="w-12 bg-gray-500 dark:bg-gray-600" />
                 <ul className="space-y-1">
                   {items.map((item) => (
                     <li key={item.text}>
-                      <Link href={item.href} className="font-heading text-gray-600 hover:text-orange-500 dark:text-gray-400 dark:hover:text-orange-400 transition">
+                      <Link href={item.href} className="font-sans text-gray-600 hover:text-orange-500 dark:text-gray-400 dark:hover:text-orange-400 transition">
                         {item.text}
                       </Link>
                     </li>
@@ -169,7 +169,7 @@ export function Footer({ data }: Readonly<FooterProps>) {
         {/* Right Section: Newsletter & Social Links */}
         <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}>
           <div className="flex flex-col items-center sm:items-end space-y-4">
-            <h4 className="text-lg font-semibold">Subscribe to our Newsletter</h4>
+            <h4 className="font-heading text-lg font-semibold">Subscribe to our Newsletter</h4>
             <Separator className="w-12 bg-gray-500 dark:bg-gray-600" />
             <div className="flex w-full">
               <Input
@@ -190,7 +190,7 @@ export function Footer({ data }: Readonly<FooterProps>) {
               Subscribe
             </Button>
             </div>
-            <h4 className="text-lg font-semibold">Follow Us</h4>
+            <h4 className="font-heading text-lg font-semibold">Follow Us</h4>
             <Separator className="w-12 bg-gray-500 dark:bg-gray-600" />
 
             <div className="flex gap-4">

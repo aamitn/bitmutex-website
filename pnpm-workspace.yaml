@@ -1,2 +1,11 @@
+packages:
+  - client
+  - server
 onlyBuiltDependencies:
+  - '@swc/core'
+  - '@tsparticles/engine'
+  - better-sqlite3
+  - core-js-pure
   - esbuild
+  - sharp
+  - unrs-resolver

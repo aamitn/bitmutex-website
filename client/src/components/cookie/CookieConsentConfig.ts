@@ -58,7 +58,7 @@ const pluginConfig: CookieConsentConfig = {
           showPreferencesBtn: 'Manage preferences',
           //closeIconLabel: 'Close',
           footer: `
-            <a href="#link">Privacy Policy</a>
+            <a href="#link">Bitmutex's Privacy Policy</a>
             <a href="#link">Impressum</a>
           `,
         },

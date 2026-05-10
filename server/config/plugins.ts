@@ -134,4 +134,9 @@ export default ({env}) => ({
   },
 },
 
+
+  'review-workflows': {
+    enabled: false,
+  },
+
 });

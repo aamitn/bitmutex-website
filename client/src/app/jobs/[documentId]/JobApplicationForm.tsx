@@ -138,7 +138,7 @@ interface JobApplicationFormProps {
     return (
       <div className="container mx-auto p-6 mt-6">
         <form onSubmit={handleSubmit} className="space-y-4">
-          <h3 className="text-xl font-semibold">Apply for this Job</h3>
+          <h3 className="text-xl font-semibold font-heading">Apply for this Job</h3>
   
           {message && (
             <div className="mt-4 text-center text-red-500">
@@ -213,7 +213,7 @@ interface JobApplicationFormProps {
             </div>
           </div>
   
-          <Button type="submit" className="w-full mt-4" disabled={loading}>
+          <Button type="submit" className="w-full mt-4 font-sans" disabled={loading}>
             {loading ? "Submitting..." : "Submit Application"}
           </Button>
         </form>

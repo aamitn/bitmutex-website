@@ -868,7 +868,7 @@ export default function UnifiedSearchComponent() {
     <div>
       {/* Search Input */}
       <div className="mb-6">
-        <div className="relative">
+        <div className="font-heading relative">
           <input
             type="text"
             placeholder="Search across all content types..."
@@ -893,16 +893,18 @@ export default function UnifiedSearchComponent() {
         <div className="mb-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
           <div className="flex items-center gap-4">
             <label className="text-sm font-medium text-gray-700">Results per type:</label>
-            <select
-              value={hitsPerIndex}
-              onChange={(e) => setHitsPerIndex(Number(e.target.value))}
-              className="px-3 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value={3}>3</option>
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-            </select>
+              <select
+                value={hitsPerIndex}
+                onChange={(e) => setHitsPerIndex(Number(e.target.value))}
+                aria-label="Results per page"
+                title="Results per page"
+                className="px-3 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value={3}>3</option>
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+              </select>
           </div>
         </div>
       )}
@@ -956,7 +958,7 @@ export default function UnifiedSearchComponent() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
-          <h3 className="text-xl font-medium text-gray-900 dark:text-gray-400 mb-2">Unified Content Search</h3>
+          <h3 className="text-xl font-medium font-heading text-gray-900 dark:text-gray-400 mb-2">Unified Content Search</h3>
           <p className="text-gray-500 mb-4">Search across jobs, testimonials, success stories, services, projects, blog posts, pages, logos, industries, free resources, FAQs, and categories</p>
           
           {/* Content Type Grid */}

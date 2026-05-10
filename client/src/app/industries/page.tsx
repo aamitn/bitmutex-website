@@ -105,19 +105,19 @@ export default async function IndustryPage() {
         <div className="text-center mb-20">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-200/30 dark:border-blue-700/30 rounded-full mb-6">
             <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-            <span className="font-semibold uppercase text-blue-600 dark:text-blue-400 tracking-wide text-sm">
+            <span className="font-sans font-semibold uppercase text-blue-600 dark:text-blue-400 tracking-wide text-sm">
               {heading}
             </span>
             <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           </div>
           
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
+          <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
             <span className="bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 dark:from-white dark:via-blue-100 dark:to-white bg-clip-text text-transparent leading-tight">
               {sub_heading}
             </span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-4xl mx-auto leading-relaxed">
+          <p className="font-sans text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-4xl mx-auto leading-relaxed">
             {description}
           </p>
           
@@ -158,7 +158,7 @@ export default async function IndustryPage() {
                         </div>
                         
                         <div className="flex-1">
-                          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-blue-900 dark:group-hover:text-blue-100 transition-colors duration-300">
+                          <h2 className="font-heading text-2xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-blue-900 dark:group-hover:text-blue-100 transition-colors duration-300">
                             {industry.name}
                           </h2>
                         </div>
@@ -166,7 +166,7 @@ export default async function IndustryPage() {
                     </CardHeader>
 
                     <CardContent className="p-0">
-                      <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-lg line-clamp-3 mb-6">
+                      <p className="font-sans text-slate-600 dark:text-slate-400 leading-relaxed text-lg line-clamp-3 mb-6">
                         {industry.description}
                       </p>
                       
@@ -202,16 +202,16 @@ export default async function IndustryPage() {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-xl"></div>
             <div className="relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 rounded-3xl p-12">
-              <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-sky-700 bg-clip-text text-transparent">
+              <h3 className="font-heading text-3xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-sky-700 bg-clip-text text-transparent">
                 Don&apos;t See Your Sector?
               </h3>
-              <p className="text-slate-600 dark:text-slate-400 text-lg mb-8 max-w-2xl mx-auto">
+              <p className="font-sans text-slate-600 dark:text-slate-400 text-lg mb-8 max-w-2xl mx-auto">
                 We work across various sectors and can customize our solutions for your specific industry needs. Let&apos;s discuss how we can help transform your business.
               </p>
                   {/* Call to Action Section */}
                   <div className="text-center dark:border-slate-800/50">
                     <Link href="/contact"> {/* <-- Add your desired path here */}
-                      <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
+                      <div className="font-heading inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
                         <span>Get in Touch</span>
                         <ArrowUpRight className="w-5 h-5" />
                       </div>

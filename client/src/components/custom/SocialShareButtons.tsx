@@ -106,7 +106,7 @@ const SocialShareButtons: React.FC<SocialShareButtonsProps> = ({ slug, title }) 
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 my-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md border-t border-b border-gray-200 dark:border-gray-700">
-      <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 mr-2">Share this article:</span>
+      <span className="font-heading text-sm font-semibold text-gray-700 dark:text-gray-300 mr-2">Share this article:</span>
       {shareLinks.map((link) => {
         const Icon = link.icon;
         return (

@@ -28,13 +28,14 @@ const LoginButtonClient = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
           /* Tablet Position (sm: and above) */
           sm:bottom-30 sm:top-7 sm:left-48
           /* Small Desktop Position (md: and above) */
-          md:top-15 md:left-24
+          md:top-6 md:left-24
           /* Medium Desktop Position (lg: and above) */
-          lg:top-15 lg:left-48
+          lg:top-6 lg:left-48
           /* Large Desktop Position (xl: and above) */
-          xl:top-15 xl:left-28
+          xl:top-6 xl:left-28
           /* Extra Large Desktop Position (2xl: and above) */
-          2xl:top-7 2xl:left-48"
+          2xl:top-7 2xl:left-48
+        "
         >
       <button
         onClick={isLoggedIn ? handleLogout : handleLogin}

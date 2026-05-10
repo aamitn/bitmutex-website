@@ -134,7 +134,7 @@ export default async function BrandKitPage() {
 
         {/* Page Header */}
         <header className="mb-16 text-center max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 dark:from-sky-600 dark:via-blue-600 dark:to-pink-400">
+          <h1 className="font-heading text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 dark:from-sky-600 dark:via-blue-600 dark:to-pink-400">
             {heading || "Brand Kit"}
           </h1>
           {sub_heading && (
@@ -151,7 +151,7 @@ export default async function BrandKitPage() {
 
         {/* Brand Colors */}
         <section className="mb-20">
-          <h2 className="text-3xl font-semibold mb-8 flex items-center gap-3 justify-center text-sky-700 dark:text-indigo-400">
+          <h2 className="font-sans text-3xl font-semibold mb-8 flex items-center gap-3 justify-center text-sky-700 dark:text-indigo-400">
             <span className="text-2xl">🎨</span> Brand Colors
           </h2>
 
@@ -162,18 +162,18 @@ export default async function BrandKitPage() {
                 className="overflow-hidden rounded-xl shadow-md bg-white dark:bg-gray-800 hover:shadow-xl transition-shadow duration-300 cursor-pointer"
                 aria-label={`Color swatch for ${color.name}`}
               >
-                <CardHeader className="p-0">
+                <CardHeader className="p-0 font-heading">
                   <div
                     className="h-28 w-full rounded-t-xl"
                     style={{ backgroundColor: color.hex }}
                   />
                 </CardHeader>
                 <CardContent className="p-5 text-center space-y-2">
-                  <CardTitle className="text-xl font-semibold truncate">{color.name}</CardTitle>
-                  <p className="text-sm text-gray-600 dark:text-gray-300"><strong>HEX:</strong> {color.hex}</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-300"><strong>RGB:</strong> {color.rgb}</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-300"><strong>HSL:</strong> {color.hsl}</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-300"><strong>CMYK:</strong> {color.cmyk}</p>
+                  <CardTitle className="font-heading text-xl font-semibold truncate">{color.name}</CardTitle>
+                  <p className="font-sans text-sm text-gray-600 dark:text-gray-300"><strong className="font-heading">HEX:</strong> {color.hex}</p>
+                  <p className="font-sans text-sm text-gray-600 dark:text-gray-300"><strong className="font-heading">RGB:</strong> {color.rgb}</p>
+                  <p className="font-sans text-sm text-gray-600 dark:text-gray-300"><strong className="font-heading">HSL:</strong> {color.hsl}</p>
+                  <p className="font-sans text-sm text-gray-600 dark:text-gray-300"><strong className="font-heading">CMYK:</strong> {color.cmyk}</p>
                 </CardContent>
               </Card>
             ))}
@@ -182,7 +182,7 @@ export default async function BrandKitPage() {
 
         {/* Brand Logos */}
         <section>
-          <h2 className="text-3xl font-semibold mb-8 flex items-center gap-3 justify-center text-sky-700 dark:text-indigo-400">
+          <h2 className="font-sans text-3xl font-semibold mb-8 flex items-center gap-3 justify-center text-sky-700 dark:text-indigo-400">
             <span className="text-2xl">🚀</span> Brand Logos
           </h2>
           <BrandKitClient logos={updatedLogos} />

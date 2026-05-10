@@ -132,7 +132,7 @@ const splitHeading = (headingText: string, startIndex: number, wordCount: number
           />
 
           {/* Description */}
-          <p className="text-lg lg:text-xl font-normal text-gray-700 dark:text-gray-300 
+          <p className="text-lg lg:text-xl font-sans text-gray-700 dark:text-gray-300 
             leading-relaxed text-center lg:text-left max-w-xl
             transition-colors duration-300">
             {text}

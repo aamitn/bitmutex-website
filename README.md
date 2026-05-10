@@ -1,6 +1,6 @@
 # Bitmutex-Website - Batteries Included Business Starter Template : Strapi5 + Next15 + Postgres + SocketIO
 
-**Bitmutex-Website** - A `modern`, `cloud-native` `ready-to-use` business website `starter template` with all the batteries included from SEO to Reusable Blocks. Built using `Strapi 5` at Backend and `NextJs 15 SSR` with `React 19` in Frontend as a BFF (Backend For Frontend).
+**Bitmutex-Website** - A `modern`, `cloud-native` `ready-to-use` business website `starter template` with all the batteries included from SEO to Reusable Blocks. Built using `Strapi 5` at Backend and `NextJs 16 SSR/AppRouter/RSC` with `React 19` in Frontend as a BFF (Backend For Frontend) alongside `Postgres17` as DB.
 
 [![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/1mjch.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
 [![Deploy Strapi & Next.js via SSH](https://github.com/aamitn/bitmutex-website/actions/workflows/deploy.yml/badge.svg)](https://github.com/aamitn/bitmutex-website/actions/workflows/deploy.yml)
@@ -19,8 +19,8 @@
 
 ## 🚀 Features
 -  **Strapi 5 CMS** (Headless API-driven backend)
--  **Next.js 15** (Fast, SSR-capable frontend)
--  **PostgreSQL 15** (Database for Strapi)
+-  **Next.js 16** (Fast, SSR-capable frontend)
+-  **PostgreSQL 17** (Database for Strapi)
 -  **Docker-Compose Support** (For seamless development & deployment)
 -  **Native Built-In Live Chat to Discord** (Powered by Socket.io integrated within strapi, No 3rd Party Service/Embed/Widgets)
 -  **Strapi Auto-Admin User Creation** (Creates admin user on first run)
@@ -102,7 +102,10 @@ This will run pnpm install  and also copies .env.example to .env on both `client
   ```
 - After running this strapi should start, go to `http://localhost:1337` and create admin user
 - Ctrl-C to stop both strapi and next
-
+- For Local Dev , in /server (Strapi) folder , edit `config/server.ts` and comment out the below line:
+```bash
+url: 'https://strapiadmin.bitmutex.com', //backend fqdn url //comment for local-dev
+```
 
 ### 4️⃣ **Import/Seed DB**
 You may run this on the project root,
@@ -135,7 +138,7 @@ pnpm dev
   -- Run `pm2 list` to check status and go to [`http://localhost:1337] and [http://localhost:3001]`
   -- If all started successfully, then autostart the app on machine restart using `oxmgr service install` and `oxmgr ui` to monitor. 
   commands.
-> Use `/server/src/admin/vite.config.ts` to control admin dashboard domain access
+> Use `/server/src/admin/vite.config.ts` `/server/config/server.ts` to control admin dashboard domain access
 
 ### 7️⃣  **Upgrade Strapi to Latest Version**
   ```sh

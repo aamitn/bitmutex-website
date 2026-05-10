@@ -57,7 +57,7 @@ export default function JobBoardClient({ initialJobs }: JobBoardClientProps) {
     <div className="container mx-auto p-6 mt-20 mb-20 gap-8 flex flex-col md:flex-row">
       {/* Sidebar with Filters */}
       <aside className="w-full md:w-1/4 lg:w-1/5 p-6 bg-white dark:bg-gray-900 rounded-2xl shadow-lg sticky top-24 h-fit">
-        <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2">
+        <h2 className="font-heading text-2xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2">
           Filters
         </h2>
 
@@ -75,7 +75,7 @@ export default function JobBoardClient({ initialJobs }: JobBoardClientProps) {
 
         {/* Experience Filter */}
         <div className="mb-6">
-          <h3 className="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200">
+          <h3 className="font-heading text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200">
             Experience
           </h3>
           <div className="flex flex-col gap-3 max-h-48 overflow-y-auto pr-2">
@@ -95,7 +95,7 @@ export default function JobBoardClient({ initialJobs }: JobBoardClientProps) {
                   }
                   className="form-checkbox h-5 w-5 text-indigo-600 rounded focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-700"
                 />
-                <span className="ml-3">{experience}</span>
+                <span className="ml-3 font-sans">{experience}</span>
               </label>
             ))}
           </div>
@@ -103,7 +103,7 @@ export default function JobBoardClient({ initialJobs }: JobBoardClientProps) {
 
         {/* Location Filter */}
         <div>
-          <h3 className="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200">
+          <h3 className="font-heading text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200">
             Location
           </h3>
           <div className="flex flex-col gap-3 max-h-48 overflow-y-auto pr-2">
@@ -123,7 +123,7 @@ export default function JobBoardClient({ initialJobs }: JobBoardClientProps) {
                   }
                   className="form-checkbox h-5 w-5 text-indigo-600 rounded focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-700"
                 />
-                <span className="ml-3">{location}</span>
+                <span className="ml-3 font-sans">{location}</span>
               </label>
             ))}
           </div>
@@ -142,12 +142,12 @@ export default function JobBoardClient({ initialJobs }: JobBoardClientProps) {
               aria-label={`View details for ${job.title}`}
             >
               <CardHeader className="p-0 mb-4">
-                <CardTitle className="text-xl font-extrabold text-gray-900 dark:text-white line-clamp-2">
+                <CardTitle className="font-heading text-xl font-extrabold text-gray-900 dark:text-white line-clamp-2">
                   {job.title}
                 </CardTitle>
               </CardHeader>
 
-              <CardContent className="p-0 flex flex-col flex-grow space-y-4 text-gray-700 dark:text-gray-300">
+              <CardContent className="font-sans p-0 flex flex-col flex-grow space-y-4 text-gray-700 dark:text-gray-300">
                 <p className="text-sm leading-relaxed line-clamp-3">{job.description}</p>
 
                 <div className="flex flex-wrap gap-4 text-sm">
@@ -169,14 +169,14 @@ export default function JobBoardClient({ initialJobs }: JobBoardClientProps) {
               </CardContent>
 
               <footer className="mt-auto pt-6">
-                <div className="bg-red-50 dark:bg-red-900 text-red-700 dark:text-red-400 rounded-xl py-2 px-4 font-semibold text-sm w-max">
+                <div className="font-heading bg-red-50 dark:bg-red-900 text-red-700 dark:text-red-400 rounded-xl py-2 px-4 font-semibold text-sm max-w-full break-words">
                   Application Deadline: {job.deadline}
                 </div>
 
                 {/* Button appears only on hover */}
                 <div className="mt-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <Button
-                    className="w-full py-3 text-base font-semibold rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg transition-transform transform group-hover:scale-105 focus:outline-none focus:ring-4 focus:ring-indigo-400"
+                    className="font-heading w-full py-3 text-base font-semibold rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg transition-transform transform group-hover:scale-105 focus:outline-none focus:ring-4 focus:ring-indigo-400"
                   >
                     View Details
                   </Button>

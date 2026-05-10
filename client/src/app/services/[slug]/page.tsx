@@ -114,7 +114,7 @@ export default async function ServicePage({ params }: PageProps) {
         <div className="absolute top-1/2 -left-40 w-96 h-96 bg-gradient-to-tr from-emerald-400/10 to-cyan-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
-      <div className="relative container mx-auto px-6 py-12">
+      <div className="font-sans relative container mx-auto px-6 py-12">
         {/* Navigation Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-8">
           <Link href="/services" className="flex items-center gap-1 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
@@ -132,7 +132,7 @@ export default async function ServicePage({ params }: PageProps) {
             
             <CardHeader className="relative p-12">
               {/* Back Button */}
-              <div className="absolute top-8 left-8">
+              <div className="absolute top-8 left-8 font-sans">
                 <Link href="/services">
                   <Button 
                     variant="outline" 
@@ -155,17 +155,17 @@ export default async function ServicePage({ params }: PageProps) {
                 </div>
 
                 {/* Title */}
-                <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-br from-slate-900 via-slate-700 to-slate-600 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent leading-tight mb-6">
+                <h1 className="font-heading text-5xl md:text-6xl font-bold bg-gradient-to-br from-slate-900 via-slate-700 to-slate-600 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent leading-tight mb-6">
                   {service.name}
                 </h1>
 
                 {/* Description */}
-                <p className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-3xl mx-auto mb-8">
+                <p className="font-sans text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-3xl mx-auto mb-8">
                   {service.description}
                 </p>
 
                   {/* Call to Action Section */}
-                  <div className="text-center dark:border-slate-800/50">
+                  <div className="font-sans text-center dark:border-slate-800/50">
                     <Link href="/connect"> {/* <-- Add your desired path here */}
                       <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
                         <span>Get started</span>
@@ -189,10 +189,10 @@ export default async function ServicePage({ params }: PageProps) {
                   Technology Stack
                 </span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+              <h2 className="font-heading text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
                 Cutting-Edge Technologies
               </h2>
-              <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+              <p className="font-sans text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
                 We leverage the most advanced tools and frameworks to deliver exceptional results
               </p>
             </div>
@@ -215,7 +215,7 @@ export default async function ServicePage({ params }: PageProps) {
                   What We Offer
                 </span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+              <h2 className="font-heading text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
                 Comprehensive Solutions
               </h2>
               <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
@@ -247,7 +247,7 @@ export default async function ServicePage({ params }: PageProps) {
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors duration-300">
+                      <h3 className="font-heading text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors duration-300">
                         {item.name}
                       </h3>
                     </CardHeader>
@@ -271,7 +271,7 @@ export default async function ServicePage({ params }: PageProps) {
         {/* Call to Action Section */}
         <div className="text-center mt-20 pt-16 border-t border-slate-200/50 dark:border-slate-800/50">
           <div className="max-w-2xl mx-auto mb-8">
-            <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
+            <h3 className="font-heading text-3xl font-bold text-slate-900 dark:text-white mb-4">
               Ready to Transform Your Business?
             </h3>
             <p className="text-slate-600 dark:text-slate-400 text-lg">

@@ -20,20 +20,21 @@ const RenderMarkdown: React.FC<RenderMarkdownProps> = ({ content }) => {
       components={{
         h1: ({ node, ...props }) => (
           <>
-            <h1 className="text-4xl font-bold mt-8 mb-4 border-b pb-3 text-gray-900 dark:text-gray-100" {...props} />
+            <h1 className="font-heading text-4xl font-bold mt-8 mb-4 border-b pb-3 text-gray-900 dark:text-gray-100" {...props} />
           </>
         ),
         h2: ({ node, ...props }) => (
           <>
-            <h2 className="text-3xl font-semibold mt-6 mb-3 border-b pb-2 text-gray-800 dark:text-gray-200" {...props} />
+            <h2 className="font-heading text-3xl font-semibold mt-6 mb-3 border-b pb-2 text-gray-800 dark:text-gray-200" {...props} />
           </>
         ),
-        h3: (props) => <h3 className="text-2xl font-semibold mt-5 mb-2 text-gray-700 dark:text-gray-300" {...props} />,
-        p: (props) => <p className="mb-4 text-lg leading-relaxed text-gray-700 dark:text-gray-300" {...props} />,
-        ul: (props) => <ul className="list-disc pl-6 mb-4 space-y-2 text-lg text-gray-700 dark:text-gray-300" {...props} />,
-        ol: (props) => <ol className="list-decimal pl-6 mb-4 space-y-2 text-lg text-gray-700 dark:text-gray-300" {...props} />,
+        h3: (props) => <h3 className="font-heading text-2xl font-semibold mt-5 mb-2 text-gray-700 dark:text-gray-300" {...props} />,
+        h4: (props) => <h4 className="font-heading text-xl font-semibold mt-4 mb-2 text-gray-700 dark:text-gray-300" {...props} />,
+        p: (props) => <p className="font-sans  mb-4 text-lg leading-relaxed text-gray-700 dark:text-gray-300" {...props} />,
+        ul: (props) => <ul className="font-heading  list-disc pl-6 mb-4 space-y-2 text-lg text-gray-700 dark:text-gray-300" {...props} />,
+        ol: (props) => <ol className="font-heading  list-decimal pl-6 mb-4 space-y-2 text-lg text-gray-700 dark:text-gray-300" {...props} />,
         blockquote: (props) => (
-          <blockquote className="border-l-4 pl-5 italic text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-sm" {...props} />
+          <blockquote className="font-special border-l-4 pl-5 italic text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-sm" {...props} />
         ),
         hr: () => <hr className="border-gray-500 dark:border-gray-300 my-6" />, // Custom HR styling
 
@@ -58,10 +59,10 @@ const RenderMarkdown: React.FC<RenderMarkdownProps> = ({ content }) => {
           </div>
         ),
         th: (props) => (
-          <th className="border border-gray-400 dark:border-gray-600 px-4 py-3 bg-gray-200 dark:bg-gray-700 text-left text-lg font-semibold" {...props} />
+          <th className="font-heading border border-gray-400 dark:border-gray-600 px-4 py-3 bg-gray-200 dark:bg-gray-700 text-left text-lg font-semibold" {...props} />
         ),
         td: (props) => (
-          <td className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-lg text-gray-700 dark:text-gray-300" {...props} />
+          <td className="font-sans border border-gray-300 dark:border-gray-600 px-4 py-2 text-lg text-gray-700 dark:text-gray-300" {...props} />
         ),
       }}
     >

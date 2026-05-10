@@ -45,10 +45,12 @@ export function SignupForm() {
       <form action={formAction}>
         <Card className="border-none">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-3xl font-bold">Sign Up</CardTitle>
-            <CardDescription>Enter your details to create a new account</CardDescription>
+            <CardTitle className="font-heading text-3xl font-bold">Sign Up</CardTitle>
+            <CardDescription className="font-sans">
+              Enter your details to create a new account
+            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 font-sans">
             <div className="space-y-2">
               <Label htmlFor="username">Username</Label>
               <Input id="username" name="username" type="text" placeholder="username" />

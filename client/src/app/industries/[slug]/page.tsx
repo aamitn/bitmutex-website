@@ -146,12 +146,12 @@ export default async function IndustryDetailPage({ params }: PageProps) {
               <div className="flex-1">
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-200/30 dark:border-blue-700/30 rounded-full mb-4">
                   <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                  <span className="font-semibold text-blue-600 dark:text-blue-400 text-sm">
+                  <span className="font-sans font-semibold text-blue-600 dark:text-blue-400 text-sm">
                     Industry Focus
                   </span>
                 </div>
                 
-                <h1 className="text-5xl lg:text-6xl font-bold mb-4">
+                <h1 className="font-heading text-5xl lg:text-6xl font-bold mb-4">
                   <span className="bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 dark:from-white dark:via-blue-100 dark:to-white bg-clip-text text-transparent">
                     {industry.name}
                   </span>
@@ -163,7 +163,7 @@ export default async function IndustryDetailPage({ params }: PageProps) {
             <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20 dark:border-slate-700/30 hover:shadow-2xl transition-all duration-500">
               <div className="flex items-start gap-4">
                 <div className="w-1 h-16 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full flex-shrink-0"></div>
-                <p className="text-xl text-slate-700 dark:text-slate-300 leading-relaxed">
+                <p className="font-sans text-xl text-slate-700 dark:text-slate-300 leading-relaxed">
                   {industry.description}
                 </p>
               </div>
@@ -180,7 +180,7 @@ export default async function IndustryDetailPage({ params }: PageProps) {
                 <AccordionItem value="details" className="border-none">
                   <AccordionTrigger className="px-8 py-6 hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors duration-300 [&[data-state=open]]:bg-slate-50/50 dark:[&[data-state=open]]:bg-slate-700/30">
                     <div className="text-left">
-                      <h2 className="text-3xl font-bold mb-2">
+                      <h2 className="font-heading text-3xl font-bold mb-2">
                         The State of{" "}
                         <span className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent">
                           {industry.name}
@@ -195,7 +195,7 @@ export default async function IndustryDetailPage({ params }: PageProps) {
                   <AccordionContent className="px-8 pb-8">
                     <div className="pt-6 border-t border-slate-200/50 dark:border-slate-700/50">
                       <div
-                        className="prose prose-slate dark:prose-invert max-w-none prose-lg ckeditor-content"
+                        className="font-sans prose prose-slate dark:prose-invert max-w-none prose-lg ckeditor-content"
                         dangerouslySetInnerHTML={{ __html: sanitizedDetails }}
                       />
                     </div>
@@ -215,7 +215,7 @@ export default async function IndustryDetailPage({ params }: PageProps) {
                     <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-2xl">
                       <AlertTriangle className="w-8 h-8 text-red-500" />
                     </div>
-                    <h3 className="text-2xl font-bold text-red-600 dark:text-red-400">
+                    <h3 className="font-heading text-2xl font-bold text-red-600 dark:text-red-400">
                       Key Challenges
                     </h3>
                   </div>
@@ -228,7 +228,7 @@ export default async function IndustryDetailPage({ params }: PageProps) {
                         className="group/item flex items-start gap-4 p-4 rounded-xl bg-slate-50/50 dark:bg-slate-700/30 hover:bg-red-50/50 dark:hover:bg-red-900/10 transition-all duration-300 hover:scale-[1.02]"
                       >
                         <div className="w-2 h-2 rounded-full bg-red-500 flex-shrink-0 mt-3 group-hover/item:scale-125 transition-transform duration-300"></div>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                        <p className="font-sans text-slate-700 dark:text-slate-300 leading-relaxed">
                           {challenge.name}
                         </p>
                       </div>
@@ -246,7 +246,7 @@ export default async function IndustryDetailPage({ params }: PageProps) {
                     <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-2xl">
                       <TrendingUp className="w-8 h-8 text-green-500" />
                     </div>
-                    <h3 className="text-2xl font-bold text-green-600 dark:text-green-400">
+                    <h3 className="font-heading text-2xl font-bold text-green-600 dark:text-green-400">
                       Growth Opportunities
                     </h3>
                   </div>
@@ -259,7 +259,7 @@ export default async function IndustryDetailPage({ params }: PageProps) {
                         className="group/item flex items-start gap-4 p-4 rounded-xl bg-slate-50/50 dark:bg-slate-700/30 hover:bg-green-50/50 dark:hover:bg-green-900/10 transition-all duration-300 hover:scale-[1.02]"
                       >
                         <div className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0 mt-3 group-hover/item:scale-125 transition-transform duration-300"></div>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                        <p className="font-sans text-slate-700 dark:text-slate-300 leading-relaxed">
                           {opportunity.name}
                         </p>
                       </div>
@@ -275,16 +275,16 @@ export default async function IndustryDetailPage({ params }: PageProps) {
             <div className="text-center mb-12">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-200/30 dark:border-blue-700/30 rounded-full mb-6">
                 <Target className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                <span className="font-semibold text-blue-600 dark:text-blue-400 text-sm">
+                <span className="font-sans font-semibold text-blue-600 dark:text-blue-400 text-sm">
                   Our Solutions
                 </span>
               </div>
-              <h2 className="text-4xl font-bold mb-4">
+              <h2 className="font-heading text-4xl font-bold mb-4">
                 <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
                   Tailored Solutions
                 </span>
               </h2>
-              <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+              <p className="font-sans text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
                 Comprehensive approaches designed specifically for the {industry.name} industry
               </p>
             </div>
@@ -323,10 +323,10 @@ export default async function IndustryDetailPage({ params }: PageProps) {
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-xl"></div>
               <div className="relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 rounded-3xl p-12">
-                <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-sky-700 bg-clip-text text-transparent">
+                <h3 className="font-heading text-3xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-sky-700 bg-clip-text text-transparent">
                   Ready to Transform Your {industry.name} Business?
                 </h3>
-                <p className="text-slate-600 dark:text-slate-400 text-lg mb-8 max-w-2xl mx-auto">
+                <p className="font-sans text-slate-600 dark:text-slate-400 text-lg mb-8 max-w-2xl mx-auto">
                   Let&apos;s discuss how our tailored solutions can address your specific challenges and unlock new opportunities in the {industry.name} sector.
                 </p>
                   {/* Call to Action Section */}
@@ -334,7 +334,7 @@ export default async function IndustryDetailPage({ params }: PageProps) {
                     <div className="flex justify-center gap-4"> {/* Use flexbox to align buttons */}
                       {/* Primary Button */}
                       <Link href="/connect">
-                        <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
+                        <div className="font-sans inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
                           <span>Get Consultation</span>
                           <ArrowUpRight className="w-5 h-5" />
                         </div>
@@ -342,7 +342,7 @@ export default async function IndustryDetailPage({ params }: PageProps) {
 
                       {/* Secondary Button */}
                       <Link href="/success-stories">
-                        <div className="inline-flex items-center gap-2 px-6 py-3 bg-slate-700 text-white font-semibold rounded-full hover:bg-slate-600 transition-all duration-300 hover:scale-105 shadow-lg cursor-pointer">
+                        <div className="font-sans inline-flex items-center gap-2 px-6 py-3 bg-slate-700 text-white font-semibold rounded-full hover:bg-slate-600 transition-all duration-300 hover:scale-105 shadow-lg cursor-pointer">
                           <span>View Case Studies</span>
                           <ArrowRight className="w-5 h-5" />
                         </div>

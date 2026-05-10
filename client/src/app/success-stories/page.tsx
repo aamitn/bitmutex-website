@@ -81,9 +81,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     <div className="container mx-auto py-20 px-4 gap-8">
       {/* Header */}
       <div className="text-center">
-        <span className="font-bold uppercase text-primary tracking-wide">{heading}</span>
+        <span className="font-sans font-bold uppercase text-primary tracking-wide">{heading}</span>
         <h2 className="font-heading text-4xl font-bold text-gray-900 dark:text-white mt-2">{sub_heading}</h2>
-        <p className="text-lg text-muted-foreground mt-3 max-w-xl mx-auto">
+        <p className="font-sans text-xl text-muted-foreground mt-3 max-w-xl mx-auto">
           {description}
         </p>
       </div>

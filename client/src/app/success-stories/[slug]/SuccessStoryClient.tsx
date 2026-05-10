@@ -105,10 +105,10 @@ export default function SuccessStoryClient({ story }: Props) {
         )}
 
         <CardHeader>
-          <CardTitle className="text-2xl sm:text-3xl font-extrabold tracking-wide bg-gradient-to-r from-blue-500 to-orange-500 bg-clip-text text-transparent">
+          <CardTitle className="font-heading text-2xl sm:text-3xl font-extrabold tracking-wide bg-gradient-to-r from-blue-500 to-orange-500 bg-clip-text text-transparent">
             {story.name}
           </CardTitle>
-          <p className="text-sm text-gray-600 dark:text-slate-300 flex items-center gap-1 mt-1">
+          <p className="font-sans text-sm text-gray-600 dark:text-slate-300 flex items-center gap-1 mt-1">
             <Briefcase className="w-4 h-4" /> {story.industry}
           </p>
         </CardHeader>
@@ -144,12 +144,12 @@ export default function SuccessStoryClient({ story }: Props) {
           {/* Success Story Heading Content */}
           <Card className="bg-gradient-to-r from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900 shadow-lg border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
             <CardHeader className="text-center space-y-4 p-6">
-              <CardTitle className="text-2xl font-light text-gray-900 dark:text-gray-100 tracking-wide leading-snug">
-                How <span className="text-blue-600 dark:text-blue-400">{story.name}</span> Embarked on a Digital Transformation Journey with <span className="text-gray-800 dark:text-gray-300 font-bold">Bitmutex</span>
+              <CardTitle className="font-sans text-2xl font-light text-gray-900 dark:text-gray-100 tracking-wide leading-snug">
+                How <span className="font-heading font-bold text-blue-600 dark:text-blue-400">{story.name}</span> Embarked on a Digital Transformation Journey with <span className="font-heading text-gray-800 dark:text-gray-300 font-bold">Bitmutex</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6">
-              <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+              <p className="font-sans text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
                 {story.content}
               </p>
             </CardContent>
@@ -182,7 +182,7 @@ export default function SuccessStoryClient({ story }: Props) {
           {/* Glimpses (Clickable Images for Lightbox) */}
           {story.glimpses.length > 0 && (
             <div className="mt-6">
-              <h4 className="text-lg font-semibold text-gray-900 dark:text-slate-300">Glimpses</h4>
+              <h4 className="font-heading text-xl font-semibold text-gray-900 dark:text-slate-300">Glimpses</h4>
               <div className="flex flex-wrap gap-4 mt-2">
                 {story.glimpses.map((glimpse: any, index: number) => (
                   <Image
@@ -240,7 +240,7 @@ export default function SuccessStoryClient({ story }: Props) {
           {story.services.length > 0 && (
             <div className="mt-4">
               <div className="flex items-center flex-wrap gap-3">
-                <h4 className="text-lg font-semibold text-gray-900 dark:text-slate-300 whitespace-nowrap">
+                <h4 className="font-heading text-lg font-semibold text-gray-900 dark:text-slate-300 whitespace-nowrap">
                   Services Provided:
                 </h4>
                 <div className="flex flex-wrap gap-2">
@@ -258,7 +258,7 @@ export default function SuccessStoryClient({ story }: Props) {
           {story.stack.length > 0 && (
             <div className="mt-4">
               <div className="flex items-center flex-wrap gap-3">
-                <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-300 whitespace-nowrap">
+                <h4 className="font-heading text-lg font-semibold text-gray-900 dark:text-gray-300 whitespace-nowrap">
                   Tech Stack Used:
                 </h4>
                 <div className="flex flex-wrap gap-2">
@@ -275,7 +275,7 @@ export default function SuccessStoryClient({ story }: Props) {
           {/* Key Impacts in Styled Cards */}
           {story.impacts.length > 0 && (
             <div className="mt-8 mb-8">
-              <h4 className="text-xl font-bold text-gray-900 dark:text-gray-200 tracking-wide">
+              <h4 className="font-heading text-xl font-bold text-gray-900 dark:text-gray-200 tracking-wide">
                 🔥 Key Impacts
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
@@ -290,10 +290,10 @@ export default function SuccessStoryClient({ story }: Props) {
                         <div className="p-3 rounded-lg bg-gradient-to-br from-primary-100 to-primary-300 dark:from-primary-700 dark:to-primary-900 shadow-md">
                           <IconComponent size={36} className="text-primary-700 dark:text-primary-300" />
                         </div>
-                        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">{impact.name}</h3>
+                        <h3 className="font-heading text-lg font-semibold text-gray-800 dark:text-gray-100">{impact.name}</h3>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-justify tracking-tight hyphens-auto">
+                        <p className="font-sans text-gray-600 dark:text-gray-300 leading-relaxed text-justify tracking-tight hyphens-auto">
                           {impact.description}
                         </p>
                       </CardContent>

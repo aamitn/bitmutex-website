@@ -123,14 +123,14 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           <div className="mb-12">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
               <div>
-                <h1 className="text-4xl py-1 md:text-5xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 dark:from-white dark:via-blue-100 dark:to-white bg-clip-text text-transparent leading-tight">
+                <h1 className="font-heading text-4xl py-1 md:text-5xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 dark:from-white dark:via-blue-100 dark:to-white bg-clip-text text-transparent leading-tight">
                   {project.name}
                 </h1>
                 {project.category && (
                   <div className="mt-4">
                     <Badge 
                       variant="default" 
-                      className="px-3 py-2 rounded-full text-xs font-medium bg-gradient-to-r from-blue-500 to-sky-600 text-white border-0 hover:from-blue-600 hover:to-sky-700 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                      className="font-sans px-3 py-2 rounded-full text-xs font-medium bg-gradient-to-r from-blue-500 to-sky-600 text-white border-0 hover:from-blue-600 hover:to-sky-700 transition-all duration-300 hover:scale-105 hover:shadow-lg"
                     >
                       {project.category}
                     </Badge>
@@ -191,10 +191,10 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           {/* Project Description */}
           <div className={`${project.imageUrl ? 'lg:col-span-1' : 'lg:col-span-3'}`}>
             <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20 dark:border-slate-700/30 hover:shadow-2xl transition-all duration-500">
-              <h2 className="text-2xl font-bold mb-6 text-slate-900 dark:text-white">
+              <h2 className="font-heading text-2xl font-bold mb-6 text-slate-900 dark:text-white">
                 Project Overview
               </h2>
-              <div className="text-slate-700 dark:text-slate-300 text-lg leading-relaxed space-y-4">
+              <div className="font-sans text-slate-700 dark:text-slate-300 text-lg leading-relaxed space-y-4">
                 {renderRichText(project.description)}
               </div>
             </div>
@@ -207,7 +207,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             <Accordion type="single" defaultValue="details" collapsible className="w-full">
               <AccordionItem value="details" className="border-none">
                 <AccordionTrigger className="px-8 py-6 text-xl font-semibold text-slate-900 dark:text-white hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors duration-300 [&[data-state=open]]:bg-slate-50/50 dark:[&[data-state=open]]:bg-slate-700/30">
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 font-heading">
                     <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
                     Technical Details & Implementation
                   </div>
@@ -229,10 +229,10 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           <div className="mt-16">
             <div className="bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-600 rounded-2xl p-1 shadow-xl hover:shadow-2xl transition-all duration-500">
               <div className="bg-white dark:bg-slate-900 rounded-[calc(1rem-2px)] p-8 text-center">
-                <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-sky-600 bg-clip-text text-transparent">
+                <h3 className="font-heading text-2xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-sky-600 bg-clip-text text-transparent">
                   Ready to Explore?
                 </h3>
-                <p className="text-slate-600 dark:text-slate-400 mb-6 text-lg">
+                <p className="font-sans text-slate-600 dark:text-slate-400 mb-6 text-lg">
                   Check out the live demo or dive into the source code to see how it&apos;s built.
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">

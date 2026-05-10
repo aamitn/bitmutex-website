@@ -184,11 +184,11 @@ export default async function BlogRoute({ searchParams }: PageProps) {
                   }`}
                 >
                   <div className="flex flex-1 flex-col gap-1 sm:gap-3 mt-4">
-                    <h4 className="text-md sm:text-lg font-semibold text-gray-900 dark:text-white">{item.title}</h4>
-                    <p className="text-sm sm:text-base text-muted-foreground mb-2 sm:mb-4 line-clamp-4">{item.description}</p>
+                    <h4 className="font-heading text-md sm:text-lg font-semibold text-gray-900 dark:text-white">{item.title}</h4>
+                    <p className="font-sans text-sm sm:text-base text-muted-foreground mb-2 sm:mb-4 line-clamp-4">{item.description}</p>
 
                     {/* Meta Information */}
-                    <div className="flex items-center gap-2 sm:gap-3 mt-auto">
+                    <div className="font-sans flex items-center gap-2 sm:gap-3 mt-auto">
                       <span className="rounded-full bg-primary/10 text-primary px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm font-medium">
                         {item.category?.text || "No Category"}
                       </span>

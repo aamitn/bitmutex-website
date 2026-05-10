@@ -34,10 +34,12 @@ export function SigninForm() {
       <form action={formAction}>
         <Card className="border-none">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-3xl font-bold">Sign In</CardTitle>
-            <CardDescription>Enter your details to sign in to your account</CardDescription>
+            <CardTitle className="text-3xl font-bold font-heading">Sign In</CardTitle>
+            <CardDescription className="font-sans">
+              Enter your details to sign in to your account
+            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 font-sans">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input

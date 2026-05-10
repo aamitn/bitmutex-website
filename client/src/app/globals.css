@@ -1,302 +1,385 @@
+@import "tailwindcss";
 @import "leaflet/dist/leaflet.css";
+@plugin "tailwindcss-animate";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* =========================================
+   DARK MODE — v4 uses @variant
+   ========================================= */
+@variant dark (&:is(.dark *));
 
+/* =========================================
+   THEME — replaces tailwind.config.js
+   ========================================= */
+@theme {
+  /* Container */
+  --container-center: true;
+  --container-padding: 2rem;
+  --breakpoint-2xl: 1200px;
+  --breakpoint-3xl: 1600px;
 
-html, body {
-  overflow-x: hidden;
- /* width: 100vw; */
-}
+  /* Border radius */
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
+  /* Colors — mapped from CSS vars so bg-primary, text-muted etc. all work */
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
 
-@media (max-width: 767px) {
-  body {
-    /* Set margin and padding to 0 to remove any default spacing */
-    margin: 0;
-    padding: 0;
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-sidebar: hsl(var(--sidebar-background));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  --color-chart-1: hsl(12 76% 61%);
+  --color-chart-2: hsl(173 58% 39%);
+  --color-chart-3: hsl(197 37% 24%);
+  --color-chart-4: hsl(43 74% 66%);
+  --color-chart-5: hsl(27 87% 67%);
+
+  /* Font families */
+  --font-family-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-family-heading: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+  --font-family-mono: var(--font-mono), ui-monospace, "Cascadia Code", monospace;
+
+  /* Accordion animations */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from { height: 0; }
+    to   { height: var(--radix-accordion-content-height); }
   }
-
-    /* Used in Blog Slug Page Content */
-  .full-width-element {
-    /* Ensure the element takes up the full width of the viewport */
-    width: 100%;
-    /* Remove any padding or margin on the element itself */
-    padding: 1;
-    margin: 1;
-    /* This ensures content doesn't create horizontal scrollbars */
-    box-sizing: border-box; 
-  }
-}
-
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
-  }
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height); }
+    to   { height: 0; }
   }
 }
 
+/* =========================================
+   CSS VARIABLES — light tokens
+   (kept as raw channel values so hsl() wrapping
+    in @theme above works with alpha modifiers)
+   ========================================= */
+:root {
+  --radius: 0.5rem;
+
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 3.9%;
+  --primary: 240 5.9% 10%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 240 4.8% 95.9%;
+  --secondary-foreground: 240 5.9% 10%;
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+  --accent: 240 4.8% 95.9%;
+  --accent-foreground: 240 5.9% 10%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --ring: 240 10% 3.9%;
+
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 240 5.3% 26.1%;
+  --sidebar-primary: 240 5.9% 10%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 4.8% 95.9%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+
+  /* Hero gradient */
+  --text-gradient-light-1: #007aff;
+  --text-gradient-light-2: #5856d6;
+  --text-gradient-light-3: #ff9500;
+  --shadow-light: rgba(0, 0, 0, 0.2);
+  --code-text: #3a414c;
+  --line-number: #6d7b76;
+}
+
+/* =========================================
+   CSS VARIABLES — dark tokens
+   ========================================= */
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 240 5.9% 10%;
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 240 4.9% 83.9%;
+
+  --sidebar-background: 240 5.9% 10%;
+  --sidebar-foreground: 240 4.8% 95.9%;
+  --sidebar-primary: 224.3 76.3% 48%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 240 3.7% 15.9%;
+  --sidebar-accent-foreground: 240 4.8% 95.9%;
+  --sidebar-border: 240 3.7% 15.9%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+
+  --text-gradient-light-1: #0a84ff;
+  --text-gradient-light-2: #5e5ce6;
+  --text-gradient-light-3: #ff9f0a;
+  --shadow-light: rgba(255, 255, 255, 0.2);
+  --code-text: #cbd5e1;
+  --line-number: #94a3b8;
+}
+
+/* =========================================
+   BASE STYLES
+   ========================================= */
 @layer base {
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
   }
+
+  html,
   body {
-    @apply bg-background text-foreground;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @media (max-width: 767px) {
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .full-width-element {
+      width: 100%;
+      padding: 1px;
+      margin: 1px;
+      box-sizing: border-box;
+    }
   }
 }
 
-
-/******************************************* 
-  Rich Text Styles - Mobile Optimized & Modern
-*******************************************/ 
-
-/* Responsive Headers */
+/* =========================================
+   RICH TEXT STYLES
+   ========================================= */
 .rich-text h1 {
-  @apply text-2xl sm:text-3xl md:text-4xl font-bold mb-5 text-primary leading-tight tracking-tight;
+  @apply text-2xl sm:text-3xl md:text-4xl font-bold mb-5 leading-tight tracking-tight;
+  color: hsl(var(--primary));
 }
-
 .rich-text h2 {
-  @apply text-xl sm:text-2xl md:text-3xl font-bold mb-5 text-primary leading-tight;
+  @apply text-xl sm:text-2xl md:text-3xl font-bold mb-5 leading-tight;
+  color: hsl(var(--primary));
 }
-
 .rich-text h3 {
-  @apply text-lg sm:text-xl md:text-2xl font-bold mb-4 text-primary leading-tight;
+  @apply text-lg sm:text-xl md:text-2xl font-bold mb-4 leading-tight;
+  color: hsl(var(--primary));
 }
-
 .rich-text h4 {
-  @apply text-base sm:text-lg md:text-xl font-bold mb-4 text-primary;
+  @apply text-base sm:text-lg md:text-xl font-bold mb-4;
+  color: hsl(var(--primary));
 }
-
 .rich-text h5 {
-  @apply text-sm sm:text-base md:text-lg font-bold mb-3 text-primary;
+  @apply text-sm sm:text-base md:text-lg font-bold mb-3;
+  color: hsl(var(--primary));
 }
-
 .rich-text h6 {
-  @apply text-xs sm:text-sm md:text-base font-bold mb-3 text-primary uppercase tracking-wider;
+  @apply text-xs sm:text-sm md:text-base font-bold mb-3 uppercase tracking-wider;
+  color: hsl(var(--primary));
 }
 
-/* Horizontal Rules */
 .rich-text hr {
-  @apply border-t border-muted-foreground my-6 opacity-70;
+  @apply border-t my-6 opacity-70;
+  border-color: hsl(var(--muted-foreground));
 }
 
-/* Links - Touch-friendly & Accessible */
 .rich-text a {
-  @apply text-primary underline underline-offset-2 hover:text-primary/80 
-        transition-colors duration-200 break-words;
+  @apply underline underline-offset-2 transition-colors duration-200 break-words;
+  color: hsl(var(--primary));
 }
-
 .rich-text a:hover,
 .rich-text a:focus {
-  @apply opacity-90;
+  opacity: 0.9;
 }
 
-/* Paragraphs - Optimized for mobile reading */
 .rich-text p {
-  @apply mb-5 text-base leading-relaxed text-muted-foreground tracking-normal;
+  @apply mb-5 text-base leading-relaxed tracking-normal;
+  color: hsl(var(--muted-foreground));
 }
 
-/* Emphasis */
 .rich-text strong {
-  @apply font-bold text-foreground;
+  @apply font-bold;
+  color: hsl(var(--foreground));
 }
-
 .rich-text em {
-  @apply italic text-foreground;
+  @apply italic;
+  color: hsl(var(--foreground));
 }
-
 .rich-text del {
-  @apply line-through text-muted-foreground;
+  @apply line-through;
+  color: hsl(var(--muted-foreground));
 }
 
-/* Blockquotes - Mobile refined */
 .rich-text blockquote {
-  @apply border-l-4 border-accent-foreground pl-4 py-3 my-6 bg-muted/30 dark:bg-muted/20 
-         rounded-r-lg text-muted-foreground italic leading-relaxed;
+  @apply border-l-4 pl-4 py-3 my-6 rounded-r-lg italic leading-relaxed;
+  border-color: hsl(var(--accent-foreground));
+  background-color: color-mix(in srgb, hsl(var(--muted)) 30%, transparent);
+  color: hsl(var(--muted-foreground));
 }
 
-/* Lists - Mobile spacing & nesting */
-.rich-text ul, .rich-text ol {
+.rich-text ul,
+.rich-text ol {
   @apply pl-5 sm:pl-6 mb-5 space-y-2;
 }
-
 .rich-text li {
-  @apply leading-relaxed text-muted-foreground text-base text-zinc-600 dark:text-zinc-300;
+  @apply leading-relaxed text-base text-zinc-600 dark:text-zinc-300;
 }
-
-/* Nested lists - better hierarchy */
 .rich-text li > ul,
 .rich-text li > ol {
   @apply mt-2 mb-0;
 }
-
-.rich-text ul ul, .rich-text ol ol,
-.rich-text ul ol, .rich-text ol ul {
+.rich-text ul ul,
+.rich-text ol ol,
+.rich-text ul ol,
+.rich-text ol ul {
   @apply mt-2;
 }
 
-/* Code Blocks - Mobile scrollable */
 .rich-text pre {
-  /* Core layout and typography */
-  @apply font-mono text-sm leading-relaxed
-         bg-gray-100 dark:bg-slate-900 text-gray-800 dark:text-gray-200
-         rounded-2xl shadow-md transition-all duration-300;
-
-  /* Spacing and overflow */
-  @apply p-0 m-0;
-
-  /* Custom styling for code readability */
+  @apply font-mono text-sm leading-relaxed rounded-2xl shadow-md transition-all duration-300 p-0 m-0;
+  background-color: #f3f4f6;
+  color: #1f2937;
   tab-size: 2;
   white-space: pre;
 
-  /* Hover effect for a touch of interactivity */
   &:hover {
     @apply shadow-xl;
   }
 }
+.dark .rich-text pre {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
 
-/* Inline code */
 .rich-text code {
-  @apply font-mono text-xs sm:text-sm px-0 py-0.5 rounded bg-muted dark:bg-gray-800 
-         text-foreground;
+  @apply font-mono text-xs sm:text-sm px-0 py-0.5 rounded;
+  background-color: hsl(var(--muted));
+  color: hsl(var(--foreground));
+}
+.dark .rich-text code {
+  background-color: #1e293b;
 }
 
-/* Tables - Responsive & mobile-friendly */
 .rich-text table {
-  @apply w-full border-collapse my-6 overflow-hidden rounded-lg overflow-x-auto;
-}
-
-.rich-text th,
-.rich-text td {
-  @apply px-3 sm:px-4 py-3 text-left text-sm sm:text-base border-b border-border;
-}
-
-.rich-text th {
-  @apply bg-muted/50 dark:bg-muted/30 font-semibold text-foreground;
-}
-
-.rich-text tr:last-child td {
-  @apply border-b-0;
-}
-
-/* Make tables scrollable on mobile */
-.rich-text table {
+  @apply w-full border-collapse my-6 rounded-lg;
   display: block;
-  width: 100%;
+  overflow-x: auto;
 }
-
-.rich-text thead, .rich-text tbody, .rich-text tr {
+.rich-text thead,
+.rich-text tbody,
+.rich-text tr {
   display: table;
   width: 100%;
   table-layout: fixed;
 }
-
-.rich-text th, .rich-text td {
+.rich-text th,
+.rich-text td {
+  @apply px-3 sm:px-4 py-3 text-left text-sm sm:text-base;
   display: table-cell;
+  border-bottom: 1px solid hsl(var(--border));
+}
+.rich-text th {
+  @apply font-semibold;
+  background-color: color-mix(in srgb, hsl(var(--muted)) 50%, transparent);
+  color: hsl(var(--foreground));
+}
+.rich-text tr:last-child td {
+  border-bottom: none;
 }
 
-/* Images - Full-width, responsive, and safe */
 .rich-text img {
-  @apply w-full h-auto object-cover rounded-xl my-6 max-w-full 
-         shadow-sm transition-shadow duration-300;
+  @apply w-full h-auto object-cover rounded-xl my-6 max-w-full shadow-sm transition-shadow duration-300;
 }
-
 .rich-text img:hover {
   @apply shadow-md;
 }
-
-/* Ensure figures don't add extra margin */
 .rich-text figure {
   @apply m-0;
 }
-
 .rich-text figure img {
   @apply w-full h-auto;
 }
-
 .rich-text figcaption {
-  @apply text-center text-sm text-muted-foreground mt-2 italic;
+  @apply text-center text-sm mt-2 italic;
+  color: hsl(var(--muted-foreground));
 }
 
-/* Custom Containers */
 .rich-text .warning {
-  @apply bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-500 
-         text-yellow-800 dark:text-yellow-200 p-4 rounded-r-lg my-6;
+  @apply border-l-4 border-yellow-500 p-4 rounded-r-lg my-6 bg-yellow-50 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-200;
 }
-
-/* Info/Note blocks (optional extension) */
 .rich-text .info {
-  @apply bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 
-         text-blue-800 dark:text-blue-200 p-4 rounded-r-lg my-6;
+  @apply border-l-4 border-blue-500 p-4 rounded-r-lg my-6 bg-blue-50 text-blue-800 dark:bg-blue-900/20 dark:text-blue-200;
 }
 
-/* Responsive adjustments for small screens */
 @media (max-width: 640px) {
-  .rich-text h1 { @apply text-2xl; }
-  .rich-text h2 { @apply text-xl; }
-  .rich-text h3 { @apply text-lg; }
-  .rich-text p { @apply text-base leading-relaxed; }
-  .rich-text pre { @apply text-xs p-3; }
-  .rich-text code { @apply text-xs; }
-  .rich-text blockquote { @apply pl-3; }
-  .rich-text ul, .rich-text ol { @apply pl-5; }
+  .rich-text h1 { font-size: 1.5rem; }
+  .rich-text h2 { font-size: 1.25rem; }
+  .rich-text h3 { font-size: 1.125rem; }
+  .rich-text p  { font-size: 1rem; line-height: 1.625; }
+  .rich-text pre { font-size: 0.75rem; padding: 0.75rem; }
+  .rich-text code { font-size: 0.75rem; }
+  .rich-text blockquote { padding-left: 0.75rem; }
+  .rich-text ul,
+  .rich-text ol { padding-left: 1.25rem; }
 }
 
-
-/* Print & accessibility: Modern, professional link styling */
+/* External links */
 .rich-text a[href^="http"]:not([href*="localhost"]) {
   position: relative;
   text-decoration: underline;
@@ -305,17 +388,13 @@ body {
   color: rgba(200, 95, 50, 1);
   transition: color 0.3s ease, text-decoration-color 0.3s ease;
 }
-
-/* External link icon (always present) */
-.rich-text a[href^="http"]:not([href*="localhost"]):after {
+.rich-text a[href^="http"]:not([href*="localhost"])::after {
   content: "↗";
   font-size: 0.9em;
   opacity: 0.7;
   margin-left: 0.25em;
   display: inline-block;
 }
-
-/* Hidden URL span (shown on hover) */
 .rich-text a[href^="http"]:not([href*="localhost"])::before {
   content: " (" attr(href) ")";
   font-size: 0.9em;
@@ -328,71 +407,25 @@ body {
   left: 0;
   white-space: nowrap;
   background: rgba(0, 0, 0, 0.9);
-  color :rgba(255, 255, 250);
+  color: rgba(255, 255, 250, 1);
   padding: 2px 6px;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transform: translateY(-4px);
   transition: all 0.3s ease-in-out;
 }
-
-/* Show URL tooltip on hover */
 .rich-text a[href^="http"]:not([href*="localhost"]):hover::before {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
-
-/* Optional: keep icon subtle */
 .rich-text a[href^="http"]:not([href*="localhost"]):hover::after {
   opacity: 0.5;
 }
 
-@media print {
-  .rich-text pre {
-    overflow: visible;
-    white-space: pre-wrap;
-  }
-  .rich-text img {
-    max-height: 60vh;
-    object-fit: contain;
-  }
-  .rich-text a[href^="http"]:not([href*="localhost"]):after {
-    content: " (" attr(href) ") ";
-    font-size: 0.7em;
-    opacity: 0.6;
-    transform: none;
-    margin-left: 0.5em;
-  }
-  .rich-text a:after {
-    color: #000;
-  }
-}
-
-
-
-/* //Hero 3rd word style */
-
-:root {
-  /* Light mode colors */
-  --text-gradient-light-1: #007aff;
-  --text-gradient-light-2: #5856d6;
-  --text-gradient-light-3: #ff9500;
-  --shadow-light: rgba(0, 0, 0, 0.2);
-  --code-text: #3a414c;       /* slate-700 */
-  --line-number: #6d7b76;     /* slate-600 */
-}
-
-.dark {
-  /* Dark mode colors */
-  --text-gradient-light-1: #0a84ff;
-  --text-gradient-light-2: #5e5ce6;
-  --text-gradient-light-3: #ff9f0a;
-  --shadow-light: rgba(255, 255, 255, 0.2);
-  --code-text: #cbd5e1;       /* slate-300 */
-  --line-number: #94a3b8;     /* slate-400 */
-}
-
+/* =========================================
+   HERO GRADIENT ANIMATION
+   ========================================= */
 @keyframes pulseGradient {
   0% {
     background-position: 0% 50%;
@@ -426,31 +459,76 @@ body {
   transition: all 0.3s ease-out;
 }
 
-
+/* =========================================
+   GLASSMORPHIC CARD
+   ========================================= */
 .glassmorphic-card {
   background: rgba(255, 255, 255, 0.15);
-  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-radius: 12px;
   box-shadow: 0px 8px 10px rgba(31, 38, 135, 0.2);
   transition: transform 0.3s ease-in-out;
 }
 
-
-
-/* Leaflet OpenStreetMaps Styles */
-
+/* =========================================
+   LEAFLET OVERRIDES
+   ========================================= */
 .leaflet-container {
-  position: relative !important; /* Ensure it's positioned properly */
-  z-index: 0 !important; /* Push it below other elements */
+  position: relative !important;
+  z-index: 0 !important;
 }
-
 .custom-cluster-icon {
-  z-index: 1000 !important; /* Ensure clusters remain clickable */
+  z-index: 1000 !important;
 }
-
 .leaflet-top,
 .leaflet-bottom {
-  z-index: 1000 !important; /* Keep controls above the map */
+  z-index: 1000 !important;
+}
+
+/* =========================================
+   PRINT
+   ========================================= */
+@media print {
+  .rich-text pre {
+    overflow: visible;
+    white-space: pre-wrap;
+  }
+  .rich-text img {
+    max-height: 60vh;
+    object-fit: contain;
+  }
+  .rich-text a[href^="http"]:not([href*="localhost"])::after {
+    content: " (" attr(href) ") ";
+    font-size: 0.7em;
+    opacity: 0.6;
+    transform: none;
+    margin-left: 0.5em;
+  }
+  .rich-text a::after {
+    color: #000;
+  }
+}
+
+@layer components {
+  .container {
+    @apply mx-auto w-full max-w-7xl px-4;
+  }
+
+  .font-sans {
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .font-heading {
+    font-family: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .font-mono {
+    font-family: var(--font-mono), ui-monospace, "Cascadia Code", monospace;
+  }
+
+  .font-special {
+    font-family: var(--font-special), ui-serif, system-ui, sans-serif;
+  }
 }
 

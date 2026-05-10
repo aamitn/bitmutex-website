@@ -105,18 +105,18 @@ export default async function ServicesPage() {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600/10 to-purple-600/10 border border-blue-200/50 dark:border-blue-800/50 mb-6">
             <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-            <span className="text-sm font-semibold text-blue-700 dark:text-blue-300 tracking-wide uppercase">
+            <span className="font-sans text-sm font-semibold text-blue-700 dark:text-blue-300 tracking-wide uppercase">
               {heading || "Our Services"}
             </span>
           </div>
 
           {/* Main Heading */}
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-br from-slate-900 via-slate-700 to-slate-600 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent leading-tight mb-6">
+          <h1 className="font-heading text-3xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-br from-slate-900 via-slate-700 to-slate-600 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent leading-tight mb-6">
             {sub_heading || "Premium Solutions"}
           </h1>
 
           {/* Description */}
-          <p className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto">
+          <p className="font-sanstext-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto">
             {description || "Discover our comprehensive suite of cutting-edge services designed to elevate your business."}
           </p>
 
@@ -160,14 +160,14 @@ export default async function ServicesPage() {
                   </div>
 
                   {/* Service Title */}
-                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors duration-300">
+                  <h3 className="font-heading text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors duration-300">
                     {service.name}
                   </h3>
                 </CardHeader>
 
                 <CardContent className="relative z-10 px-8 pb-8 flex-1 flex flex-col">
                   {/* Description */}
-                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-6 flex-1 line-clamp-3">
+                  <p className="font-sans text-slate-600 dark:text-slate-400 leading-relaxed mb-6 flex-1 line-clamp-3">
                     {service.description}
                   </p>
 
@@ -194,7 +194,7 @@ export default async function ServicesPage() {
         {/* Call to Action Section */}
         <div className="text-center mt-20 pt-16 border-t border-slate-200/50 dark:border-slate-800/50">
           <Link href="/connect"> {/* <-- Add your desired path here */}
-            <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
+            <div className="font-heading inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
               <span>Ready to get started?</span>
               <ArrowUpRight className="w-5 h-5" />
             </div>
