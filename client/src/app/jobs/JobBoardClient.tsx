@@ -138,7 +138,7 @@ export default function JobBoardClient({ initialJobs }: JobBoardClientProps) {
               <Link
               href={`/jobs/${job.documentID}`}
               key={job.documentID}
-              className="block group bg-white dark:bg-gray-900 rounded-2xl shadow-md hover:shadow-xl transition-shadow transform hover:-translate-y-1 hover:scale-[1.02] duration-300 cursor-pointer p-6 flex flex-col min-h-full"
+              className="group bg-white dark:bg-gray-900 rounded-2xl shadow-md hover:shadow-xl transition-shadow transform hover:-translate-y-1 hover:scale-[1.02] duration-300 cursor-pointer p-6 flex flex-col min-h-full"
               aria-label={`View details for ${job.title}`}
             >
               <CardHeader className="p-0 mb-4">
@@ -147,7 +147,7 @@ export default function JobBoardClient({ initialJobs }: JobBoardClientProps) {
                 </CardTitle>
               </CardHeader>
 
-              <CardContent className="font-sans p-0 flex flex-col flex-grow space-y-4 text-gray-700 dark:text-gray-300">
+              <CardContent className="font-sans p-0 flex flex-col grow space-y-4 text-gray-700 dark:text-gray-300">
                 <p className="text-sm leading-relaxed line-clamp-3">{job.description}</p>
 
                 <div className="flex flex-wrap gap-4 text-sm">
@@ -169,14 +169,14 @@ export default function JobBoardClient({ initialJobs }: JobBoardClientProps) {
               </CardContent>
 
               <footer className="mt-auto pt-6">
-                <div className="font-heading bg-red-50 dark:bg-red-900 text-red-700 dark:text-red-400 rounded-xl py-2 px-4 font-semibold text-sm max-w-full break-words">
+                <div className="font-heading bg-red-50 dark:bg-red-900 text-red-700 dark:text-red-400 rounded-xl py-2 px-4 font-semibold text-sm max-w-full wrap-break-word">
                   Application Deadline: {job.deadline}
                 </div>
 
                 {/* Button appears only on hover */}
                 <div className="mt-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <Button
-                    className="font-heading w-full py-3 text-base font-semibold rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg transition-transform transform group-hover:scale-105 focus:outline-none focus:ring-4 focus:ring-indigo-400"
+                    className="font-heading w-full py-3 text-base font-semibold rounded-xl bg-linear-to-r from-indigo-600 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg transition-transform transform group-hover:scale-105 focus:outline-none focus:ring-4 focus:ring-indigo-400"
                   >
                     View Details
                   </Button>

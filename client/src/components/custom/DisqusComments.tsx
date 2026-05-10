@@ -76,16 +76,16 @@ const DisqusComments: React.FC<DisqusCommentsProps> = ({ post, currentUser }) =>
     <div className="container mx-auto max-w-6xl px-4 py-8">
       <div className="relative">
         {/* Decorative background elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-purple-50/30 to-pink-50/50 dark:from-blue-950/20 dark:via-purple-950/20 dark:to-pink-950/20 rounded-3xl transform -rotate-1"></div>
-        <div className="absolute inset-0 bg-gradient-to-tl from-indigo-50/40 via-cyan-50/20 to-teal-50/40 dark:from-indigo-950/15 dark:via-cyan-950/15 dark:to-teal-950/15 rounded-3xl transform rotate-1"></div>
+        <div className="absolute inset-0 bg-linear-to-br from-blue-50/50 via-purple-50/30 to-pink-50/50 dark:from-blue-950/20 dark:via-purple-950/20 dark:to-pink-950/20 rounded-3xl transform -rotate-1"></div>
+        <div className="absolute inset-0 bg-linear-to-tl from-indigo-50/40 via-cyan-50/20 to-teal-50/40 dark:from-indigo-950/15 dark:via-cyan-950/15 dark:to-teal-950/15 rounded-3xl transform rotate-1"></div>
 
         <Card className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-2xl border-0 ring-1 ring-gray-200/50 dark:ring-gray-700/50 rounded-2xl overflow-hidden">
           {/* Gradient header bar */}
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 via-yellow-400 to-orange-400"></div>
+          <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-orange-500 via-yellow-400 to-orange-400"></div>
 
           <CardHeader className="pb-6 pt-8">
             <div className="flex items-center justify-between">
-              <CardTitle className="flex items-center gap-4 text-2xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 dark:from-gray-100 dark:via-gray-200 dark:to-gray-300 bg-clip-text text-transparent">
+              <CardTitle className="flex items-center gap-4 text-2xl font-bold bg-linear-to-r from-gray-900 via-gray-800 to-gray-700 dark:from-gray-100 dark:via-gray-200 dark:to-gray-300 bg-clip-text text-transparent">
                 <div className="relative">
                   <MessageSquare className="h-8 w-8 text-blue-600 dark:text-blue-400 drop-shadow-sm" />
                   <Sparkles className="absolute -top-1 -right-1 h-4 w-4 text-yellow-500 animate-pulse" />
@@ -101,7 +101,7 @@ const DisqusComments: React.FC<DisqusCommentsProps> = ({ post, currentUser }) =>
                     <Skeleton className="h-5 w-16" />
                   </div>
                 ) : (
-                  <div className="group flex items-center gap-2 bg-gradient-to-r from-orange-500 to-amber-700 text-slate-100 px-4 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer">
+                  <div className="group flex items-center gap-2 bg-linear-to-r from-orange-500 to-amber-700 text-slate-100 px-4 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer">
                     <Users className="h-4 w-4 transition-transform group-hover:scale-110" />
                     {/* Safe to render now — mounted is true, config is fully formed */}
                     <CommentCount shortname="bitmutex" config={disqusConfig}>

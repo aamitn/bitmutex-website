@@ -108,17 +108,17 @@ export default async function IndustryDetailPage({ params }: PageProps) {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-20 w-72 h-72 bg-gradient-to-r from-blue-400/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 left-20 w-96 h-96 bg-gradient-to-r from-cyan-400/10 to-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-20 right-20 w-72 h-72 bg-linear-to-r from-blue-400/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 left-20 w-96 h-96 bg-linear-to-r from-cyan-400/10 to-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       <div className="relative">
         {/* Hero Section */}
         <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-purple-600/10 to-cyan-600/20"></div>
+          <div className="absolute inset-0 bg-linear-to-br from-blue-600/20 via-purple-600/10 to-cyan-600/20"></div>
           
           <div className="relative container mx-auto px-6 pt-24 pb-16">
             {/* Navigation */}
@@ -137,14 +137,14 @@ export default async function IndustryDetailPage({ params }: PageProps) {
             {/* Industry Header */}
             <div className="flex flex-col lg:flex-row items-start lg:items-center gap-8 mb-12">
               <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl blur-2xl opacity-50 group-hover:opacity-75 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-linear-to-r from-blue-500 to-purple-600 rounded-3xl blur-2xl opacity-50 group-hover:opacity-75 transition-opacity duration-500"></div>
                 <div className="relative p-8 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-3xl border border-white/20 dark:border-slate-700/30 group-hover:scale-105 transition-transform duration-500">
                   <IconComponent className="w-16 h-16 text-blue-600 dark:text-blue-400" />
                 </div>
               </div>
               
               <div className="flex-1">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-200/30 dark:border-blue-700/30 rounded-full mb-4">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-linear-to-r from-blue-500/10 to-purple-500/10 border border-blue-200/30 dark:border-blue-700/30 rounded-full mb-4">
                   <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   <span className="font-sans font-semibold text-blue-600 dark:text-blue-400 text-sm">
                     Industry Focus
@@ -152,7 +152,7 @@ export default async function IndustryDetailPage({ params }: PageProps) {
                 </div>
                 
                 <h1 className="font-heading text-5xl lg:text-6xl font-bold mb-4">
-                  <span className="bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 dark:from-white dark:via-blue-100 dark:to-white bg-clip-text text-transparent">
+                  <span className="bg-linear-to-r from-slate-900 via-blue-900 to-slate-900 dark:from-white dark:via-blue-100 dark:to-white bg-clip-text text-transparent">
                     {industry.name}
                   </span>
                 </h1>
@@ -162,7 +162,7 @@ export default async function IndustryDetailPage({ params }: PageProps) {
             {/* Industry Description */}
             <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20 dark:border-slate-700/30 hover:shadow-2xl transition-all duration-500">
               <div className="flex items-start gap-4">
-                <div className="w-1 h-16 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full flex-shrink-0"></div>
+                <div className="w-1 h-16 bg-linear-to-b from-blue-500 to-purple-600 rounded-full shrink-0"></div>
                 <p className="font-sans text-xl text-slate-700 dark:text-slate-300 leading-relaxed">
                   {industry.description}
                 </p>
@@ -178,11 +178,11 @@ export default async function IndustryDetailPage({ params }: PageProps) {
             <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/30 overflow-hidden hover:shadow-2xl transition-all duration-500">
               <Accordion type="single" collapsible defaultValue="details" className="w-full">
                 <AccordionItem value="details" className="border-none">
-                  <AccordionTrigger className="px-8 py-6 hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors duration-300 [&[data-state=open]]:bg-slate-50/50 dark:[&[data-state=open]]:bg-slate-700/30">
+                  <AccordionTrigger className="px-8 py-6 hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors duration-300 data-[state=open]:bg-slate-50/50 dark:data-[state=open]:bg-slate-700/30">
                     <div className="text-left">
                       <h2 className="font-heading text-3xl font-bold mb-2">
                         The State of{" "}
-                        <span className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent">
+                        <span className="bg-linear-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent">
                           {industry.name}
                         </span>{" "}
                         Industry
@@ -227,7 +227,7 @@ export default async function IndustryDetailPage({ params }: PageProps) {
                         key={index}
                         className="group/item flex items-start gap-4 p-4 rounded-xl bg-slate-50/50 dark:bg-slate-700/30 hover:bg-red-50/50 dark:hover:bg-red-900/10 transition-all duration-300 hover:scale-[1.02]"
                       >
-                        <div className="w-2 h-2 rounded-full bg-red-500 flex-shrink-0 mt-3 group-hover/item:scale-125 transition-transform duration-300"></div>
+                        <div className="w-2 h-2 rounded-full bg-red-500 shrink-0 mt-3 group-hover/item:scale-125 transition-transform duration-300"></div>
                         <p className="font-sans text-slate-700 dark:text-slate-300 leading-relaxed">
                           {challenge.name}
                         </p>
@@ -258,7 +258,7 @@ export default async function IndustryDetailPage({ params }: PageProps) {
                         key={index}
                         className="group/item flex items-start gap-4 p-4 rounded-xl bg-slate-50/50 dark:bg-slate-700/30 hover:bg-green-50/50 dark:hover:bg-green-900/10 transition-all duration-300 hover:scale-[1.02]"
                       >
-                        <div className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0 mt-3 group-hover/item:scale-125 transition-transform duration-300"></div>
+                        <div className="w-2 h-2 rounded-full bg-green-500 shrink-0 mt-3 group-hover/item:scale-125 transition-transform duration-300"></div>
                         <p className="font-sans text-slate-700 dark:text-slate-300 leading-relaxed">
                           {opportunity.name}
                         </p>
@@ -273,14 +273,14 @@ export default async function IndustryDetailPage({ params }: PageProps) {
           {/* Solutions Section */}
           <div className="mb-16">
             <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-200/30 dark:border-blue-700/30 rounded-full mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-linear-to-r from-blue-500/10 to-purple-500/10 border border-blue-200/30 dark:border-blue-700/30 rounded-full mb-6">
                 <Target className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 <span className="font-sans font-semibold text-blue-600 dark:text-blue-400 text-sm">
                   Our Solutions
                 </span>
               </div>
               <h2 className="font-heading text-4xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
+                <span className="bg-linear-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
                   Tailored Solutions
                 </span>
               </h2>
@@ -298,8 +298,8 @@ export default async function IndustryDetailPage({ params }: PageProps) {
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       <div className="relative">
-                        <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl blur-md opacity-0 group-hover:opacity-30 transition-opacity duration-500"></div>
-                        <div className="relative p-3 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-slate-700 dark:to-slate-600 rounded-xl group-hover:from-blue-100 group-hover:to-purple-100 dark:group-hover:from-slate-600 dark:group-hover:to-slate-500 transition-all duration-500">
+                        <div className="absolute inset-0 bg-linear-to-r from-blue-500 to-purple-600 rounded-xl blur-md opacity-0 group-hover:opacity-30 transition-opacity duration-500"></div>
+                        <div className="relative p-3 bg-linear-to-br from-blue-50 to-purple-50 dark:from-slate-700 dark:to-slate-600 rounded-xl group-hover:from-blue-100 group-hover:to-purple-100 dark:group-hover:from-slate-600 dark:group-hover:to-slate-500 transition-all duration-500">
                           <CheckCircle2 className="w-6 h-6 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform duration-500" />
                         </div>
                       </div>
@@ -312,7 +312,7 @@ export default async function IndustryDetailPage({ params }: PageProps) {
                   </CardContent>
                   
                   {/* Hover accent */}
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-blue-500 via-purple-500 to-cyan-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                 </Card>
               ))}
             </div>
@@ -321,9 +321,9 @@ export default async function IndustryDetailPage({ params }: PageProps) {
           {/* CTA Section */}
           <div className="text-center">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-xl"></div>
+              <div className="absolute inset-0 bg-linear-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-xl"></div>
               <div className="relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 rounded-3xl p-12">
-                <h3 className="font-heading text-3xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-sky-700 bg-clip-text text-transparent">
+                <h3 className="font-heading text-3xl font-bold mb-4 bg-linear-to-r from-blue-600 to-sky-700 bg-clip-text text-transparent">
                   Ready to Transform Your {industry.name} Business?
                 </h3>
                 <p className="font-sans text-slate-600 dark:text-slate-400 text-lg mb-8 max-w-2xl mx-auto">
@@ -334,7 +334,7 @@ export default async function IndustryDetailPage({ params }: PageProps) {
                     <div className="flex justify-center gap-4"> {/* Use flexbox to align buttons */}
                       {/* Primary Button */}
                       <Link href="/connect">
-                        <div className="font-sans inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
+                        <div className="font-sans inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
                           <span>Get Consultation</span>
                           <ArrowUpRight className="w-5 h-5" />
                         </div>

@@ -35,7 +35,7 @@ export default function LiveUserCount() {
       <Tooltip>
         <TooltipTrigger asChild>
           <div
-            className="z-[999] fixed bottom-20 right-4 flex items-center justify-center 
+            className="z-999 fixed bottom-20 right-4 flex items-center justify-center 
                        w-8 h-8 bg-white dark:bg-slate-800 shadow-lg rounded-full border border-gray-300 dark:border-orange-400
                        hover:shadow-xl transition-all cursor-pointer"
           >

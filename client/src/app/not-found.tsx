@@ -1,6 +1,5 @@
 "use client";
 
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Home, Search, RefreshCw } from "lucide-react";
 import Link from "next/link";
@@ -106,7 +105,7 @@ export default function NotFoundPage() {
         const deltaY = event.clientY - centerY;
         
         // Calculate angle and distance
-        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        const distance = Math.hypot(deltaX, deltaY);
         const maxDistance = Math.min(window.innerWidth, window.innerHeight) * 0.5;
         
         // Normalize and apply smooth scaling with increased range
@@ -121,10 +120,10 @@ export default function NotFoundPage() {
         targetY = Math.max(-1.2, Math.min(1.2, targetY));
       };
 
-      window.addEventListener("mousemove", handleMouseMove);
+      globalThis.addEventListener("mousemove", handleMouseMove);
       
       return () => {
-        window.removeEventListener("mousemove", handleMouseMove);
+        globalThis.removeEventListener("mousemove", handleMouseMove);
       };
     };
 
@@ -269,7 +268,7 @@ export default function NotFoundPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-blue-900 dark:to-indigo-950 flex items-center justify-center p-4 overflow-hidden relative">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-blue-900 dark:to-indigo-950 flex items-center justify-center p-4 overflow-hidden relative">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-orange-300 dark:bg-orange-400 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-30 dark:opacity-40 animate-blob"></div>
@@ -308,7 +307,7 @@ export default function NotFoundPage() {
                 whileHover={{ scale: 1.1 }}
                 transition={{ type: "spring", stiffness: 300, damping: 25 }}
               >
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-white to-blue-50 dark:from-slate-800 dark:to-blue-900 shadow-xl dark:shadow-2xl border-4 border-orange-200 dark:border-orange-400/30 backdrop-blur-sm overflow-hidden">
+                <div className="w-24 h-24 rounded-full bg-linear-to-br from-white to-blue-50 dark:from-slate-800 dark:to-blue-900 shadow-xl dark:shadow-2xl border-4 border-orange-200 dark:border-orange-400/30 backdrop-blur-sm overflow-hidden">
                   <canvas ref={leftEyeRef} className="w-full h-full"></canvas>
                 </div>
               </motion.div>
@@ -317,20 +316,20 @@ export default function NotFoundPage() {
                 whileHover={{ scale: 1.1 }}
                 transition={{ type: "spring", stiffness: 300, damping: 25 }}
               >
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-white to-blue-50 dark:from-slate-800 dark:to-blue-900 shadow-xl dark:shadow-2xl border-4 border-orange-200 dark:border-orange-400/30 backdrop-blur-sm overflow-hidden">
+                <div className="w-24 h-24 rounded-full bg-linear-to-br from-white to-blue-50 dark:from-slate-800 dark:to-blue-900 shadow-xl dark:shadow-2xl border-4 border-orange-200 dark:border-orange-400/30 backdrop-blur-sm overflow-hidden">
                   <canvas ref={rightEyeRef} className="w-full h-full"></canvas>
                 </div>
               </motion.div>
             </motion.div>
 
-            <div className="relative w-full h-96 lg:h-[500px] rounded-3xl overflow-hidden bg-gradient-to-br from-white/80 to-blue-100/60 dark:from-slate-800/30 dark:to-blue-900/20 backdrop-blur-lg border border-orange-200 dark:border-orange-400/20 shadow-xl dark:shadow-2xl">
+            <div className="relative w-full h-96 lg:h-125 rounded-3xl overflow-hidden bg-linear-to-br from-white/80 to-blue-100/60 dark:from-slate-800/30 dark:to-blue-900/20 backdrop-blur-lg border border-orange-200 dark:border-orange-400/20 shadow-xl dark:shadow-2xl">
               {isLoading && (
                 <div className="absolute inset-0 flex items-center justify-center">
                   <RefreshCw className="w-8 h-8 animate-spin text-orange-500 dark:text-orange-400" />
                 </div>
               )}
               {/* This is the new Lottie animation player. */}
-              <div className="relative w-full h-96 lg:h-[500px] rounded-3xl overflow-hidden bg-gradient-to-br from-white/80 to-blue-100/60 dark:from-slate-800/30 dark:to-blue-900/20 backdrop-blur-lg border border-orange-200 dark:border-orange-400/20 shadow-xl dark:shadow-2xl">
+              <div className="relative w-full h-96 lg:h-125 rounded-3xl overflow-hidden bg-linear-to-br from-white/80 to-blue-100/60 dark:from-slate-800/30 dark:to-blue-900/20 backdrop-blur-lg border border-orange-200 dark:border-orange-400/20 shadow-xl dark:shadow-2xl">
               <DynamicLottiePlayer />
               </div>
               <canvas 
@@ -345,7 +344,7 @@ export default function NotFoundPage() {
           <div className="space-y-8 text-center lg:text-left">
             <motion.div variants={itemVariants} className="space-y-4">
               <motion.h1 
-                className="font-sans text-6xl lg:text-8xl font-black bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 dark:from-orange-400 dark:via-amber-500 dark:to-yellow-500 bg-clip-text text-transparent"
+                className="font-sans text-6xl lg:text-8xl font-black bg-linear-to-r from-orange-500 via-amber-500 to-yellow-500 dark:from-orange-400 dark:via-amber-500 dark:to-yellow-500 bg-clip-text text-transparent"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
@@ -375,7 +374,7 @@ export default function NotFoundPage() {
                 <Button 
                   asChild 
                   size="lg" 
-                  className="bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 dark:from-orange-500 dark:to-amber-600 dark:hover:from-orange-600 dark:hover:to-amber-700 text-white font-semibold px-8 py-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group"
+                  className="bg-linear-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 dark:from-orange-500 dark:to-amber-600 dark:hover:from-orange-600 dark:hover:to-amber-700 text-white font-semibold px-8 py-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group"
                 >
                   <Link href="/" className="flex items-center gap-3">
                     <Home className="w-5 h-5 group-hover:rotate-12 transition-transform" />
@@ -407,7 +406,7 @@ export default function NotFoundPage() {
               className="pt-6"
             >
               <motion.button
-                onClick={() => window.history.back()}
+                onClick={() => globalThis.history.back()}
                 className="flex items-center gap-2 text-gray-500 hover:text-orange-500 dark:text-slate-400 dark:hover:text-orange-400 transition-colors mx-auto lg:mx-0 group"
                 whileHover={{ x: -5 }}
               >

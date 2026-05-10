@@ -95,13 +95,13 @@ export function FormNextToSection(data: Readonly<FormNextToSectionProps>) {
       </div>
 
       {/* Right Section: Contact Info + Decorative Panel */}
-      <div className="md:col-span-5 relative w-full flex border-l border-blue-900/20 dark:border-blue-700/20 overflow-hidden bg-gradient-to-br from-blue-900 via-blue-700 to-blue-800 dark:from-gray-900 dark:via-blue-950 dark:to-blue-900 items-center justify-center px-6 py-16 md:py-0">
+      <div className="md:col-span-5 relative w-full flex border-l border-blue-900/20 dark:border-blue-700/20 overflow-hidden bg-linear-to-br from-blue-900 via-blue-700 to-blue-800 dark:from-gray-900 dark:via-blue-950 dark:to-blue-900 items-center justify-center px-6 py-16 md:py-0">
         <div className="absolute inset-0 z-0 opacity-70">
           <ShootingStars />
         </div>
 
         {/* Subtle mesh gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-blue-900/40 to-transparent mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-linear-to-t from-blue-900/40 to-transparent mix-blend-overlay"></div>
 
         {/* Content Container with Glass Effect */}
         <div className={`relative z-20 max-w-md w-full bg-white/10 dark:bg-gray-900/20 backdrop-blur-sm rounded-2xl p-8 border border-white/20 transition-all duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>

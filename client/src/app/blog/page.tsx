@@ -4,14 +4,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Search } from "@/components/custom/search";
 import { PaginationComponent } from "@/components/custom/pagination";
 import { CategorySelect } from "@/components/custom/category-select";
-import { formatDate } from "@/lib/utils";
+import { formatDate, calculateReadingTime } from "@/lib/utils";
 import { getBlogPosts } from "@/data/loaders";
 import { Button } from "@/components/ui/button";
 import { List, Grid } from "lucide-react"; // Icons for toggle button
 import { generateMetadataObject } from '@/lib/metadata';
 import  fetchContentType  from '@/lib/strapi/fetchContentType';
 import { Metadata } from "next";
-import { calculateReadingTime } from "@/lib/utils";
 import { strapiImage } from "@/lib/strapi/strapiImage";
 
 interface PageProps {
@@ -164,7 +163,7 @@ export default async function BlogRoute({ searchParams }: PageProps) {
                 {/* Blog Image */}
                 <div
                   className={`relative ${
-                    viewMode === "list" ? "h-24 w-24 sm:h-32 sm:w-32 flex-shrink-0" : "h-52 w-full"
+                    viewMode === "list" ? "h-24 w-24 sm:h-32 sm:w-32 shrink-0" : "h-52 w-full"
                   } overflow-hidden rounded-t-lg`}
                 >
                   <StrapiImage
@@ -180,7 +179,7 @@ export default async function BlogRoute({ searchParams }: PageProps) {
                   className={`flex ${
                     viewMode === "list"
                       ? "flex-col justify-between  sm:flex-row sm:items-center sm:gap-8 px-4 sm:px-6 py-3 sm:py-5"
-                      : "flex-col flex-grow items-start gap-6 px-6 pb-6 pt-2"
+                      : "flex-col grow items-start gap-6 px-6 pb-6 pt-2"
                   }`}
                 >
                   <div className="flex flex-1 flex-col gap-1 sm:gap-3 mt-4">

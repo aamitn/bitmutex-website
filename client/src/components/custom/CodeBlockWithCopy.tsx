@@ -166,7 +166,7 @@ const CodeBlockWithCopy: React.FC<CodeBlockWithCopyProps> = ({
     >
       {/* Background Glow Effect */}
       <motion.div
-        className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 blur-xl"
+        className="absolute inset-0 rounded-2xl bg-linear-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 blur-xl"
         variants={glowVariants}
         animate={isHovered ? "visible" : "hidden"}
       />
@@ -182,7 +182,7 @@ const CodeBlockWithCopy: React.FC<CodeBlockWithCopyProps> = ({
         {/* Header */}
         <motion.div 
           variants={headerVariants}
-          className="flex items-center justify-between px-6 py-4 dark:border dark:border-b-1 dark:border-b-slate-700 border border-b-1 border-b-slate-400 bg-gradient-to-r from-slate-300/80 to-slate-100/50 dark:from-slate-800/80 dark:to-slate-700/80 border-b border-slate-200/30 dark:border-slate-600/30"
+          className="flex items-center justify-between px-6 py-4 dark:border dark:border-b dark:border-b-slate-700 border border-b border-b-slate-400 bg-linear-to-r from-slate-300/80 to-slate-100/50 dark:from-slate-800/80 dark:to-slate-700/80 border-slate-200/30 dark:border-slate-600/30"
         >
           <div className="flex items-center gap-3">
             <motion.div
@@ -267,7 +267,7 @@ const CodeBlockWithCopy: React.FC<CodeBlockWithCopyProps> = ({
 
             {/* Button Shine Effect */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-xl"
+              className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent rounded-xl"
               animate={{
                 x: isHovered ? ["100%", "-100%"] : "100%"
               }}
@@ -329,7 +329,7 @@ const CodeBlockWithCopy: React.FC<CodeBlockWithCopyProps> = ({
 
           {/* Code Overlay Effects */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-transparent to-purple-500/5 pointer-events-none"
+            className="absolute inset-0 bg-linear-to-r from-blue-500/5 via-transparent to-purple-500/5 pointer-events-none"
             animate={{
               opacity: isHovered ? 1 : 0,
               background: isHovered 
@@ -342,7 +342,7 @@ const CodeBlockWithCopy: React.FC<CodeBlockWithCopyProps> = ({
 
         {/* Bottom Accent Line */}
         <motion.div
-          className="h-1 bg-gradient-to-r from-orange-500 via-yellow-400 to-orange-500"
+          className="h-1 bg-linear-to-r from-orange-500 via-yellow-400 to-orange-500"
           initial={{ scaleX: 0, originX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}

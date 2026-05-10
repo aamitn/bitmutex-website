@@ -127,7 +127,7 @@ export default async function JobDetailPage({ params }: PageProps) {
         <div className="xl:col-span-2 space-y-6">
           {/* Main Job Card */}
           <Card className="bg-white dark:bg-slate-800 shadow-xl rounded-2xl overflow-hidden border border-gray-100 dark:border-slate-700 transition-all duration-300 hover:shadow-2xl">
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-slate-800 p-6 border-b border-gray-100 dark:border-slate-700">
+            <div className="bg-linear-to-r from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-slate-800 p-6 border-b border-gray-100 dark:border-slate-700">
               <CardHeader className="p-0">
                 <CardTitle className="font-heading text-3xl font-bold text-gray-900 dark:text-white leading-tight">
                   {job.title}
@@ -142,12 +142,12 @@ export default async function JobDetailPage({ params }: PageProps) {
               {/* Job Info Badges */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex items-center space-x-3 text-gray-700 dark:text-slate-300">
-                  <MapPin className="h-5 w-5 text-blue-500 flex-shrink-0" />
+                  <MapPin className="h-5 w-5 text-blue-500 shrink-0" />
                   <span className="text-sm md:text-base"><strong className="font-heading">Location:</strong> {job.location}</span>
                 </div>
 
                 <div className="flex items-center space-x-3 text-gray-700 dark:text-slate-300">
-                  <Banknote className="h-5 w-5 text-green-500 flex-shrink-0" />
+                  <Banknote className="h-5 w-5 text-green-500 shrink-0" />
                   <span className="text-sm md:text-base">
                     <strong className="font-heading">Salary:</strong>{" "}
                     <IndianRupee className="h-4 w-4 inline-block align-middle text-emerald-600 drop-shadow-[0_0_6px_#22c55e]" />
@@ -156,17 +156,17 @@ export default async function JobDetailPage({ params }: PageProps) {
                 </div>
 
                 <div className="flex items-center space-x-3 text-gray-700 dark:text-slate-300">
-                  <Briefcase className="h-5 w-5 text-purple-500 flex-shrink-0" />
+                  <Briefcase className="h-5 w-5 text-purple-500 shrink-0" />
                   <span className="text-sm md:text-base"><strong className="font-heading">Experience:</strong> {job.experience}</span>
                 </div>
 
                 <div className="flex items-center space-x-3 text-gray-700 dark:text-slate-300">
-                  <Calendar className="h-5 w-5 text-orange-500 flex-shrink-0" />
+                  <Calendar className="h-5 w-5 text-orange-500 shrink-0" />
                   <span className="text-sm md:text-base"><strong className="font-heading">Posted:</strong> {job.createdAt}</span>
                 </div>
 
                 <div className="flex items-center space-x-3 text-gray-700 dark:text-slate-300">
-                  <Clipboard className="h-5 w-5 text-red-500 flex-shrink-0" />
+                  <Clipboard className="h-5 w-5 text-red-500 shrink-0" />
                   <span className="text-sm md:text-base"><strong className="font-heading">Deadline:</strong> {job.deadline}</span>
                 </div>
               </div>

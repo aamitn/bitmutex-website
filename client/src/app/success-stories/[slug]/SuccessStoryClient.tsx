@@ -85,7 +85,7 @@ export default function SuccessStoryClient({ story }: Props) {
       </div>
 
       {/* Success Story Card */}
-      <Card className="shadow-lg rounded-lg overflow-hidden rounded-xl">
+      <Card className="shadow-lg overflow-hidden rounded-xl">
         {/* Company Logo */}
         {story.logo && (
           <div className="flex justify-center p-6">
@@ -105,7 +105,7 @@ export default function SuccessStoryClient({ story }: Props) {
         )}
 
         <CardHeader>
-          <CardTitle className="font-heading text-2xl sm:text-3xl font-extrabold tracking-wide bg-gradient-to-r from-blue-500 to-orange-500 bg-clip-text text-transparent">
+          <CardTitle className="font-heading text-2xl sm:text-3xl font-extrabold tracking-wide bg-linear-to-r from-blue-500 to-orange-500 bg-clip-text text-transparent">
             {story.name}
           </CardTitle>
           <p className="font-sans text-sm text-gray-600 dark:text-slate-300 flex items-center gap-1 mt-1">
@@ -142,7 +142,7 @@ export default function SuccessStoryClient({ story }: Props) {
           </div>
 
           {/* Success Story Heading Content */}
-          <Card className="bg-gradient-to-r from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900 shadow-lg border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+          <Card className="bg-linear-to-r from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900 shadow-lg border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
             <CardHeader className="text-center space-y-4 p-6">
               <CardTitle className="font-sans text-2xl font-light text-gray-900 dark:text-gray-100 tracking-wide leading-snug">
                 How <span className="font-heading font-bold text-blue-600 dark:text-blue-400">{story.name}</span> Embarked on a Digital Transformation Journey with <span className="font-heading text-gray-800 dark:text-gray-300 font-bold">Bitmutex</span>
@@ -284,10 +284,10 @@ export default function SuccessStoryClient({ story }: Props) {
                   return (
                     <Card
                       key={index}
-                      className="shadow-lg border border-transparent bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900 p-6 rounded-2xl transition-all transform hover:scale-[1.02] hover:shadow-2xl"
+                      className="shadow-lg border border-transparent bg-linear-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900 p-6 rounded-2xl transition-all transform hover:scale-[1.02] hover:shadow-2xl"
                     >
                       <CardHeader className="flex items-center gap-4">
-                        <div className="p-3 rounded-lg bg-gradient-to-br from-primary-100 to-primary-300 dark:from-primary-700 dark:to-primary-900 shadow-md">
+                        <div className="p-3 rounded-lg bg-linear-to-br from-primary-100 to-primary-300 dark:from-primary-700 dark:to-primary-900 shadow-md">
                           <IconComponent size={36} className="text-primary-700 dark:text-primary-300" />
                         </div>
                         <h3 className="font-heading text-lg font-semibold text-gray-800 dark:text-gray-100">{impact.name}</h3>

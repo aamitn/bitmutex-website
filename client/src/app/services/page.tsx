@@ -92,18 +92,18 @@ export default async function ServicesPage() {
   const services: Service[] = await fetchServices();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-blue-950">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-blue-950">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-emerald-400/20 to-cyan-600/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-linear-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-linear-to-tr from-emerald-400/20 to-cyan-600/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       <div className="relative container mx-auto px-6 py-20">
         {/* Modern Header Section */}
         <div className="text-center max-w-4xl mx-auto mb-16">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600/10 to-purple-600/10 border border-blue-200/50 dark:border-blue-800/50 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-blue-600/10 to-purple-600/10 border border-blue-200/50 dark:border-blue-800/50 mb-6">
             <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
             <span className="font-sans text-sm font-semibold text-blue-700 dark:text-blue-300 tracking-wide uppercase">
               {heading || "Our Services"}
@@ -111,7 +111,7 @@ export default async function ServicesPage() {
           </div>
 
           {/* Main Heading */}
-          <h1 className="font-heading text-3xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-br from-slate-900 via-slate-700 to-slate-600 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent leading-tight mb-6">
+          <h1 className="font-heading text-3xl md:text-6xl lg:text-7xl font-bold bg-linear-to-br from-slate-900 via-slate-700 to-slate-600 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent leading-tight mb-6">
             {sub_heading || "Premium Solutions"}
           </h1>
 
@@ -121,7 +121,7 @@ export default async function ServicesPage() {
           </p>
 
           {/* Decorative line */}
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mx-auto mt-8"></div>
+          <div className="w-24 h-1 bg-linear-to-r from-blue-600 to-purple-600 rounded-full mx-auto mt-8"></div>
         </div>
 
         {/* Services Grid */}
@@ -135,16 +135,16 @@ export default async function ServicesPage() {
                 }}
               >
                 {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-linear-to-br from-blue-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
                 {/* Glowing border effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-emerald-600/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl -z-10"></div>
+                <div className="absolute inset-0 bg-linear-to-r from-blue-600/20 via-purple-600/20 to-emerald-600/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl -z-10"></div>
 
                 <CardHeader className="relative z-10 p-8">
                   <div className="flex items-start justify-between mb-4">
                     {/* Icon Container */}
                     <div className="relative">
-                      <div className="w-16 h-16 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                      <div className="w-16 h-16 bg-linear-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
                         {service.icon && (
                           React.createElement(getLucideIcon(service.icon), {
                             className: "w-8 h-8 text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300",
@@ -152,7 +152,7 @@ export default async function ServicesPage() {
                         )}
                       </div>
                       {/* Floating accent */}
-                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse"></div>
+                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-linear-to-br from-blue-500 to-purple-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse"></div>
                     </div>
 
                     {/* Arrow Icon */}
@@ -184,7 +184,7 @@ export default async function ServicesPage() {
                   )}
 
                   {/* Bottom gradient line */}
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blue-600/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-blue-600/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </CardContent>
               </Card>
             </Link>
@@ -194,7 +194,7 @@ export default async function ServicesPage() {
         {/* Call to Action Section */}
         <div className="text-center mt-20 pt-16 border-t border-slate-200/50 dark:border-slate-800/50">
           <Link href="/connect"> {/* <-- Add your desired path here */}
-            <div className="font-heading inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
+            <div className="font-heading inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
               <span>Ready to get started?</span>
               <ArrowUpRight className="w-5 h-5" />
             </div>

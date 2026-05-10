@@ -129,12 +129,12 @@ export default async function BrandKitPage() {
   })) ?? [];
 
   return (
-    <main className="min-h-screen bg-gradient-to-tr from-indigo-50 to-white dark:from-neutral-900 dark:to-neutral-950 text-gray-900 dark:text-gray-100 transition-colors py-24 px-6 md:px-12 flex justify-center">
+    <main className="min-h-screen bg-linear-to-tr from-indigo-50 to-white dark:from-neutral-900 dark:to-neutral-950 text-gray-900 dark:text-gray-100 transition-colors py-24 px-6 md:px-12 flex justify-center">
       <section className="max-w-7xl w-full">
 
         {/* Page Header */}
         <header className="mb-16 text-center max-w-3xl mx-auto">
-          <h1 className="font-heading text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 dark:from-sky-600 dark:via-blue-600 dark:to-pink-400">
+          <h1 className="font-heading text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-linear-to-r from-blue-800 via-blue-600 to-blue-700 dark:from-sky-600 dark:via-blue-600 dark:to-pink-400">
             {heading || "Brand Kit"}
           </h1>
           {sub_heading && (

@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 
 async function copyEnvFile(targetDir: string): Promise<void> {
   // Ensure targetDir is trimmed
@@ -38,7 +38,7 @@ async function copyEnvFile(targetDir: string): Promise<void> {
 const directoryPath: string | undefined = process.argv[2]?.trim();
 
 if (directoryPath) {
-  copyEnvFile(directoryPath);
+  await copyEnvFile(directoryPath);
 } else {
   console.error("Please provide a directory path as an argument.");
 }

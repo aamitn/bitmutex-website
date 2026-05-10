@@ -65,7 +65,47 @@ export function Footer({ data }: Readonly<FooterProps>) {
   }, {});
 
   return (
-    <footer className="relative bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-white mt-14">
+    <footer className="relative text-gray-800 dark:text-white mt-14">
+
+      {/* Light mode grain background */}
+      <div className="absolute inset-0 -z-20 dark:hidden" style={{
+        background: "radial-gradient(ellipse at 20% 80%, #e0e7ff 0%, #f1f5f9 50%, #f8fafc 100%)"
+      }} />
+
+      {/* Dark mode grain background */}
+      <div className="absolute inset-0 -z-20 hidden dark:block" style={{
+        background: "radial-gradient(ellipse at 20% 80%, #15223d 0%, #111827 55%, #0a0a0f 100%)"
+      }} />
+
+      {/* Grain overlay */}
+        {/* Light mode grain — subtle */}
+        <svg className="absolute inset-0 -z-10 w-full h-full pointer-events-none dark:hidden" xmlns="http://www.w3.org/2000/svg">
+          <filter id="footer-grain-light" x="0%" y="0%" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.80" numOctaves="3" stitchTiles="stitch" result="noise" />
+            <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise" />
+            <feComponentTransfer in="grayNoise">
+              <feFuncA type="linear" slope="0.8" />
+            </feComponentTransfer>
+          </filter>
+          <rect width="100%" height="100%" filter="url(#footer-grain-light)" />
+        </svg>
+
+        {/* Dark mode grain — stronger */}
+        <svg className="absolute inset-0 -z-10 w-full h-full pointer-events-none hidden dark:block" xmlns="http://www.w3.org/2000/svg">
+          <filter id="footer-grain-dark" x="0%" y="0%" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="noise" />
+            <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise" />
+            <feComponentTransfer in="grayNoise">
+              <feFuncA type="linear" slope="0.1" />
+            </feComponentTransfer>
+          </filter>
+          <rect width="100%" height="100%" filter="url(#footer-grain-dark)" />
+        </svg>
+
+      {/* Subtle top border accent */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-slate-700 to-transparent" />
+
+
       {/* Shape Divider */}
       <ShapeDivider />
 
@@ -80,7 +120,7 @@ export function Footer({ data }: Readonly<FooterProps>) {
           <div className="flex flex-col items-center sm:items-start space-y-4">
 
             {/* Company Logo Wide(or Placeholder) */}
-            <div className="w-[180px] h-[60px] flex items-center justify-center">
+            <div className="w-45 h-15 flex items-center justify-center">
               {logoWideSrc ? (
                 <Image
                   src={logoWideSrc}
@@ -180,11 +220,11 @@ export function Footer({ data }: Readonly<FooterProps>) {
             <Button
               className="rounded-r-md text-white
                 /* Normal State (dark blue gradient) */
-                bg-gradient-to-r from-blue-900 to-blue-700
+                bg-linear-to-r from-blue-900 to-blue-700
                 hover:from-blue-800 hover:to-blue-600
 
                 /* Dark Mode (orange gradient) */
-                dark:bg-gradient-to-r dark:from-orange-600 dark:to-orange-400
+                dark:bg-linear-to-r dark:from-orange-600 dark:to-orange-400
                 dark:hover:from-amber-500 dark:hover:to-amber-300"
             >
               Subscribe
@@ -207,7 +247,7 @@ export function Footer({ data }: Readonly<FooterProps>) {
                       transition-all duration-300 transform hover:scale-110"
                   >
                     <div className="flex items-center justify-center w-full h-full rounded-full
-                      bg-gradient-to-br from-blue-800 to-blue-700 text-white
+                      bg-linear-to-br from-blue-800 to-blue-700 text-white
                       group-hover:from-blue-600 group-hover:to-blue-800
                       dark:from-orange-500 dark:to-orange-700 dark:text-white
                       dark:group-hover:from-orange-600 dark:group-hover:to-orange-800

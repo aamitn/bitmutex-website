@@ -40,9 +40,9 @@ const splitHeading = (headingText: string, startIndex: number, wordCount: number
   const words = headingText.split(" ");
   if (startIndex < 0 || startIndex >= words.length) return headingText; // Edge case handling
 
-  for (let i = startIndex; i < Math.min(startIndex + wordCount, words.length); i++) {
-    words[i] = `<span class="font-bold bg-gradient-to-r from-blue-600  via-cyan-500 to-orange-500 text-transparent bg-clip-text animate-pulse-gradient">${words[i]}</span>`;
-  }
+for (let i = startIndex; i < Math.min(startIndex + wordCount, words.length); i++) {
+  words[i] = `<span class="font-black bg-gradient-to-r from-blue-900 via-orange-500 via-40% to-blue-900 dark:from-sky-400 dark:via-orange-400 dark:to-sky-400 text-transparent bg-clip-text bg-[length:200%_auto] animate-pulse-gradient drop-shadow-[0_0_25px_theme(colors.orange.500/70%)] dark:drop-shadow-[0_2px_30px_theme(colors.sky.400/60%)]">${words[i]}</span>`;
+}
   return words.join(" ");
 };
 
@@ -52,16 +52,18 @@ const splitHeading = (headingText: string, startIndex: number, wordCount: number
   const parallaxZ = useTransform(mouseX, [-0.5, 0.5], ["5px", "-5px"]);
 
   return (
-    <section className="relative container max-w-8xl mx-auto px-4 py-16 md:py-6 md:mt-24 mt-2">
-      {/* Background gradient with parallax */}
-      <motion.div
-        className="absolute inset-0 -z-10 bg-gradient-to-br from-blue-50/80 via-transparent to-purple-50/60 dark:from-blue-950/40 dark:via-transparent dark:to-purple-950/30 blur-3xl opacity-60"
-        style={{
-          transform: `translate3d(${parallaxX.get()}, ${parallaxY.get()}, ${parallaxZ.get()})`,
-        }}
-      />
+    <section className="grain relative container max-w-full mx-auto px-4 py-16 md:py-6 md:mt-24 mt-2 min-h-[600px]">
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <motion.div
+      className="absolute inset-0 -z-10 blur-3xl opacity-90
+        [background:radial-gradient(ellipse_at_15%_60%,theme(colors.blue.300)_0%,transparent_45%),radial-gradient(ellipse_at_85%_15%,theme(colors.violet.300)_0%,transparent_40%),radial-gradient(ellipse_at_55%_85%,theme(colors.red.200)_0%,transparent_35%)]
+        dark:[background:radial-gradient(ellipse_at_15%_60%,theme(colors.blue.600)_0%,transparent_45%),radial-gradient(ellipse_at_85%_15%,theme(colors.violet.600)_0%,transparent_40%),radial-gradient(ellipse_at_55%_85%,theme(colors.indigo.600)_0%,transparent_35%)]"
+      style={{
+        transform: `translate3d(${parallaxX.get()}, ${parallaxY.get()}, ${parallaxZ.get()})`,
+      }}
+    />
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center max-w-7xl mx-auto">
         
         {/* Left Content Section */}
         <motion.div
@@ -156,7 +158,7 @@ const splitHeading = (headingText: string, startIndex: number, wordCount: number
                         variant={link.isPrimary ? "default" : "outline"}
                         className={`group relative h-12 px-8 cursor-pointer overflow-hidden rounded-lg text-base font-semibold transition-all duration-300 ease-out ${
                           link.isPrimary
-                            ? "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98]"
+                            ? "bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98]"
                             : "border-2 border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-800 dark:text-gray-200 hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400"
                         }`}
                       >
@@ -174,7 +176,7 @@ const splitHeading = (headingText: string, startIndex: number, wordCount: number
                     className={`relative h-12 px-8 cursor-pointer text-base font-semibold overflow-hidden 
                       transition-all duration-300 ease-out rounded-lg group
                       ${link.isPrimary 
-                      ? "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98]" 
+                      ? "bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98]" 
                       : "border-2 border-orange-300 dark:border-orange-600 text-gray-800 dark:text-gray-200 hover:border-orange-500 dark:hover:border-orange-400 hover:text-orange-600 dark:hover:text-orange-400 bg-orange-50/80 dark:bg-orange-900/20 backdrop-blur-sm"
                       }`}
                   >
@@ -197,7 +199,7 @@ const splitHeading = (headingText: string, startIndex: number, wordCount: number
             transform: `translate3d(${parallaxX.get()}, ${parallaxY.get()}, ${parallaxZ.get()})`,
           }}
         >
-          <div className="relative h-[250px] md:h-[400px] lg:h-[500px]">
+          <div className="relative h-62.5 md:h-100 lg:h-125 rounded-2xl">
             {/* ParticleShape as Aesthetic Background - Full Coverage */}
             <div className="absolute inset-0 w-full h-full -z-10">
               <Canvas

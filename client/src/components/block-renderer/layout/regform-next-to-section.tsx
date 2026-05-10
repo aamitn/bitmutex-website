@@ -54,8 +54,7 @@ export function RegformNextToSection(data: Readonly<RegformNextToSectionProps>) 
   const typewriterText = useTypewriter(typewriterWords)
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-zinc-100 dark:bg-slate-900 text-white py-16 md:py-24">
-      <motion.div 
+  <div className="relative min-h-screen flex items-center justify-center overflow-hidden text-white dark:text-white py-16 md:py-24">   <motion.div 
         initial={{ opacity: 0 }} 
         animate={{ opacity: 1 }} 
         transition={{ duration: 0.5, delay: 0.5 }} 
@@ -63,6 +62,26 @@ export function RegformNextToSection(data: Readonly<RegformNextToSectionProps>) 
       >
         <ShootingStars />
       </motion.div>
+
+      {/* Light mode grain background */}
+      <div className="absolute inset-0 -z-20 dark:hidden" style={{
+        background: "radial-gradient(ellipse at 60% 30%, #c7d2fe 0%, #e0e7ff 40%, #f1f5f9 100%)"
+      }} />
+
+      {/* Dark mode grain background */}
+      <div className="absolute inset-0 -z-20 hidden dark:block" style={{
+        background: "radial-gradient(ellipse at 60% 30%, #2d1b69 0%, #0d0d1a 55%, #000000 100%)"
+      }} />
+
+      {/* Grain overlay — works on both */}
+      <svg className="absolute inset-0 -z-10 w-full h-full opacity-[0.25] dark:opacity-[0.35] pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+        <filter id="grain">
+          <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+          <feBlend in="SourceGraphic" mode="overlay" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#grain)" />
+      </svg>
 
       <div className="relative z-10 container mx-auto px-6 md:px-8 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -75,22 +94,25 @@ export function RegformNextToSection(data: Readonly<RegformNextToSectionProps>) 
           <Heading 
             as="h1" 
             className="text-7xl md:text-4xl lg:text-7xl font-heading font-semibold max-w-2xl
-                      bg-gradient-to-r from-blue-600 via-orange-500 to-blue-600 
-                      dark:from-blue-600 dark:via-orange-500 dark:to-blue-400 
+                      bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900
+                      dark:from-white dark:via-slate-200 dark:to-slate-400
                       bg-clip-text text-transparent 
-                      tracking-tight drop-shadow-lg pb-2"
+                      tracking-tight pb-2"
           >   
-             {words.slice(0, highlightIndex).join(" ")}{" "}
-              <span className="relative inline-block min-w-[7.5ch] text-blue-600 dark:text-blue-300">
-                <motion.span 
-                  initial={{ opacity: 0 }} 
-                  animate={{ opacity: 1 }} 
-                  transition={{ duration: 1 }} 
-                  className="relative"
-                >
-                  {typewriterText}
-                </motion.span>
-              </span>{" "}
+            {words.slice(0, highlightIndex).join(" ")}{" "}
+            <span className="relative inline-block min-w-[7.5ch]
+                            bg-gradient-to-r from-blue-700 to-indigo-600
+                            dark:from-blue-400 dark:to-indigo-300
+                            bg-clip-text text-transparent">
+              <motion.span 
+                initial={{ opacity: 0 }} 
+                animate={{ opacity: 1 }} 
+                transition={{ duration: 1 }} 
+                className="relative"
+              >
+                {typewriterText}
+              </motion.span>
+            </span>{" "}
             {words.slice(highlightIndex + 1).join(" ")}
           </Heading>
         <Subheading className="text-lg md:text-xl text-slate-700 dark:text-slate-300 max-w-lg">{sub_heading}</Subheading>
@@ -111,7 +133,7 @@ export function RegformNextToSection(data: Readonly<RegformNextToSectionProps>) 
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 h-80 w-full bg-gradient-to-t from-black to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-80 w-full bg-linear-to-t from-black to-transparent" />
     </div>
   )
 }

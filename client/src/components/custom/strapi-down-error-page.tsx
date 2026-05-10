@@ -35,14 +35,14 @@ export default function ErrorPage() {
           <AlertCircle className="w-14 h-14 text-red-500 mx-auto" />
         </div>
 
-        <h1 className="mt-4 text-3xl font-bold text-gray-900 dark:text-gray-100">
+        <h1 className="font-heading mt-4 text-3xl font-bold text-gray-900 dark:text-gray-100">
           Backend Unavailable
         </h1>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">
+        <p className="font-sans mt-2 text-gray-600 dark:text-gray-400">
           Our servers are currently down. We are actively working to resolve the issue.
         </p>
 
-        <div className="mt-4 p-4 bg-red-100 dark:bg-red-900 rounded-lg text-sm text-red-700 dark:text-red-300 border border-red-300 dark:border-red-700">
+        <div className="font-sans mt-4 p-4 bg-red-100 dark:bg-red-900 rounded-lg text-sm text-red-700 dark:text-red-300 border border-red-300 dark:border-red-700">
           <p>⚠️ For Admins: Ensure Strapi is running on port <strong>1337</strong>.</p>
         </div>
 

@@ -186,7 +186,7 @@ export default async function SinglePost({ params }: PageProps) {
             width={800}
             height={600}
             priority
-            className="w-full max-w-sm sm:max-w-2xl lg:max-w-5xl h-56 sm:h-72 md:h-80 lg:h-[500px] xl:h-[550px] mx-auto mt-4 mb-4 sm:mt-6 sm:mb-6 lg:mt-8 lg:mb-8 rounded-lg sm:rounded-xl lg:rounded-2xl shadow-lg sm:shadow-xl lg:shadow-2xl object-fill transition-all duration-300 sm:duration-500 lg:duration-700 hover:scale-102 sm:hover:scale-105 hover:shadow-xl sm:hover:shadow-2xl lg:hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] hover:brightness-105 sm:hover:brightness-110 filter"
+            className="w-full max-w-sm sm:max-w-2xl lg:max-w-5xl h-56 sm:h-72 md:h-80 lg:h-125 xl:h-137.5 mx-auto mt-4 mb-4 sm:mt-6 sm:mb-6 lg:mt-8 lg:mb-8 rounded-lg sm:rounded-xl lg:rounded-2xl shadow-lg sm:shadow-xl lg:shadow-2xl object-fill transition-all duration-300 sm:duration-500 lg:duration-700 hover:scale-102 sm:hover:scale-105 hover:shadow-xl sm:hover:shadow-2xl lg:hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] hover:brightness-105 sm:hover:brightness-110 filter"
           />
         </header>
           {/* Post Content START */}
@@ -194,7 +194,7 @@ export default async function SinglePost({ params }: PageProps) {
             <section className="flex items-center justify-center md:px-1 md:py-1">
               <div className="full-width-element relative w-full bg-white dark:bg-neutral-950 md:max-w-7xl md:rounded-2xl md:shadow-lg md:p-10 md:border dark:md:border-gray-700 transition-all">
                 {/* Accent Gradient Border */}
-                <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-500 via-yellow-400 to-orange-500 rounded-t-2xl"></div>
+                <div className="absolute top-0 left-0 w-full h-2 bg-linear-to-r from-orange-500 via-yellow-400 to-orange-500 rounded-t-2xl"></div>
 
                 {/* The rest of the content */}
                 <div className="rich-text prose max-w-none text-gray-800 dark:text-gray-200 leading-relaxed">

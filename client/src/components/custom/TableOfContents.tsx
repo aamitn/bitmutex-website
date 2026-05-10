@@ -30,13 +30,13 @@ const TableOfContents = ({ containerClass }: TOCProps) => {
     const tocItems: TOCItem[] = [];
 
     headingElements.forEach((heading) => {
-      const id = heading.id || heading.textContent?.toLowerCase().replace(/\s+/g, "-");
+      const id = heading.id || heading.textContent?.toLowerCase().replaceAll(/\s+/g, "-");
       if (id) {
         heading.id = id;
         tocItems.push({
           id,
           text: heading.textContent || "",
-          level: parseInt(heading.tagName.replace("H", ""), 10),
+          level: Number.parseInt(heading.tagName.replace("H", ""), 10),
         });
       }
     });
@@ -144,7 +144,7 @@ const TableOfContents = ({ containerClass }: TOCProps) => {
       <AnimatePresence>
         {isMobileToCOpen && (
           <motion.div
-            className="z-[999] fixed inset-0 bg-black bg-opacity-50 flex flex-col"
+            className="z-999 fixed inset-0 bg-black bg-opacity-50 flex flex-col"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

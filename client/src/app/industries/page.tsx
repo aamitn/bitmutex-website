@@ -93,17 +93,17 @@ export default async function IndustryPage() {
   const industries: Industry[] = await fetchIndustries();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800">
       {/* Animated Background Pattern */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-blue-400/20 to-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-cyan-400/20 to-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-linear-to-r from-blue-400/20 to-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-linear-to-r from-cyan-400/20 to-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       <div className="relative container mx-auto px-6 py-24">
         {/* Enhanced Header Section */}
         <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-200/30 dark:border-blue-700/30 rounded-full mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-linear-to-r from-blue-500/10 to-purple-500/10 border border-blue-200/30 dark:border-blue-700/30 rounded-full mb-6">
             <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
             <span className="font-sans font-semibold uppercase text-blue-600 dark:text-blue-400 tracking-wide text-sm">
               {heading}
@@ -112,7 +112,7 @@ export default async function IndustryPage() {
           </div>
           
           <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 dark:from-white dark:via-blue-100 dark:to-white bg-clip-text text-transparent leading-tight">
+            <span className="bg-linear-to-r from-slate-900 via-blue-900 to-slate-900 dark:from-white dark:via-blue-100 dark:to-white bg-clip-text text-transparent leading-tight">
               {sub_heading}
             </span>
           </h1>
@@ -123,7 +123,7 @@ export default async function IndustryPage() {
           
           {/* Decorative line */}
           <div className="flex items-center justify-center mt-8">
-            <div className="h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent w-64"></div>
+            <div className="h-px bg-linear-to-r from-transparent via-blue-500/50 to-transparent w-64"></div>
           </div>
         </div>
 
@@ -140,10 +140,10 @@ export default async function IndustryPage() {
                   }}
                 >
                   {/* Gradient overlay that appears on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-cyan-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-cyan-500/5 transition-all duration-500"></div>
+                  <div className="absolute inset-0 bg-linear-to-br from-blue-500/0 via-purple-500/0 to-cyan-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-cyan-500/5 transition-all duration-500"></div>
                   
                   {/* Animated border gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl blur-sm"></div>
+                  <div className="absolute inset-0 bg-linear-to-r from-blue-500/20 via-purple-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl blur-sm"></div>
                   
                   {/* Content */}
                   <div className="relative p-8">
@@ -151,8 +151,8 @@ export default async function IndustryPage() {
                       <div className="flex items-start gap-4">
                         {/* Enhanced Icon Container */}
                         <div className="relative">
-                          <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-500"></div>
-                          <div className="relative p-4 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-600 rounded-2xl group-hover:from-blue-50 group-hover:to-purple-50 dark:group-hover:from-slate-600 dark:group-hover:to-slate-500 transition-all duration-500">
+                          <div className="absolute inset-0 bg-linear-to-r from-blue-500 to-purple-600 rounded-2xl blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-500"></div>
+                          <div className="relative p-4 bg-linear-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-600 rounded-2xl group-hover:from-blue-50 group-hover:to-purple-50 dark:group-hover:from-slate-600 dark:group-hover:to-slate-500 transition-all duration-500">
                             <IconComponent className="w-8 h-8 text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:scale-110 transition-all duration-500" />
                           </div>
                         </div>
@@ -190,7 +190,7 @@ export default async function IndustryPage() {
                   </div>
 
                   {/* Animated bottom accent */}
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-blue-500 via-purple-500 to-cyan-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                 </Card>
               </Link>
             );
@@ -200,9 +200,9 @@ export default async function IndustryPage() {
         {/* Enhanced Footer CTA Section */}
         <div className="mt-24 text-center">
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-xl"></div>
+            <div className="absolute inset-0 bg-linear-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-xl"></div>
             <div className="relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 rounded-3xl p-12">
-              <h3 className="font-heading text-3xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-sky-700 bg-clip-text text-transparent">
+              <h3 className="font-heading text-3xl font-bold mb-4 bg-linear-to-r from-blue-600 to-sky-700 bg-clip-text text-transparent">
                 Don&apos;t See Your Sector?
               </h3>
               <p className="font-sans text-slate-600 dark:text-slate-400 text-lg mb-8 max-w-2xl mx-auto">
@@ -211,7 +211,7 @@ export default async function IndustryPage() {
                   {/* Call to Action Section */}
                   <div className="text-center dark:border-slate-800/50">
                     <Link href="/contact"> {/* <-- Add your desired path here */}
-                      <div className="font-heading inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
+                      <div className="font-heading inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
                         <span>Get in Touch</span>
                         <ArrowUpRight className="w-5 h-5" />
                       </div>

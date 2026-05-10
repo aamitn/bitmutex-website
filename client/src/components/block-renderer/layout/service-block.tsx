@@ -107,7 +107,13 @@ export function ServiceBlock(data: Readonly<ServiceBlockProps>) {
                 onClick={() => router.push(`/services/${service.slug}`)}
               >
                 <Card 
-                  className="h-full flex flex-col shadow-lg hover:shadow-2xl backdrop-blur-xl bg-opacity-90 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden transform hover:-translate-y-1 hover:scale-[1.02] transition"
+              className="grain h-full flex flex-col shadow-lg hover:shadow-2xl backdrop-blur-xl 
+                border border-indigo-100/80 dark:border-indigo-900/50 
+                rounded-xl overflow-hidden transform hover:-translate-y-1 hover:scale-[1.02] transition
+                bg-[radial-gradient(ellipse_at_0%_0%,theme(colors.blue.50)_0%,theme(colors.slate.50)_50%,theme(colors.violet.50)_100%)]
+                dark:bg-[radial-gradient(ellipse_at_0%_0%,theme(colors.indigo.950)_0%,theme(colors.slate.950)_50%,theme(colors.violet.950)_100%)]
+                hover:border-indigo-300/80 dark:hover:border-indigo-700/60
+                hover:shadow-indigo-100/50 dark:hover:shadow-indigo-950/50"
                 >
                   {/* Icon and Title */}
                   <CardHeader className="relative flex items-center justify-center py-6">

@@ -11,13 +11,15 @@ import { useState } from "react";
 
 export function Brands(data: Readonly<BrandsProps>) {
   const { heading, sub_heading, logos } = data;
-  const [speed] = useState(180); // Default speed
+  const [speed] = useState(180); // Default speed logo carousel, can be made dynamic if needed
+
+
 
   return (
-    <div className="relative py-10 md:py-40 overflow-hidden bg-transparent">
+    <div className="relative py-10 md:py-8 overflow-hidden bg-transparent">
       {/* Section Heading */}
       <Heading className="pt-4 text-slate-950 dark:text-gray-200 font-heading">{heading}</Heading>
-      <Subheading className="max-w-3xl mx-auto text-cyan-950 dark:text-slate-300">{sub_heading}</Subheading>
+      <Subheading className="font-sans max-w-3xl mx-auto text-cyan-950 dark:text-slate-300">{sub_heading}</Subheading>
 
       {/* Wrap Marquee in a div to handle hover events */}
       <div

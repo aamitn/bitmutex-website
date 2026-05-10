@@ -107,11 +107,11 @@ export default async function ServicePage({ params }: PageProps) {
   const IconComponent = getLucideIcon(service.icon);
 
   return (
-    <div className="py-20 min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-blue-950">
+    <div className="py-20 min-h-screen bg-linear-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-blue-950">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/10 to-purple-600/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute top-1/2 -left-40 w-96 h-96 bg-gradient-to-tr from-emerald-400/10 to-cyan-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-linear-to-br from-blue-400/10 to-purple-600/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-1/2 -left-40 w-96 h-96 bg-linear-to-tr from-emerald-400/10 to-cyan-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       <div className="font-sans relative container mx-auto px-6 py-12">
@@ -128,7 +128,7 @@ export default async function ServicePage({ params }: PageProps) {
         <div className="relative mb-16">
           <Card className="overflow-hidden bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-slate-800/50 shadow-2xl">
             {/* Gradient Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-purple-600/5 to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-br from-blue-600/5 via-purple-600/5 to-transparent"></div>
             
             <CardHeader className="relative p-12">
               {/* Back Button */}
@@ -148,14 +148,14 @@ export default async function ServicePage({ params }: PageProps) {
               {/* Main Content */}
               <div className="text-center pt-8">
                 {/* Service Icon */}
-                <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-3xl mb-8 shadow-lg">
+                <div className="inline-flex items-center justify-center w-24 h-24 bg-linear-to-br from-blue-500/20 to-purple-600/20 rounded-3xl mb-8 shadow-lg">
                   <div className="w-16 h-16 bg-white/50 dark:bg-slate-800/50 rounded-2xl flex items-center justify-center backdrop-blur">
                     <IconComponent className="w-8 h-8 text-blue-600 dark:text-blue-400" />
                   </div>
                 </div>
 
                 {/* Title */}
-                <h1 className="font-heading text-5xl md:text-6xl font-bold bg-gradient-to-br from-slate-900 via-slate-700 to-slate-600 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent leading-tight mb-6">
+                <h1 className="font-heading text-5xl md:text-6xl font-bold bg-linear-to-br from-slate-900 via-slate-700 to-slate-600 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent leading-tight mb-6">
                   {service.name}
                 </h1>
 
@@ -167,7 +167,7 @@ export default async function ServicePage({ params }: PageProps) {
                   {/* Call to Action Section */}
                   <div className="font-sans text-center dark:border-slate-800/50">
                     <Link href="/connect"> {/* <-- Add your desired path here */}
-                      <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
+                      <div className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
                         <span>Get started</span>
                         <ArrowUpRight className="w-5 h-5" />
                       </div>
@@ -183,7 +183,7 @@ export default async function ServicePage({ params }: PageProps) {
         {service.techstacklogos.length > 0 && (
           <div className="mb-20">
             <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-600/10 to-cyan-600/10 border border-emerald-200/50 dark:border-emerald-800/50 mb-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-emerald-600/10 to-cyan-600/10 border border-emerald-200/50 dark:border-emerald-800/50 mb-4">
                 <Zap className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 <span className="text-sm font-semibold text-emerald-700 dark:text-emerald-300 tracking-wide uppercase">
                   Technology Stack
@@ -209,7 +209,7 @@ export default async function ServicePage({ params }: PageProps) {
         {service.service_items.length > 0 && (
           <div>
             <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-600/10 to-pink-600/10 border border-purple-200/50 dark:border-purple-800/50 mb-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-purple-600/10 to-pink-600/10 border border-purple-200/50 dark:border-purple-800/50 mb-4">
                 <Target className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                 <span className="text-sm font-semibold text-purple-700 dark:text-purple-300 tracking-wide uppercase">
                   What We Offer
@@ -235,14 +235,14 @@ export default async function ServicePage({ params }: PageProps) {
                     }}
                   >
                     {/* Gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-pink-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute inset-0 bg-linear-to-br from-purple-600/5 to-pink-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     
                     {/* Glowing border */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-blue-600/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl -z-10"></div>
+                    <div className="absolute inset-0 bg-linear-to-r from-purple-600/20 via-pink-600/20 to-blue-600/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl -z-10"></div>
 
                     <CardHeader className="relative z-10 p-8">
                       {/* Icon */}
-                      <div className="w-16 h-16 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg mb-4">
+                      <div className="w-16 h-16 bg-linear-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg mb-4">
                         <ItemIcon className="w-8 h-8 text-slate-700 dark:text-slate-300 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300" />
                       </div>
 
@@ -259,7 +259,7 @@ export default async function ServicePage({ params }: PageProps) {
                       </p>
 
                       {/* Bottom accent line */}
-                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-purple-600/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-purple-600/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </CardContent>
                   </Card>
                 );
@@ -282,7 +282,7 @@ export default async function ServicePage({ params }: PageProps) {
             {/* Call to Action Section */}
             <div className="text-center dark:border-slate-800/50">
               <Link href="/connect"> {/* <-- Add your desired path here */}
-                <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
+                <div className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full hover:from-sky-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
                   <span>Get started</span>
                   <ArrowUpRight className="w-5 h-5" />
                 </div>

@@ -69,7 +69,7 @@ export default function Chat() {
           >
             <Button
               onClick={() => setIsOpen(true)}
-              className="p-4 rounded-full bg-gradient-to-r from-blue-500 to-blue-800 text-white shadow-xl hover:scale-105 transition-transform"
+              className="font-heading p-4 rounded-full bg-gradient-to-r from-blue-500 to-blue-800 text-white shadow-xl hover:scale-105 transition-transform"
             >
               <MessageCircleMore /> Chat
             </Button>
@@ -88,7 +88,7 @@ export default function Chat() {
           >
             <Card className="shadow-2xl border border-gray-200 bg-white/90 backdrop-blur-md rounded-xl">
               <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-t-xl">
-                <h3 className="font-semibold">Live Support</h3>
+                <h3 className="font-semibold font-heading">Live Support</h3>
                 <Button
                   onClick={() => setIsOpen(false)}
                   variant="ghost"
@@ -165,15 +165,15 @@ export default function Chat() {
                 />
                 <Button
                   onClick={sendMessage}
-                  className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg hover:scale-105 transition-transform"
+                  className="font-sans bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg hover:scale-105 transition-transform"
                 >
                   Send
                 </Button>
               </div>
 
               {/* Powered By Footer */}
-              <div className="text-center text-xs text-gray-500 p-2 bg-gray-100 rounded-b-xl">
-                Powered by <span className="font-semibold text-indigo-600">Bitmutex Technologies</span>
+              <div className="font-sans text-center text-xs text-gray-500 p-2 bg-gray-100 rounded-b-xl">
+                Powered by <span className="font-heading font-semibold text-indigo-600">Bitmutex Technologies</span>
               </div>
             </Card>
           </motion.div>

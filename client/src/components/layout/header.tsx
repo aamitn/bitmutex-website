@@ -67,7 +67,7 @@ export function Header({ data }: Readonly<HeaderProps>) {
   }, [controls]);
 
   useEffect(() => {
-    if (typeof window === "undefined") return; // Ensure this runs only on the client
+    if (typeof globalThis.window === "undefined") return; // Ensure this runs only on the client
 
     const detectTheme = () => {
       return document.documentElement.classList.contains("dark") ? "dark" : "light";
@@ -147,7 +147,7 @@ export function Header({ data }: Readonly<HeaderProps>) {
                   animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                   exit={{ opacity: 0, y: -10, scale: 0.98, filter: "blur(8px)" }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="absolute left-0 top-full mt-2 w-[850px] max-w-[90vw] bg-neutral-300 dark:bg-neutral-800 shadow-xl rounded-xl border border-gray-300 dark:border-gray-700 z-[9999]
+                  className="absolute left-0 top-full mt-2 w-212.5 max-w-[90vw] bg-neutral-300 dark:bg-neutral-800 shadow-xl rounded-xl border border-gray-300 dark:border-gray-700 z-9999
                     backdrop-blur-md bg-opacity-80 dark:bg-opacity-75 transform-gpu"
                   onMouseEnter={() => setOpenDropdown(parentName)}
                   onMouseLeave={() => setOpenDropdown(null)}
@@ -168,7 +168,7 @@ export function Header({ data }: Readonly<HeaderProps>) {
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: idx * 0.05, duration: 0.1, ease: "easeOut" }}
                           whileHover={{ scale: 1.03 }}
-                          className="relative bg-gradient-to-br from-slate-50 to-neutral-300 border border-neutral-200 border-b-0 dark:from-slate-800 dark:to-slate-700 dark:border-slate-600 rounded-xl p-4 transition-transform hover:shadow-md h-full overflow-hidden group"
+                          className="relative bg-linear-to-br from-slate-50 to-neutral-300 border border-neutral-200 border-b-0 dark:from-slate-800 dark:to-slate-700 dark:border-slate-600 rounded-xl p-4 transition-transform hover:shadow-md h-full overflow-hidden group"
                         >
                           <div className="flex justify-between items-center text-base font-semibold text-gray-800 dark:text-white group-hover:text-slate-700 dark:group-hover:text-slate-300">
                             <div>{item.text}</div>
@@ -179,14 +179,14 @@ export function Header({ data }: Readonly<HeaderProps>) {
                             </span>
                           </div>
                           {/* Accented bottom border with a professional orange-yellow gradient */}
-                          <div className="absolute inset-x-0 bottom-0 h-1 rounded-b-xl bg-gradient-to-r from-orange-400 to-yellow-400 transition-transform transform scale-x-0 group-hover:scale-x-100 origin-left" />
+                          <div className="absolute inset-x-0 bottom-0 h-1 rounded-b-xl bg-linear-to-r from-orange-400 to-yellow-400 transition-transform transform scale-x-0 group-hover:scale-x-100 origin-left" />
                         </motion.div>
                       </Link>
                     ))}
                   </div>
 
                 {/* Right: Highlight Card */}
-                <div className="w-1/3 bg-gradient-to-br from-blue-600 via-indigo-700 to-orange-500 text-white rounded-xl p-6 flex flex-col justify-between shadow-lg">
+                <div className="w-1/3 bg-linear-to-br from-blue-600 via-indigo-700 to-orange-500 text-white rounded-xl p-6 flex flex-col justify-between shadow-lg">
                   <div>
                     <div className="flex items-center space-x-2">
                       <Rocket />
@@ -303,7 +303,7 @@ export function Header({ data }: Readonly<HeaderProps>) {
                   transition-all duration-300 ease-out border shadow-sm
                 ${item.isPrimary
                   ? "text-white border-blue-900 \
-                    bg-gradient-to-r from-blue-900 to-blue-800 \
+                    bg-linear-to-r from-blue-900 to-blue-800 \
                     hover:from-blue-800 hover:to-blue-700 \
                     dark:from-blue-600 dark:to-blue-500 \
                     dark:text-white dark:border-blue-400 \
@@ -356,19 +356,19 @@ export function Header({ data }: Readonly<HeaderProps>) {
           >
             {/* Animated Bars */}
             <motion.div
-              className={`w-6 h-[2px] rounded-full transition-all 
+              className={`w-6 h-0.5 rounded-full transition-all 
               ${isSticky ? "bg-gray-500 dark:bg-gray-400" : "bg-gray-700 dark:bg-gray-300"}`}
               animate={{ rotate: isOpen ? 45 : 0, y: isOpen ? 6 : 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             />
             <motion.div
-              className={`w-6 h-[2px] rounded-full my-1 transition-all 
+              className={`w-6 h-0.5 rounded-full my-1 transition-all 
               ${isSticky ? "bg-gray-500 dark:bg-gray-400" : "bg-gray-700 dark:bg-gray-300"}`}
               animate={{ opacity: isOpen ? 0 : 1 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
             />
             <motion.div
-              className={`w-6 h-[2px] rounded-full transition-all 
+              className={`w-6 h-0.5 rounded-full transition-all 
               ${isSticky ? "bg-gray-500 dark:bg-gray-400" : "bg-gray-700 dark:bg-gray-300"}`}
               animate={{ rotate: isOpen ? -45 : 0, y: isOpen ? -6 : 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}

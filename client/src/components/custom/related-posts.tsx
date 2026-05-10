@@ -65,7 +65,7 @@ export default async function RelatedPosts({ category }: RelatedPostsProps) {
               <Badge 
                 variant="secondary" 
                 className="
-                  bg-gradient-to-r from-primary/10 to-primary/20 
+                  bg-linear-to-r from-primary/10 to-primary/20 
                   text-primary 
                   border-primary/20 
                   shadow-sm
@@ -115,7 +115,7 @@ export default async function RelatedPosts({ category }: RelatedPostsProps) {
                       "text-lg font-semibold",
                       "group-hover:text-primary",
                       "transition-colors",
-                      "line-clamp-2 min-h-[3rem]"
+                      "line-clamp-2 min-h-12"
                     )}>
                       {post.title}
                     </h3>
@@ -158,7 +158,7 @@ export default async function RelatedPosts({ category }: RelatedPostsProps) {
               <Badge 
                 variant="secondary" 
                 className="
-                  bg-gradient-to-r from-primary/10 to-primary/20 
+                  bg-linear-to-r from-primary/10 to-primary/20 
                   text-primary 
                   border-primary/20 
                   shadow-sm

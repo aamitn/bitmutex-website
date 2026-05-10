@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 import CalBookingModal from "@/components/custom/appointment";
 import { NavLink } from "@/types";
 import Image from "next/image";
-import ModelViewer from '@/components/custom/ModelViewer';
 
 const appointmentUrl = process.env.NEXT_PUBLIC_APPOINTMENT_URL || "https://cal.com/bitmutexs";
 

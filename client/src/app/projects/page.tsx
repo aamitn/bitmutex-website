@@ -9,7 +9,7 @@ import fetchContentType from '@/lib/strapi/fetchContentType';
 import { Metadata } from "next";
 import Image from "next/image";
 import { strapiImage } from "@/lib/strapi/strapiImage";
-import { Search, Filter, ArrowUpRight, Sparkles, FolderOpen, ExternalLink, Eye, Calendar, Tag } from "lucide-react";
+import { Search, Filter, ArrowUpRight, Sparkles, FolderOpen } from "lucide-react";
 
 type Project = {
   id: number;
@@ -90,19 +90,19 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-orange-50 dark:from-slate-950 dark:via-slate-900 dark:to-blue-950">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-orange-50 dark:from-slate-950 dark:via-slate-900 dark:to-blue-950">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/10 to-orange-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute top-1/2 -left-40 w-96 h-96 bg-gradient-to-tr from-orange-400/10 to-blue-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute bottom-0 right-1/3 w-64 h-64 bg-gradient-to-tl from-blue-500/10 to-orange-600/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-linear-to-br from-blue-400/10 to-orange-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-1/2 -left-40 w-96 h-96 bg-linear-to-tr from-orange-400/10 to-blue-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute bottom-0 right-1/3 w-64 h-64 bg-linear-to-tl from-blue-500/10 to-orange-600/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
       </div>
 
       <div className="relative container mx-auto px-6 py-24">
         {/* Header Section */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-blue-600/10 to-orange-600/10 border border-blue-200/30 dark:border-orange-800/30 mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-linear-to-r from-blue-600/10 to-orange-600/10 border border-blue-200/30 dark:border-orange-800/30 mb-4">
             <FolderOpen className="w-3 h-3 text-blue-600 dark:text-orange-400" />
             <span className="font-sans text-xs font-medium text-blue-700 dark:text-orange-300 tracking-wide uppercase">
               {heading || "Portfolio"}
@@ -147,7 +147,7 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
 
                   {/* Category Select */}
                   <div>
-                    <label className="font-heading font-bold text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">
+                    <label className="font-heading text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">
                       Category
                     </label>
                     <Select name="category" defaultValue={selectedCategory}>
@@ -167,7 +167,7 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
                   {/* Apply Button */}
                   <Button 
                     type="submit" 
-                    className="w-full bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 text-white rounded-xl py-3 shadow-lg hover:shadow-xl transition-all duration-300"
+                    className="w-full bg-linear-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 text-white rounded-xl py-3 shadow-lg hover:shadow-xl transition-all duration-300"
                   >
                     <Sparkles className="w-4 h-4 mr-2" />
                     Apply Filters
@@ -181,7 +181,7 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
                   </div>
                   <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
                     <div 
-                      className="bg-gradient-to-r from-purple-600 to-pink-600 h-2 rounded-full transition-all duration-300"
+                      className="bg-linear-to-r from-purple-600 to-pink-600 h-2 rounded-full transition-all duration-300"
                       style={{ width: `${(filteredProjects.length / projects.length) * 100}%` }}
                     ></div>
                   </div>
@@ -203,16 +203,16 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
                       }}
                     >
                       {/* Sleek gradient border */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-orange-500 to-blue-500 rounded-2xl p-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <div className="absolute inset-0 bg-linear-to-r from-blue-500 via-orange-500 to-blue-500 rounded-2xl p-px opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         <div className="w-full h-full bg-white dark:bg-slate-900 rounded-2xl"></div>
                       </div>
 
                       {/* Subtle gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-orange-50/30 dark:from-blue-950/20 dark:to-orange-950/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+                      <div className="absolute inset-0 bg-linear-to-br from-blue-50/30 to-orange-50/30 dark:from-blue-950/20 dark:to-orange-950/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
                       
                       {/* Category Badge */}
                       <div className="absolute top-2 right-2 z-20">
-                        <div className="flex items-center gap-1 px-2 py-0.5 bg-gradient-to-r from-blue-500/90 to-orange-500/90 backdrop-blur-sm rounded-full text-white shadow-sm">
+                        <div className="flex items-center gap-1 px-2 py-0.5 bg-linear-to-r from-blue-500/90 to-orange-500/90 backdrop-blur-sm rounded-full text-white shadow-sm">
                           <span className="font-sans text-[10px] font-medium capitalize">
                             {project.category || "N/A"}
                           </span>
@@ -237,7 +237,7 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
                           <CardTitle className="font-heading text-base font-semibold text-slate-900 dark:text-white leading-tight group-hover:text-blue-600 dark:group-hover:text-orange-400 transition-colors duration-300">
                             {project.name}
                           </CardTitle>
-                          <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-500 dark:group-hover:text-orange-400 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 flex-shrink-0 mt-0.5" />
+                          <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-500 dark:group-hover:text-orange-400 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0 mt-0.5" />
                         </div>
 
                         {/* Description */}
@@ -251,7 +251,7 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
               </div>
             ) : (
               <div className="text-center py-16">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-orange-100 dark:from-blue-900/20 dark:to-orange-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-linear-to-br from-blue-100 to-orange-100 dark:from-blue-900/20 dark:to-orange-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Search className="w-8 h-8 text-blue-600 dark:text-orange-400" />
                 </div>
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">No projects found</h3>
@@ -259,9 +259,9 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
                   Try adjusting your filters.
                 </p>
                 <Button 
-                  onClick={() => window.location.href = '/projects'}
+                  onClick={() => globalThis.location.href = '/projects'}
                   size="sm"
-                  className="bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 text-white"
+                  className="bg-linear-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 text-white"
                 >
                   Clear Filters
                 </Button>
@@ -281,7 +281,7 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
           
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link href="/connect">
-            <Button className="bg-gradient-to-r from-blue-600 to-orange-400 hover:from-blue-700 hover:to-orange-600 text-white px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+            <Button className="bg-linear-to-r from-blue-600 to-orange-400 hover:from-blue-700 hover:to-orange-600 text-white px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
               Get Started
             </Button>
             </Link>

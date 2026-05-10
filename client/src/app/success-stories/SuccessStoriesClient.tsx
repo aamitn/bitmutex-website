@@ -71,9 +71,9 @@ export default function SuccessStoriesClient({ stories }: PageProps) {
   const markers = stories
   .flatMap((story) =>
     story.location.map((loc) => {
-      const lat = parseFloat(loc.lat);
-      const lon = parseFloat(loc.lon);
-      return isNaN(lat) || isNaN(lon)
+      const lat = Number.parseFloat(loc.lat);
+      const lon = Number.parseFloat(loc.lon);
+      return Number.isNaN(lat) || Number.isNaN(lon)
         ? null
         : {
             lat: lat.toString(),  // ← Convert to string
@@ -191,7 +191,7 @@ export default function SuccessStoriesClient({ stories }: PageProps) {
         {/* Sidebar Filters */}
         <aside
           className={`xl:col-span-1 transition-all duration-300 ease-in-out ${
-            isFilterOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0 overflow-hidden"
+            isFilterOpen ? "max-h-150 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
           } xl:max-h-full xl:opacity-100`}  // ← xl: instead of md: to match your grid breakpoint
         >
           <Card className="bg-white dark:bg-slate-800 shadow-lg rounded-2xl overflow-hidden border border-gray-100 dark:border-slate-700">
@@ -199,7 +199,7 @@ export default function SuccessStoriesClient({ stories }: PageProps) {
               <CardTitle className="font-heading text-lg font-semibold text-gray-900 dark:text-white">🔍 Filters</CardTitle>
             </CardHeader>
             <CardContent>
-              <ScrollArea className="h-[600px] pr-2">  {/* ← was h-80 (320px), now 600px */}
+              <ScrollArea className="h-150 pr-2">  {/* ← was h-80 (320px), now 600px */}
                 {[
                   { title: "Industry", options: allIndustries, state: selectedIndustries, setState: setSelectedIndustries },
                   { title: "Services", options: allServices, state: selectedServices, setState: setSelectedServices },

@@ -11,7 +11,7 @@ export default function Home() {
           
           {/* Header Section */}
           <div className="text-center mb-8 mt-20">
-          <h1 className="font-heading text-4xl sm:text-5xl font-extrabold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-sky-500 via-blue-500 to-blue-600 dark:from-orange-500 dark:via-orange-400 dark:to-orange-600 dark:bg-gradient-to-r">            Search
+          <h1 className="font-heading text-4xl sm:text-5xl font-extrabold mb-2 bg-clip-text text-transparent bg-linear-to-r from-sky-500 via-blue-500 to-blue-600 dark:from-orange-500 dark:via-orange-400 dark:to-orange-600 dark:bg-linear-to-r">            Search
             </h1>
             <p className="font-sans text-lg text-gray-600 dark:text-gray-400">
               Search across all your content in one place.
