@@ -1,0 +1,73 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "copy": {
+      "cache": false,
+      "inputs": [".env.example"],
+      "outputs": [".env"]
+    },
+    "dev": {
+      "cache": false,
+      "interactive": true,
+      "persistent": true
+    },
+    "build": {
+      "outputs": [".next/**", "dist/**", ".strapi/**"],
+      "cache": true,
+      "inputs": ["src/**", "package.json", "tsconfig.json"],
+      "dependsOn": []
+    },
+    "backend#build": {
+      "outputs": [".strapi/**", "dist/**"],
+      "cache": true,
+      "inputs": ["src/**", "package.json", "tsconfig.json"],
+      "dependsOn": []
+    },
+    "client#build": {
+      "outputs": [".next/**"],
+      "cache": true,
+      "inputs": ["src/**", "package.json", "tsconfig.json"],
+      "dependsOn": ["backend#build"]
+    },
+    "start": {
+      "cache": false,
+      "interactive": true,
+      "persistent": true
+    },
+    "backend#start": {
+      "cache": false,
+      "interactive": true,
+      "persistent": true,
+      "dependsOn": ["backend#build"]
+    },
+    "client#start": {
+      "cache": false,
+      "interactive": true,
+      "persistent": true
+    },
+    "lint": {
+      "outputs": [],
+      "cache": true,
+      "inputs": ["src/**", "package.json", "tsconfig.json", ".eslintrc*"]
+    },
+    "develop": {
+      "cache": false,
+      "interactive": true,
+      "persistent": true
+    },
+    "strapi": {
+      "cache": false,
+      "interactive": true,
+      "persistent": true
+    },
+    "deploy": {
+      "cache": false,
+      "dependsOn": ["build"]
+    }
+  },
+  "globalDependencies": [
+    "tsconfig.json",
+    "package.json"
+  ]
+}

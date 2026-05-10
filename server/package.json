@@ -4,12 +4,13 @@
   "version": "0.1.0",
   "description": "A Strapi 5 Backend application",
   "scripts": {
-    "develop": "strapi develop",
     "dev": "strapi develop",
+    "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "deploy": "strapi deploy"
+    "deploy": "strapi deploy",
+    "copy": "node --import tsx ../copy-env.mts ./"
   },
   "devDependencies": {
     "@types/node": "^20",

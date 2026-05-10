@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-function copyEnvFile(targetDir: string): void {
+async function copyEnvFile(targetDir: string): Promise<void> {
   // Ensure targetDir is trimmed
   targetDir = targetDir.trim();
 
@@ -10,32 +10,28 @@ function copyEnvFile(targetDir: string): void {
 
   console.log("Attempting to copy from:", examplePath);
   console.log("To:", envPath);
-  // Check if .env.example exists
-  fs.access(examplePath, fs.constants.F_OK, (err: Error | null) => {
-    if (err) {
+
+  try {
+    // Check if .env already exists
+    if (fs.existsSync(envPath)) {
+      console.log(
+        `.env file already exists in ${targetDir}, no action taken.`
+      );
+      return;
+    }
+
+    // Check if .env.example exists
+    if (!fs.existsSync(examplePath)) {
       console.error(`.env.example file does not exist in ${targetDir}`);
       return;
     }
 
-    // .env.example exists, now check for .env
-    fs.access(envPath, fs.constants.F_OK, (err: Error | null) => {
-      if (err) {
-        // .env file does not exist, copy .env.example to .env
-        fs.copyFile(examplePath, envPath, (err: Error | null) => {
-          if (err) {
-            console.error("Error occurred:", err);
-            return;
-          }
-          console.log(`.env.example has been copied to ${envPath}`);
-        });
-      } else {
-        // .env file exists, no action needed
-        console.log(
-          `.env file already exists in ${targetDir}, no action taken.`
-        );
-      }
-    });
-  });
+    // Copy .env.example to .env
+    fs.copyFileSync(examplePath, envPath);
+    console.log(`.env.example has been copied to ${envPath}`);
+  } catch (err) {
+    console.error("Error occurred:", err);
+  }
 }
 
 // Get the directory path from the command line argument and trim whitespace

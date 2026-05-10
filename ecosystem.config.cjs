@@ -25,7 +25,7 @@ module.exports = {
       name: "bitmutex-nextjs",
       cwd: "./client",
       script: "./node_modules/next/dist/bin/next",
-      args: "start -p 3137",
+      args: "start",
       env_file: "./.env",
       out_file: "./logs/next-out.log",
       error_file: "./logs/next-error.log",
@@ -36,8 +36,8 @@ module.exports = {
       max_memory_restart: "3G", // Next.js frontend usually requires less memory
       exp_backoff_restart_delay: 100, 
       kill_timeout: 3000, 
-      instances: "2", // Scales Next.js across all available CPU cores for better traffic handling
-      exec_mode: "cluster", 
+      instances: 1, // Scales Next.js across all available CPU cores for better traffic handling
+      exec_mode: "fork", 
       env: {
         NODE_ENV: "production",
       },

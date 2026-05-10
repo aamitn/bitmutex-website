@@ -5,9 +5,10 @@
   "description": "A NexrJs 16 SSR BFF Application",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "wait-on http://localhost:1337 --timeout 120000 && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "copy": "node --import tsx ../copy-env.mts ./"
   },
   "dependencies": {
     "@algolia/client-search": "^5.35.0",
