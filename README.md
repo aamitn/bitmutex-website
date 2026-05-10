@@ -1,4 +1,4 @@
-# Bitmutex-Website - Batteries Included Business Starter Template : Strapi5 + Next16 + Postgres17 + SocketIO
+# BM Site - Batteries Included Business Starter Template : Strapi5 + Next16 + React19 +  Postgres17 + SocketIO + SSR & RSC Goodness
 
 **Bitmutex-Website** - A `modern`, `cloud-native` `ready-to-use` business website `starter template` with all the batteries included from SEO to Reusable Blocks. Built using `Strapi 5` at Backend and `NextJs 16 SSR/AppRouter/RSC` with `React 19` in Frontend as a BFF (Backend For Frontend) alongside `Postgres17` as DB. Supports Latest Node 24 LTS.
 
