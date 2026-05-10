@@ -1,4 +1,4 @@
-# Bitmutex-Website - Batteries Included Business Starter Template : Strapi5 + Next15 + Postgres + SocketIO
+# Bitmutex-Website - Batteries Included Business Starter Template : Strapi5 + Next16 + Postgres17 + SocketIO
 
 **Bitmutex-Website** - A `modern`, `cloud-native` `ready-to-use` business website `starter template` with all the batteries included from SEO to Reusable Blocks. Built using `Strapi 5` at Backend and `NextJs 16 SSR/AppRouter/RSC` with `React 19` in Frontend as a BFF (Backend For Frontend) alongside `Postgres17` as DB. Supports Latest Node 24 LTS.
 
@@ -7,7 +7,12 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=bugs)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
+
+<!--
+
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=coverage)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
+-->
+
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
 
 
@@ -64,6 +69,8 @@
 |                 | `pnpm repo:upstream` | Fetch and merge latest changes from `upstream/main`. |
 |                 | `pnpm repo:sync`     | Pull the latest changes from `origin/main`. |
 |                 | `pnpm backup`        | Uploads Strapi export `seed-data.tar.gz` to Cloudflare R2 Storage |
+|                 | `pnpm clean`        | Removes root and client , server folder's node_modules, dist, build, .turbo and other static folders |
+|                 | `pnpm deepclean`        | Same as clean with added lockfile removal |
 | **Backend Server**      | `pnpm develop`       | Start Strapi in development mode. |
 |                 | `pnpm start`         | Start Strapi in production mode. |
 |                 | `pnpm build`         | Build Strapi project. |
