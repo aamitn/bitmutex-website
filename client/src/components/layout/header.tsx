@@ -91,11 +91,29 @@ export function Header({ data }: Readonly<HeaderProps>) {
   const { grouped: groupedNavItems, independent: independentNavItems } = processNavItems(navItems);
   const { grouped: groupedNavItems1, independent: independentNavItems1 } = processNavItems(navItems1);
   const { grouped: groupedNavItems2, independent: independentNavItems2 } = processNavItems(navItems2);
+  const [stickyWidth, setStickyWidth] = useState("65%");
 
+    useEffect(() => {
+      const updateWidth = () => {
+        if (window.innerWidth < 1024) {
+          setStickyWidth("92%");
+        } else if (window.innerWidth < 1440) {
+          setStickyWidth("90%");
+        } else if (window.innerWidth < 1920) {
+          setStickyWidth("78%");
+        } else {
+          setStickyWidth("65%");
+        }
+      };
+      updateWidth();
+      window.addEventListener("resize", updateWidth);
+      return () => window.removeEventListener("resize", updateWidth);
+    }, []);
+    
   return (
     <motion.header
       animate={{
-        width: isSticky ? "65%" : "100%",
+        width: isSticky ? stickyWidth : "100%",
         height: isSticky ? "24px" : "48px",
         borderRadius: isSticky ? "120px" : "0px",
         backgroundColor: isSticky
@@ -106,7 +124,7 @@ export function Header({ data }: Readonly<HeaderProps>) {
         boxShadow: isSticky
           ? "0px 8px 20px rgba(0, 0, 0, 0.15)"
           : "0px 0px 0px rgba(0, 0, 0, 0)",
-        padding: isSticky ? "25px 20px" : "10px 30px",
+        padding: isSticky ? "25px 16px" : "10px 30px",
       }}
       transition={{ duration: 0.4, ease: [0.25, 0.2, 0.25, 1] }}
       className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-between 
@@ -115,7 +133,7 @@ export function Header({ data }: Readonly<HeaderProps>) {
     >
 
       {/* Company Logo (or Placeholder) */}
-      <Link href="/" className="flex items-center gap-3">
+      <Link href="/" className="flex items-center gap-3 flex-shrink-0 min-w-[40px]">
         {logoSrc ? (
           <Image src={logoSrc} alt={logoText} width={40} height={40} className="h-10 w-auto" />
         ) : (
@@ -124,16 +142,16 @@ export function Header({ data }: Readonly<HeaderProps>) {
       </Link>
 
       {/* Desktop Navigation */}
-      <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-1 md:gap-2 lg:gap-3 xl:gap-6 min-w-0 flex-1 justify-center">
         {[groupedNavItems, groupedNavItems1, groupedNavItems2].map((group, index) =>
           Object.entries(group).map(([parentName, items]) => (
             <div key={`${parentName}-${index}`} className="relative group">
               {/* Parent Menu Button */}
               <Button
                 variant="ghost"
-                className="font-heading flex items-center text-lg font-bold transition-all rounded-full duration-300 
-                  hover:text-blue-500 dark:hover:text-blue-400 group-hover:scale-105 
-                  hover:shadow-[0px_4px_12px_rgba(59,130,246,0.8)]"
+                  className="font-heading flex items-center text-xs md:text-sm lg:text-base xl:text-lg font-bold transition-all rounded-full duration-300 px-1 md:px-2 lg:px-3
+                    hover:text-blue-500 dark:hover:text-blue-400 group-hover:scale-105 
+                    hover:shadow-[0px_4px_12px_rgba(59,130,246,0.8)]"
                 onMouseEnter={() => setOpenDropdown(parentName)}
               >
                 {parentName}
@@ -224,7 +242,7 @@ export function Header({ data }: Readonly<HeaderProps>) {
                       </li>
                       <li>
                         <a
-                          href="https://forge.bitmutex.com"
+                          href="https://git.bitmutex.com"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-lg font-semibold hover:underline hover:text-blue-200 transition-colors"
@@ -270,9 +288,9 @@ export function Header({ data }: Readonly<HeaderProps>) {
             <Link
               href={item.href}
               target={item.isExternal ? "_blank" : "_self"}
-              className="text-lg font-heading font-bold transition-all duration-300 
+              className="text-xs md:text-sm lg:text-base xl:text-lg font-heading font-bold transition-all duration-300 
               text-gray-800 dark:text-slate-200 hover:text-blue-500 dark:hover:text-blue-400"
-            >
+              >
               {item.text}
             </Link>
           </motion.div>
@@ -281,67 +299,47 @@ export function Header({ data }: Readonly<HeaderProps>) {
 
 
 
-      {/* CTA & Theme Toggle */}
-      <div className="hidden md:flex items-center gap-4">
-      <SearchWidget />
-      <div className="flex flex-wrap gap-3">
-        {Array.isArray(cta) &&
-          cta.map((item, index) => {
-            // Get the booking URL from environment variable or default to Cal.com
-            const appointmentUrl = process.env.NEXT_PUBLIC_APPOINTMENT_URL || "https://cal.com/bitmutex";
+{/* CTA & Theme Toggle */}
+<div className="hidden md:flex items-center gap-1 lg:gap-3 flex-shrink-0">
+  <div className="flex flex-wrap gap-1 lg:gap-2">
+    {Array.isArray(cta) &&
+      cta.map((item, index) => {
+        const appointmentUrl = process.env.NEXT_PUBLIC_APPOINTMENT_URL || "https://cal.com/bitmutex";
+        const parts = item.href.split(" ");
+        const isAppointment = parts.length > 1 && parts[1].toLowerCase() === "appointment";
+        const baseHref = parts[0];
 
-            // Check if the href contains "appointment" as the second word
-            const parts = item.href.split(" ");
-            const isAppointment = parts.length > 1 && parts[1].toLowerCase() === "appointment";
-            const baseHref = parts[0]; // Extract the actual URL
+        const button = (
+          <Button
+            asChild
+            className={`relative h-7 lg:h-9 px-2 lg:px-3 xl:px-5 flex items-center gap-1 
+              text-xs lg:text-sm xl:text-base font-medium rounded-lg
+              transition-all duration-300 ease-out border shadow-sm
+            ${item.isPrimary
+              ? "text-white border-blue-900 bg-linear-to-r from-blue-900 to-blue-800 hover:from-blue-800 hover:to-blue-700 dark:from-blue-600 dark:to-blue-500 dark:text-white dark:border-blue-400 shadow-orange-500 dark:shadow-orange-700"
+              : "border-blue-700 dark:border-blue-600 text-blue-800 dark:text-blue-300 bg-transparent hover:border-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900 dark:hover:text-white shadow-blue-500 dark:shadow-blue-700"
+            }`}
+          >
+            {isAppointment ? <span>{item.text}</span> : (
+              <Link href={baseHref} target={item.isExternal ? "_blank" : "_self"}>{item.text}</Link>
+            )}
+          </Button>
+        );
 
-            // The button component (WITHOUT href for appointments)
-            const button = (
-              <Button
-                asChild
-                className={`relative h-12 sm:h-9 sm:px-5 flex items-center gap-2 text-base font-medium rounded-lg
-                  transition-all duration-300 ease-out border shadow-sm
-                ${item.isPrimary
-                  ? "text-white border-blue-900 \
-                    bg-linear-to-r from-blue-900 to-blue-800 \
-                    hover:from-blue-800 hover:to-blue-700 \
-                    dark:from-blue-600 dark:to-blue-500 \
-                    dark:text-white dark:border-blue-400 \
-                    dark:hover:from-blue-500 dark:hover:to-blue-400\
-                    shadow-orange-500 dark:shadow-orange-700 hover:shadow-orange-700 dark:hover:shadow-orange-500"
-                  : "border-blue-700 dark:border-blue-600 \
-                    text-blue-800 dark:text-blue-300 bg-transparent \
-                    hover:border-blue-400 dark:hover:border-blue-400 \
-                    hover:bg-blue-100 dark:hover:bg-blue-900 \
-                    dark:hover:text-white\
-                     shadow-blue-500 dark:shadow-blue-700 hover:shadow-blue-700 dark:hover:shadow-blue-500"
-                }`}
-              >
-                {isAppointment ? (
-                  <span>{item.text}</span> // No <Link> for appointment
-                ) : (
-                  <Link href={baseHref} target={item.isExternal ? "_blank" : "_self"}>
-                    {item.text}
-                  </Link>
-                )}
-              </Button>
-            );
-
-            return (
-              <div key={index} className="flex flex-col sm:flex-row gap-3">
-                {isAppointment ? <CalBookingModal url={appointmentUrl} trigger={button} /> : button}
-              </div>
-            );
-          })}
-       </div>
-      <ThemeSwitcher />
-    {/*  <ThemeSwitcher variant="toggle"/>  Second variant */}
-    </div>
+        return (
+          <div key={index}>
+            {isAppointment ? <CalBookingModal url={appointmentUrl} trigger={button} /> : button}
+          </div>
+        );
+      })}
+  </div>
+  <ThemeSwitcher />
+</div>
 
 
       {/* Mobile Navbar */}
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <div className="w-full absolute top-2 left-72 px-4 md:hidden">
+        <div className="hidden xl:flex items-center gap-2 lg:gap-4 flex-shrink-0">
           <SearchWidget />
         </div>
         <SheetTrigger asChild>
@@ -396,6 +394,11 @@ export function Header({ data }: Readonly<HeaderProps>) {
             transition={{ duration: 0.4, ease: "easeOut" }}
             className="flex flex-col gap-4 mt-4"
           >
+
+              {/* Mobile Search */}
+              <div className="px-4 pb-2">
+                <SearchWidget />
+              </div>
 
             {/* Expandable Dropdowns */}
             {[

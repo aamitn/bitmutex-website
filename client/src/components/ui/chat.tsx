@@ -69,7 +69,7 @@ export default function Chat() {
           >
             <Button
               onClick={() => setIsOpen(true)}
-              className="font-heading p-4 rounded-full bg-gradient-to-r from-blue-500 to-blue-800 text-white shadow-xl hover:scale-105 transition-transform"
+              className="font-heading p-4 rounded-full bg-linear-to-r from-blue-500 to-blue-800 text-white shadow-xl hover:scale-105 transition-transform"
             >
               <MessageCircleMore /> Chat
             </Button>
@@ -87,7 +87,7 @@ export default function Chat() {
             className="fixed bottom-20 left-12 w-90 z-50"
           >
             <Card className="shadow-2xl border border-gray-200 bg-white/90 backdrop-blur-md rounded-xl">
-              <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-t-xl">
+              <div className="flex justify-between items-center p-4 bg-linear-to-r from-blue-500 to-indigo-600 text-white rounded-t-xl">
                 <h3 className="font-semibold font-heading">Live Support</h3>
                 <Button
                   onClick={() => setIsOpen(false)}
@@ -165,7 +165,7 @@ export default function Chat() {
                 />
                 <Button
                   onClick={sendMessage}
-                  className="font-sans bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg hover:scale-105 transition-transform"
+                  className="font-sans bg-linear-to-r from-blue-500 to-indigo-600 text-white shadow-lg hover:scale-105 transition-transform"
                 >
                   Send
                 </Button>
