@@ -17,7 +17,17 @@
 
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
 
+## SINGLE COMMAND DEPLOY 🛠️📦🚀
 
+**1. For  macOS / Linux(Bash)
+```sh
+curl -sL https://raw.githubusercontent.com/aamitn/bitmutex-website/main/scripts/install.sh | bash
+```
+
+**2. For Windows (PowerShell)
+```sh
+irm https://raw.githubusercontent.com/aamitn/bitmutex-website/main/scripts/install.ps1 | iex
+```
 
 | Screenshot | Illustration |
 |------------|--------------|
