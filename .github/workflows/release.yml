@@ -89,7 +89,7 @@ jobs:
 
       - name: Create release notes
         run: |
-          cat > release_notes.md << NOTES_EOF
+          cat > release_notes.md << 'NOTES_EOF'
           ## 📦 Release Information
           **Tag/Name:** `${{ steps.set_names.outputs.tag_name }}`
           **Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
