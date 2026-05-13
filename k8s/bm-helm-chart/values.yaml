@@ -1,24 +1,112 @@
-# -- PostgreSQL Configuration --
+# ============================================================================
+# PostgreSQL Configuration
+# ============================================================================
 postgres:
   image: postgres:18-alpine
   database: strapi-bitmutex
   username: postgres
-  password: 1234qwer # ⚠️ Override this during production installation!
+  password: "1234qwer"  # ⚠️ CHANGE in production!
+  client: postgres
+  host: postgres
+  port: 5432
   storageSize: 5Gi
 
-# -- App Configuration --
+# ============================================================================
+# Environment
+# ============================================================================
+environment: production
+
+# ============================================================================
+# Strapi Configuration
+# ============================================================================
+strapi:
+  port: 1337
+  host: 0.0.0.0
+  autoCreateAdmin: false
+  baseUrl: http://localhost:1337
+  
+  # Security Keys (REQUIRED - Generate using: openssl rand -hex 32)
+  appKeys: "toBeModified1,toBeModified2,toBeModified3,toBeModified4"
+  apiTokenSalt: "toBeModifiedApiTokenSalt"
+  adminJwtSecret: "toBeModifiedAdminJwtSecret"
+  jwtSecret: "toBeModifiedJwtSecret"
+  transferTokenSalt: "toBeModifiedTransferTokenSalt"
+  encryptionKey: "toBeModifiedEncryptionKey"
+
+# ============================================================================
+# Next.js Configuration
+# ============================================================================
+nextjs:
+  port: 3000
+  strapiBaseUrl: "https://strapiadmin.bitmutex.com"  # Public domain
+  disableTypecheck: false
+
+# ============================================================================
+# Email Configuration (Strapi nodemailer)
+# ============================================================================
+email:
+  host: "smtp.gmail.com"
+  port: "587"
+  username: "your-email@gmail.com"
+  password: "your-app-password"
+  from: "noreply@bitmutex.com"
+  fromName: "Bitmutex"
+
+# ============================================================================
+# AWS S3 Configuration
+# ============================================================================
+aws:
+  accessKeyId: ""
+  secretAccessKey: ""
+  region: us-east-1
+  bucket: bitmutex-uploads
+
+# ============================================================================
+# Cloudflare R2 Configuration
+# ============================================================================
+r2:
+  accessKeyId: ""
+  secretAccessKey: ""
+  bucket: bitmutex-r2
+  endpoint: "https://your-account-id.r2.cloudflarestorage.com"
+
+# ============================================================================
+# Algolia Search Configuration
+# ============================================================================
+algolia:
+  appId: ""
+  adminApiKey: ""
+  searchApiKey: ""
+
+# ============================================================================
+# Discord Bot Configuration
+# ============================================================================
+discord:
+  botToken: ""
+  guildId: ""
+
+# ============================================================================
+# Sentry Configuration
+# ============================================================================
+sentry:
+  dsn: ""
+  environment: production
+
+# ============================================================================
+# Application URLs
+# ============================================================================
+urls:
+  apiUrl: "https://api.bitmutex.com"
+  websiteUrl: "https://bitmutex.com"
+
+# ============================================================================
+# App Configuration
+# ============================================================================
 app:
   image:
     repository: bitmutex/bm-site
     tag: latest
     pullPolicy: Always
-  
-  # Environment Variables
-  env:
-    host: "0.0.0.0"
-    nodeEnv: "production"
-    disableTypecheck: "true"
-    autoCreateAdmin: "false"
   
   # Storage for your volumes
   storage:
@@ -27,4 +115,6 @@ app:
 
   # Network Service
   service:
-    type: LoadBalancer # Change to ClusterIP if using an Ingress
+    type: LoadBalancer  # Change to ClusterIP if using an Ingress
+    strapiPort: 1337
+    nextPort: 3000
