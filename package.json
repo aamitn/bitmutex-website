@@ -14,8 +14,10 @@
     "copy": "node --import tsx ./copy-env.mts ./ && turbo run copy",
     "spawn": "pnpm install && pnpm copy",
     "dev": "turbo dev",
-    "build": "turbo build --filter=backend && concurrently --kill-others \"cd server && pnpm start\" \"wait-on http://localhost:1337 --timeout 120000 && turbo build --filter=client\"",
+    "_comment-build": "turbo build --filter=backend && concurrently --kill-others \"cd server && pnpm start\" \"wait-on http://localhost:1337 --timeout 120000 && turbo build --filter=client\"",
+    "build": "turbo build --filter=backend --env-mode=loose && concurrently --kill-others \"cd server && pnpm start\" \"wait-on http://localhost:1337 --timeout 120000 && turbo build --filter=client --env-mode=loose\"",
     "start": "turbo start",
+    "startci": "turbo startci --ui=stream",
     "lint": "turbo lint",
     "seed": "cd server && pnpm strapi import -f ../seed-data.tar.gz --force",
     "export": "cd server && pnpm strapi export --no-encrypt -f ../seed-data",
@@ -31,7 +33,7 @@
     "concurrently": "^9.2.0",
     "dotenv": "^17.2.1",
     "typescript": "^5.9.2",
-    "wait-on": "^8.0.4"
+    "wait-on": "^9.0.10"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.863.0",
@@ -42,12 +44,20 @@
   "pnpm": {
     "overrides": {
       "@strapi/design-system": ">=2.2.0",
-      "@strapi/sdk-plugin": ">=6.1.0"
+      "@strapi/sdk-plugin": ">=6.1.0",
+      "typescript": ">=6.0.3",
+      "zod": ">=3.25.76",
+      "yaml": ">=2.4.2",
+      "codemirror": ">=6.0.0"
     }
   },
   "overrides": {
     "@strapi/design-system": ">=2.2.0",
-    "@strapi/sdk-plugin": ">=6.1.0"
+    "@strapi/sdk-plugin": ">=6.1.0",
+    "typescript": ">=6.0.3",
+    "zod": ">=4",
+    "yaml": ">=2.4.2",
+    "codemirror": ">=6.0.0"
   },
   "license": "Apache-2.0",
   "trustedDependencies": [

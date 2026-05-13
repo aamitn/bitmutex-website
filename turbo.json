@@ -1,6 +1,25 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
+  "globalEnv": [
+    "NODE_ENV",
+    "HOST",
+    "DATABASE_CLIENT",
+    "DATABASE_HOST",
+    "DATABASE_PORT",
+    "DATABASE_NAME",
+    "DATABASE_USERNAME",
+    "DATABASE_PASSWORD",
+    "APP_KEYS",
+    "API_TOKEN_SALT",
+    "TRANSFER_TOKEN_SALT",
+    "JWT_SECRET",
+    "ADMIN_JWT_SECRET",
+    "ADMIN_AUTH_SECRET",
+    "STRAPI_BASE_URL",
+    "DISABLE_TYPECHECK",
+    "AUTO_CREATE_ADMIN"
+  ],
   "tasks": {
     "copy": {
       "cache": false,
@@ -44,6 +63,19 @@
     "client#start": {
       "cache": false,
       "interactive": true,
+      "persistent": true
+    },
+    "startci": {
+      "cache": false,
+      "persistent": true
+    },
+    "backend#startci": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": ["backend#build"]
+    },
+    "client#startci": {
+      "cache": false,
       "persistent": true
     },
     "lint": {

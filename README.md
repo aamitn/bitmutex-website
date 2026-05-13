@@ -1,13 +1,15 @@
 # BM Site - Batteries Included Business Starter Template : Strapi5 + Next16 + React19 +  Postgres17 + SocketIO + SSR & RSC Goodness
 
-**Bitmutex-Website** - A `modern`, `cloud-native` `ready-to-use` business website `starter template` with all the batteries included from SEO to Reusable Blocks. Built using `Strapi 5` at Backend and `NextJs 16 SSR/AppRouter/RSC` with `React 19` in Frontend as a BFF (Backend For Frontend) alongside `Postgres17` as DB. Supports Latest Node 24 LTS.
+**Bitmutex-Website** - A `modern`, `cloud-native` `ready-to-use` business website `starter template` with all the batteries included from SEO to Reusable Blocks. Built using `Strapi 5` at Backend and `NextJs 16 SSR/AppRouter/RSC` with `React 19` in Frontend as a BFF (Backend For Frontend) alongside `Postgres17` as DB. Supports Latest Node 24 LTS with cloud native and bare-metal deployment options.
 
 [![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/1mjch.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
 [![Deploy Strapi & Next.js via SSH](https://github.com/aamitn/bitmutex-website/actions/workflows/deploy.yml/badge.svg)](https://github.com/aamitn/bitmutex-website/actions/workflows/deploy.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=bugs)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
-
+[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-bitmutex%2Fbm--site-blue?logo=docker)](https://hub.docker.com/r/bitmutex/bm-site)
+![Docker Pulls](https://img.shields.io/docker/pulls/bitmutex/bm-site)
+![Docker Image Size](https://img.shields.io/docker/image-size/bitmutex/bm-site/latest)
 <!--
 
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=coverage)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
@@ -83,7 +85,13 @@
 
   
 ## ⚙️Setup Instructions
-  
+
+ 0️⃣ 1-Step Docker Deploy 
+ ```sh
+ git clone --depth=1 https://github.com/aamitn/bitmutex-website.git && cd bitmutex-website && docker compose up
+```
+##### Read docker build instructions [DOCKER.md](/DOCKER.md) , for Kubernetes Deployments and Helm Charts Read [K8S.md](/K8S.md)  
+
 
 ### 1️⃣ **Clone the Repository**
 ```sh
@@ -126,11 +134,17 @@ You may run this on the project root,
  After running this strapi should strart, go to `http://localhost:1337` and create admin user
 
 
-### 5️⃣  **Finally Start the application for development**
+### 5️⃣.1️⃣  **Finally Start the application for development**
   ```sh
 pnpm dev
   ```
   This will start both strapi and nextjs  in development mode (next will have `live refresh` and `watch` enabled)
+
+### 5️⃣.1️⃣  **Start the application in prod mode**
+  ```sh
+pnpm start
+  ```
+  This will start both strapi and nextjs  in production mode, no debugging.
  
 ### 6️⃣  **Build for Production**
 - Change your .env vars accordingly for production use case

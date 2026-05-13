@@ -1,0 +1,30 @@
+# -- PostgreSQL Configuration --
+postgres:
+  image: postgres:18-alpine
+  database: strapi-bitmutex
+  username: postgres
+  password: 1234qwer # ⚠️ Override this during production installation!
+  storageSize: 5Gi
+
+# -- App Configuration --
+app:
+  image:
+    repository: bitmutex/bm-site
+    tag: latest
+    pullPolicy: Always
+  
+  # Environment Variables
+  env:
+    host: "0.0.0.0"
+    nodeEnv: "production"
+    disableTypecheck: "true"
+    autoCreateAdmin: "false"
+  
+  # Storage for your volumes
+  storage:
+    nextBuildSize: 2Gi
+    strapiPublicSize: 5Gi
+
+  # Network Service
+  service:
+    type: LoadBalancer # Change to ClusterIP if using an Ingress

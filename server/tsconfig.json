@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "lib": [
       "ES2020"
     ],
-    "target": "ES2019",
+    "target": "ES2022",
     "strict": false,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
@@ -22,7 +22,7 @@
     "./**/*.ts",
     "./**/*.js",
     "src/**/*.json"
-  ],
+,     "../client/src/types/r3f.d.ts"  ],
   "exclude": [
     "node_modules/",
     "build/",

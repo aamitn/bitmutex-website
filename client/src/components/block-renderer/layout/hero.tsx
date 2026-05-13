@@ -75,17 +75,6 @@ export function Hero(data: Readonly<HeroProps>) {
    |--------------------------------------------------------------------------
    */
 
-  const smoothBgX = useSpring(bgX, {
-    stiffness: 90,
-    damping: 30,
-  });
-
-  const smoothBgY = useSpring(bgY, {
-    stiffness: 90,
-    damping: 30,
-  });
-
-
   const smoothVisualX = useSpring(visualX, {
     stiffness: 100,
     damping: 20,

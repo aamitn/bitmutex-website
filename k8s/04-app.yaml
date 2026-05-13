@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bitmutex-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bitmutex-app
+  template:
+    metadata:
+      labels:
+        app: bitmutex-app
+    spec:
+      # Wait for Postgres to be ready (Replaces depends_on)
+      initContainers:
+        - name: wait-for-postgres
+          image: postgres:18-alpine
+          command: ['sh', '-c', 'until pg_isready -h postgres -p 5432 -U postgres; do echo waiting for db; sleep 2; done;']
+      
+      containers:
+        - name: bitmutex-app
+          image: bitmutex/bm-site:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 1337
+            - containerPort: 3000
+          
+          # Pull all variables from your secret
+          envFrom:
+            - secretRef:
+                name: bitmutex-secrets
+          
+          # Hardcoded environment variables
+          env:
+            - name: DATABASE_HOST
+              value: "postgres"
+            - name: DATABASE_PORT
+              value: "5432"
+            - name: DATABASE_CLIENT
+              value: "postgres"
+            - name: HOST
+              value: "0.0.0.0"
+            - name: NODE_ENV
+              value: "production"
+            - name: DISABLE_TYPECHECK
+              value: "true"
+            - name: AUTO_CREATE_ADMIN
+              value: "false"
+
+          volumeMounts:
+            - name: strapi-public
+              mountPath: /app/server/public
+            - name: next-build
+              mountPath: /app/client/.next
+      
+      volumes:
+        - name: strapi-public
+          persistentVolumeClaim:
+            claimName: strapi-public-pvc
+        - name: next-build
+          persistentVolumeClaim:
+            claimName: next-build-pvc
+
+---
+# Expose the app to the outside world
+apiVersion: v1
+kind: Service
+metadata:
+  name: bitmutex-service
+spec:
+  type: LoadBalancer # Gives you an external IP if your cluster supports it
+  selector:
+    app: bitmutex-app
+  ports:
+    - name: strapi
+      port: 1337
+      targetPort: 1337
+    - name: nextjs
+      port: 3000
+      targetPort: 3000

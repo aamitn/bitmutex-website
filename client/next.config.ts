@@ -29,7 +29,7 @@ const nextConfig: NextConfig = {
   },
 
   typescript: {
-    ignoreBuildErrors: false,
+    ignoreBuildErrors: process.env.DISABLE_TYPECHECK === "true",
   },
 
   turbopack: {

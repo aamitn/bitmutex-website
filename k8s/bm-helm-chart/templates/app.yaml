@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-app
+    spec:
+      initContainers:
+        - name: wait-for-postgres
+          image: postgres:18-alpine
+          # Notice we dynamically inject the postgres service name here!
+          command: ['sh', '-c', 'until pg_isready -h {{ .Release.Name }}-postgres-svc -p 5432 -U {{ .Values.postgres.username }}; do echo waiting for db; sleep 2; done;']
+      
+      containers:
+        - name: bitmutex-app
+          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          ports:
+            - containerPort: 1337
+            - containerPort: 3000
+          
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}-secrets
+          
+          env:
+            - name: DATABASE_HOST
+              value: "{{ .Release.Name }}-postgres-svc"
+            - name: DATABASE_PORT
+              value: "5432"
+            - name: DATABASE_CLIENT
+              value: "postgres"
+            - name: HOST
+              value: {{ .Values.app.env.host | quote }}
+            - name: NODE_ENV
+              value: {{ .Values.app.env.nodeEnv | quote }}
+            - name: DISABLE_TYPECHECK
+              value: {{ .Values.app.env.disableTypecheck | quote }}
+            - name: AUTO_CREATE_ADMIN
+              value: {{ .Values.app.env.autoCreateAdmin | quote }}
+
+          volumeMounts:
+            - name: strapi-public
+              mountPath: /app/server/public
+            - name: next-build
+              mountPath: /app/client/.next
+      
+      volumes:
+        - name: strapi-public
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-strapi-pvc
+        - name: next-build
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-next-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-app-svc
+spec:
+  type: {{ .Values.app.service.type }}
+  selector:
+    app: {{ .Release.Name }}-app
+  ports:
+    - name: strapi
+      port: 1337
+      targetPort: 1337
+    - name: nextjs
+      port: 3000
+      targetPort: 3000

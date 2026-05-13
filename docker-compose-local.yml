@@ -24,7 +24,9 @@ services:
 
   # ── App (Strapi + Next.js in one container) ─────────────────────────────────
   app:
-    image: bitmutex/bm-site:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
 
     restart: unless-stopped
 

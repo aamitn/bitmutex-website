@@ -1,0 +1,59 @@
+# Version control
+.git
+.gitignore
+.github
+
+# Env files (injected at runtime)
+.env
+.env.*
+!.env.docker.example
+!.env.example
+
+# Node modules (reinstalled inside Docker)
+node_modules
+client/node_modules
+server/node_modules
+
+# Build outputs (rebuilt inside Docker)
+client/.next
+server/dist
+server/.strapi
+server/build
+
+# Strapi uploads (volume-mounted at runtime)
+server/public/uploads
+
+# Dev / editor artefacts
+.turbo
+.turbo/**
+*.log
+logs/
+.DS_Store
+Thumbs.db
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Test files & coverage
+**/*.test.*
+**/*.spec.*
+coverage
+.nyc_output
+
+# Docs / misc
+README.md
+docs/
+scripts/
+DOCKER.md
+LICENSE
+*.md
+
+# Source maps (not needed in production)
+**/*.map
+
+# Temporary files
+tmp/
+temp/
+.cache
