@@ -33,6 +33,15 @@ curl -sL https://raw.githubusercontent.com/aamitn/bitmutex-website/main/scripts/
 irm https://raw.githubusercontent.com/aamitn/bitmutex-website/main/scripts/install.ps1 | iex
 ```
 
+- For Windows (CMD)
+```sh
+powershell -ExecutionPolicy Bypass -NoProfile -Command "irm https://raw.githubusercontent.com/aamitn/bitmutex-website/main/scripts/install.ps1 | iex"
+
+OR
+
+curl -fsSL https://raw.githubusercontent.com/aamitn/bitmutex-website/main/scripts/install.ps1 | powershell -ExecutionPolicy Bypass -NoProfile -
+```
+
 | Screenshot | Illustration |
 |------------|--------------|
 | <img src="./illustration/ss.png" width="450" height="250"> | <img src="./illustration/illustration.gif" width="450" height="250"> |
