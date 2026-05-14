@@ -10,21 +10,25 @@
 [![Docker Hub](https://img.shields.io/badge/Docker%20Hub-bitmutex%2Fbm--site-blue?logo=docker)](https://hub.docker.com/r/bitmutex/bm-site)
 ![Docker Pulls](https://img.shields.io/docker/pulls/bitmutex/bm-site)
 ![Docker Image Size](https://img.shields.io/docker/image-size/bitmutex/bm-site/latest)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
+[![GitHub release](https://img.shields.io/github/v/release/aamitn/bitmutex-website)](https://github.com/aamitn/bitmutex-website/releases/latest)
+[![GitHub release](https://img.shields.io/github/v/release/aamitn/bitmutex-website?include_prereleases)](https://github.com/aamitn/bitmutex-website/releases)
+
 <!--
 
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=coverage)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
 -->
 
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
+
 
 ## SINGLE COMMAND DEPLOY 🛠️📦🚀
 
-**1. For  macOS / Linux(Bash)
+- For  macOS / Linux(Bash)
 ```sh
 curl -sL https://raw.githubusercontent.com/aamitn/bitmutex-website/main/scripts/install.sh | bash
 ```
 
-**2. For Windows (PowerShell)
+- For Windows (PowerShell)
 ```sh
 irm https://raw.githubusercontent.com/aamitn/bitmutex-website/main/scripts/install.ps1 | iex
 ```
