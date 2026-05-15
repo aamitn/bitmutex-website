@@ -2,8 +2,6 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm"; // GitHub-Flavored Markdown (tables, task lists)
 import rehypeRaw from "rehype-raw"; // Allow raw HTML inside Markdown
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"; // Syntax Highlighting
-import { materialDark } from "react-syntax-highlighter/dist/esm/styles/prism"; // Theme
 import CodeBlockWithCopy from "./CodeBlockWithCopy"; 
 
 interface RenderMarkdownProps {

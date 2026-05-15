@@ -125,15 +125,16 @@ function TestimonialCard({ testimonial, theme }: { testimonial: any; theme: stri
               <p
                 className={cn(
                   "text-sm font-medium leading-tight truncate",
-                  isDark ? "text-white/85" : "text-gray-800"
+                  isDark ? "text-white/90" : "text-gray-900"
                 )}
               >
                 {testimonial.firstname} {testimonial.lastname}
               </p>
+
               <span
                 className={cn(
-                  "text-[10px] font-light tracking-wider uppercase truncate",
-                  isDark ? "text-white/35" : "text-gray-400"
+                  "text-xs font-medium tracking-wide uppercase truncate",
+                  isDark ? "text-white/70" : "text-gray-700"
                 )}
               >
                 {testimonial.job}

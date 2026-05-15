@@ -166,18 +166,15 @@ export function Footer({ data }: Readonly<FooterProps>) {
 
             {/* ✅ Cookie Preferences Link and theme toggle*/}
             <div className="flex items-center justify-center sm:justify-start w-full gap-3">
-              <a
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  CookieConsent.showPreferences();
-                }}
-                className="text-sm font-normal text-slate-800 dark:text-orange-400 transition-all duration-300 ease-in-out 
-                hover:text-orange-500 dark:hover:text-blue-300 hover:font-bold focus:outline-none focus:ring-2 
-                focus:ring-orange-400 dark:focus:ring-orange-500 rounded-md px-2 py-1 flex items-center"
-              >
-                ⚙️ Cookie Preferences
-              </a>
+                <button
+                  type="button"
+                  onClick={() => CookieConsent.showPreferences()}
+                  className="text-sm font-normal text-slate-800 dark:text-orange-400 transition-all duration-300 ease-in-out 
+                  hover:text-orange-500 dark:hover:text-blue-300 hover:font-bold focus:outline-none focus:ring-2 
+                  focus:ring-orange-400 dark:focus:ring-orange-500 rounded-md px-2 py-1 flex items-center"
+                >
+                  ⚙️ Cookie Preferences
+                </button>
               <ThemeToggle />
             </div>
 
@@ -190,7 +187,7 @@ export function Footer({ data }: Readonly<FooterProps>) {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 dark:text-orange-500 text-slate-800">
             {Object.entries(groupedNavItems).map(([parent, items]) => (
               <div key={parent} className="space-y-2">
-                <h4 className="font-heading text-lg font-semibold">{parent}</h4>
+               <h2 className="font-heading text-lg font-semibold">{parent}</h2>
                 <Separator className="w-12 bg-gray-500 dark:bg-gray-600" />
                 <ul className="space-y-1">
                   {items.map((item) => (
@@ -209,11 +206,14 @@ export function Footer({ data }: Readonly<FooterProps>) {
         {/* Right Section: Newsletter & Social Links */}
         <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}>
           <div className="flex flex-col items-center sm:items-end space-y-4">
-            <h4 className="font-heading text-lg font-semibold">Subscribe to our Newsletter</h4>
-            <Separator className="w-12 bg-gray-500 dark:bg-gray-600" />
+          <h2 className="font-heading text-lg font-semibold">
+            Subscribe to our Newsletter
+          </h2>     
+         <Separator className="w-12 bg-gray-500 dark:bg-gray-600" />
             <div className="flex w-full">
               <Input
                 type="email"
+                aria-label="Email address"
                 placeholder="Enter your email"
                 className="flex-1 rounded-l-md bg-gray-300 text-gray-900 dark:bg-gray-700 dark:text-white border-none placeholder-gray-600 dark:placeholder-slate-300 focus:ring-2 focus:ring-orange-500"
               />
@@ -230,7 +230,9 @@ export function Footer({ data }: Readonly<FooterProps>) {
               Subscribe
             </Button>
             </div>
-            <h4 className="font-heading text-lg font-semibold">Follow Us</h4>
+            <h2 className="font-heading text-lg font-semibold">
+              Follow Us
+            </h2>
             <Separator className="w-12 bg-gray-500 dark:bg-gray-600" />
 
             <div className="flex gap-4">
@@ -240,6 +242,7 @@ export function Footer({ data }: Readonly<FooterProps>) {
                   <Link
                     key={link.text}
                     href={link.href}
+                    aria-label={link.text}
                     target="_blank"
                     className="group relative flex items-center justify-center w-12 h-12 rounded-full
                       bg-white shadow-xl

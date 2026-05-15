@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
   /* config options here */
   allowedDevOrigins: ['localhost', '*.bitmutex.com','bitmutex.com'],
 
+  productionBrowserSourceMaps: true,
+
   images: {
     unoptimized: process.env.NEXT_PUBLIC_IMAGES_UNOPTIMIZED === "true",
     remotePatterns: [

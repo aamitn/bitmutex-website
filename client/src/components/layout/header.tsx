@@ -309,20 +309,25 @@ export function Header({ data }: Readonly<HeaderProps>) {
         const isAppointment = parts.length > 1 && parts[1].toLowerCase() === "appointment";
         const baseHref = parts[0];
 
-        const button = (
-          <Button
-            asChild
-            className={`relative h-7 lg:h-9 px-2 lg:px-3 xl:px-5 flex items-center gap-1 
-              text-xs lg:text-sm xl:text-base font-medium rounded-lg
-              transition-all duration-300 ease-out border shadow-sm
-            ${item.isPrimary
-              ? "text-white border-blue-900 bg-linear-to-r from-blue-900 to-blue-800 hover:from-blue-800 hover:to-blue-700 dark:from-blue-600 dark:to-blue-500 dark:text-white dark:border-blue-400 shadow-orange-500 dark:shadow-orange-700"
-              : "border-blue-700 dark:border-blue-600 text-blue-800 dark:text-blue-300 bg-transparent hover:border-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900 dark:hover:text-white shadow-blue-500 dark:shadow-blue-700"
-            }`}
-          >
-            {isAppointment ? <span>{item.text}</span> : (
-              <Link href={baseHref} target={item.isExternal ? "_blank" : "_self"}>{item.text}</Link>
-            )}
+        const baseButtonClasses = `relative h-7 lg:h-9 px-2 lg:px-3 xl:px-5 flex items-center gap-1 
+          text-xs lg:text-sm xl:text-base font-medium rounded-lg
+          transition-all duration-300 ease-out border shadow-sm
+          ${item.isPrimary
+            ? "text-white border-blue-900 bg-linear-to-r from-blue-900 to-blue-800 hover:from-blue-800 hover:to-blue-700 dark:from-blue-600 dark:to-blue-500 dark:text-white dark:border-blue-400 shadow-orange-500 dark:shadow-orange-700"
+            : "border-blue-700 dark:border-blue-600 text-blue-800 dark:text-blue-300 bg-transparent hover:border-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900 dark:hover:text-white shadow-blue-500 dark:shadow-blue-700"
+          }`;
+
+        const button = isAppointment ? (
+          // Renders a native <button> with proper ARIA support
+          <Button className={baseButtonClasses}>
+            {item.text}
+          </Button>
+        ) : (
+          // Uses asChild to pass button styling down to the Next.js <Link>
+          <Button asChild className={baseButtonClasses}>
+            <Link href={baseHref} target={item.isExternal ? "_blank" : "_self"}>
+              {item.text}
+            </Link>
           </Button>
         );
 

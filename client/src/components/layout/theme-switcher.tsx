@@ -51,6 +51,8 @@ export function ThemeSwitcher({ variant = "default" }: ThemeSwitcherProps) {
               <TooltipTrigger asChild>
                 <motion.button
                   onClick={() => setTheme(mode)}
+                  aria-label={`Switch to ${label} theme`}
+                  title={`Switch to ${label} theme`}
                   className={`flex items-center justify-center w-8 h-8 rounded-md transition-colors duration-200
                     ${
                       theme === mode
@@ -79,6 +81,16 @@ export function ThemeSwitcher({ variant = "default" }: ThemeSwitcherProps) {
     <div className="flex items-center gap-3">
       <motion.button
         onClick={() => setTheme(isDark ? "light" : "dark")}
+        aria-label={
+          isDark
+            ? "Switch to light theme"
+            : "Switch to dark theme"
+        }
+        title={
+          isDark
+            ? "Switch to light theme"
+            : "Switch to dark theme"
+        }
         className="relative w-16 h-8 rounded-full bg-gray-300 dark:bg-gray-800 flex items-center px-1 shadow-lg border border-gray-400 dark:border-gray-700"
         whileTap={{ scale: 0.95 }}
         animate={{ scale: 1 }}

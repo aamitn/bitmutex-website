@@ -160,13 +160,14 @@ function ProfileRow({ testimonial, isDark }: { testimonial: any; isDark: boolean
         <div className="relative shrink-0">
           <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500 to-orange-500 blur-[2px] scale-110 opacity-50" />
           {testimonial.image?.url ? (
-            <Image
-              src={`${baseUrl}${testimonial.image.url}`}
-              alt={`${testimonial.firstname} ${testimonial.lastname}`}
-              width={36}
-              height={36}
-              className="relative rounded-full object-cover ring-2 ring-white/20"
-            />
+              <Image
+                src={`${baseUrl}${testimonial.image.url}`}
+                alt={`${testimonial.firstname} ${testimonial.lastname}`}
+                width={36}
+                height={36}
+                sizes="36px"
+                className="relative rounded-full object-cover ring-2 ring-white/20"
+              />
           ) : (
             <div className="relative w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-orange-500 flex items-center justify-center ring-2 ring-white/20">
               <span className="text-xs font-semibold text-white">
@@ -185,8 +186,8 @@ function ProfileRow({ testimonial, isDark }: { testimonial: any; isDark: boolean
             {`${testimonial.firstname} ${testimonial.lastname}`}
           </QuoteDescription>
           <QuoteDescription className={cn(
-            "text-[10px] font-light tracking-wider uppercase truncate",
-            isDark ? "text-white/35" : "text-gray-400"
+            "text-xs font-medium tracking-wide uppercase truncate",
+            isDark ? "text-white/60" : "text-gray-600"
           )}>
             {testimonial.job}
           </QuoteDescription>
@@ -214,7 +215,7 @@ export const QuoteDescription = ({
   className?: string;
 }) => {
   return (
-    <p className={cn("text-sm font-normal text-neutral-400 max-w-sm", className)}>
+    <p className={cn("text-sm font-normal max-w-sm", className)}>
       {children}
     </p>
   );

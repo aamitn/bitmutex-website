@@ -6,13 +6,11 @@ import { cn } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import { Header, Footer } from "@/components/layout";
 import { getGlobalPageData } from "@/data/loaders";
-import Chat from "@/components/ui/chat";
-import LiveUserCount from "@/components/custom/LiveUserCount";
+import ClientWidgets from "@/components/custom/ClientWidgets";
 import 'vanilla-cookieconsent/dist/cookieconsent.css';
 import CookieConsentComponent from '@/components/cookie/CookieConsent';
 import ErrorPage from '@/components/custom/strapi-down-error-page';
 import LoginButtonServer from "@/components/custom/LoginButtonServer";
-import Metrics from './metrics'
 
 // Font Configuration using next/font with CSS variables for Tailwind integration
 /*
@@ -99,7 +97,7 @@ export default async function RootLayout({
         )}
        >
 
-        <Metrics /> {/* Analytics */}
+       
         
         <ThemeProvider
           attribute="class"
@@ -110,16 +108,18 @@ export default async function RootLayout({
          
           <Header data={{ ...topNav, logoSrc }} /> {/* Pass logoSrc */}
           <LoginButtonServer />
-          {children}
+
+          <main id="main-content" className="min-h-screen">
+            {children}
+          </main>
           
           <Footer data={{ ...footer, logoWideSrc }} />
           
           <CookieConsentComponent />
           
-          <Chat />
+          <ClientWidgets />
+          {/* if (pathname === "/") return <ClientWidgets />;  Only show on homepage */} 
           
-          <LiveUserCount />
-
         </ThemeProvider>
       </body>
     </html>

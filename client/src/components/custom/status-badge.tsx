@@ -42,6 +42,7 @@ export default function StatusBadge() {
                         width="250"
                         height="30"
                         style={{ colorScheme: "normal" }}
+                        title="Bitmutex Status Badge"
                     ></iframe>
                 )}
             </div>

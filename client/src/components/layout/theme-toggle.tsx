@@ -29,7 +29,16 @@ export function ThemeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button
+          variant="outline"
+          size="icon"
+          aria-label={
+            isDark
+              ? "Current theme dark. Open theme menu"
+              : "Current theme light. Open theme menu"
+          }
+          title="Toggle theme"
+        >
           {isDark ? (
             <Moon className="h-[1.2rem] w-[1.2rem] text-slate-300" />
           ) : (

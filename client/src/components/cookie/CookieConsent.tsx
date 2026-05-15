@@ -34,13 +34,14 @@ const CookieConsentComponent = () => {
   return (
     <a
       href="#"
+      aria-label="Show cookie preferences"
       onClick={(e) => {
         e.preventDefault();
         CookieConsent.showPreferences();
       }}
       className="text-sm text-blue-500 underline cursor-pointer"
     >
-     {/* Show Cookie Preferences  Remove comments to show text */} 
+      <span className="sr-only">Show Cookie Preferences</span>
     </a>
   );
 };

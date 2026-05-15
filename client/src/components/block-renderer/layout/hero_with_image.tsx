@@ -231,13 +231,14 @@ const splitHeading = (headingText: string, startIndex: number, wordCount: number
         >
           <div className="absolute inset-0" />
           <Image
-          src={strapiImage(image.url)}
-          alt="Bitmutex Dashboard"
-          width={1200}
-          height={850}
-          priority
-          className="rounded-xl object-cover"
-        />
+            src={strapiImage(image.url)}
+            alt="Bitmutex Dashboard"
+            width={1200}
+            height={850}
+            sizes="(max-width: 768px) 100vw, 1200px"
+            priority
+            className="rounded-xl object-cover"
+          />
         </div>
       </motion.div>
 

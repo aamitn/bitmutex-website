@@ -100,15 +100,22 @@ export function RegformNextToSection(data: Readonly<RegformNextToSectionProps>) 
                       tracking-tight pb-2"
           >   
             {words.slice(0, highlightIndex).join(" ")}{" "}
-            <span className="relative inline-block min-w-[7.5ch]
-                            bg-gradient-to-r from-blue-700 to-indigo-600
-                            dark:from-blue-400 dark:to-indigo-300
-                            bg-clip-text text-transparent">
+              <span
+                className="
+                  relative inline-block min-w-[7.5ch] whitespace-nowrap
+                  bg-gradient-to-r from-blue-700 to-indigo-600
+                  dark:from-blue-400 dark:to-indigo-300
+                  bg-clip-text text-transparent
+                  [-webkit-background-clip:text]
+                  [-webkit-text-fill-color:transparent]
+                  will-change-transform
+                  transform-gpu
+                "
+              >
               <motion.span 
                 initial={{ opacity: 0 }} 
                 animate={{ opacity: 1 }} 
                 transition={{ duration: 1 }} 
-                className="relative"
               >
                 {typewriterText}
               </motion.span>

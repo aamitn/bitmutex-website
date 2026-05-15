@@ -47,7 +47,9 @@ export function CardCarousel({ cardItems }: Readonly<CardGridProps>) {
                       <IconComponent size={32} className="text-white" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="mb-2 text-lg font-bold font-heading  hover:drop-shadow-md text-foreground">{heading}</h4>
+                      <h3 className="mb-2 text-lg font-bold font-heading hover:drop-shadow-md text-foreground">
+                        {heading}
+                      </h3>
                       <p className="text-muted-foreground text-sm">{text}</p>
                     </div>
             
