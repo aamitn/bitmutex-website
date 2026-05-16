@@ -1,6 +1,13 @@
 name: Build & Publish Docker Image
 
 on:
+  # Triggers the workflow automatically on push of tags matching v*.*.*
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-*' # Optional: handles prereleases like v1.0.0-alpha
+
+  # Keeps the manual trigger available just in case
   workflow_dispatch:
     inputs:
       tag_selection:
@@ -25,7 +32,8 @@ jobs:
           # 1. Use manual input if provided
           INPUT_TAG="${{ github.event.inputs.tag_selection }}"
           
-          if [ -not -z "$INPUT_TAG" ]; then
+          # FIXED: Changed invalid Bash '-not -z' to '-n' (not empty)
+          if [ -n "$INPUT_TAG" ]; then
             VERSION="$INPUT_TAG"
             echo "Using manually entered tag: $VERSION"
           else
