@@ -4,6 +4,7 @@
 
 [![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/1mjch.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
 [![Deploy Strapi & Next.js via SSH](https://github.com/aamitn/bitmutex-website/actions/workflows/deploy.yml/badge.svg)](https://github.com/aamitn/bitmutex-website/actions/workflows/deploy.yml)
+[![Build & Publish Docker Image](https://github.com/aamitn/bitmutex-website/actions/workflows/docker_publish.yml/badge.svg)](https://github.com/aamitn/bitmutex-website/actions/workflows/docker_publish.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=bugs)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
