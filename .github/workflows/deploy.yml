@@ -1,59 +1,78 @@
 name: Deploy Strapi & Next.js via SSH to Server
 
 on:
-  workflow_dispatch: # Allows you to trigger the deployment manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          ssh-passphrase: ${{ secrets.SSH_PASSPHRASE }} # Added passphrase support here
+      - name: Install expect
+        run: sudo apt-get update && sudo apt-get install -y expect
+
+      - name: Start ssh-agent and add key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
+        run: |
+          eval "$(ssh-agent -s)"
+
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          expect << EOF
+          spawn ssh-add ~/.ssh/id_rsa
+          expect "Enter passphrase"
+          send "$SSH_PASSPHRASE\r"
+          expect eof
+          EOF
 
       - name: Deploy and Build via SSH
         env:
           SSH_HOST: 68.233.96.154
         run: |
-          # Note: Changed 'ubuntu' to 'bigwiz' based on your target directory structure
-          ssh -o StrictHostKeyChecking=no bigwiz@$SSH_HOST << 'EOF'
-            
-            # Load environment variables for non-interactive shells
-            if [ -f ~/.zshrc ]; then source ~/.zshrc; fi
+          ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << 'EOF'
+
+            source ~/.zshrc
 
             echo "Starting deployment on server..."
+
             APP_DIR="/home/bigwiz/apps/bitmutex-website"
             REPO_URL="https://github.com/aamitn/bitmutex-website.git"
-      
-            # Check if the directory exists and clone if it doesn't
+
             if [ ! -d "$APP_DIR" ]; then
               echo "Directory $APP_DIR does not exist. Cloning repository..."
               mkdir -p /home/bigwiz/apps
               cd /home/bigwiz/apps
               git clone "$REPO_URL" "$APP_DIR"
             fi
-            
+
             cd "$APP_DIR"
-      
+
             echo "Deploying application..."
-            git fetch --all
+
+            git fetch origin
             git reset --hard origin/main
-            
-            # PM2 updates and builds
+            git clean -fd
+
             pm2 stop bitmutex-strapi || true
             pm2 stop bitmutex-nextjs || true
-            
+
             pnpm deepclean
             pnpm spawn
             pnpm build
-            
-            pm2 reload ecosystemci.config.cjs
+
+            pm2 reload ecosystemci.config.cjs || pm2 start ecosystemci.config.cjs
+
             echo "Deployment complete!"
+
           EOF
 
       - name: Audit URLs using Lighthouse
@@ -61,5 +80,5 @@ jobs:
         with:
           urls: |
             https://bitmutex.com/
-          uploadArtifacts: true # save results as an action artifacts
-          temporaryPublicStorage: true # upload lighthouse report to the temporary storage
+          uploadArtifacts: true
+          temporaryPublicStorage: true
