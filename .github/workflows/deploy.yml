@@ -1,9 +1,7 @@
 name: Deploy Strapi & Next.js via SSH to Server
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch: # Allows you to trigger the deployment manually from the Actions tab
 
 jobs:
   deploy:
@@ -53,7 +51,6 @@ jobs:
             echo "Deployment complete!"
           EOF
 
-      - uses: actions/checkout@v4
       - name: Audit URLs using Lighthouse
         uses: treosh/lighthouse-ci-action@v12
         with:
