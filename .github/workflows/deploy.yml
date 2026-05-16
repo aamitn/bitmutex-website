@@ -14,15 +14,17 @@ jobs:
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-passphrase: ${{ secrets.SSH_PASSPHRASE }} # Added passphrase support here
 
       - name: Deploy and Build via SSH
         env:
           SSH_HOST: 68.233.96.154
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << 'EOF'
+          # Note: Changed 'ubuntu' to 'bigwiz' based on your target directory structure
+          ssh -o StrictHostKeyChecking=no bigwiz@$SSH_HOST << 'EOF'
             
-            # Get System and User Envs
-            source ~/.zshrc
+            # Load environment variables for non-interactive shells
+            if [ -f ~/.zshrc ]; then source ~/.zshrc; fi
 
             echo "Starting deployment on server..."
             APP_DIR="/home/bigwiz/apps/bitmutex-website"
@@ -31,6 +33,7 @@ jobs:
             # Check if the directory exists and clone if it doesn't
             if [ ! -d "$APP_DIR" ]; then
               echo "Directory $APP_DIR does not exist. Cloning repository..."
+              mkdir -p /home/bigwiz/apps
               cd /home/bigwiz/apps
               git clone "$REPO_URL" "$APP_DIR"
             fi
@@ -38,15 +41,17 @@ jobs:
             cd "$APP_DIR"
       
             echo "Deploying application..."
-            git pull --force
+            git fetch --all
             git reset --hard origin/main
-            # Remove all untracked files except uploads
-            # git clean -fd -e "${APP_DIR}/server/public/uploads" -e "${APP_DIR}/server/public/uploads/*"
-            pm2 stop bitmutex-strapi
-            pm2 stop bitmutex-nextjs
+            
+            # PM2 updates and builds
+            pm2 stop bitmutex-strapi || true
+            pm2 stop bitmutex-nextjs || true
+            
             pnpm deepclean
             pnpm spawn
             pnpm build
+            
             pm2 reload ecosystemci.config.cjs
             echo "Deployment complete!"
           EOF
