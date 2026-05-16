@@ -2,6 +2,12 @@ name: Build & Publish Docker Image
 
 on:
   workflow_dispatch:
+    inputs:
+      tag_selection:
+        description: 'Select or type the Git tag to build (leave blank for auto-resolve)'
+        required: false
+        default: ''
+        type: string
 
 jobs:
   publish_docker:
@@ -16,24 +22,32 @@ jobs:
       - name: Resolve Docker Version
         id: version
         run: |
-          # Try exact current tag first
-          VERSION=$(git describe --tags --exact-match 2>/dev/null || true)
+          # 1. Use manual input if provided
+          INPUT_TAG="${{ github.event.inputs.tag_selection }}"
+          
+          if [ -not -z "$INPUT_TAG" ]; then
+            VERSION="$INPUT_TAG"
+            echo "Using manually entered tag: $VERSION"
+          else
+            # 2. Try exact current commit tag first
+            VERSION=$(git describe --tags --exact-match 2>/dev/null || true)
 
-          # Fallback to latest available tag
-          if [ -z "$VERSION" ]; then
-            VERSION=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null || true)
-          fi
+            # 3. Fallback to latest available tag in history
+            if [ -z "$VERSION" ]; then
+              VERSION=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null || true)
+            fi
 
-          # Final fallback
-          if [ -z "$VERSION" ]; then
-            VERSION="latest"
+            # 4. Final fallback
+            if [ -z "$VERSION" ]; then
+              VERSION="latest"
+            fi
+            echo "Auto-resolved tag to: $VERSION"
           fi
 
           # Remove optional leading "v"
           CLEAN_VERSION=${VERSION#v}
 
           echo "VERSION=$CLEAN_VERSION" >> $GITHUB_ENV
-
           echo "Using Docker version tag: $CLEAN_VERSION"
 
       - name: Setup Docker Buildx
