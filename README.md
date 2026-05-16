@@ -20,7 +20,7 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=coverage)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
 -->
 
-
+ [DOWNLOAD](https://github.com/aamitn/bitmutex-website/releases/download/INTERNAL-0/seed-data.tar.gz) INIT SEED DATA `must be placed in repo root`
 
 ## SINGLE COMMAND DEPLOY 🛠️📦🚀
 
