@@ -20,7 +20,7 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=coverage)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
 -->
 
- [DOWNLOAD](https://github.com/aamitn/bitmutex-website/releases/download/INTERNAL-0/seed-data.tar.gz) INIT SEED DATA `must be placed in repo root`
+ Manually [DOWNLOAD](https://github.com/aamitn/bitmutex-website/releases/download/INTERNAL-0/seed-data.tar.gz) INIT SEED DATA and `must be placed in repo root` for versions below `2.8.40`
 
 ## SINGLE COMMAND DEPLOY 🛠️📦🚀
 
@@ -42,12 +42,14 @@ OR
 
 curl -fsSL https://raw.githubusercontent.com/aamitn/bitmutex-website/main/scripts/install.ps1 | powershell -ExecutionPolicy Bypass -NoProfile -
 ```
-<img src="./illustration/lighthouse.png" width="450" height="auto">
+<img src="https://gitlab.com/aamitn/assets/-/raw/main/bm-site-data/lighthouse.png" width="450" height="auto">
 
 
 | Screenshot | Illustration |
 |------------|--------------|
-| <img src="./illustration/ss.png" width="450" height="250"> | <img src="./illustration/illustration.gif" width="450" height="250"> |
+| <img src="https://gitlab.com/aamitn/assets/-/raw/main/bm-site-data/ss.png" width="450" height="250"> | <img src="https://gitlab.com/aamitn/assets/-/raw/main/bm-site-data/illustration.gif" width="450" height="250"> |
+
+<img src="https://gitlab.com/aamitn/assets/-/raw/main/bm-site-data/ER_Diagram.png" width="800" height="auto">
 
 
 ## 🚀 Features
