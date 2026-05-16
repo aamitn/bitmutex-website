@@ -14,10 +14,10 @@ jobs:
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: 68.233.96.154
-          username: bigwiz # Using 'bigwiz' to match your target directory path
+          username: bigwiz
+          port: 2198 # Explicitly targets your custom SSH port
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }} # Securely passes your passphrase
-          envs: GITHUB_SHA # Optional: passes metadata if you need it
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             # Load environment variables for non-interactive shells
             if [ -f ~/.zshrc ]; then source ~/.zshrc; fi
