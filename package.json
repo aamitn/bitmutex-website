@@ -4,7 +4,7 @@
   "description": "Strapi5 NextJs16 App built to use as website for Bitmutex Technologies",
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@9.0.0",
+  "packageManager": "pnpm@11.1.2",
   "workspaces": [
     "client",
     "server"

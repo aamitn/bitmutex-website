@@ -57,8 +57,7 @@
     "backend#start": {
       "cache": false,
       "interactive": true,
-      "persistent": true,
-      "dependsOn": ["backend#build"]
+      "persistent": true
     },
     "client#start": {
       "cache": false,
@@ -71,8 +70,7 @@
     },
     "backend#startci": {
       "cache": false,
-      "persistent": true,
-      "dependsOn": ["backend#build"]
+      "persistent": true
     },
     "client#startci": {
       "cache": false,

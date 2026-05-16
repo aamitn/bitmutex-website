@@ -4,6 +4,7 @@ import path from "node:path";
 const pathsToDelete = [
   "node_modules",
   "bun.lock",
+  ".turbo",
 
   "client/node_modules",
   "client/.next",

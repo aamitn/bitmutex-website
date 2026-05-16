@@ -165,6 +165,7 @@ pnpm dev
 
 ### 5️⃣.1️⃣  **Start the application in prod mode**
   ```sh
+pnpm build  OR pnpm turbo build --no-cache
 pnpm start
   ```
   This will start both strapi and nextjs  in production mode, no debugging.
@@ -215,19 +216,6 @@ This will start:
 - Strapi CMS at `http://localhost:1337`
 - Next.js Frontend at `http://localhost:3000`
 
-  
-
-## 📥 **Manual Data Import (Strapi Limitation)**
-  
-⚠️ **Strapi does NOT support data import in Docker builds** ([GitHub Issue-17809](https://github.com/strapi/strapi/issues/17809))
-
-**To manually import seed data try:**
-
-  ```sh
-  docker  exec  -it  bitmutex-strapi  bash
-  yarn  strapi  import  -f  /seed-data.tar.gz  --force
-  ```
-
 
 ## 🔑 Default Admin Credentials
 > These credentials are created automatically when `AUTO_CREATE_ADMIN=true` in `docker-compose.yml` or `.env` inside `server` directory.
@@ -236,7 +224,6 @@ This will start:
 -  **Password**: `strapiadmin`   
 🚨 **Change the default password after the first login!**
 
-  
 
 ## 📞 Support
 If you encounter issues, feel free to [ open an issue](https://github.com/aamitn/bitmutex-website/issues/new/choose).

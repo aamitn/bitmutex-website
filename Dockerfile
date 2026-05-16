@@ -5,7 +5,7 @@ FROM node:24-alpine
 
 RUN apk add --no-cache libc6-compat openssl
 
-RUN corepack enable && corepack prepare pnpm@9.0.0 --activate
+RUN corepack enable && corepack prepare pnpm@11.1.2 --activate
 
 ENV PNPM_HOME=/usr/local/share/pnpm
 ENV PATH=$PNPM_HOME:$PATH
