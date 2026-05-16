@@ -42,7 +42,8 @@ OR
 curl -fsSL https://raw.githubusercontent.com/aamitn/bitmutex-website/main/scripts/install.ps1 | powershell -ExecutionPolicy Bypass -NoProfile -
 ```
 <img src="./illustration/lighthouse.png" width="450" height="auto">
- 
+
+
 | Screenshot | Illustration |
 |------------|--------------|
 | <img src="./illustration/ss.png" width="450" height="250"> | <img src="./illustration/illustration.gif" width="450" height="250"> |
