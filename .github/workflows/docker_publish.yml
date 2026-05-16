@@ -1,0 +1,60 @@
+name: Build & Publish Docker Image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish_docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve Docker Version
+        id: version
+        run: |
+          # Try exact current tag first
+          VERSION=$(git describe --tags --exact-match 2>/dev/null || true)
+
+          # Fallback to latest available tag
+          if [ -z "$VERSION" ]; then
+            VERSION=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null || true)
+          fi
+
+          # Final fallback
+          if [ -z "$VERSION" ]; then
+            VERSION="latest"
+          fi
+
+          # Remove optional leading "v"
+          CLEAN_VERSION=${VERSION#v}
+
+          echo "VERSION=$CLEAN_VERSION" >> $GITHUB_ENV
+
+          echo "Using Docker version tag: $CLEAN_VERSION"
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build & Push Multi-Arch Docker Image
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \
+            -t bitmutex/bm-site:latest \
+            -t bitmutex/bm-site:${VERSION} \
+            --push .
+
+      - name: Show Published Tags
+        run: |
+          echo "Published:"
+          echo " - bitmutex/bm-site:latest"
+          echo " - bitmutex/bm-site:${VERSION}"

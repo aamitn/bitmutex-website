@@ -47,7 +47,7 @@ jobs:
             pnpm deepclean
             pnpm spawn
             pnpm build
-            pm2 reload ecosystem.config.cjs
+            pm2 reload ecosystemci.config.cjs
             echo "Deployment complete!"
           EOF
 
