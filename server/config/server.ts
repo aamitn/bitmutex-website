@@ -5,5 +5,6 @@ export default ({ env }) => ({
     keys: env.array('APP_KEYS'),
   },
   // url: 'https://strapiadmin.bitmutex.com', //backend fqdn url //comment for local-dev
+  url: env('BACKEND_URL', undefined),
   proxy: true, 
 });
