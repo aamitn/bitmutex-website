@@ -12,7 +12,7 @@
   "scripts": {
     "turbo": "turbo",
     "copy": "node --import tsx ./copy-env.mts ./ && turbo run copy",
-    "spawn": "pnpm install && pnpm copy",
+    "spawn": "pnpm install && pnpm copy && pnpm download:seed",
     "dev": "turbo dev",
     "_comment-build": "turbo build --filter=backend && concurrently --kill-others \"cd server && pnpm start\" \"wait-on http://localhost:1337 --timeout 120000 && turbo build --filter=client\"",
     "build": "turbo build --filter=backend --env-mode=loose && concurrently --kill-others \"cd server && pnpm start\" \"wait-on http://localhost:1337 --timeout 120000 && turbo build --filter=client --env-mode=loose\"",
@@ -25,7 +25,8 @@
     "repo:sync": "git pull origin main",
     "backup": "pnpm run export && node --import tsx ./r2-backup.mts",
     "clean": "node --import tsx ./scripts/clean.ts",
-    "deepclean": "node --import tsx ./scripts/clean.ts --locks"
+    "deepclean": "node --import tsx ./scripts/clean.ts --locks",
+    "download:seed": "node --import tsx ./scripts/download-seed.ts"
   },
   "dependencies": {
     "@types/node": "^24.2.0",

@@ -20,10 +20,13 @@ ENV NODE_ENV=development
 RUN pnpm install --frozen-lockfile
 
 # =============================================================================
-# Permissions & Env Setup
+# Download Assets and Permissions & Env Setup
 # =============================================================================
+RUN pnpm download:seed
+
 RUN mkdir -p /app/server/public/uploads
 RUN chmod -R 777 /app/server/public
+
 
 # Run copy script safely during build
 RUN pnpm copy

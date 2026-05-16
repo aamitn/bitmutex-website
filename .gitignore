@@ -126,3 +126,6 @@ build
 
 # Turborepo
 .turbo/
+
+# Seed exports
+seed-data.tar.gz
