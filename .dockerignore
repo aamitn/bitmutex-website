@@ -45,7 +45,6 @@ coverage
 # Docs / misc
 README.md
 docs/
-scripts/
 DOCKER.md
 LICENSE
 *.md
