@@ -47,7 +47,7 @@ curl -fsSL https://raw.githubusercontent.com/aamitn/bitmutex-website/main/script
 
 | Screenshot | Illustration |
 |------------|--------------|
-| <img src="https://gitlab.com/aamitn/assets/-/raw/main/bm-site-data/ss.png" width="450" height="250"> | <img src="https://jumpshare.com/embed/CCpy8Z4GFqxzG49eY8RM" width="450" height="250"> |
+| <img src="https://gitlab.com/aamitn/assets/-/raw/main/bm-site-data/ss.png" width="450" height="250"> | <img src="https://github.com/aamitn/bitmutex-website/releases/download/INTERNAL-0/illustration.gif" width="450" height="250"> |
 
 <img src="https://gitlab.com/aamitn/assets/-/raw/main/bm-site-data/ER_Diagram.png" width="800" height="auto">
 
