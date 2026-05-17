@@ -44,26 +44,35 @@ const StreamInfoPopover = ({ hlsUrl, dashUrl, rtmpServer }: { hlsUrl: string, da
   return (
     <div className="relative" ref={popoverRef}>
       <div className="flex items-center gap-3 p-2 bg-gray-100/50 dark:bg-gray-900/50 rounded-xl backdrop-blur-lg border border-gray-300 dark:border-gray-700">
+        {/* Main Popover Toggle Button */}
         <button 
           onClick={() => setIsOpen(!isOpen)} 
+          aria-label="Open Stream Endpoints Menu"
           className="p-2 rounded-full bg-gray-200/50 backdrop-blur-lg border border-gray-300 hover:bg-gray-300 dark:bg-gray-800/50 dark:border-gray-700 dark:hover:bg-gray-700 transition-colors"
         >
           <Signal size={20} className="text-gray-600 dark:text-gray-400" />
         </button>
 
+        {/* Reload Player Button */}
         <button 
           onClick={() => window.location.reload()} 
+          aria-label="Reload Live Player Stream"
           className="p-2 rounded-full bg-gray-200/50 backdrop-blur-lg border border-gray-300 hover:bg-gray-300 dark:bg-gray-800/50 dark:border-gray-700 dark:hover:bg-gray-700 transition-colors"
         >
           <RotateCcw size={20} className="text-gray-600 dark:text-gray-400" />
         </button>
       </div>
       
-      {isOpen && (
+    {isOpen && (
         <div className="absolute left-1/2 -translate-x-1/2 mt-3 w-96 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg z-50 p-4 transition-all duration-300 ease-out transform scale-100 opacity-100">
           <div className="flex justify-between items-center mb-3">
             <h4 className="text-lg font-bold text-gray-900 dark:text-white">Stream Endpoints</h4>
-            <button onClick={() => setIsOpen(false)} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+            {/* Popover Close Button */}
+            <button 
+              onClick={() => setIsOpen(false)} 
+              aria-label="Close Endpoints Menu"
+              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+            >
               <X size={20} />
             </button>
           </div>
@@ -74,8 +83,10 @@ const StreamInfoPopover = ({ hlsUrl, dashUrl, rtmpServer }: { hlsUrl: string, da
               <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Stream HLS URL</p>
               <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">
                 <span className="text-xs text-gray-500 dark:text-gray-400 truncate">{hlsUrl}</span>
+                {/* Copy HLS Button */}
                 <button 
                   onClick={() => handleCopy(hlsUrl, "HLS Stream URL")}
+                  aria-label="Copy HLS Stream URL to Clipboard"
                   className="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-400"
                 >
                   <Clipboard size={16} />
@@ -83,13 +94,15 @@ const StreamInfoPopover = ({ hlsUrl, dashUrl, rtmpServer }: { hlsUrl: string, da
               </div>
             </div>
 
-            {/* STREAM DASH Section */}
+          {/* STREAM DASH Section */}
             <div>
               <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Stream DASH URL</p>
               <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">
                 <span className="text-xs text-gray-500 dark:text-gray-400 truncate">{dashUrl}</span>
+                {/* Copy DASH Button */}
                 <button 
-                  onClick={() => handleCopy(rtmpServer, "DASH Stream URL")}
+                  onClick={() => handleCopy(dashUrl, "DASH Stream URL")}
+                  aria-label="Copy DASH Stream URL to Clipboard"
                   className="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-400"
                 >
                   <Clipboard size={16} />
@@ -97,13 +110,15 @@ const StreamInfoPopover = ({ hlsUrl, dashUrl, rtmpServer }: { hlsUrl: string, da
               </div>
             </div>
             
-            {/* RTMP Section */}
+          {/* RTMP Section */}
             <div>
               <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">RTMP URL</p>
               <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">
                 <span className="text-xs text-gray-500 dark:text-gray-400 truncate">{rtmpServerUrl}</span>
+                {/* Copy RTMP Button */}
                 <button 
                   onClick={() => handleCopy(rtmpServerUrl, "RTMP Stream Url")}
+                  aria-label="Copy RTMP Stream URL to Clipboard"
                   className="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-400"
                 >
                   <Clipboard size={16} />

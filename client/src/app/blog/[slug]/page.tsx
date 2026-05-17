@@ -9,7 +9,6 @@ import { BlockRenderer } from "@/components/block-renderer";
 import ReadingProgress from "@/components/ui/ReadingProgress";
 import { CkeditorBlock } from "@/components/block-renderer/layout/ckeditor-block";
 import TableOfContents from "@/components/custom/TableOfContents";
-import {FiEye } from "react-icons/fi";
 import { generateMetadataObject } from '@/lib/metadata';
 import  fetchContentType  from '@/lib/strapi/fetchContentType';
 import { strapiImage } from '@/lib/strapi/strapiImage';
@@ -17,6 +16,8 @@ import RelatedPosts from "@/components/custom/related-posts";
 import SocialShareButtons from "@/components/custom/SocialShareButtons";
 import Image from "next/image";
 import DisqusComments from "@/components/custom/DisqusComments"; 
+import { FiEye, FiArrowLeft } from "react-icons/fi";
+import Link from "next/link";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -117,10 +118,22 @@ export default async function SinglePost({ params }: PageProps) {
   
 
   return (
-    <article className="pt-10 pb-16">
+<article className="pt-10 pb-16">
       <ReadingProgress />
       <TableOfContents  containerClass="post-content" />
-      <div className="container  max-w-6xl px-4">
+      <div className="container max-w-8xl px-4">
+        
+        {/* Back to All Blogs Button */}
+        <div className="pt-6 pb-2">
+          <Link 
+            href="/blog" 
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-neutral-800 hover:text-gray-900 dark:hover:text-gray-100 transition-all w-fit"
+          >
+            <FiArrowLeft size={16} />
+            <span>Back to all blogs</span>
+          </Link>
+        </div>
+
         <header className="my-10 text-center">
           <h1 className="font-heading text-4xl font-extrabold tracking-tight sm:text-5xl mb-4">
             {post.title} 
@@ -169,11 +182,13 @@ export default async function SinglePost({ params }: PageProps) {
             <span className="font-semibold">{readingTime} min read</span>
           </p>
 
-          {/* View Count */}
-          <div className="flex items-center justify-center gap-2 mt-3 text-gray-600 dark:text-gray-400">
-            <FiEye  size={18} />
+        {/* View Count */}
+        <div className="flex justify-center mt-4">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-gray-100/80 dark:bg-neutral-800/50 border border-gray-200/60 dark:border-neutral-700/60 rounded-full text-sm font-medium text-gray-600 dark:text-gray-300 shadow-sm transition-colors hover:bg-gray-200/80 dark:hover:bg-neutral-800/80">
+            <FiEye size={15} className="text-gray-500 dark:text-gray-400" />
             <span>{viewCount} views</span>
           </div>
+        </div>
 
           {/* Share Buttons */}
           <div className="flex justify-center gap-4 mt-4">
@@ -232,11 +247,14 @@ export default async function SinglePost({ params }: PageProps) {
 
       </div>
 
-    {/*Related Posts */}
-    <RelatedPosts category={post.category}/>
+      <div className="container  max-w-8xl px-4">
+          {/*Related Posts */}
+          <RelatedPosts category={post.category}/>
 
-    {/* Disqus Comments Section using disqus-react */}
-    <DisqusComments post={{ slug: post.slug, title: post.title }} />
+          {/* Disqus Comments Section using disqus-react */}
+          <DisqusComments post={{ slug: post.slug, title: post.title }} />
+
+      </div>
 
     </article>
   );

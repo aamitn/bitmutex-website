@@ -73,7 +73,7 @@ const DisqusComments: React.FC<DisqusCommentsProps> = ({ post, currentUser }) =>
   if (!mounted) return null;
 
   return (
-    <div className="container mx-auto max-w-6xl px-4 py-8">
+    <div className="container mx-auto px-4 py-8">
       <div className="relative">
         {/* Decorative background elements */}
         <div className="absolute inset-0 bg-linear-to-br from-blue-50/50 via-purple-50/30 to-pink-50/50 dark:from-blue-950/20 dark:via-purple-950/20 dark:to-pink-950/20 rounded-3xl transform -rotate-1"></div>

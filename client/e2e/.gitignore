@@ -1,0 +1,15 @@
+# Test artifacts
+test-results/
+playwright-report/
+.playwright/
+
+# Test cache
+e2e/.cache/
+e2e/.auth/
+
+# Local environment variables for testing
+.env.test.local
+
+# Temporary test files
+*.tmp.ts
+*.test.tmp

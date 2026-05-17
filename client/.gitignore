@@ -48,3 +48,9 @@ next-env.d.ts
 
 # Turborepo
 .turbo/
+
+# Tests
+coverage/
+playwright-report/
+test-results/
+

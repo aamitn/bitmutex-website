@@ -1,0 +1,178 @@
+name: Continuous Integration Testing Pipeline
+
+on:
+  # Allows manual triggering and run-time customization directly from the GitHub Actions dashboard tab
+  workflow_dispatch:
+    inputs:
+      run_e2e:
+        description: 'Execute Playwright End-to-End Test Suite?'
+        required: true
+        type: boolean
+        default: true
+
+# Permissions required to deploy static assets securely to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Cancel running builds on the same branch automatically if a new commit push drops in
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-and-verify:
+    name: Build & Validate Ecosystem
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Source Code repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment Runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22 # Matching your project engine specification constraints
+
+      - name: Setup pnpm Package Manager
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.1.2 # Matches your workspace root packageManager exactly
+
+      - name: Restore Monorepo Dependency Cache Matrix
+        uses: actions/cache@v4
+        with:
+          path: |
+            node-modules
+            ~/.local/share/pnpm/store
+            client/.next/cache
+            .turbo
+          key: ${{ runner.os }}-pnpm-turbo-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-turbo-${{ hashFiles('**/pnpm-lock.yaml') }}-
+
+      - name: Install Monorepo Package Dependencies
+        run: pnpm install --frozen-lockfile
+
+      # --- 1. RUN VITEST UNIT & COVERAGE TESTS ---
+      - name: Run Vitest Unit Tests & Generate V8 Coverage
+        run: pnpm run test:coverage
+        env:
+          NEXT_PUBLIC_STRAPI_BASE_URL: http://localhost:1337
+
+      # --- 2. CONDITIONALLY RUN PLAYWRIGHT E2E TESTS ---
+      - name: Determine E2E Execution Flag Trigger
+        id: e2e-checker
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "should_run=${{ github.event.inputs.run_e2e }}" >> $GITHUB_OUTPUT
+          else
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install Playwright System Browser Binaries
+        if: steps.e2e-checker.outputs.should_run == 'true'
+        run: |
+          cd client
+          pnpm exec playwright install --with-deps
+
+      - name: Monorepo Micro-Build Handshake Sequence (Loose Mode)
+        if: steps.e2e-checker.outputs.should_run == 'true'
+        run: pnpm run build
+        env:
+          NEXT_PUBLIC_STRAPI_BASE_URL: http://localhost:1337
+          NEXT_PUBLIC_STATUS_PAGE_URL: https://status.bitmutex.com
+          NEXT_PUBLIC_ALGOLIA_APP_ID: demo-app-id
+          NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY: demo-search-key
+
+      - name: Launch Monorepo Full-Stack Services Background Thread
+        if: steps.e2e-checker.outputs.should_run == 'true'
+        run: pnpm run start &
+        env:
+          NEXT_PUBLIC_STRAPI_BASE_URL: http://localhost:1337
+
+      - name: Await Port Hook Handshakes (wait-on API checks)
+        if: steps.e2e-checker.outputs.should_run == 'true'
+        run: pnpm exec wait-on http://localhost:1337 http://localhost:3000 --timeout 120000
+
+      - name: Run Playwright End-to-End Integration Suites
+        if: steps.e2e-checker.outputs.should_run == 'true'
+        run: |
+          cd client
+          pnpm run test:e2e
+        env:
+          NEXT_PUBLIC_STRAPI_BASE_URL: http://localhost:1337
+
+      # --- 3. CONSOLIDATE GRAPHICAL STATIC REPORTS FOR PAGES ---
+      - name: Structure Pages Directory Framework
+        if: always() # Ensures logs upload even if assertion metrics experience partial failures
+        run: |
+          mkdir -p public-dashboard
+          
+          # Copy Vitest reports if they exist
+          if [ -d "client/coverage" ]; then
+            cp -r client/coverage public-dashboard/unit-coverage
+          fi
+          
+          # Copy Playwright reports if they exist
+          if [ -d "client/playwright-report" ]; then
+            cp -r client/playwright-report public-dashboard/e2e-report
+          fi
+
+      # Simple unified routing landing layout to navigate between reports easily
+      - name: Compile Dashboard Router Page Artifacts
+        if: always()
+        run: |
+          cat << 'EOF' > public-dashboard/index.html
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Bitmutex Technologies - Test Reports Dashboard</title>
+            <script src="https://cdn.tailwindcss.com"></script>
+          </head>
+          <body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex items-center justify-center">
+            <div class="max-w-xl w-full p-8 bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl text-center">
+              <h1 class="text-2xl font-bold tracking-tight text-white mb-2">Bitmutex Site CI Reports</h1>
+              <p class="text-sm text-slate-400 mb-8">Automated pipeline test metrics generation panel.</p>
+              <div class="space-y-4">
+                <a href="./unit-coverage/index.html" class="flex items-center justify-between p-4 bg-slate-800/50 border border-slate-700/50 rounded-2xl hover:bg-slate-800 hover:border-blue-500/50 transition-all group">
+                  <div class="text-left">
+                    <span class="block font-semibold text-white">Vitest Unit Coverage</span>
+                    <span class="text-xs text-slate-400">V8 line-by-line function execution percentages.</span>
+                  </div>
+                  <span class="text-blue-400 group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+                <a href="./e2e-report/index.html" class="flex items-center justify-between p-4 bg-slate-800/50 border border-slate-700/50 rounded-2xl hover:bg-slate-800 hover:border-amber-500/50 transition-all group">
+                  <div class="text-left">
+                    <span class="block font-semibold text-white">Playwright E2E Report</span>
+                    <span class="text-xs text-slate-400">Full stack responsive workflow integration test status logs.</span>
+                  </div>
+                  <span class="text-amber-400 group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+              </div>
+            </div>
+          </body>
+          </html>
+          EOF
+
+      - name: Setup GitHub Pages Deployment Context Layer
+        if: always()
+        uses: actions/configure-pages@v5
+
+      - name: Compress Directory Static Output Tarball Package
+        if: always()
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public-dashboard
+
+  deploy-reports-dashboard:
+    name: Publish Dashboard to GitHub Pages
+    needs: test-and-verify
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Compiled Dashboard Tarball directly onto GitHub Pages Infrastructure
+        uses: actions/deploy-pages@v4

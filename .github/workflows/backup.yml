@@ -12,27 +12,27 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
       - name: Run Backup on Remote Server via SSH
-        env:
-          SSH_HOST: 152.67.0.194
-        run: |
-          echo "Connecting to server to run backup..."
-          ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << 'EOF'
-            echo "Starting scheduled backup process..."
-            
-            source ~/.zshrc
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: 68.233.96.154
+          username: bigwiz
+          port: 2198 # Explicitly targets your custom SSH port
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          script: |
+              echo "Connecting to server to run backup..."
+              ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << 'EOF'
+                echo "Starting scheduled backup process..."
+                
+                source ~/.zshrc
 
-            # Navigate to the application root directory
-            cd /var/www/bitmutex-website
-            
-            # Run the backup script
-            echo "Executing pnpm run backup..."
-            pnpm run backup
-            
-            echo "Backup script finished."
-          EOF
+                # Navigate to the application root directory
+                cd /home/bigwiz/apps/bitmutex-website
+                
+                # Run the backup script
+                echo "Executing pnpm run backup..."
+                # pnpm run backup # disabled here, as it is currently done via server cron
+                
+                echo "Backup script finished."
+              EOF

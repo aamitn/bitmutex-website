@@ -26,7 +26,13 @@
     "backup": "pnpm run export && node --import tsx ./r2-backup.mts",
     "clean": "node --import tsx ./scripts/clean.ts",
     "deepclean": "node --import tsx ./scripts/clean.ts --locks",
-    "download:seed": "node --import tsx ./scripts/download-seed.ts"
+    "download:seed": "node --import tsx ./scripts/download-seed.ts",
+    "test": "cd client && pnpm test",
+    "test:watch": "cd client && pnpm test:watch",
+    "test:coverage": "cd client && pnpm test:coverage",
+    "test:e2e": "cd client && pnpm test:e2e",
+    "test:e2e:ui": "cd client && pnpm test:e2e:ui"
+    
   },
   "dependencies": {
     "@types/node": "^24.2.0",

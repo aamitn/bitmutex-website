@@ -17,21 +17,24 @@ interface FooterBottomProps {
  * @returns {JSX.Element} The rendered FooterBottom component.
  */
 const FooterBottom: React.FC<FooterBottomProps> = ({ text }) => {
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const [currentTime, setCurrentTime] = useState<Date | null>(null);
   const [mounted, setMounted] = useState(false);
 
   // Get the current year dynamically to keep the copyright up to date.
   const currentYear = new Date().getFullYear();
 
   // Update time every second
-  useEffect(() => {
-    setMounted(true);
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
+    useEffect(() => {
+      setMounted(true);
 
-    return () => clearInterval(timer);
-  }, []);
+      setCurrentTime(new Date());
+
+      const timer = setInterval(() => {
+        setCurrentTime(new Date());
+      }, 1000); // Update every 1000 milliseconds (1 second)
+
+      return () => clearInterval(timer);
+    }, []);
 
   // Format time in a clean, readable format
   const formatTime = (date: Date) => {
@@ -107,12 +110,17 @@ const FooterBottom: React.FC<FooterBottomProps> = ({ text }) => {
             {/* Date and time display */}
             <div className="flex items-center gap-2 bg-linear-to-r from-white/70 to-gray-50/70 dark:from-gray-800/70 dark:to-gray-700/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-gray-200/50 dark:border-gray-600/50 shadow-sm hover:shadow-md transition-all duration-300">
               <div className="flex flex-col items-center sm:items-end">
-                <span className="font-mono font-bold text-xs text-gray-700 dark:text-gray-300 tabular-nums leading-tight">
-                  {formatTime(currentTime)}
-                </span>
-                <span className="font-mono font-medium text-[10px] text-gray-500 dark:text-gray-400 leading-tight">
-                  {formatDate(currentTime)}
-                </span>
+                {currentTime && (
+                  <>
+                    <span className="font-mono font-bold text-xs text-gray-700 dark:text-gray-300 tabular-nums leading-tight">
+                      {formatTime(currentTime)}
+                    </span>
+
+                    <span className="font-mono font-medium text-[10px] text-gray-500 dark:text-gray-400 leading-tight">
+                      {formatDate(currentTime)}
+                    </span>
+                  </>
+                )}
               </div>
               <div className="relative">
                 <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>

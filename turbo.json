@@ -94,6 +94,20 @@
     "deploy": {
       "cache": false,
       "dependsOn": ["build"]
+    },
+    "test": {
+      "cache": false,
+      "dependsOn": [
+        "backend#build",
+        "client#build"
+      ]
+    },
+
+    "client#test": {
+      "cache": false,
+      "dependsOn": [
+        "client#build"
+      ]
     }
   },
   "globalDependencies": [
