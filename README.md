@@ -14,7 +14,7 @@
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=aamitn_bitmutex-website&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=aamitn_bitmutex-website)
 [![GitHub release](https://img.shields.io/github/v/release/aamitn/bitmutex-website)](https://github.com/aamitn/bitmutex-website/releases/latest)
 [![TEST](https://img.shields.io/badge/TEST-View_Report-blue)](https://aamitn.github.io/bitmutex-website/)
-![Vitest Framework Coverage](https://aamitn.github.io/bitmutex-website/coverage-badge.svg)
+[![Vitest Framework Coverage](https://aamitn.github.io/bitmutex-website/coverage-badge.svg)](https://aamitn.github.io/bitmutex-website/)
 
 <!--
 
