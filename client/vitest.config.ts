@@ -11,7 +11,7 @@ export default defineConfig({
 
     coverage: {
       provider: "v8", // or "istanbul"
-      reporter: ["text", "json", "html", "json-summary"], // Formats for terminal logs and visual dashboards
+      reporter: ["text", "json", "html", "json-summary", "lcov"], // Formats for terminal logs and visual dashboards
       reportsDirectory: "./coverage", // Target directory where reports will output
     },
 
