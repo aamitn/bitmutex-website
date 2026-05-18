@@ -1,11 +1,10 @@
-name: Build & Publish Docker Image
+name: PUBLISH DOCKER IMAGE
 
 on:
-  # Triggers the workflow automatically on push of tags matching v*.*.*
-  push:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
-      - 'v[0-9]+.[0-9]+.[0-9]+-*' # Optional: handles prereleases like v1.0.0-alpha
+  workflow_run:
+    workflows: ["TEST & REPORT"]
+    types:
+      - completed
 
   # Keeps the manual trigger available just in case
   workflow_dispatch:

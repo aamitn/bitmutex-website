@@ -1,6 +1,16 @@
-name: Continuous Integration Testing Pipeline
+name: TEST & REPORT
 
 on:
+  # 1. Triggers the workflow automatically on specific tag pushes
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'     # Matches strict semver tags like 1.2.3
+      - 'v[0-9]+.[0-9]+.[0-9]+*'   # Matches tags prefixed with v (e.g., v1.0.0, v2.1.0-beta)
+
+  pull_request:
+      # 2. Triggers on pull requests targeted at any branch
+      types: [opened, synchronize, reopened]
+
   # Allows manual triggering and run-time customization directly from the GitHub Actions dashboard tab
   workflow_dispatch:
     inputs:
@@ -9,6 +19,12 @@ on:
         required: true
         type: boolean
         default: true
+
+# Non-secret environment configurations
+env:
+  # If left empty, misspelled, or set to 'false', auto runs fallback strictly to false.
+  # If using GitHub Repository variables, map it cleanly here: ${{ vars.RUN_E2E_IN_CI }}
+  RUN_E2E_IN_CI: 'false'
 
 # Permissions required to deploy static assets securely to GitHub Pages
 permissions:
@@ -65,10 +81,17 @@ jobs:
       - name: Determine E2E Execution Flag Trigger
         id: e2e-checker
         run: |
+          # 1. Manual trigger handling via workflow_dispatch
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "should_run=${{ github.event.inputs.run_e2e }}" >> $GITHUB_OUTPUT
+          
+          # 2. Automated triggers (e.g., tag push): check the non-secret environment variable
           else
-            echo "should_run=true" >> $GITHUB_OUTPUT
+            if [ "${{ env.RUN_E2E_IN_CI }}" = "true" ]; then
+              echo "should_run=true" >> $GITHUB_OUTPUT
+            else
+              echo "should_run=false" >> $GITHUB_OUTPUT
+            fi
           fi
 
       - name: Install Playwright System Browser Binaries
@@ -110,15 +133,32 @@ jobs:
         run: |
           mkdir -p public-dashboard
           
-          # Copy Vitest reports if they exist
+          # 1. Copy Vitest reports if they exist
           if [ -d "client/coverage" ]; then
             cp -r client/coverage public-dashboard/unit-coverage
+            
+            # Extract total line coverage percentage using jq
+            COVERAGE_PCT=$(jq '.total.lines.pct' client/coverage/coverage-summary.json)
+            echo "Extracted Coverage: ${COVERAGE_PCT}%"
+            
+            # Determine color threshold dynamically based on the percentage
+            if (( $(echo "$COVERAGE_PCT >= 90" | bc -l) )); then
+              COLOR="brightgreen"
+            elif (( $(echo "$COVERAGE_PCT >= 75" | bc -l) )); then
+              COLOR="yellow"
+            else
+              COLOR="red"
+            fi
+            
+            # Download a beautiful, standalone SVG badge directly into your dashboard directory
+            curl -s "https://img.shields.io/badge/Coverage-${COVERAGE_PCT}%25-${COLOR}.svg" > public-dashboard/coverage-badge.svg
           fi
           
-          # Copy Playwright reports if they exist
+          # 2. Copy Playwright reports if they exist
           if [ -d "client/playwright-report" ]; then
             cp -r client/playwright-report public-dashboard/e2e-report
           fi
+
 
       # Simple unified routing landing layout to navigate between reports easily
       - name: Compile Dashboard Router Page Artifacts
