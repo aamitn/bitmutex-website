@@ -159,7 +159,6 @@ jobs:
             cp -r client/playwright-report public-dashboard/e2e-report
           fi
 
-
       # Simple unified routing landing layout to navigate between reports easily
       - name: Compile Dashboard Router Page Artifacts
         if: always()
@@ -175,7 +174,10 @@ jobs:
           </head>
           <body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex items-center justify-center">
             <div class="max-w-xl w-full p-8 bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl text-center">
-              <h1 class="text-2xl font-bold tracking-tight text-white mb-2">Bitmutex Site CI Reports</h1>
+              <h1 class="text-2xl font-bold tracking-tight text-white mb-2 flex items-center justify-center gap-3">
+                Bitmutex Site CI Reports
+                <img src="./coverage-badge.svg" alt="Vitest Coverage Badge" class="h-5" />
+              </h1>
               <p class="text-sm text-slate-400 mb-8">Automated pipeline test metrics generation panel.</p>
               <div class="space-y-4">
                 <a href="./unit-coverage/index.html" class="flex items-center justify-between p-4 bg-slate-800/50 border border-slate-700/50 rounded-2xl hover:bg-slate-800 hover:border-blue-500/50 transition-all group">
