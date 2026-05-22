@@ -2,12 +2,16 @@ name: BACKUP VIA SSH
 
 on:
   schedule:
-    - cron: '0 2 1,8,15,22 * *'  # Runs at 2:00 AM UTC on the 1st, 8th, 15th, and 22nd of every month.
+    - cron: '0 2 1,8,15,22 * *'
   workflow_dispatch:
 
 jobs:
   backup_via_ssh:
+    # Runs if variable is missing OR not equal to 'false'
+    if: ${{ vars.ENABLE_DB_BACKUP != 'false' }}
+
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -17,22 +21,18 @@ jobs:
         with:
           host: 68.233.96.154
           username: bigwiz
-          port: 2198 # Explicitly targets your custom SSH port
+          port: 2198
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
-              echo "Connecting to server to run backup..."
-              ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST << 'EOF'
-                echo "Starting scheduled backup process..."
-                
-                source ~/.zshrc
+            echo "Connecting to server to run backup..."
 
-                # Navigate to the application root directory
-                cd /home/bigwiz/apps/bitmutex-website
-                
-                # Run the backup script
-                echo "Executing pnpm run backup..."
-                # pnpm run backup # disabled here, as it is currently done via server cron
-                
-                echo "Backup script finished."
-              EOF
+            source ~/.zshrc
+
+            cd /home/bigwiz/apps/bitmutex-website
+
+            echo "Starting scheduled backup process..."
+
+            pnpm run backup
+
+            echo "Backup script finished."
