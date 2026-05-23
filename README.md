@@ -43,6 +43,9 @@ OR
 
 curl -fsSL https://raw.githubusercontent.com/aamitn/bitmutex-website/main/scripts/install.ps1 | powershell -ExecutionPolicy Bypass -NoProfile -
 ```
+
+### **Lighthouse Performance :**
+
 <img src="https://gitlab.com/aamitn/assets/-/raw/main/bm-site-data/lighthouse.png" width="450" height="auto">
 
 
