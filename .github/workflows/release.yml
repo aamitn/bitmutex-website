@@ -73,14 +73,20 @@ jobs:
       - name: Set release name & tag
         id: set_names
         run: |
-          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
-            tag_name="${GITHUB_REF#refs/tags/}"
+          # Fetch the reference from the event that triggered the parent workflow
+          TRIGGERING_REF="${{ github.event.workflow_run.head_branch }}"
+          TRIGGERING_SHA="${{ github.event.workflow_run.head_sha }}"
+
+          # Check if the parent workflow was triggered by a tag push
+          # Note: workflow_run.head_branch contains the tag name (e.g., v2.8.46) if triggered by a tag
+          if [[ "${{ github.event.workflow_run.event }}" == "push" && "$TRIGGERING_REF" == v* ]]; then
+            tag_name="$TRIGGERING_REF"
             release_name="$tag_name"
           else
-            branch="${GITHUB_REF#refs/heads/}"
-            short_sha=$(git rev-parse --short HEAD)
-            tag_name="snapshot-${branch}-${short_sha}"
-            release_name="Snapshot - ${branch}"
+            # Fallback for standard branch pushes or manual runs
+            short_sha=$(echo "$TRIGGERING_SHA" | cut -c1-7)
+            tag_name="snapshot-${TRIGGERING_REF}-${short_sha}"
+            release_name="Snapshot - ${TRIGGERING_REF}"
           fi
 
           echo "tag_name=$tag_name" >> $GITHUB_OUTPUT
